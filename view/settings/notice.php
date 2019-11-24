@@ -10,7 +10,7 @@ else if($dbClass->getUserGroupPermission(45) != 1 ){
 ?> 
 	<div class="x_panel">
 		<div class="alert alert-danger" align="center">You Don't Have permission of this Page.</div>
-	</div>
+	</div>f
 	<?php 
 }
 else{
@@ -19,7 +19,7 @@ else{
 
 <div class="x_panel">
     <div class="x_title">
-        <h2>All Post</h2>
+        <h2>All Notice</h2>
         <ul class="nav navbar-right panel_toolbox">
             <li>
 				<a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
@@ -76,7 +76,7 @@ else{
 
 <div class="x_panel">
     <div class="x_title">
-        <h2>Submit Post</h2>
+        <h2>Update Notice</h2>
         <ul class="nav navbar-right panel_toolbox">
 			<li>
 				<a class="collapse-link" id="toggle_form"><i class="fa fa-chevron-down"></i></a>
@@ -158,67 +158,32 @@ develped by @momit
 =>search records
 */
 $(document).ready(function () {
-	//$('#post_modal').modal()
-	// close form submit section onload page
-	var x_panel = $('#iniial_collapse').closest('div.x_panel');
-	var button = $('#iniial_collapse').find('i');
-	var content = x_panel.find('div.x_content');
-	content.slideToggle(200);
-	(x_panel.hasClass('fixed_height_390') ? x_panel.toggleClass('').toggleClass('fixed_height_390') : '');
-	(x_panel.hasClass('fixed_height_320') ? x_panel.toggleClass('').toggleClass('fixed_height_320') : '');
-	button.toggleClass('fa-chevron-up').toggleClass('fa-chevron-down');
-	setTimeout(function () {
-		x_panel.resize();
-	}, 50);
-	//input tags
+
 	$('#post_tags').tagsInput({width: 'auto'});
 	// add file row
 	$('#add_file_row').click(function(){
 		$('#first_section').children('div:last').after("<div class='input-group ' id='first_file'><input name='attached_file[]' class='form-control input-sm col-md-6 col-xs-12' type='file'><span class='input-group-btn'><button type='button' class='btn btn-danger btn-sm remove_me'  ><span class='glyphicon glyphicon-minus'></span></button></span></div> ");
 		$('.remove_me').click(function(){
 			$(this).parent().parent().remove();
-		});		
-	});	
-	 
-	 
-	 
-	//datepicker
-	$('.date-picker').daterangepicker({
-		singleDatePicker: true,
-	/*	autoUpdateInput: false,*/
-		calender_style: "picker_3",
-		locale: {
-			  format: 'YYYY-MM-DD',
-			  separator: " - ",
-		}
+		});
 	});
-	
-	$('#expire_date').val("");
 
-	// collaps button function
-	$('.collapse-link').click(function () {
-		var x_panel = $(this).closest('div.x_panel');
-		var button = $(this).find('i');
-		var content = x_panel.find('div.x_content');
-		content.slideToggle(200);
-		(x_panel.hasClass('fixed_height_390') ? x_panel.toggleClass('').toggleClass('fixed_height_390') : '');
-		(x_panel.hasClass('fixed_height_320') ? x_panel.toggleClass('').toggleClass('fixed_height_320') : '');
-		button.toggleClass('fa-chevron-down').toggleClass('fa-chevron-up');
-		setTimeout(function () {
-			x_panel.resize();
-		}, 50);
-	})
+	$('#expire_date').val("");
+    //datepicker
+    $('.date-picker').daterangepicker({
+        singleDatePicker: true,
+        /*	autoUpdateInput: false,*/
+        calender_style: "picker_3",
+        locale: {
+            format: 'YYYY-MM-DD',
+            separator: " - ",
+        }
+    });
+
+
 		
 });
-<!-- ------------------------------------------end --------------------------------------->
 
-
-//------------------------------------- grid table codes --------------------------------------
-/*
-develped by @momit
-=>load grid with paging
-=>search records
-*/
 $(document).ready(function () {	
 	// initialize page no to "1" for paging
 	var current_page_no=1;	
@@ -226,12 +191,12 @@ $(document).ready(function () {
 		$("#search_notice_button").toggleClass('active');		 
 		var mynoticeTable_length =parseInt($('#mynoticeTable_length').val());
 		$.ajax({
-			url: project_url+"controller/noticeController.php",
+			url: project_url+"controller/webSiteSettingsController.php",
 			dataType: "json",
 			type: "post",
 			async:false,
 			data: {
-				q: "grid_data",
+				q: "grid_data_notice",
 				search_txt: search_txt,
 				limit:mynoticeTable_length,
 				page_no:current_page_no
@@ -314,10 +279,6 @@ $(document).ready(function () {
 });
 
 
-<!-- ------------------------------------------end --------------------------------------->
-
-
-<!-- -------------------------------Form related functions ------------------------------->
 
 /*
 develped by @momit
@@ -335,7 +296,7 @@ $(document).ready(function () {
 		event.preventDefault();
 		ckeditorUpdateElement();
 		var formData = new FormData($('#notice_post_form')[0]);
-		formData.append("q","insert_or_update");
+		formData.append("q","insert_or_update_notice");
 		//validation 
 		if($.trim($('#title').val()) == ""){
 			success_or_error_msg('#form_submit_error','danger',not_input_insert_title_ln,"#title");			
@@ -345,7 +306,7 @@ $(document).ready(function () {
 		}
 		else{
 			$('#save_notice_post').attr('disabled','disabled');
-			var url = project_url+"controller/noticeController.php";
+			var url = project_url+"controller/webSiteSettingsController.php";
 			$.ajax({
 				url: url,
 				type:'POST',
@@ -356,6 +317,7 @@ $(document).ready(function () {
 				success: function(data){
 					$('#save_notice_post').removeAttr('disabled','disabled');
 					if($.isNumeric(data)==true && data>0){
+					    alert('ok1')
 						success_or_error_msg('#form_submit_error',"success",save_success_ln); 
 						clear_form();
 						current_page_no=1;
@@ -363,6 +325,7 @@ $(document).ready(function () {
 						//$( "#toggle_form" ).trigger( "click" );
 					}
 					else{
+					    alert(data)
 						if(data == "img_error")
 							success_or_error_msg('#form_submit_error',"danger",not_saved_msg_for_attachment_ln);
 						else	
@@ -412,12 +375,12 @@ $(document).ready(function () {
 	
 	edit_notice = function edit_notice(notice_id){
 		$.ajax({
-			url: project_url+"controller/noticeController.php",
+			url: project_url+"controller/webSiteSettingsController.php",
 			dataType: "json",
 			type: "post",
 			async:false,
 			data: {
-				q: "get_notice_details",
+				q: "get_notice_details_notice",
 				notice_id: notice_id
 			},
 			success: function(data){
@@ -445,10 +408,10 @@ $(document).ready(function () {
 								onRemoveTag:function(fie_name){
 									if (confirm("Do you want to delete the attached file"+ fie_name +"? ") == true) {
 										$.ajax({
-											url: project_url+"controller/noticeController.php",
+											url: project_url+"controller/webSiteSettingsController.php",
 											type:'POST',
 											async:false,
-											data: "q=delete_attached_file&master_id="+master_id+"&file_name="+fie_name,
+											data: "q=delete_attached_file_notice&master_id="+master_id+"&file_name="+fie_name,
 											success: function(data){
 												if($.trim(data) == 1){
 													success_or_error_msg('#form_submit_error',"success",delete_msg_ln);
@@ -473,7 +436,7 @@ $(document).ready(function () {
 	delete_notice = function delete_notice(notice_id){
 		if (confirm("Do you want to delete the record? ") == true) {
 			$.ajax({
-				url: project_url+"controller/noticeController.php",
+				url: project_url+"controller/webSiteSettingsController.php",
 				type:'POST',
 				async:false,
 				data: "q=delete_notice&notice_id="+notice_id,
@@ -493,5 +456,4 @@ $(document).ready(function () {
 	
 });
 
-<!-- ------------------------------------------end --------------------------------------->
 </script>

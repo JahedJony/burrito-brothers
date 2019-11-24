@@ -132,45 +132,19 @@ else{
 
 <script src="js/customTable.js"></script> 
 <script>
-//------------------------------------- general & UI  --------------------------------------
 
 $(document).ready(function () {
 	
-	// close form submit section onload page
-	var x_panel = $('#iniial_collapse').closest('div.x_panel');
-	var button = $('#iniial_collapse').find('i');
-	var content = x_panel.find('div.x_content');
-	content.slideToggle(200);
-	(x_panel.hasClass('fixed_height_390') ? x_panel.toggleClass('').toggleClass('fixed_height_390') : '');
-	(x_panel.hasClass('fixed_height_320') ? x_panel.toggleClass('').toggleClass('fixed_height_320') : '');
-	button.toggleClass('fa-chevron-up').toggleClass('fa-chevron-down');
-	setTimeout(function () {
-		x_panel.resize();
-	}, 50); 
 
-
-	// collaps button function
-	$('.collapse-link').click(function () {
-		var x_panel = $(this).closest('div.x_panel');
-		var button = $(this).find('i');
-		var content = x_panel.find('div.x_content');
-		content.slideToggle(200);
-		(x_panel.hasClass('fixed_height_390') ? x_panel.toggleClass('').toggleClass('fixed_height_390') : '');
-		(x_panel.hasClass('fixed_height_320') ? x_panel.toggleClass('').toggleClass('fixed_height_320') : '');
-		button.toggleClass('fa-chevron-up').toggleClass('fa-chevron-down');
-		setTimeout(function () {
-			x_panel.resize();
-		}, 50);
-	})
 	
  	load_menu = function load_menu(){	
 		$.ajax({
-			url: project_url+"controller/pageController.php",
+			url: project_url+"controller/webSiteSettingsController.php",
 			dataType: "json",
 			type: "post",
 			async:false,
 			data: {
-				q: "get_menus"
+				q: "get_menus_page"
 			},
 			success: function(data){
 				var option_html = '';	
@@ -196,15 +170,7 @@ $(document).ready(function () {
 	
 });
 	
-<!-- ------------------------------------------end --------------------------------------->
 
-
-//------------------------------------- grid table codes --------------------------------------
-/*
-develped by @momit
-=>load grid with paging
-=>search records
-*/
 $(document).ready(function () {	
 	// initialize page no to "1" for paging
 	var current_page_no=1;	
@@ -212,12 +178,12 @@ $(document).ready(function () {
 		$("#search_page_button").toggleClass('active');		 
 		var page_Table_length =parseInt($('#page_Table_length').val());
 		$.ajax({
-			url: project_url+"controller/pageController.php",
+			url: project_url+"controller/webSiteSettingsController.php",
 			dataType: "json",
 			type: "post",
 			async:false,
 			data: {
-				q: "grid_data",
+				q: "grid_data_page",
 				search_txt: search_txt,
 				limit:page_Table_length,
 				page_no:current_page_no
@@ -297,9 +263,6 @@ $(document).ready(function () {
 });
 
 
-<!-- ------------------------------------------end --------------------------------------->
-
-<!-- -------------------------------Form related functions ------------------------------->
 
 $(document).ready(function () {
 
@@ -310,7 +273,7 @@ $(document).ready(function () {
 		event.preventDefault();
 		ckeditorUpdateElement();
 		var formData = new FormData($('#page_form')[0]);
-		formData.append("q","insert_or_update");
+		formData.append("q","insert_or_update_page");
 		//validation 
 		if($.trim($('#details').val()) == ""){
 			success_or_error_msg('#form_submit_error','danger','Please Insert Details',"#details"); 
@@ -320,7 +283,7 @@ $(document).ready(function () {
 		}
 		else{
 			$('#save_page_btn').attr('disabled','disabled');
-			var url = project_url+"controller/pageController.php";
+			var url = project_url+"controller/webSiteSettingsController.php";
 			$.ajax({
 				url: url,
 				type:'POST',
@@ -348,7 +311,7 @@ $(document).ready(function () {
 	
 	edit_pages = function edit_pages(menu_id){	
 		$.ajax({
-			url: project_url+"controller/pageController.php",
+			url: project_url+"controller/webSiteSettingsController.php",
 			dataType: "json",
 			type: "post",
 			async:false,
@@ -427,5 +390,4 @@ $(document).ready(function () {
 
 });
 
-<!-- ------------------------------------------end --------------------------------------->
 </script>

@@ -131,41 +131,6 @@ develped by @niloy
 =>search records
 */
 $(document).ready(function () {	
-	// close form submit section onload page
-	var x_panel = $('#iniial_collapse').closest('div.x_panel');
-	var button = $('#iniial_collapse').find('i');
-	var content = x_panel.find('div.x_content');
-	content.slideToggle(200);
-	(x_panel.hasClass('fixed_height_390') ? x_panel.toggleClass('').toggleClass('fixed_height_390') : '');
-	(x_panel.hasClass('fixed_height_320') ? x_panel.toggleClass('').toggleClass('fixed_height_320') : '');
-	button.toggleClass('fa-chevron-up').toggleClass('fa-chevron-down');
-	setTimeout(function () {
-		x_panel.resize();
-	}, 50);
-
-	//datepicker
-	$('.date-picker').daterangepicker({
-		singleDatePicker: true,
-		calender_style: "picker_3",
-		locale: {
-			  format: 'YYYY-MM-DD',
-			  separator: " - ",
-		}
-	});
-
-	// collaps button function
-	$('.collapse-link').click(function () {
-		var x_panel = $(this).closest('div.x_panel');
-		var button = $(this).find('i');
-		var content = x_panel.find('div.x_content');
-		content.slideToggle(200);
-		(x_panel.hasClass('fixed_height_390') ? x_panel.toggleClass('').toggleClass('fixed_height_390') : '');
-		(x_panel.hasClass('fixed_height_320') ? x_panel.toggleClass('').toggleClass('fixed_height_320') : '');
-		button.toggleClass('fa-chevron-up').toggleClass('fa-chevron-down');
-		setTimeout(function () {
-			x_panel.resize();
-		}, 50);
-	})
 
 		// icheck for the inputs
 	$('#group_form').iCheck({
@@ -174,15 +139,7 @@ $(document).ready(function () {
 	});	
 
 });
-<!-- ------------------------------------------end --------------------------------------->
 
-
-//------------------------------------- grid table codes --------------------------------------
-/*
-develped by @niloy
-=>load grid with paging
-=>search records
-*/
 $(document).ready(function () {	
 	load_groups = function load_groups(search_txt){
 		$("#search_group_button").toggleClass('active');
@@ -357,34 +314,8 @@ $(document).ready(function () {
 			}
 		});	
 	}
-	
-	/*$('#save_group_permission_info').click(function(event){		
-		event.preventDefault();
-		var formData = new FormData($('#group_permission_form')[0]);
-		formData.append("q","update");
-		$('#save_group_permission_info').attr('disabled','disabled');
-		var url = project_url+"controller/groupController.php";
-		$.ajax({
-			url: url,
-			type:'POST',
-			data:formData,
-			async:false,
-			cache:false,
-			contentType:false,processData:false,
-			success: function(data){
-				$('#save_group_permission_info').removeAttr('disabled','disabled');
-				if($.isNumeric(data)==true && data>0){
-					success_or_error_msg('#permission_form_submit_error',"success",update_success_ln); 
-					clear_form();
-				}
-				else{	
-					success_or_error_msg('#permission_form_submit_error',"danger",not_update_msg_for_input_ln);												
-				}
-			 }	
-		});
-			
-	})*/
-	
+
+
 	clear_form = function clear_form(){			 
 		$('#group_id').val('');
 		$("#group_form").trigger('reset');
@@ -404,5 +335,4 @@ $(document).ready(function () {
 });
 
 
-<!-- ------------------------------------------end --------------------------------------->
 </script>

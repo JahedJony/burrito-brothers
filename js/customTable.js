@@ -1,6 +1,6 @@
 /** ******  table  *********************** **/
 
-var x_panel = $('#iniial_collapse').closest('div.x_panel');
+	var x_panel = $('#iniial_collapse').closest('div.x_panel');
 	var button = $('#iniial_collapse').find('i');
 	var content = x_panel.find('div.x_content');
 	content.slideToggle(200);
@@ -38,7 +38,7 @@ var x_panel = $('#iniial_collapse').closest('div.x_panel');
 		x_panel.resize();
 	}, 50); 
 	
-	// collaps button function
+	// collaps button function for advance search
 	$('.collapse-link-adv').click(function (){
 		var x_panel = $(this).closest('div.x_panel');
 		var button = $(this).find('i');
@@ -50,9 +50,16 @@ var x_panel = $('#iniial_collapse').closest('div.x_panel');
 		setTimeout(function () {
 			x_panel.resize();
 		}, 50);
-	}) 
+	})
 
-
+$('.date-picker').daterangepicker({
+	singleDatePicker: true,
+	calender_style: "picker_3",
+	locale: {
+		format: 'YYYY-MM-DD',
+		separator: " - ",
+	}
+});
 
 $('table input').on('ifChecked', function () {	
     check_state = '';

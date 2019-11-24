@@ -33,8 +33,9 @@
                     <li><a href="index.php?module=settings&view=pages">Pages</a></li>
                     <li><a href="index.php?module=settings&view=notice">Notice</a></li>
                     <li><a href="index.php?module=settings&view=gallary">Gallary</a></li>
-                    <li><a href="index.php?module=settings&view=gallary1">Banner Image</a></li>
-				</ul>
+                    <li><a href="index.php?module=settings&view=banners">Banner Image</a></li>
+
+                </ul>
 			</li>
 			<!--<li><a><i class="fa  fa fa-bar-chart-o"></i>REPORTS <span class="fa fa-chevron-down"></span></a>
 				<ul class="nav child_menu" style="display: none">

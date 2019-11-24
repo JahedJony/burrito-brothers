@@ -202,7 +202,7 @@ else{
 		}
 	} 
 ?>
-<script src="js/customTable.js"></script> 
+<script src="js/customTable.js"></script>
 <script>
 //------------------------------------- general & UI  --------------------------------------
 /*
@@ -212,69 +212,8 @@ develped by @momit
 */
 $(document).ready(function () {	
 	var user_type = "<?php echo $user_type; ?>";
-	// close form submit section onload page
-	var x_panel = $('#iniial_collapse').closest('div.x_panel');
-	var button = $('#iniial_collapse').find('i');
-	var content = x_panel.find('div.x_content');
-	content.slideToggle(200);
-	(x_panel.hasClass('fixed_height_390') ? x_panel.toggleClass('').toggleClass('fixed_height_390') : '');
-	(x_panel.hasClass('fixed_height_320') ? x_panel.toggleClass('').toggleClass('fixed_height_320') : '');
-	button.toggleClass('fa-chevron-up').toggleClass('fa-chevron-down');
-	setTimeout(function () {
-		x_panel.resize();
-	}, 50);
 
 
-	// collaps button function
-	$('.collapse-link').click(function () {
-		var x_panel = $(this).closest('div.x_panel');
-		var button = $(this).find('i');
-		var content = x_panel.find('div.x_content');
-		content.slideToggle(200);
-		(x_panel.hasClass('fixed_height_390') ? x_panel.toggleClass('').toggleClass('fixed_height_390') : '');
-		(x_panel.hasClass('fixed_height_320') ? x_panel.toggleClass('').toggleClass('fixed_height_320') : '');
-		button.toggleClass('fa-chevron-up').toggleClass('fa-chevron-down');
-		setTimeout(function () {
-			x_panel.resize();
-		}, 50);
-	})	
-	
-	// close form submit section onload page
-	var x_panel = $('#iniial_collapse_adv').closest('div.x_panel');
-	var button = $('#iniial_collapse').find('i');
-	var content = x_panel.find('div.x_content');
-	content.slideToggle(200);
-	(x_panel.hasClass('fixed_height_390') ? x_panel.toggleClass('').toggleClass('fixed_height_390') : '');
-	(x_panel.hasClass('fixed_height_320') ? x_panel.toggleClass('').toggleClass('fixed_height_320') : '');
-	button.toggleClass('fa-chevron-up').toggleClass('fa-chevron-down');
-	setTimeout(function () {
-		x_panel.resize();
-	}, 50); 
-	
-	// collaps button function
-	$('.collapse-link-adv').click(function (){
-		var x_panel = $(this).closest('div.x_panel');
-		var button = $(this).find('i');
-		var content = x_panel.find('div.x_content');
-		content.slideToggle(200);
-		(x_panel.hasClass('fixed_height_390') ? x_panel.toggleClass('').toggleClass('fixed_height_390') : '');
-		(x_panel.hasClass('fixed_height_320') ? x_panel.toggleClass('').toggleClass('fixed_height_320') : '');
-		button.toggleClass('fa-chevron-up').toggleClass('fa-chevron-down');
-		setTimeout(function () {
-			x_panel.resize();
-		}, 50);
-	}) 
-
-	//datepicker
-	$('.date-picker').daterangepicker({
-		singleDatePicker: true,
-		calender_style: "picker_3",
-		locale: {
-			  format: 'YYYY-MM-DD',
-			  separator: " - ",
-		}
-	});
-	
 	// icheck for the inputs
 	$('#emp_form').iCheck({
 		checkboxClass: 'icheckbox_flat-green',
@@ -287,10 +226,7 @@ $(document).ready(function () {
 	});
 
 });
-<!-- ------------------------------------------end --------------------------------------->
 
-
-//------------------------------------- grid table codes --------------------------------------
 /*
 develped by @momit
 =>load grid with paging
@@ -395,6 +331,7 @@ $(document).ready(function (){
 				q: "get_user_groups"
 			},
 			success: function(data) {
+			    //alert(data)
 				//var option_html = '';	
 				if(!jQuery.isEmptyObject(data.records)){
 					var html = '<table class="table table-bordered jambo_table"><thead><tr class="headings"><th class="column-title text-center" class="col-md-8 col-sm-8 col-xs-8" >User Groups</th><th class="col-md-2 col-sm-2 col-xs-12"><input type="checkbox" id="check-all" class="tableflat">Select All</th></tr></thead>';
@@ -469,12 +406,6 @@ $(document).ready(function (){
 	load_user_groups("");
 });
 
-
-<!-- ------------------------------------------end --------------------------------------->
-
-
-<!-- -------------------------------Form related functions ------------------------------->
-
 /*
 develped by @momit
 =>form submition for add/edit
@@ -505,6 +436,7 @@ $(document).ready(function () {
 				cache:false,
 				contentType:false,processData:false,
 				success: function(data){
+				    //alert('ok')
 					$('#save_emp_info').removeAttr('disabled','disabled');
 					
 					if($.isNumeric(data)==true && data==5){
@@ -629,19 +561,19 @@ $(document).ready(function () {
 								emp_id: emp_id
 							},
 							success: function(data) {
+							    //alert('ok')
 								//alert(data);
 								//var option_html = '';	
 								if(!jQuery.isEmptyObject(data.records)){
 									var html = '<table class="table table-bordered jambo_table"><thead><tr class="headings"><th class="column-title text-center" class="col-md-8 col-sm-8 col-xs-8" >User Groups</th><th class="col-md-2 col-sm-2 col-xs-12"><input type="checkbox" id="check-all" class="tableflat">Select All</th></tr></thead>';
 										$.each(data.records, function(i,datas){ 			
 											 html += '<tr><td colspan="2">';
-											 $.each(datas.module_group, function(i,module_group){ 
-											// alert(module_group)
-												module_group_arr = module_group.split("*");	
-												if(module_group_arr[2]==1) 	
-													html += '<div class="col-md-3" ><input type="checkbox" name="group[]"  class="tableflat" checked="checked"  value="'+module_group_arr[0]+'"/> '+module_group_arr[1]+'</div>';	
+											 $.each(datas.module_group, function(i,module_group){
+												module_group_arr = module_group.split("*");
+                                                 if(module_group_arr[2]!=1)
+													html += '<div class="col-md-3" ><input type="checkbox" name="group[]"  class="tableflat"   value="'+module_group_arr[0]+'"/> '+module_group_arr[1]+'</div>';
 												else
-													html += '<div class="col-md-3" ><input type="checkbox" name="group[]"  class="tableflat"  value="'+module_group_arr[0]+'"/> '+module_group_arr[1]+'</div>';	
+													html += '<div class="col-md-3" ><input type="checkbox" name="group[]"  class="tableflat" checked="checked" value="'+module_group_arr[0]+'"/> '+module_group_arr[1]+'</div>';
 											 });
 											html += '</td></tr>';
 											
@@ -673,6 +605,4 @@ $(document).ready(function () {
 	}				
 });
 
-
-<!-- ------------------------------------------end --------------------------------------->
 </script>

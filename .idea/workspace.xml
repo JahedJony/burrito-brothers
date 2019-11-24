@@ -1,7 +1,28 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="289ea524-a539-47c6-a345-6f05b3774d37" name="Default Changelist" comment="" />
+    <list default="true" id="289ea524-a539-47c6-a345-6f05b3774d37" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/controller/couponController.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/controller/webSiteSettingsController.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/view/settings/coupons.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/view/settings/gallar.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/controller/website_settings/bannerController.php" beforeDir="false" afterPath="$PROJECT_DIR$/controller/website_settings/bannerController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/controller/website_settings/noticeController.php" beforeDir="false" afterPath="$PROJECT_DIR$/controller/website_settings/noticeController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/controller/website_settings/pageController.php" beforeDir="false" afterPath="$PROJECT_DIR$/controller/website_settings/pageController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/document/notice_attachment/Untitled-1.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/js/customTable.js" beforeDir="false" afterPath="$PROJECT_DIR$/js/customTable.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/view/common_view/left_menu.php" beforeDir="false" afterPath="$PROJECT_DIR$/view/common_view/left_menu.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/view/cp/actions.php" beforeDir="false" afterPath="$PROJECT_DIR$/view/cp/actions.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/view/cp/group_permission.php" beforeDir="false" afterPath="$PROJECT_DIR$/view/cp/group_permission.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/view/settings/gallary.php" beforeDir="false" afterPath="$PROJECT_DIR$/view/settings/gallary.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/view/settings/gallary1.php" beforeDir="false" afterPath="$PROJECT_DIR$/view/settings/gallary1.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/view/settings/general.php" beforeDir="false" afterPath="$PROJECT_DIR$/view/settings/general.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/view/settings/notice.php" beforeDir="false" afterPath="$PROJECT_DIR$/view/settings/notice.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/view/settings/pages.php" beforeDir="false" afterPath="$PROJECT_DIR$/view/settings/pages.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/view/user/user.php" beforeDir="false" afterPath="$PROJECT_DIR$/view/user/user.php" afterDir="false" />
+    </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -13,10 +34,15 @@
       <executable />
     </execution>
   </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
   <component name="ProjectId" id="1U0yhALMcmVnMgJ1EUx54sNMxxf" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="PropertiesComponent">
+    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/controller" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/view/settings" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.detected.package.tslint" value="true" />
     <property name="node.js.path.for.package.eslint" value="project" />
@@ -26,12 +52,12 @@
   </component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$/view/settings" />
       <recent name="$PROJECT_DIR$/controller" />
+      <recent name="$PROJECT_DIR$/view/settings" />
     </key>
     <key name="CopyFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$/controller" />
       <recent name="$PROJECT_DIR$/view/settings" />
+      <recent name="$PROJECT_DIR$/controller" />
       <recent name="$PROJECT_DIR$/view" />
     </key>
   </component>
@@ -57,11 +83,22 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1574507923535</updated>
-      <workItem from="1574507924990" duration="7167000" />
+      <workItem from="1574507924990" duration="19793000" />
     </task>
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="1" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
   </component>
 </project>

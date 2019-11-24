@@ -26,7 +26,7 @@ else{
         </ul>
         <div class="clearfix"></div>
     </div>
-    <div class="x_content" id="iniial_collapse">
+    <div class="x_content" >
         <br />       
         <form method="post"  id="gallary_form" name="gallary_form" enctype="multipart/form-data" class="form-horizontal form-label-left">
             <div class="form-group">
@@ -106,7 +106,7 @@ $(document).ready(function () {
         },
         source: function(request, response) {
             $.ajax({
-                url: project_url+'controller/gallaryController.php',
+                url: project_url+'controller/webSiteSettingsController.php',
                 dataType: "json",
                 type: "post",
 				async:false,
@@ -129,18 +129,7 @@ $(document).ready(function () {
 	
 });
 	
-<!-- ------------------------------------------end --------------------------------------->
 
-<!-- -------------------------------Form related functions ------------------------------->
-
-/*
-develped by @momit
-=>form submition for add/edit
-=>clear form
-=>load data to edit
-=>delete record
-=>view 
-*/
 $(document).ready(function () {
 	var user_id = "<?php echo $_SESSION['user_id']; ?>";
 		
@@ -149,7 +138,7 @@ $(document).ready(function () {
 		event.preventDefault();
 		ckeditorUpdateElement();
 		var formData = new FormData($('#gallary_form')[0]);
-		formData.append("q","insert_or_update");
+		formData.append("q","insert_or_update_image");
 		//validation 
 		if($.trim($('#title').val()) == ""){
 			success_or_error_msg('#form_submit_error','danger',not_input_insert_title_ln,"#title");			
@@ -159,7 +148,7 @@ $(document).ready(function () {
 		}
 		else{
 			$('#save_gallary_btn').attr('disabled','disabled');
-			var url = project_url+"controller/gallaryController.php";
+			var url = project_url+"controller/webSiteSettingsController.php";
 			$.ajax({
 				url: url,
 				type:'POST',
@@ -174,6 +163,7 @@ $(document).ready(function () {
 						clear_form();			
 					}
 					else{
+					    alert(data)
 						if(data == "img_error")
 							success_or_error_msg('#form_submit_error',"danger",not_saved_msg_for_attachment_ln);
 						else	
@@ -205,7 +195,7 @@ $(document).ready(function () {
 	load_gallary_data = function load_gallary_data(master_id){
 		$('.img_label').after('');
 		var attachement_html = "";
-		var url = project_url+"controller/gallaryController.php";
+		var url = project_url+"controller/webSiteSettingsController.php";
 		$.ajax({
 			url: url,
 			dataType: "json",
@@ -246,12 +236,12 @@ $(document).ready(function () {
 	} 
 	
 	delete_gallary_image = function delete_gallary_image(img_id, master_id){
-		var url = project_url+"controller/gallaryController.php";
+		var url = project_url+"controller/webSiteSettingsController.php";
 		$.ajax({
 			url: url,
 			type:'POST',
 			async:false,
-			data: "q=delete_attached_file&img_id="+img_id,
+			data: "q=delete_attached_image_file&img_id="+img_id,
 			success: function(data){
 				if($.isNumeric(data)==true && data>0){
 					success_or_error_msg('#form_submit_error',"success","Deleted Successfully");

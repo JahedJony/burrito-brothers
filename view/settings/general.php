@@ -19,7 +19,16 @@ else{
     ?>
     <?php if($dbClass->getUserGroupPermission(98) == 1){ ?>
         <div class="x_panel employee_entry_cl">
-            <div class="x_content" id="iniial_collapse">
+            <div class="x_title">
+                <h2>General Settings</h2>
+                <ul class="nav navbar-right panel_toolbox">
+                    <li>
+                        <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                    </li>
+                </ul>
+                <div class="clearfix"></div>
+            </div>
+            <div class="x_content" >
                 <br />
                 <form id="setting_form" name="setting_form" enctype="multipart/form-data" class="form-horizontal form-label-left" style="width: 80%; margin: auto">
                     <div class="row">
