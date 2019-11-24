@@ -2,26 +2,22 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="289ea524-a539-47c6-a345-6f05b3774d37" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/controller/couponController.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/controller/webSiteSettingsController.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/view/settings/coupons.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/view/settings/gallar.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/controller/website_settings/bannerController.php" beforeDir="false" afterPath="$PROJECT_DIR$/controller/website_settings/bannerController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/controller/website_settings/noticeController.php" beforeDir="false" afterPath="$PROJECT_DIR$/controller/website_settings/noticeController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/controller/website_settings/pageController.php" beforeDir="false" afterPath="$PROJECT_DIR$/controller/website_settings/pageController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/document/notice_attachment/Untitled-1.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/js/customTable.js" beforeDir="false" afterPath="$PROJECT_DIR$/js/customTable.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/view/common_view/left_menu.php" beforeDir="false" afterPath="$PROJECT_DIR$/view/common_view/left_menu.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/view/cp/actions.php" beforeDir="false" afterPath="$PROJECT_DIR$/view/cp/actions.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/view/cp/group_permission.php" beforeDir="false" afterPath="$PROJECT_DIR$/view/cp/group_permission.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/view/settings/gallary.php" beforeDir="false" afterPath="$PROJECT_DIR$/view/settings/gallary.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/view/settings/gallary1.php" beforeDir="false" afterPath="$PROJECT_DIR$/view/settings/gallary1.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/view/settings/general.php" beforeDir="false" afterPath="$PROJECT_DIR$/view/settings/general.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/view/settings/notice.php" beforeDir="false" afterPath="$PROJECT_DIR$/view/settings/notice.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/view/settings/pages.php" beforeDir="false" afterPath="$PROJECT_DIR$/view/settings/pages.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/view/user/user.php" beforeDir="false" afterPath="$PROJECT_DIR$/view/user/user.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DB/brick_fields_(07-11-2019).sql" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/DB/brick_fields_(15-10-2019).sql" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/DB/brick_fields_(17-11-2019).sql" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/controller/personalController.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/controller/purchaseController.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/document/project_attachment/1524648626Logo.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/document/project_attachment/1529470972Sig.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/document/project_attachment/Koala.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/document/project_attachment/Logo.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/document/project_attachment/Penguins.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/document/project_attachment/Sig.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/document/purchase/1553864045rsz_momit_pp_photo.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/document/purchase/Mahbub.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/document/purchase/rsz_momit_pp_photo.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/document/purchase/tiva.jpg" beforeDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -83,7 +79,7 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1574507923535</updated>
-      <workItem from="1574507924990" duration="19793000" />
+      <workItem from="1574507924990" duration="21032000" />
     </task>
     <servers />
   </component>
