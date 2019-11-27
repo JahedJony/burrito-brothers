@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Nov 25, 2019 at 06:40 AM
+-- Generation Time: Nov 27, 2019 at 08:04 AM
 -- Server version: 8.0.17
 -- PHP Version: 7.3.10
 
@@ -49,7 +49,7 @@ INSERT INTO `appuser` (`user_id`, `user_name`, `user_password`, `user_level`, `l
 ('1000001', 'admin', 'e10adc3949ba59abbe56e057f20f883e', 'ROLE_USER', 0, 1, NULL, NULL, '1000001'),
 ('1000002', 'kajol', 'e10adc3949ba59abbe56e057f20f883e', 'General', 0, 1, NULL, NULL, '1000002'),
 ('1000003', 'jahed', 'e10adc3949ba59abbe56e057f20f883e', 'General', 0, 0, NULL, NULL, '1000001'),
-('1000004', 'biplob', 'e10adc3949ba59abbe56e057f20f883e', 'General', 0, 0, NULL, NULL, '1000001');
+('1000004', 'biplob', 'e10adc3949ba59abbe56e057f20f883e', 'General', 0, 1, NULL, NULL, '1000002');
 
 -- --------------------------------------------------------
 
@@ -72,7 +72,9 @@ CREATE TABLE `banner_image` (
 INSERT INTO `banner_image` (`id`, `title`, `text`, `photo`, `status`) VALUES
 (29, 'Banner3', 'Savory/Pastry/Cake/Coffee/Cookies/Bread', 'images/banner/3.jpg', 1),
 (36, 'banner4', 'Brownie', 'images/banner/8.jpg', 1),
-(37, 'Banner2', 'Makeup kit', 'images/banner/Mac Structured Cake.jpg', 1);
+(37, 'Banner2', 'Makeup kit', 'images/banner/Mac Structured Cake.jpg', 1),
+(38, 'sdfaswe', 'sdfgh', '/images/banner/1574791806moumit.jpg', 1),
+(39, 'sdfas', 'dsfg', '/images/banner/1574793260moumit.jpg', 1);
 
 -- --------------------------------------------------------
 
@@ -372,7 +374,60 @@ INSERT INTO `gallary_images` (`id`, `title`, `album_id`, `attachment`) VALUES
 (54, 'Pizza Bun', 21, '2.jpg'),
 (55, 'Mini Chicken Burger', 21, '8.jpg'),
 (56, 'Sausage Delight', 21, '3.jpg'),
-(58, 'cake', 23, '38.jpg');
+(58, 'cake', 23, '38.jpg'),
+(59, 'sdfas', 21, 'moumit.jpg');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `general_settings`
+--
+
+CREATE TABLE `general_settings` (
+  `id` int(11) DEFAULT NULL,
+  `company_name` varchar(100) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL,
+  `website_title` varchar(100) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL,
+  `website_url` varchar(100) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL,
+  `web_admin_email` varchar(100) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL,
+  `web_admin_contact` varchar(15) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL,
+  `store_name` varchar(100) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL,
+  `store_address` varchar(200) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL,
+  `store_longitude` varchar(100) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
+  `store_latitude` varchar(100) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
+  `store_contact` varchar(100) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL,
+  `store_incharge_name` varchar(100) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
+  `company_logo` varchar(100) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
+  `yelp_url` varchar(300) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
+  `fb_url` varchar(300) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
+  `tweeter_url` varchar(300) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
+  `instagram_url` varchar(300) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
+  `meta_description` text CHARACTER SET utf8 COLLATE utf8_unicode_ci,
+  `meta_keywards` text CHARACTER SET utf8 COLLATE utf8_unicode_ci,
+  `currency` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL,
+  `currency_symbol` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL,
+  `decimal_placement` tinyint(1) DEFAULT '2' COMMENT '2decimal',
+  `tax_enable` tinyint(1) DEFAULT '0' COMMENT '1:enabled, 0:disable',
+  `minimum_order_amount` double(10,2) DEFAULT NULL,
+  `takeout` tinyint(1) NOT NULL DEFAULT '1' COMMENT '1:enabled, 0:disable',
+  `delivery` tinyint(1) NOT NULL DEFAULT '1' COMMENT '1:enabled, 0:disable',
+  `dinein` tinyint(1) NOT NULL DEFAULT '1' COMMENT '1:enabled, 0:disable',
+  `card_payment` tinyint(1) NOT NULL DEFAULT '1' COMMENT '1:enabled, 0:disable',
+  `cash_payment` tinyint(1) NOT NULL DEFAULT '1' COMMENT '1:enabled, 0:disable',
+  `loyelty_payment` tinyint(1) NOT NULL DEFAULT '1' COMMENT '1:enabled, 0:disable',
+  `payment_card_visa` tinyint(1) NOT NULL DEFAULT '1' COMMENT '1:enabled, 0:disable',
+  `payment_card_master` tinyint(1) NOT NULL DEFAULT '1' COMMENT '1:enabled, 0:disable',
+  `payment_card_amex` tinyint(1) NOT NULL DEFAULT '1' COMMENT '1:enabled, 0:disable',
+  `payment_card_discover` tinyint(1) NOT NULL DEFAULT '1' COMMENT '1:enabled, 0:disable',
+  `point_reserve_value` int(11) NOT NULL COMMENT 'point reserve value(_$=1point)',
+  `redeem_value` int(11) NOT NULL COMMENT 'point financial value(_point=1$)'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Dumping data for table `general_settings`
+--
+
+INSERT INTO `general_settings` (`id`, `company_name`, `website_title`, `website_url`, `web_admin_email`, `web_admin_contact`, `store_name`, `store_address`, `store_longitude`, `store_latitude`, `store_contact`, `store_incharge_name`, `company_logo`, `yelp_url`, `fb_url`, `tweeter_url`, `instagram_url`, `meta_description`, `meta_keywards`, `currency`, `currency_symbol`, `decimal_placement`, `tax_enable`, `minimum_order_amount`, `takeout`, `delivery`, `dinein`, `card_payment`, `cash_payment`, `loyelty_payment`, `payment_card_visa`, `payment_card_master`, `payment_card_amex`, `payment_card_discover`, `point_reserve_value`, `redeem_value`) VALUES
+(1, 'Burrito Brothers', 'Burrito Brothers', 'http://burritobrothers.test/', 'sagdf2fds', '12345', 'Burrito Brothers', '622, West shawrapara\r\nmirpur', '12.23', '13.123', '12345', 'kajol', 'images/banner/1574837831moumit.jpg', 'http://burritobrothers.test/', 'http://burritobrothers.test/', 'http://burritobrothers.test/', 'http://burritobrothers.test/', 'You can use a standard JS for..in loop - you don\'t need jQuery, though it has you covered too with its $.each() method. Either way gives you access to the property names and their corresponding values. Given you\'ve got nested objects you will probably want nested for..in or $.each() loops.\r\nYou don\'t make it at all clear what format your output should be, but here\'s a simple example that at least shows how to get the pieces you need:', 'food, pizza, takeout, group', 'USD', '$', 3, 0, 1.00, 1, 0, 1, 1, 0, 1, 1, 1, 1, 0, 10, 10);
 
 -- --------------------------------------------------------
 
@@ -696,29 +751,6 @@ INSERT INTO `product_stock` (`id`, `product_rate_id`, `date`, `quantity`, `note`
 -- --------------------------------------------------------
 
 --
--- Table structure for table `settings`
---
-
-CREATE TABLE `settings` (
-  `id` int(11) NOT NULL,
-  `company_name` varchar(200) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL,
-  `site_title` varchar(200) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL,
-  `site_url` varchar(200) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL,
-  `stock_alert_quantity` int(11) NOT NULL,
-  `tax` float NOT NULL,
-  `logo` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-
---
--- Dumping data for table `settings`
---
-
-INSERT INTO `settings` (`id`, `company_name`, `site_title`, `site_url`, `stock_alert_quantity`, `tax`, `logo`) VALUES
-(1, 'Fastfood', 'Fastfood POS', 'http://localhost/fastfood/admin/', 62, 52, 'images/banner/moumit.jpg');
-
--- --------------------------------------------------------
-
---
 -- Table structure for table `size`
 --
 
@@ -824,7 +856,7 @@ INSERT INTO `user_group_member` (`id`, `group_id`, `emp_id`, `status`) VALUES
 (9, 24, '1000001', 0),
 (10, 24, '1000002', 0),
 (11, 24, '1000003', 0),
-(12, 24, '1000004', 0);
+(12, 24, '1000004', 1);
 
 -- --------------------------------------------------------
 
@@ -980,7 +1012,7 @@ INSERT INTO `user_infos` (`emp_id`, `full_name`, `designation_name`, `address`, 
 ('1000001', 'Momit', 'Software Engineer', '', '', '', 'images/employee/moumit.jpg', '01737151125', 'shofiqueshahin@gmail.com', 'B+', '201800001', 0, 'aaaaaaaaaa'),
 ('1000002', 'kajol kumar chaki', 'software engineer ', '', '', '23489', 'images/employee/DA90208.jpg', '01757808214', 'kajolchaki@gmail.com', 'o+', NULL, 0, 'none'),
 ('1000003', 'jahed', 'Chef', '', '', '345678', 'images/employee/558.jpg', '32456', 'sfho@dsaf.dsf', 'A-', NULL, 0, ''),
-('1000004', 'biplob', 'Store Keeper', '', '', '2345', '', '21345', 'kumar@mail.com', 'A-', NULL, 0, '');
+('1000004', 'biplob', 'Store Keeper', '622, West shawrapara, mirpur', '', '2345', '', '21345', 'kumar@mail.com', 'A-', NULL, 0, 'sf');
 
 -- --------------------------------------------------------
 
@@ -1063,18 +1095,6 @@ INSERT INTO `web_actions` (`id`, `activity_name`, `module_id`, `status`) VALUES
 (100, 'Unit CRUD', 6, 0),
 (101, 'Stock adjustment', 3, 0),
 (102, 'Stock Grid', 3, 0);
-
--- --------------------------------------------------------
-
---
--- Table structure for table `web_login`
---
-
-CREATE TABLE `web_login` (
-  `emp_id` varchar(10) NOT NULL,
-  `is_login` tinyint(1) NOT NULL DEFAULT '0' COMMENT '0:not logged, 1: logged in',
-  `chat_status` tinyint(1) NOT NULL DEFAULT '1' COMMENT ' 1:available,2:meeting,3:busy'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 
@@ -1345,14 +1365,6 @@ ALTER TABLE `product_stock`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `settings`
---
-ALTER TABLE `settings`
-  ADD UNIQUE KEY `id` (`id`),
-  ADD UNIQUE KEY `id_3` (`id`),
-  ADD KEY `id_2` (`id`);
-
---
 -- Indexes for table `size`
 --
 ALTER TABLE `size`
@@ -1399,12 +1411,6 @@ ALTER TABLE `web_actions`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `web_login`
---
-ALTER TABLE `web_login`
-  ADD PRIMARY KEY (`emp_id`);
-
---
 -- Indexes for table `web_menu`
 --
 ALTER TABLE `web_menu`
@@ -1432,7 +1438,7 @@ ALTER TABLE `web_notice`
 -- AUTO_INCREMENT for table `banner_image`
 --
 ALTER TABLE `banner_image`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=38;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=40;
 
 --
 -- AUTO_INCREMENT for table `category`
@@ -1498,7 +1504,7 @@ ALTER TABLE `external_contact`
 -- AUTO_INCREMENT for table `gallary_images`
 --
 ALTER TABLE `gallary_images`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=59;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=60;
 
 --
 -- AUTO_INCREMENT for table `image_album`
@@ -1565,12 +1571,6 @@ ALTER TABLE `product_review`
 --
 ALTER TABLE `product_stock`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=34;
-
---
--- AUTO_INCREMENT for table `settings`
---
-ALTER TABLE `settings`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `size`
@@ -1676,12 +1676,6 @@ ALTER TABLE `user_group_member`
 ALTER TABLE `user_group_permission`
   ADD CONSTRAINT `FK__activity_actions` FOREIGN KEY (`action_id`) REFERENCES `web_actions` (`id`),
   ADD CONSTRAINT `FK__user_group_id` FOREIGN KEY (`group_id`) REFERENCES `user_group` (`id`);
-
---
--- Constraints for table `web_login`
---
-ALTER TABLE `web_login`
-  ADD CONSTRAINT `emp_id_fk` FOREIGN KEY (`emp_id`) REFERENCES `user_infos` (`emp_id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Constraints for table `web_menu`
