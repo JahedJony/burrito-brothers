@@ -3,7 +3,7 @@
 // define some global variable
 $activity_url  = "";
 
-$emp_pic_directory = "images/employee/";
+$emp_pic_directory = "images/user/";
 
 $company_website_url = "";
 $file_max_length = 5297152;

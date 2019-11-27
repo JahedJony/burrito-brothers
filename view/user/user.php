@@ -20,7 +20,7 @@ else{
 	
 <div class="x_panel">
     <div class="x_title">
-        <h2>Employee List</h2>
+        <h2>Users List</h2>
         <ul class="nav navbar-right panel_toolbox">
             <li>
 				<a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
@@ -81,9 +81,9 @@ else{
     </div>
 </div>
 <?php if($dbClass->getUserGroupPermission(10) == 1){ ?>
-<div class="x_panel employee_entry_cl">
+<div class="x_panel user_entry_cl">
     <div class="x_title">
-        <h2>Employee Entry</h2>
+        <h2>User Entry</h2>
         <ul class="nav navbar-right panel_toolbox">
             <li>
 				<a class="collapse-link" id="toggle_form"><i class="fa fa-chevron-down"></i></a>
@@ -263,7 +263,7 @@ $(document).ready(function (){
 					if(emp_active_status == 0)  serach_areas += "In-Active <br>";
 					/*<input name="print" type="button" value="Print" id="printBTN" onClick="printpage();" />*/
 					
-					html +='<div width="100%"  style="text-align:center"><img src="'+employee_import_url+'/images/logo.png" width="80"/></div><h2 style="text-align:center">Cakencookie</h2><h4 style="text-align:center">User Information Report</h4><table width="100%"><tr><th width="60%" style="text-align:left"><small>'+serach_areas+'</small></th><th width="40%"  style="text-align:right"><small>Printed By: '+user_name+', Date:'+todate+'</small></th></tr></table>';
+					html +='<div width="100%"  style="text-align:center"><img src="'+user_import_url+'/images/logo.png" width="80"/></div><h2 style="text-align:center">Cakencookie</h2><h4 style="text-align:center">User Information Report</h4><table width="100%"><tr><th width="60%" style="text-align:left"><small>'+serach_areas+'</small></th><th width="40%"  style="text-align:right"><small>Printed By: '+user_name+', Date:'+todate+'</small></th></tr></table>';
 					
 					if(!jQuery.isEmptyObject(data.records)){
 						html +='<table width="100%" border="1px" style="margin-top:10px;border-collapse:collapse"><thead><tr><th style="text-align:left">ID</th><th style="text-align:left">Name</th><th style="text-align:left">Designation</th><th style="text-align:center">Contact No</th><th style="text-align:left">Status</th></tr></thead><tbody>';
@@ -288,7 +288,7 @@ $(document).ready(function (){
 				}
 				else{
 					if(data.entry_status==0){
-						$('.employee_entry_cl').hide();
+						$('.user_entry_cl').hide();
 					}
 					// for  showing grid's no of records from total no of records 
 					show_record_no(current_page_no, emp_Table_length, data.total_records )
@@ -489,7 +489,7 @@ $(document).ready(function () {
 				url: url,
 				type:'POST',
 				async:false,
-				data: "q=delete_employee&emp_id="+emp_id,
+				data: "q=delete_user&emp_id="+emp_id,
 				success: function(data){
 					if($.trim(data) == 1){
 						success_or_error_msg('#page_notification_div',"success","Deleted Successfully");
@@ -545,7 +545,7 @@ $(document).ready(function () {
 							$('#is_active').iCheck('check'); 
 						
 						//change button value 
-						$('#save_emp_info').html('Update Employee');
+						$('#save_emp_info').html('Update User');
 						
 						// to open submit post section
 						if($.trim($('#toggle_form i').attr("class"))=="fa fa-chevron-down")

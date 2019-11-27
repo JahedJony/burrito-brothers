@@ -2,8 +2,20 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="289ea524-a539-47c6-a345-6f05b3774d37" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/.idea/sqldialects.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/imageLibrary.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/DB/burritobrothers_db(24-11-19).sql" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/controller/generalSettingController.php" beforeDir="false" afterPath="$PROJECT_DIR$/controller/generalSettingController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/controller/loginController.php" beforeDir="false" afterPath="$PROJECT_DIR$/controller/loginController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/controller/userController.php" beforeDir="false" afterPath="$PROJECT_DIR$/controller/userController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/controller/webSiteSettingsController.php" beforeDir="false" afterPath="$PROJECT_DIR$/controller/webSiteSettingsController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dbClass.php" beforeDir="false" afterPath="$PROJECT_DIR$/dbClass.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/includes/static_text.php" beforeDir="false" afterPath="$PROJECT_DIR$/includes/static_text.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/js/login.js" beforeDir="false" afterPath="$PROJECT_DIR$/js/login.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/login.php" beforeDir="false" afterPath="$PROJECT_DIR$/login.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/view/personal/emp_profile.php" beforeDir="false" afterPath="$PROJECT_DIR$/view/personal/emp_profile.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/view/settings/general.php" beforeDir="false" afterPath="$PROJECT_DIR$/view/settings/general.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/view/user/user.php" beforeDir="false" afterPath="$PROJECT_DIR$/view/user/user.php" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -24,7 +36,7 @@
   <component name="PropertiesComponent">
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/view/settings" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.detected.package.tslint" value="true" />
     <property name="node.js.path.for.package.eslint" value="project" />
@@ -33,14 +45,15 @@
     <property name="node.js.selected.package.tslint" value="(autodetect)" />
   </component>
   <component name="RecentsManager">
-    <key name="MoveFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$/controller" />
-      <recent name="$PROJECT_DIR$/view/settings" />
-    </key>
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$" />
       <recent name="$PROJECT_DIR$/view/settings" />
       <recent name="$PROJECT_DIR$/controller" />
       <recent name="$PROJECT_DIR$/view" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/controller" />
+      <recent name="$PROJECT_DIR$/view/settings" />
     </key>
   </component>
   <component name="RunDashboard">
@@ -66,7 +79,7 @@
       <option name="presentableId" value="Default" />
       <updated>1574507923535</updated>
       <workItem from="1574507924990" duration="22901000" />
-      <workItem from="1574655901483" duration="797000" />
+      <workItem from="1574655901483" duration="23859000" />
     </task>
     <servers />
   </component>

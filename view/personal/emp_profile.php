@@ -7,7 +7,7 @@
 </style>
 
 <div class="x_content">
-	<div class="x_panel employee_profile">
+	<div class="x_panel user_profile">
 		<div class="x_title">
 			<h2>Personal Information (<?php echo $user_type_name; ?>)</h2>
 			<div class="clearfix"></div>

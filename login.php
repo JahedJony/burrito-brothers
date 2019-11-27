@@ -69,18 +69,8 @@ if(isset($_SESSION['user_id']) && $_SESSION['user_id'])header("Location:".$activ
 </html>
 
 	<script>
-	$(document).ready(function () {	
-		$(document).on("change", '#company_id', function () {
-			$.ajax({
-				url: 'controller/loginController.php',
-				type:'POST',
-				async:false,
-				data: "q=season_info_dropdown&company_id="+$(this).val(),
-				success: function(data){
-					$('#season_id').html(data);
-				 }	
-			});
-		});
+	$(document).ready(function () {
+	    alert('oks')
 		$('#company_id').trigger('change');
 	});
 	</script>

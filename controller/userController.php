@@ -428,7 +428,7 @@ switch ($q){
         echo json_encode($data);
         break;
 
-    case "delete_employee":
+    case "delete_user":
         $delete_permission = $dbClass->getUserGroupPermission(10);
         if($delete_permission==1){
             $condition_array = array(

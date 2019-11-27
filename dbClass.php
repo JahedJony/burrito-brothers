@@ -1,7 +1,10 @@
-<?php 			
+<?php
+include("imageLibrary.php");
+
 class dbClass {		
 	private $dbCon;	
 	private $userId;
+
 
 	public function __construct() {
 		include("dbConnect.php");			
@@ -140,6 +143,16 @@ class dbClass {
 		$result = $stmt->fetchAll(PDO::FETCH_ASSOC);
 		return 	$result;	
 	}
+
+    function store_uploaded_image($file_name, $new_img_width, $new_img_height, $target_dir, $target_file) {
+        /*$target_dir = "your-uploaded-images-folder/";
+        $target_file = $target_dir . basename($_FILES[$html_element_name]["name"]);*/
+        $image = new SimpleImage();
+        $image->load($file_name);
+        $image->resize($new_img_width, $new_img_height);
+        $image->save($target_file);
+        return $target_file; //return name of saved file in case you want to store it in you database or show confirmation message to user
+    }
 	
 	function arrangeCondition($conditions){		
 		$condition = "";
@@ -238,6 +251,8 @@ class dbClass {
         }
         echo "</pre>";
     }
+
+
 	
 	
 }

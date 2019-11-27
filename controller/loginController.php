@@ -19,14 +19,15 @@ foreach ($result as $row) {
 if($stmt -> rowCount()>0){
     //compare the password
     if($row['user_password'] == md5($pass)){
-        $update_activity_login_sql = "UPDATE web_login set is_login=:is_login where emp_id=:user_id";
+       /* $update_activity_login_sql = "UPDATE web_login set is_login=:is_login where emp_id=:user_id";
         $stmt = $conn->prepare($update_activity_login_sql);
         $stmt->bindParam(':is_login', $is_login);
         $stmt->bindParam(':user_id', $row['user_id']);
         $is_login = 1;
         $stmt->execute();
+        echo $stmt->execute(); die;*/
         $_SESSION['user_id']=$row['user_id'];
-        $_SESSION['user_type']=1;
+        $_SESSION['user_type']=1;// change
         // need to get these info dynamicly later
         $_SESSION['user_pic']	= $row['photo'];
         $_SESSION['user_name']	= $row['full_name'];

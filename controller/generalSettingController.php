@@ -15,9 +15,10 @@ switch ($q){
 
 
     case "general_setting_data":
+
         $update_permission = $dbClass->getUserGroupPermission(98);
         if($update_permission==1){
-            $emp_details = $dbClass->getResultList("SELECT * FROM settings WHERE settings.id =1");
+            $emp_details = $dbClass->getResultList("SELECT * FROM general_settings WHERE general_settings.id =1");
             foreach ($emp_details as $row){
                 $data['records'][] = $row;
             }
@@ -26,13 +27,13 @@ switch ($q){
         break;
 
     case "update_setting":
-            if(isset($_FILES['logo_upload']) && $_FILES['logo_upload']['name']!= ""){
+            if(isset($_FILES['company_logo']) && $_FILES['company_logo']['name']!= ""){
                 $desired_dir = "../images/banner";
                 chmod( "../images/banner", 0777);
-                $file_name = $_FILES['logo_upload']['name'];
-                $file_size =$_FILES['logo_upload']['size'];
-                $file_tmp =$_FILES['logo_upload']['tmp_name'];
-                $file_type=$_FILES['logo_upload']['type'];
+                $file_name = $_FILES['company_logo']['name'];
+                $file_size =$_FILES['company_logo']['size'];
+                $file_tmp =$_FILES['company_logo']['tmp_name'];
+                $file_type=$_FILES['company_logo']['type'];
                 if($file_size < $file_max_length){
                     if(file_exists("$desired_dir/".$file_name)==false){
                         if(move_uploaded_file($file_tmp,"$desired_dir/".$file_name))
@@ -50,27 +51,57 @@ switch ($q){
                 }
             }
             else{
-                $logo = $dbClass->getSingleRow("select settings.logo from settings where settings.id = 1");
-                $photo= $logo['logo'];
+                $logo = $dbClass->getSingleRow("select general_settings.company_logo from general_settings where general_settings.id = 1");
+                $photo= $logo['company_logo'];
                 //echo  $photo['logo']; die;
                 //$logo = $photo[0];
             }
 
+
+
             $columns_value = array(
                 'id'=>1,
                 'company_name'=>$company_name,
-                'site_title'=>$site_title,
-                'site_url'=>$site_url,
-                'stock_alert_quantity'=>$stock_alert_quantity,
-                'tax'=>$tax,
-                'logo'=>$photo,
-
+                'website_title'=>$website_title,
+                'website_url'=>$website_url,
+                'web_admin_email'=>$web_admin_email,
+                'web_admin_contact'=>$web_admin_contact,
+                'store_name'=>$store_name,
+                'store_address'=>$store_address,
+                'store_longitude'=>$store_longitude,
+                'store_latitude'=>$store_latitude,
+                'store_contact'=>$store_contact,
+                'store_incharge_name'=>$store_incharge_name,
+                'company_logo'=>$photo,
+                'yelp_url'=>$yelp_url,
+                'fb_url'=>$fb_url,
+                'tweeter_url'=>$tweeter_url,
+                'instagram_url'=>$instagram_url,
+                'meta_description'=>$meta_description,
+                'meta_keywards'=>$meta_keywards,
+                'currency'=>$currency,
+                'currency_symbol'=>$currency_symbol,
+                'decimal_placement'=>$decimal_placement,
+                'tax_enable'=>$tax_enable,
+                'minimum_order_amount'=>$minimum_order_amount,
+                'takeout'=>$takeout,
+                'delivery'=>$delivery,
+                'dinein'=>$dinein,
+                'card_payment'=>$card_payment,
+                'cash_payment'=>$cash_payment,
+                'loyelty_payment'=>$loyelty_payment,
+                'payment_card_visa'=>$payment_card_visa,
+                'payment_card_master'=>$payment_card_master,
+                'payment_card_amex'=>$payment_card_amex,
+                'payment_card_discover'=>$payment_card_discover,
+                'point_reserve_value'=>$point_reserve_value,
+                'redeem_value'=>$redeem_value,
             );
             $condition_array = array(
                 'id'=>1
             );
 
-            $return = $dbClass->update("settings", $columns_value, $condition_array);
+            $return = $dbClass->update("general_settings", $columns_value, $condition_array);
 
             if($return) echo "1";
             else 	echo "0";
