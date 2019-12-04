@@ -5,7 +5,7 @@ include("../../dbConnect.php");
 include("../../dbClass.php");
 $dbClass = new dbClass;
 $user_type = $_SESSION['user_type'];
-if(!isset($_SESSION['user_id']) && $_SESSION['user_id'] == "") header("Location:".$site_url."../view/login.php");
+if(!isset($_SESSION['user_id']) && $_SESSION['user_id'] == "") header("Location:".$userurl."../view/login.php");
 else if($dbClass->getUserGroupPermission(45) != 1){
     ?>
     <div class="x_panel">
@@ -113,7 +113,7 @@ else{
                         </div>
                     </div>
                     <div class="col-md-5 imgDiv">
-                        <img src="<?php echo $site_url ?>images/no_image.png" width="100%" height="196px" class="img-fluid" id="bannerImg_img">
+                        <img src="<?php echo $website_url ?>images/no_image.png" width="100%" height="196px" class="img-fluid" id="bannerImg_img">
                     </div>
                 </div>
                 <div class="form-group">

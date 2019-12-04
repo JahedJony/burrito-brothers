@@ -19,7 +19,7 @@ $(document).ready(function(){
 		}
 		else{ 		
 			$.post("controller/loginController.php",{q:'login',company_id:$('#company_id').val(), season_id:$('#season_id').val(), user_name:$('#user_login').val(),password:$('#user_pass').val(),user_type:$('#user_type').val(), rand:Math.random() } ,function(data){
-		  		alert(data)
+		  		//alert(data)
 				var data = data.replace(/^\s*|\s*$/g,'');
 		  		if(data==1){
 					$("#login_error").fadeTo(200,0.1,function(){ 

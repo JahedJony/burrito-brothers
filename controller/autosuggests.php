@@ -114,11 +114,15 @@ switch ($q){
 
 
     case "size_infos":
+
         $sql ="SELECT s.id , name as  size_name	FROM  size s WHERE CONCAT( ifnull(code,''), name ) LIKE '%$term%'  ORDER BY s.id";
         $stmt = $conn->prepare($sql);
         $stmt->execute();
         $json = array();
         $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+        //echo $result; die;
+
         $count = $stmt->rowCount();
 
 

@@ -42,14 +42,14 @@ if($stmt -> rowCount()>0){
 
 
 
-        $settings_sql = "select * from settings";
+        $settings_sql = "select * from general_settings";
         $stmt_settings = $conn->prepare($settings_sql);
         $stmt_settings->execute();
         $result_settings = $stmt_settings->fetch(PDO::FETCH_ASSOC);
 
         $_SESSION['company_name'] = $result_settings['company_name'];
-        $_SESSION['site_title'] = $result_settings['site_title'];
-        $_SESSION['site_url'] = $result_settings['site_url'];
+        $_SESSION['website_title'] = $result_settings['website_title'];
+        $_SESSION['website_url'] = $result_settings['website_url'];
 
         echo 1;
     }

@@ -6,7 +6,7 @@ include("../../dbClass.php");
 $dbClass = new dbClass;
 $user_type = $_SESSION['user_type'];
 
-if(!isset($_SESSION['user_id']) && $_SESSION['user_id'] == "") header("Location:".$site_url."../view/login.php");
+if(!isset($_SESSION['user_id']) && $_SESSION['user_id'] == "") header("Location:".$website_url."../view/login.php");
 else if($dbClass->getUserGroupPermission(15) != 1){
 ?> 
 	<div class="x_panel">
@@ -171,7 +171,7 @@ else{
 					<div class="ln_solid"></div>
 				</div>
 				<div class="col-md-3">
-					<img src="<?php echo $site_url ?>images/no_image.png" width="70%" height="70%" class="img-thumbnail" id="emp_img">
+					<img src="<?php echo $website_url ?>images/no_image.png" width="70%" height="70%" class="img-thumbnail" id="emp_img">
 					<input type="file" name="emp_image_upload" id="emp_image_upload">
                     <br />
                     <br />

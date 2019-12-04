@@ -1,4 +1,4 @@
-<?php 
+<?php
 session_start();
 include '../includes/static_text.php';
 include("../dbConnect.php");
@@ -6,126 +6,154 @@ include("../dbClass.php");
 
 $dbClass = new dbClass;
 $conn       = $dbClass->getDbConn();
-$loggedUser = $dbClass->getUserId();	
-$permission = $dbClass->getUserGroupPermission(100);		
+$loggedUser = $dbClass->getUserId();
+$permission = $dbClass->getUserGroupPermission(98);
 
 extract($_REQUEST);
 
 switch ($q){
-	/************************************************ Company CRUID ***************************************************/
-	case "insert_or_update_company":	
-		if(isset($Company_id) && $Company_id == ""){
-			$check_user_name_availability = $dbClass->getSingleRow("select count(company_name) as no_of_Company from companies where company_name='$company_name'");
-			if($check_user_name_availability['no_of_Company']!=0) { echo 5; die;}
-			
-			$is_active =(isset($_POST['is_active']))?1:0;
 
-			if(isset($_FILES['Company_image_upload']) && $_FILES['Company_image_upload']['name']!= ""){
-				$desired_dir = "../images/Company";
-				chmod( "../images/Company", 0777);
-				$file_name = $_FILES['Company_image_upload']['name'];
-				$file_size =$_FILES['Company_image_upload']['size'];
-				$file_tmp =$_FILES['Company_image_upload']['tmp_name'];
-				$file_type=$_FILES['Company_image_upload']['type'];	
-				if($file_size < $file_max_length){
-					if(file_exists("$desired_dir/".$file_name)==false){
-						if(move_uploaded_file($file_tmp,"$desired_dir/".$file_name))
-							$photo = "$file_name";
-					}
-					else{//rename the file if another one exist
-						$new_dir="$desired_dir/".time().$file_name;
-						if(rename($file_tmp,$new_dir))
-							$photo =time()."$file_name";				
-					}
-					$photo  = "images/Company/".$photo;					
-				}
-				else {
-					echo $img_error_ln;die;
-				}			
-			}
-			else{
-				$photo  = "";	
-			}
 
-			$columns_value = array(
-				'company_name'=>$company_name,
-				'company_address'=>$address,
-				'phone'=>$contact_no,
-				'note'=>$note,
-				'status'=>$is_active,
-				'logo'=>$photo,
-				'note'=>$note,
-				'created_by'=>$loggedUser
-			);	
-			
-			$return = $dbClass->insert("companies", $columns_value);
-			if($return) echo "1";
-			else 	echo "0";
-		}
-		else{
-		//var_dump($_REQUEST);die;
-			$check_user_name_availability = $dbClass->getSingleRow("select count(company_name) as no_of_Company from companies where company_name='$company_name' and company_id!=$Company_id");
-			if($check_user_name_availability['no_of_Company']!=0) { echo 5; die;}
-			
-			$is_active =(isset($_POST['is_active']))?1:0;		
-			
-			if(isset($_FILES['Company_image_upload']) && $_FILES['Company_image_upload']['name']!= ""){
-				$desired_dir = "../images/Company";
-				chmod( "../images/Company", 0777);
-				$file_name = $_FILES['Company_image_upload']['name'];
-				$file_size =$_FILES['Company_image_upload']['size'];
-				$file_tmp =$_FILES['Company_image_upload']['tmp_name'];
-				$file_type=$_FILES['Company_image_upload']['type'];	
-				if($file_size < $file_max_length){
-					if(file_exists("$desired_dir/".$file_name)==false){
-						if(move_uploaded_file($file_tmp,"$desired_dir/".$file_name))
-							$photo = "$file_name";
-					}
-					else{//rename the file if another one exist
-						$new_dir="$desired_dir/".time().$file_name;
-						if(rename($file_tmp,$new_dir))
-							$photo =time()."$file_name";				
-					}
-					$photo  = "images/Company/".$photo;					
-				}
-				else {
-					echo $img_error_ln;die;
-				}
+    /************************************************ Unit CRUID ***************************************************/
+    case "insert_or_update_unit":
+        if(isset($unit_id) && $unit_id == ""){
+            $check_unit_name_availability = $dbClass->getSingleRow("select count(id) as no_of_unit from units where unit_name='$unit_name'");
+            if($check_unit_name_availability['no_of_unit']!=0) { echo 5; die;}
 
-				$columns_value = array(
-					'company_name'=>$company_name,
-					'company_address'=>$address,
-					'phone'=>$contact_no,
-					'note'=>$note,
-					'status'=>$is_active,
-					'logo'=>$photo,
-					'note'=>$note,
-					'created_by'=>$loggedUser
-				);					
-			}
-			else{
-				$columns_value = array(
-					'company_name'=>$company_name,
-					'company_address'=>$address,
-					'phone'=>$contact_no,
-					'note'=>$note,
-					'status'=>$is_active,
-					'note'=>$note,
-					'modified_by'=>$loggedUser
-				);
-			}
-			$condition_array = array(
-				'company_id'=>$Company_id
-			);	
-			$return = $dbClass->update("companies", $columns_value, $condition_array);
-							
-			if($return) echo "2";
-			else 	echo "0";
-		}
-	break;
+            $is_active =(isset($_POST['is_active']))?1:0;
 
-	
+            //echo $base_unit_id; die;
 
-	
+            if(!$base_unit_id>0){
+                $base_unit_id=NULL;
+            }
+            if(!$conversion_rate>0){
+                $conversion_rate=NULL;
+            }
+            //echo $base_unit_id; die;
+
+            $columns_value = array(
+                'unit_name'=>$unit_name,
+                'short_name'=>$short_name,
+                'conversion_rate'=>$conversion_rate,
+                'base_unit'=>$base_unit_id,
+                'operator'=>$operator,
+                'status'=>$is_active,
+                'note'=>($note?$note:NULL)
+            );
+            //$dbClass->print_arrays($columns_value);
+            $return = $dbClass->insert("units", $columns_value);
+            if($return) echo "1";
+            else 	echo "0";
+        }
+        else{
+            $check_unit_name_availability = $dbClass->getSingleRow("select count(id) as no_of_unit from units where unit_name='$unit_name' and id!=$unit_id");
+            if($check_unit_name_availability['no_of_unit']!=0) { echo 5; die;}
+
+            $is_active =(isset($_POST['is_active']))?1:0;
+
+            $columns_value = array(
+                'unit_name'=>$unit_name,
+                'short_name'=>$short_name,
+                'conversion_rate'=>$conversion_rate,
+                'base_unit'=>$base_unit_id,
+                'operator'=>$operator,
+                'status'=>$is_active,
+                'note'=>($note?$note:NULL)
+            );
+            $condition_array = array(
+                'id'=>$unit_id
+            );
+            //$dbClass->print_arrays($columns_value);
+            $return = $dbClass->update("units", $columns_value, $condition_array);
+
+            if($return) echo "2";
+            else 	echo "0";
+        }
+        break;
+
+    case "grid_data_unit":
+        $start = ($page_no*$limit)-$limit;
+        $end   = $limit;
+        $data = array();
+
+        $countsql = "SELECT count(id)
+				FROM(
+					SELECT m.id, short_name, ifnull(note,'') note, unit_name,  base_unit, conversion_rate,  operator,
+					CASE m.status WHEN 1 THEN 'Active'  WHEN 0 THEN 'Inactive' END status_text
+					FROM units m
+				)A
+				WHERE CONCAT(id, unit_name, ifnull(note,''),short_name,status_text) LIKE '%$search_txt%'";
+        //echo $countsql;die;
+        $stmt = $conn->prepare($countsql);
+        $stmt->execute();
+        $total_records = $stmt->fetchColumn();
+        $data['total_records'] = $total_records;
+        $data['entry_status'] = $permission;
+        $total_pages = $total_records/$limit;
+        $data['total_pages'] = ceil($total_pages);
+        if($permission==1){
+            $sql = 	"SELECT id, unit_name, short_name, note, status_text status, base_unit, conversion_rate,  operator,
+				    $permission as update_status,  $permission as delete_status
+					FROM(
+					SELECT m.id, short_name, ifnull(note,'') note, unit_name,  base_unit, conversion_rate,  operator,
+						CASE m.status WHEN 1 THEN 'Active'  WHEN 0 THEN 'Inactive' END status_text
+						FROM units m
+					)A
+					WHERE CONCAT(id, unit_name, ifnull(note,''),short_name,status_text) LIKE '%$search_txt%'
+					ORDER BY id DESC
+					LIMIT $start, $end";
+
+
+            $stmt = $conn->prepare($sql);
+            $stmt->execute();
+            $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            foreach ($result as $row) {
+                $data['records'][] = $row;
+            }
+            echo json_encode($data);
+        }
+        break;
+
+
+    case "get_unit_details":
+        if($permission==1){
+            $unit_details = $dbClass->getResultList("
+				SELECT m.id, ifnull(m.note,'') note, m.short_name, m.unit_name,  m.status,m.base_unit, m.conversion_rate,  m.operator, b.unit_name base_unit_name
+						FROM units m	
+						left join units b on b.id=m.base_unit 						
+				WHERE m.id='$unit_id'");
+
+            foreach ($unit_details as $row){
+                $data['records'][] = $row;
+            }
+            echo json_encode($data);
+        }
+        break;
+
+
+    case "delete_unit":
+        if($permission==1){
+            $condition_array = array(
+                'id'=>$unit_id
+            );
+            $columns_value = array(
+                'status'=>0
+            );
+            $return = $dbClass->update("units", $columns_value, $condition_array);
+        }
+        if($return==1) echo "1";
+        else 		   echo "0";
+        break;
+
+    /*----------------------------------------------- END Unit ---------------------------------------------------*/
+
+
+
+
+
+
+
+
 }
 ?>

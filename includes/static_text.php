@@ -11,7 +11,7 @@ $file_max_length = 5297152;
 
 // global variable
 $company_name   = "Mbrothers Brickfield";
-$site_title 	= "Brickfield";
+$website_title 	= "Brickfield";
 // login.php 
 $login 		    = "Log In";
 $forget_pass    = "Lost your password?";

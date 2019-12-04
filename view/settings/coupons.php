@@ -6,7 +6,7 @@ include("../../dbConnect.php");
 include("../../dbClass.php");
 $dbClass = new dbClass;
 $user_type = $_SESSION['user_type'];
-if(!isset($_SESSION['user_id']) && $_SESSION['user_id'] == "") header("Location:".$site_url."../view/login.php");
+if(!isset($_SESSION['user_id']) && $_SESSION['user_id'] == "") header("Location:".$website_url."../view/login.php");
 else if($dbClass->getUserGroupPermission(81) != 1 ){
     ?>
     <div class="x_panel">

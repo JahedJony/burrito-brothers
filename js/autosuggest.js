@@ -160,6 +160,34 @@ $(document).ready(function () {
 		}
 	});
 
+	$("#ingredient_size_name").autocomplete({
+		search: function() {
+		},
+		source: function(request, response) {
+			//alert(request.term)
+			$.ajax({
+				url: project_url+'controller/autosuggests.php',
+				dataType: "json",
+				type: "post",
+				async:false,
+				data: {
+					q: "size_infos",
+					term: request.term,
+					people_type:9
+				},
+				success: function(data) {
+					//alert(data)
+					response(data);
+				}
+			});
+		},
+		minLength: 2,
+		select: function(event, ui) {
+			var unit_id = ui.item.id;
+			//alert(unit_id)
+			$(this).next().val(unit_id);
+		}
+	});
 
 
 	/*

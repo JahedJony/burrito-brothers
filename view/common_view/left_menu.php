@@ -10,6 +10,16 @@
 
                 </ul>
 			</li>
+
+            <li><a><i class="fa fa-users"></i>Items<span class="fa fa-chevron-down"></span></a>
+                <ul class="nav child_menu" style="display: none">
+                    <li><a href="index.php?module=items&view=item">Items</a></li>
+                    <li><a href="index.php?module=items&view=category">Category</a></li>
+                    <li><a href="index.php?module=items&view=ingredient">Ingredient</a></li>
+                    <li><a href="index.php?module=items&view=size">Size</a></li>
+                    <li><a href="index.php?module=items&view=units">Units</a></li>
+                </ul>
+            </li>
             <!--<li><a><i class="fa fa-th-list"></i>PURCHASE <span class="fa fa-chevron-down"></span></a>
                 <ul class="nav child_menu" style="display: none">
                     <li><a href="index.php?module=purchase&view=purchases">Purchases</a></li>
