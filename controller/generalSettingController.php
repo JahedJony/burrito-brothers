@@ -96,6 +96,8 @@ switch ($q){
                 'payment_card_discover'=>$payment_card_discover,
                 'point_reserve_value'=>$point_reserve_value,
                 'redeem_value'=>$redeem_value,
+                'tax_type'=>$tax_type,
+                'tax_amount'=>$tax_amount,
             );
             $condition_array = array(
                 'id'=>1

@@ -29,6 +29,28 @@ else{
                             <div class="col-md-8 col-sm-8 col-xs-8"><h2></h2></div>
                             <div class="clearfix"></div>
                         </div>
+                        <div class="col-md-9 col-sm-9 col-xs-12">
+                            <label class="control-label col-md-2 col-sm-2 col-xs-12">Meta Description<span class="required">*</span></label>
+                            <div class="col-md-10 col-sm-10 col-xs-12" style="margin-bottom: 10px">
+                                <textarea rows="4" id="meta_description" name="meta_description" required class="form-control col-lg-12"/>
+                            </div>
+
+                            <label class="control-label col-md-2 col-sm-2 col-xs-12">Meta Keywards<span class="required">*</span></label>
+                            <div class="col-md-10 col-sm-10 col-xs-12" style="margin-bottom: 10px">
+                                <textarea rows="2" id="meta_keywards" name="meta_keywards" required class="form-control col-lg-12"/>
+                            </div>
+                        </div>
+                        <div class="col-md-3 col-sm-3 col-xs-12">
+                            <div class="col-md-12 col-sm-12">
+                                <label>Company Logo</label>
+                                <hr>
+
+                                <img src="<?php echo $site_url ?>images/no_image.png" width="70%" height="70%" class="img-thumbnail" id="logo">
+                                <input type="file" name="company_logo" id="company_logo">
+                                <br />
+                                <br />
+                            </div>
+                        </div>
                         <div class="col-md-6 col-sm-6 col-xs-6">
                             <label class="control-label col-md-4 col-sm-4 col-xs-12">Company Name<span class="required">*</span></label>
                             <div class="col-md-8 col-sm-8 col-xs-12" style="margin-bottom: 10px">
@@ -247,37 +269,22 @@ else{
                                     <option selected value='0'>Disable</option>
                                 </select>
                             </div>
-
-                        </div>
-
-                        <div class="x_title col-md-12 col-sm-12 col-xs-12" style="margin-top: 20px; margin-bottom: 20px">
-                            <div class="col-md-4 col-sm-4 col-xs-4"><h2>Meta Data Information</h2></div>
-                            <div class="col-md-8 col-sm-8 col-xs-8"><h2></h2></div>
-                            <div class="clearfix"></div>
-                        </div>
-                        <div class="col-md-9 col-sm-9 col-xs-12">
-                            <label class="control-label col-md-2 col-sm-2 col-xs-12">Meta Description<span class="required">*</span></label>
-                            <div class="col-md-10 col-sm-10 col-xs-12" style="margin-bottom: 10px">
-                                <textarea rows="3" id="meta_description" name="meta_description" required class="form-control col-lg-12"/>
+                            <div id="tax_set" style="display: none">
+                                <label class="control-label col-md-4 col-sm-4 col-xs-12">Tax Type<span class="required">*</span></label>
+                                <div class="col-md-8 col-sm-8 col-xs-12" style="margin-bottom: 10px">
+                                    <select class="form-control" name="tax_type" id="tax_type">
+                                        <option  value='1'>Flat</option>
+                                        <option selected value='0'>Percentage</option>
+                                    </select>
+                                </div>
+                                <label class="control-label col-md-4 col-sm-4 col-xs-12">Tax Amount<span class="required">*</span></label>
+                                <div class="col-md-8 col-sm-8 col-xs-12" style="margin-bottom: 10px">
+                                    <input type="text" id="tax_amount" name="tax_amount" placeholder="Tax Amount" required class="form-control col-lg-12"/>
+                                </div>
                             </div>
 
-                            <label class="control-label col-md-2 col-sm-2 col-xs-12">Meta Keywards<span class="required">*</span></label>
-                            <div class="col-md-10 col-sm-10 col-xs-12" style="margin-bottom: 10px">
-                                <textarea rows="2" id="meta_keywards" name="meta_keywards" required class="form-control col-lg-12"/>
-                            </div>
-                        </div>
-                        <div class="col-md-3 col-sm-3 col-xs-12">
-                            <div class="col-md-12 col-sm-12">
-                                <label>Company Logo</label>
-                                <hr>
 
-                                <img src="<?php echo $site_url ?>images/no_image.png" width="70%" height="70%" class="img-thumbnail" id="logo">
-                                <input type="file" name="company_logo" id="company_logo">
-                                <br />
-                                <br />
-                            </div>
                         </div>
-
 
 
                         </div>
@@ -336,13 +343,33 @@ else{
                             }
                         });
 
+                        if(data.records[0]['tax_enable']==1){
+                            $('#tax_set').css({display: "block"});
+                        }
+                        else {
+                            $('#tax_set').css({display: "none"});
+                        }
+
                     }
                 }
             });
         }
         load_data();
 
+        $('#tax_enable').on('change', function() {
+            if(this.value==1){
+                $('#tax_set').css({display: "block"});
+            }
+            else {
+                $('#tax_set').css({display: "none"});
+            }
+        });
+
         $('#save_general_settings').click(function(event){
+            if($('#tax_enable').val()==0){
+                $('#tax_amount').val(0)
+            }
+
             event.preventDefault();
             var formData = new FormData($('#setting_form')[0]);
             formData.append("q","update_setting");
@@ -354,7 +381,6 @@ else{
                 cache:false,
                 contentType:false,processData:false,
                 success: function(data){
-                    alert(data)
                     if($.isNumeric(data)==true && data==0){
                         success_or_error_msg('#form_submit_error',"danger","Please Insert Unique Username","#user_name" );
 

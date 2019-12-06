@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Nov 27, 2019 at 08:04 AM
+-- Generation Time: Dec 06, 2019 at 10:42 AM
 -- Server version: 8.0.17
 -- PHP Version: 7.3.10
 
@@ -101,7 +101,8 @@ INSERT INTO `category` (`id`, `code`, `name`, `parent_id`, `photo`, `status`) VA
 (27, '0003', 'Pizza', NULL, 'images/no_image.png', 1),
 (28, '0004', 'Noodlse', NULL, 'images/no_image.png', 1),
 (29, '0005', 'Pasta', NULL, 'images/no_image.png', 1),
-(30, '0006', 'Fry Item', NULL, 'images/no_image.png', 1);
+(30, '0006', 'Fry Item', NULL, 'images/no_image.png', 1),
+(31, '0007', 'Lunch', NULL, 'images/no_image.png', 1);
 
 -- --------------------------------------------------------
 
@@ -419,15 +420,17 @@ CREATE TABLE `general_settings` (
   `payment_card_amex` tinyint(1) NOT NULL DEFAULT '1' COMMENT '1:enabled, 0:disable',
   `payment_card_discover` tinyint(1) NOT NULL DEFAULT '1' COMMENT '1:enabled, 0:disable',
   `point_reserve_value` int(11) NOT NULL COMMENT 'point reserve value(_$=1point)',
-  `redeem_value` int(11) NOT NULL COMMENT 'point financial value(_point=1$)'
+  `redeem_value` int(11) NOT NULL COMMENT 'point financial value(_point=1$)',
+  `tax_type` tinyint(1) NOT NULL DEFAULT '0' COMMENT '1:flat, 0:percentage',
+  `tax_amount` int(11) NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
 -- Dumping data for table `general_settings`
 --
 
-INSERT INTO `general_settings` (`id`, `company_name`, `website_title`, `website_url`, `web_admin_email`, `web_admin_contact`, `store_name`, `store_address`, `store_longitude`, `store_latitude`, `store_contact`, `store_incharge_name`, `company_logo`, `yelp_url`, `fb_url`, `tweeter_url`, `instagram_url`, `meta_description`, `meta_keywards`, `currency`, `currency_symbol`, `decimal_placement`, `tax_enable`, `minimum_order_amount`, `takeout`, `delivery`, `dinein`, `card_payment`, `cash_payment`, `loyelty_payment`, `payment_card_visa`, `payment_card_master`, `payment_card_amex`, `payment_card_discover`, `point_reserve_value`, `redeem_value`) VALUES
-(1, 'Burrito Brothers', 'Burrito Brothers', 'http://burritobrothers.test/', 'sagdf2fds', '12345', 'Burrito Brothers', '622, West shawrapara\r\nmirpur', '12.23', '13.123', '12345', 'kajol', 'images/banner/1574837831moumit.jpg', 'http://burritobrothers.test/', 'http://burritobrothers.test/', 'http://burritobrothers.test/', 'http://burritobrothers.test/', 'You can use a standard JS for..in loop - you don\'t need jQuery, though it has you covered too with its $.each() method. Either way gives you access to the property names and their corresponding values. Given you\'ve got nested objects you will probably want nested for..in or $.each() loops.\r\nYou don\'t make it at all clear what format your output should be, but here\'s a simple example that at least shows how to get the pieces you need:', 'food, pizza, takeout, group', 'USD', '$', 3, 0, 1.00, 1, 0, 1, 1, 0, 1, 1, 1, 1, 0, 10, 10);
+INSERT INTO `general_settings` (`id`, `company_name`, `website_title`, `website_url`, `web_admin_email`, `web_admin_contact`, `store_name`, `store_address`, `store_longitude`, `store_latitude`, `store_contact`, `store_incharge_name`, `company_logo`, `yelp_url`, `fb_url`, `tweeter_url`, `instagram_url`, `meta_description`, `meta_keywards`, `currency`, `currency_symbol`, `decimal_placement`, `tax_enable`, `minimum_order_amount`, `takeout`, `delivery`, `dinein`, `card_payment`, `cash_payment`, `loyelty_payment`, `payment_card_visa`, `payment_card_master`, `payment_card_amex`, `payment_card_discover`, `point_reserve_value`, `redeem_value`, `tax_type`, `tax_amount`) VALUES
+(1, 'Burrito Brothers', 'Burrito Brothers', 'http://burritobrothers.test/', 'sagdf2fds', '12345', 'Burrito Brothers', '622, West shawrapara\r\nmirpur', '12.23', '13.123', '12345', 'kajol', 'images/banner/1574837831moumit.jpg', 'http://burritobrothers.test/', 'http://burritobrothers.test/', 'http://burritobrothers.test/', 'http://burritobrothers.test/', 'You can use a standard JS for..in loop - you don\'t need jQuery, though it has you covered too with its $.each() method. Either way gives you access to the property names and their corresponding values. Given you\'ve got nested objects you will probably want nested for..in or $.each() loops.\r\nYou don\'t make it at all clear what format your output should be, but here\'s a simple example that at least shows how to get the pieces you need:', 'food, pizza, takeout, group', 'USD', '$', 3, 0, 1.00, 1, 0, 1, 1, 0, 1, 1, 1, 1, 0, 10, 10, 0, 0);
 
 -- --------------------------------------------------------
 
@@ -459,6 +462,8 @@ CREATE TABLE `ingredient` (
   `id` int(11) NOT NULL,
   `code` varchar(55) NOT NULL,
   `name` varchar(55) NOT NULL,
+  `size_id` int(11) DEFAULT NULL,
+  `price` int(11) DEFAULT NULL,
   `photo` varchar(200) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -466,17 +471,44 @@ CREATE TABLE `ingredient` (
 -- Dumping data for table `ingredient`
 --
 
-INSERT INTO `ingredient` (`id`, `code`, `name`, `photo`) VALUES
-(4, '10002', 'Eggs', 'images/no_image.png'),
-(7, '10005', 'Milk', 'images/no_image.png'),
-(8, '10007', 'Suger', 'images/no_image.png'),
-(11, '10009', 'Butter', 'images/no_image.png'),
-(15, '10013', 'Cheese', 'images/no_image.png'),
-(16, '10014', 'Chocolate', 'images/no_image.png'),
-(17, '10015', 'Dark Chocolate', 'images/no_image.png'),
-(24, '10022', 'Chicken', 'images/no_image.png'),
-(26, '10024', 'Vegetable', 'images/no_image.png'),
-(29, '10001', 'Beef', NULL);
+INSERT INTO `ingredient` (`id`, `code`, `name`, `size_id`, `price`, `photo`) VALUES
+(4, '10002', 'Eggs', NULL, NULL, 'images/no_image.png'),
+(7, '10005', 'Milk', NULL, NULL, 'images/no_image.png'),
+(8, '10007', 'Suger', NULL, NULL, 'images/no_image.png'),
+(11, '10009', 'Butter', NULL, NULL, 'images/no_image.png'),
+(15, '10013', 'Cheese', NULL, NULL, 'images/no_image.png'),
+(16, '10014', 'Chocolate', NULL, NULL, 'images/no_image.png'),
+(17, '10015', 'Dark Chocolate', NULL, NULL, 'images/no_image.png'),
+(24, '10022', 'Chicken', NULL, NULL, 'images/no_image.png'),
+(26, '10024', 'Vegetable', NULL, NULL, 'images/no_image.png'),
+(29, '10001', 'Beef', NULL, NULL, NULL),
+(38, '234', 'Chicken Slice', NULL, NULL, 'images/ingredient/'),
+(39, '344', 'Suger', 5, 22, 'images/no_image.png'),
+(40, '1234', 'Musrum', 3, 20, 'images/ingredient/');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `notification`
+--
+
+CREATE TABLE `notification` (
+  `id` int(11) NOT NULL,
+  `product_rate_id` int(11) NOT NULL,
+  `details` text,
+  `status` tinyint(1) NOT NULL DEFAULT '0' COMMENT '1.read, 0:unread',
+  `date_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `view_time` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `notification`
+--
+
+INSERT INTO `notification` (`id`, `product_rate_id`, `details`, `status`, `date_time`, `view_time`) VALUES
+(5417, 9, 'Add <b>Plain Cake >>Small</b> in Stock.', 1, '2019-11-26 10:25:38', NULL),
+(5419, 7, 'Add <b>Pestry >>500 gm</b> in Stock.', 0, '2019-11-26 10:26:35', NULL),
+(5420, 9, 'Add <b>Plain Cake >>Small</b> in Stock.', 0, '2019-11-26 11:28:08', NULL);
 
 -- --------------------------------------------------------
 
@@ -504,7 +536,8 @@ INSERT INTO `order_details` (`id`, `order_id`, `product_id`, `size_id`, `unit_id
 (67, 30, 2, 1, 3, 12, 150.00, 1),
 (68, 30, 1, 500, 3, 1, 1720.00, 1),
 (69, 30, 2, 0, 3, 12, 150.00, 1),
-(70, 30, 1, 7, 3, 3, 1720.00, 1);
+(70, 30, 1, 7, 3, 3, 1720.00, 1),
+(83, 30, 1, 7, 3, 1, 1720.00, 1);
 
 -- --------------------------------------------------------
 
@@ -805,12 +838,15 @@ CREATE TABLE `units` (
 --
 
 INSERT INTO `units` (`id`, `unit_name`, `short_name`, `base_unit`, `operator`, `conversion_rate`, `note`, `status`) VALUES
-(1, 'Kilogram', 'KG', NULL, NULL, 0.00, NULL, 1),
+(1, 'Kilogram', 'KG', 2, 'mul', 1000.00, NULL, 1),
 (2, 'Gram', 'gm', 1, 'sub', 1000.00, NULL, 1),
 (3, 'Pices', 'Pcs', NULL, NULL, 0.00, NULL, 1),
 (4, 'Dozen', 'Dzn', 3, 'mul', 12.00, NULL, 1),
 (5, 'Liter', 'Ltr', NULL, 'mul', 0.00, NULL, 1),
-(6, 'Mililiter', 'ml', 5, 'div', 1000.00, NULL, 1);
+(6, 'Mililiter', 'ml', 5, 'div', 1000.00, NULL, 1),
+(7, 'box', 'bx', 0, 'div', 0.00, NULL, 1),
+(8, 'Slice', 'slc', NULL, 'mul', NULL, NULL, 1),
+(9, 'Pound', 'lb', NULL, NULL, NULL, NULL, 1);
 
 -- --------------------------------------------------------
 
@@ -1444,7 +1480,7 @@ ALTER TABLE `banner_image`
 -- AUTO_INCREMENT for table `category`
 --
 ALTER TABLE `category`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=31;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;
 
 --
 -- AUTO_INCREMENT for table `cupons`
@@ -1516,13 +1552,13 @@ ALTER TABLE `image_album`
 -- AUTO_INCREMENT for table `ingredient`
 --
 ALTER TABLE `ingredient`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=30;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=42;
 
 --
 -- AUTO_INCREMENT for table `order_details`
 --
 ALTER TABLE `order_details`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=71;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=84;
 
 --
 -- AUTO_INCREMENT for table `order_master`
@@ -1582,7 +1618,7 @@ ALTER TABLE `size`
 -- AUTO_INCREMENT for table `units`
 --
 ALTER TABLE `units`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT for table `user_group`

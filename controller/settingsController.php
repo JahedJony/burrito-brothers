@@ -24,20 +24,11 @@ switch ($q){
 
             //echo $base_unit_id; die;
 
-            if(!$base_unit_id>0){
-                $base_unit_id=NULL;
-            }
-            if(!$conversion_rate>0){
-                $conversion_rate=NULL;
-            }
             //echo $base_unit_id; die;
 
             $columns_value = array(
                 'unit_name'=>$unit_name,
                 'short_name'=>$short_name,
-                'conversion_rate'=>$conversion_rate,
-                'base_unit'=>$base_unit_id,
-                'operator'=>$operator,
                 'status'=>$is_active,
                 'note'=>($note?$note:NULL)
             );
@@ -55,9 +46,6 @@ switch ($q){
             $columns_value = array(
                 'unit_name'=>$unit_name,
                 'short_name'=>$short_name,
-                'conversion_rate'=>$conversion_rate,
-                'base_unit'=>$base_unit_id,
-                'operator'=>$operator,
                 'status'=>$is_active,
                 'note'=>($note?$note:NULL)
             );
@@ -79,7 +67,7 @@ switch ($q){
 
         $countsql = "SELECT count(id)
 				FROM(
-					SELECT m.id, short_name, ifnull(note,'') note, unit_name,  base_unit, conversion_rate,  operator,
+					SELECT m.id, short_name, ifnull(note,'') note, unit_name, 
 					CASE m.status WHEN 1 THEN 'Active'  WHEN 0 THEN 'Inactive' END status_text
 					FROM units m
 				)A
@@ -93,10 +81,10 @@ switch ($q){
         $total_pages = $total_records/$limit;
         $data['total_pages'] = ceil($total_pages);
         if($permission==1){
-            $sql = 	"SELECT id, unit_name, short_name, note, status_text status, base_unit, conversion_rate,  operator,
+            $sql = 	"SELECT id, unit_name, short_name, note, status_text status,
 				    $permission as update_status,  $permission as delete_status
 					FROM(
-					SELECT m.id, short_name, ifnull(note,'') note, unit_name,  base_unit, conversion_rate,  operator,
+					SELECT m.id, short_name, ifnull(note,'') note, unit_name, 
 						CASE m.status WHEN 1 THEN 'Active'  WHEN 0 THEN 'Inactive' END status_text
 						FROM units m
 					)A
@@ -119,7 +107,7 @@ switch ($q){
     case "get_unit_details":
         if($permission==1){
             $unit_details = $dbClass->getResultList("
-				SELECT m.id, ifnull(m.note,'') note, m.short_name, m.unit_name,  m.status,m.base_unit, m.conversion_rate,  m.operator, b.unit_name base_unit_name
+				SELECT m.id, ifnull(m.note,'') note, m.short_name, m.unit_name,  m.status, b.unit_name base_unit_name
 						FROM units m	
 						left join units b on b.id=m.base_unit 						
 				WHERE m.id='$unit_id'");

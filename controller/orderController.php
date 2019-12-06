@@ -1,4 +1,4 @@
-<?php 
+<?php
 session_start();
 include '../includes/static_text.php';
 include("../dbConnect.php");
@@ -6,186 +6,187 @@ include("../dbClass.php");
 
 $dbClass = new dbClass;
 $conn       = $dbClass->getDbConn();
-$loggedUser = $dbClass->getUserId();	
+$loggedUser = $dbClass->getUserId();
 $c_date = date('Y-m-d H:i:s');
 
 extract($_REQUEST);
 
 switch ($q){
-	case "insert_or_update":
-		if(isset($order_id) && $order_id == ""){
-			//var_dump($_REQUEST);die;			
-			//------------ generate invoice no  -------------------
-			$c_y_m = date('my');
-			$last_invoice_no = $dbClass->getSingleRow("SELECT max(RIGHT(invoice_no,5)) as invoice_no FROM order_master");
-			
-			if($last_invoice_no == null){
-				$inv_no = '00001';
-			}
-			else{
-				$inv_no = $last_invoice_no['invoice_no']+1;
-			}
-			
-			$str_length = 5;
-			$str = substr("00000{$inv_no}", -$str_length);
+    case "insert_or_update":
+        if(isset($order_id) && $order_id == ""){
+            //var_dump($_REQUEST);die;
+            //------------ generate invoice no  -------------------
+            $c_y_m = date('my');
+            $last_invoice_no = $dbClass->getSingleRow("SELECT max(RIGHT(invoice_no,5)) as invoice_no FROM order_master");
 
-			$invoice_no = "INV$c_y_m$str";
-			
-			//-----------------------------------------------------
+            if($last_invoice_no == null){
+                $inv_no = '00001';
+            }
+            else{
+                $inv_no = $last_invoice_no['invoice_no']+1;
+            }
 
-			$remarks	 = htmlspecialchars($remarks,ENT_QUOTES);
-			
-			$columns_value = array(
-				'customer_id'=>$customer_id,
-				'delivery_date'=>$delivery_date,
-				'delivery_type'=>$delivery_option,
-				'delivery_charge_id'=>$delivery_option,
-				'delivery_charge' =>$delivery_charge_amount,
-				'address'=>$address,
-				'remarks'=>$remarks,
-				'payment_method'=>$payment_option,
-				'order_status'=>$order_status_id,
-				'payment_status'=>$payment_status,
-				'payment_reference_no'=>$payment_referance_no,
-				'discount_amount'=>$discounted_amount,
-				'total_order_amt'=>$total_product_amount,
-				'invoice_no'=>$invoice_no,
-				'sell_type'=>$sell_type,
-				'token_no'=>$token_no
-			);		
-			
-			if($payment_status==2){
-				$columns_value['total_paid_amount'] = $total_paid_amount;
-				$columns_value['payment_time'] = $c_date;
-			}	
-			
-			if(isset($coupon_name) && $coupon_name != ""){
-				$coupon = (explode(" >> ",$coupon_name));	
-				$columns_value['cupon_id'] = $coupon[0];
-			}
-			
-			//var_dump($columns_value);die;
-			$return_master = $dbClass->insert("order_master", $columns_value); 
-			
-			if($return_master){
-				foreach($product_id as $key=>$value){
-					$columns_value = array(
-						'order_id'=>$return_master,
-						'product_id'=>$product_id[$key],
-						'quantity'=>$quantity[$key],
-						'size_id'=>$size_id[$key],
-						'unit_id'=>$unit_id[$key],
-						'product_rate'=>$rate[$key]
-					);				
-					$return_details = $dbClass->insert("order_details", $columns_value);	
-				}
-			} 
-			
-			if($return_details){
-				echo "1";
-			}
-			else{
-				echo "0";
-			}
-		}
-		else if(isset($order_id) && $order_id>0){
-			//var_dump($_REQUEST);die;			
-			$columns_value = array(
-				'customer_id'=>$customer_id,
-				'delivery_date'=>$delivery_date,
-				'delivery_type'=>$delivery_option,
-				'delivery_charge_id'=>$delivery_option,
-				'delivery_charge' =>number_format($delivery_charge_amount,2),
-				'address'=>$address,
-				'remarks'=>$remarks, 
-				'payment_status'=>$payment_status,
-				'payment_reference_no'=>$payment_referance_no,
-				'discount_amount'=>$discounted_amount,				
-				'total_order_amt'=>$total_product_amount,
-				'total_paid_amount'=>$total_paid_amount,
-				'payment_time'=>$c_date,
-				'sell_type'=>$sell_type,
-				'token_no'=>$token_no
-			);	
-			
-			if(isset($outlet_option) && $outlet_option != 0){
-				$columns_value['outlet_id'] = $outlet_option;
-			}
-			if(isset($payment_option) && $payment_option != 0){
-				$columns_value['payment_method'] = $payment_option;
-			}
-			
-			if(isset($coupon_name) && $coupon_name != ""){
-				$coupon = (explode(" >> ",$coupon_name));
-				if(isset($coupon_name)){
-					$coupon = (explode(" >> ",$coupon_name));	
-					$columns_value['cupon_id'] 		 = $coupon[0];
-				}				
-			}
-			//var_dump($columns_value);die;
-			$condition_array = array(
-				'order_id'=>$order_id
-			);	
-			
-			$return_master = $dbClass->update("order_master", $columns_value,$condition_array); 
- 
-			if($return_master){
-				$condition_array = array(
-					'order_id'=>$order_id
-				);
-				$return_dlt = $dbClass->delete("order_details", $condition_array);				
-				if($return_dlt){
-					foreach($product_id as $key=>$value){
-						$columns_value = array(
-							'order_id'=>$order_id,
-							'product_id'=>$product_id[$key],
-							'quantity'=>$quantity[$key],
-							'size_id'=>$size_id[$key],
-							'unit_id'=>$unit_id[$key],
-							'product_rate'=>$rate[$key]
-						);						
-						$condition_array = array(
-							'order_id'=>$order_id
-						);						
-						$return_details = $dbClass->insert("order_details", $columns_value);	
-					}	
-				}
-			} 
-			
-			if($return_details) echo "2";
-			else                echo "0";
-		}
-	break;
-	
-	case "grid_data":
-		$start = ($page_no*$limit)-$limit;
-		$end   = $limit;
-		$data = array();
-		
-		$entry_permission   	    = $dbClass->getUserGroupPermission(74);
-		$delete_permission          = $dbClass->getUserGroupPermission(75);
-		$update_permission          = $dbClass->getUserGroupPermission(76);
-		
-		$category_grid_permission   = $dbClass->getUserGroupPermission(77);
-		
-		$condition = "";
-		//# advance search for grid		
-		if($search_txt == "Print" || $search_txt == "Advance_search"){	
-			// for advance condition 
-			$search_txt = "";	
-			if($ad_product_id != '') 	 	$condition  .=" and product_id = $ad_product_id ";
-			if($ad_order_date != '')  		$condition  .=" and date(order_date) ='$ad_order_date'";
-			//if($ad_delivery_date != '') 	$condition  .=" and date(delivery_date) = '$ad_delivery_date'";
-			if($ad_is_payment != 0)  		$condition  .=" and payment_status = $ad_is_payment";
-			if($ad_is_order != 0)  			$condition  .=" and order_status = $ad_is_order";
-			//$condition .=	"where s.name LIKE '%$std_name%' AND sch.name LIKE '%$sch_name%' AND s.class LIKE '%$std_class%'  AND s.address LIKE '%$std_address%'  AND s.upazilla LIKE '%$std_upazilla%' AND s.zilla LIKE '%$std_zilla%'  AND s.division LIKE '%$std_division%'";							
-		}
-		// textfield search for grid
-		/*else{
-			$condition .=	" CONCAT(order_id, customer_name, p_name, product_rate) LIKE '%$search_txt%' ";			
-		}*/
-		
-		$countsql = "SELECT count(order_id)
+            $str_length = 5;
+            $str = substr("00000{$inv_no}", -$str_length);
+
+            $invoice_no = "INV$c_y_m$str";
+
+            //-----------------------------------------------------
+
+            $remarks	 = htmlspecialchars($remarks,ENT_QUOTES);
+
+            $columns_value = array(
+                'customer_id'=>$customer_id,
+                'delivery_date'=>$delivery_date,
+                'delivery_type'=>$delivery_option,
+                'delivery_charge_id'=>$delivery_option,
+                'delivery_charge' =>$delivery_charge_amount,
+                'address'=>$address,
+                'remarks'=>$remarks,
+                'payment_method'=>$payment_option,
+                'order_status'=>$order_status_id,
+                'payment_status'=>$payment_status,
+                'payment_reference_no'=>$payment_referance_no,
+                'discount_amount'=>$discounted_amount,
+                'total_order_amt'=>$total_product_amount,
+                'invoice_no'=>$invoice_no,
+                'sell_type'=>$sell_type,
+                'token_no'=>$token_no
+            );
+
+            if($payment_status==2){
+                $columns_value['total_paid_amount'] = $total_paid_amount;
+                $columns_value['payment_time'] = $c_date;
+            }
+
+            if(isset($coupon_name) && $coupon_name != ""){
+                $coupon = (explode(" >> ",$coupon_name));
+                $columns_value['cupon_id'] = $coupon[0];
+            }
+
+            //var_dump($columns_value);die;
+            $return_master = $dbClass->insert("order_master", $columns_value);
+
+            if($return_master){
+                foreach($product_id as $key=>$value){
+                    $columns_value = array(
+                        'order_id'=>$return_master,
+                        'product_id'=>$product_id[$key],
+                        'quantity'=>$quantity[$key],
+                        'size_id'=>$size_id[$key],
+                        'unit_id'=>$unit_id[$key],
+                        'product_rate'=>$rate[$key]
+                    );
+                    $return_details = $dbClass->insert("order_details", $columns_value);
+                }
+            }
+
+            if($return_details){
+                echo "1";
+            }
+            else{
+                echo "0";
+            }
+        }
+        else if(isset($order_id) && $order_id>0){
+            //var_dump($_REQUEST);die;
+            $columns_value = array(
+                'customer_id'=>$customer_id,
+                'delivery_date'=>$delivery_date,
+                'delivery_type'=>$delivery_option,
+                'delivery_charge_id'=>$delivery_option,
+                'delivery_charge' =>number_format($delivery_charge_amount,2),
+                'address'=>$address,
+                'remarks'=>$remarks,
+                'payment_status'=>$payment_status,
+                'payment_reference_no'=>$payment_referance_no,
+                'discount_amount'=>$discounted_amount,
+                'total_order_amt'=>$total_product_amount,
+                'total_paid_amount'=>$total_paid_amount,
+                'payment_time'=>$c_date,
+                'sell_type'=>$sell_type,
+                'token_no'=>$token_no
+            );
+
+            if(isset($outlet_option) && $outlet_option != 0){
+                $columns_value['outlet_id'] = $outlet_option;
+            }
+            if(isset($payment_option) && $payment_option != 0){
+                $columns_value['payment_method'] = $payment_option;
+            }
+
+            if(isset($coupon_name) && $coupon_name != ""){
+                $coupon = (explode(" >> ",$coupon_name));
+                if(isset($coupon_name)){
+                    $coupon = (explode(" >> ",$coupon_name));
+                    $columns_value['cupon_id'] 		 = $coupon[0];
+                }
+            }
+            //var_dump($columns_value);die;
+            $condition_array = array(
+                'order_id'=>$order_id
+            );
+
+            $return_master = $dbClass->update("order_master", $columns_value,$condition_array);
+
+            if($return_master){
+                $condition_array = array(
+                    'order_id'=>$order_id
+                );
+                $return_dlt = $dbClass->delete("order_details", $condition_array);
+                if($return_dlt){
+                    foreach($product_id as $key=>$value){
+                        $columns_value = array(
+                            'order_id'=>$order_id,
+                            'product_id'=>$product_id[$key],
+                            'quantity'=>$quantity[$key],
+                            'size_id'=>$size_id[$key],
+                            'unit_id'=>$unit_id[$key],
+                            'product_rate'=>$rate[$key]
+                        );
+                        $condition_array = array(
+                            'order_id'=>$order_id
+                        );
+                        $return_details = $dbClass->insert("order_details", $columns_value);
+                    }
+                }
+            }
+
+            if($return_details) echo "2";
+            else                echo "0";
+        }
+        break;
+
+    case "grid_data":
+        $start = ($page_no*$limit)-$limit;
+        $end   = $limit;
+        $data = array();
+
+        $entry_permission   	    = $dbClass->getUserGroupPermission(74);
+        $delete_permission          = $dbClass->getUserGroupPermission(75);
+        $update_permission          = $dbClass->getUserGroupPermission(76);
+
+        $category_grid_permission   = $dbClass->getUserGroupPermission(77);
+
+        $condition = "";
+
+        //# advance search for grid
+        if($search_txt == "Print" || $search_txt == "Advance_search"){
+            // for advance condition
+            $search_txt = "";
+            if($ad_product_id != '') 	 	$condition  .=" and product_id = $ad_product_id ";
+            if($ad_order_date != '')  		$condition  .=" and date(order_date) ='$ad_order_date'";
+            //if($ad_delivery_date != '') 	$condition  .=" and date(delivery_date) = '$ad_delivery_date'";
+            if($ad_is_payment != 0)  		$condition  .=" and payment_status = $ad_is_payment";
+            if($ad_is_order != 0)  			$condition  .=" and order_status = $ad_is_order";
+            //$condition .=	"where s.name LIKE '%$std_name%' AND sch.name LIKE '%$sch_name%' AND s.class LIKE '%$std_class%'  AND s.address LIKE '%$std_address%'  AND s.upazilla LIKE '%$std_upazilla%' AND s.zilla LIKE '%$std_zilla%'  AND s.division LIKE '%$std_division%'";
+        }
+        // textfield search for grid
+        /*else{
+            $condition .=	" CONCAT(order_id, customer_name, p_name, product_rate) LIKE '%$search_txt%' ";
+        }*/
+
+        $countsql = "SELECT count(order_id)
 					FROM(
 						SELECT m.order_id, m.customer_id, c.full_name as customer_name, m.invoice_no,
 						d.product_id,d.product_rate, d.size_id,  d.unit_id, m.order_date, m.delivery_date, 
@@ -204,17 +205,17 @@ switch ($q){
 						GROUP BY d.order_id
 						ORDER BY m.order_id desc
 					)A
-					WHERE CONCAT(invoice_no, order_id, customer_name, p_name, product_rate) LIKE '%$search_txt%' $condition"; 
-		//echo $countsql;die;
-		$stmt = $conn->prepare($countsql);
-		$stmt->execute();
-		$total_records = $stmt->fetchColumn();
-		$data['total_records'] = $total_records;
-		$data['entry_status'] = $entry_permission;	
-		$total_pages = $total_records/$limit;		
-		$data['total_pages'] = ceil($total_pages); 
-		if($category_grid_permission==1){
-			$sql = 	"SELECT order_id, customer_id, customer_name, product_id, product_rate, size_id, unit_id, p_name, order_date,order_noticed,
+					WHERE CONCAT(invoice_no, order_id, customer_name, p_name, product_rate) LIKE '%$search_txt%' $condition";
+        echo $countsql;die;
+        $stmt = $conn->prepare($countsql);
+        $stmt->execute();
+        $total_records = $stmt->fetchColumn();
+        $data['total_records'] = $total_records;
+        $data['entry_status'] = $entry_permission;
+        $total_pages = $total_records/$limit;
+        $data['total_pages'] = ceil($total_pages);
+        if($category_grid_permission==1){
+            $sql = 	"SELECT order_id, customer_id, customer_name, product_id, product_rate, size_id, unit_id, p_name, order_date,order_noticed,
 					delivery_date, delivery_type, outlet_id, outlet_name, address, remarks, order_status, payment_status, delivery_charge,
 					payment_method, payment_reference_no, invoice_no, payment_status_text, order_status_text, total_order_amt, total_paid_amount,
 					token_no, sell_type, $update_permission as update_status, $delete_permission as delete_status
@@ -242,21 +243,21 @@ switch ($q){
 					WHERE CONCAT(invoice_no, order_id, customer_name, p_name, product_rate) LIKE '%$search_txt%' $condition
 					ORDER BY order_id desc
 					LIMIT $start, $end";
-					//echo $sql;die;
-			$stmt = $conn->prepare($sql);
-			$stmt->execute();
-			$result = $stmt->fetchAll(PDO::FETCH_ASSOC);		
-			foreach ($result as $row) {
-				$data['records'][] = $row;
-			}			
-			echo json_encode($data);	
-		}
-	break;
-	
-	case "get_order_details":
-		$update_permission = $dbClass->getUserGroupPermission(76);
-		if($update_permission==1){
-			$sql = "SELECT m.order_id, m.customer_id, m.token_no, m.sell_type,
+            //echo $sql;die;
+            $stmt = $conn->prepare($sql);
+            $stmt->execute();
+            $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            foreach ($result as $row) {
+                $data['records'][] = $row;
+            }
+            echo json_encode($data);
+        }
+        break;
+
+    case "get_order_details":
+        $update_permission = $dbClass->getUserGroupPermission(76);
+        if($update_permission==1){
+            $sql = "SELECT m.order_id, m.customer_id, m.token_no, m.sell_type,
 					c.full_name customer_name, d.product_id, c.contact_no customer_contact_no, c.address customer_address, 
 					GROUP_CONCAT(ca.name,' >> ',ca.id,'#',ca.id,'#',p.name,' (',ca.name,' )','#',p.product_id,'#',s.name,'#',d.size_id,'#',d.product_rate,'#',d.quantity,'#',u.short_name,'#',d.unit_id) order_info,
 					m.order_date, m.delivery_date, m.delivery_type, m.discount_amount, m.total_paid_amount, m.delivery_charge,
@@ -278,87 +279,87 @@ switch ($q){
 					WHERE d.status=1 and m.order_id= $order_id 
 					GROUP BY d.order_id
 					ORDER BY m.order_id ";
-			//echo $sql;die;
-			$stmt = $conn->prepare($sql);
-			$stmt->execute();
-			$result = $stmt->fetchAll(PDO::FETCH_ASSOC);	
-			foreach ($result as $row) {
-				$data['records'][] = $row;
-			}				
-			echo json_encode($data);	
-		}			
-	break;
+            //echo $sql;die;
+            $stmt = $conn->prepare($sql);
+            $stmt->execute();
+            $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            foreach ($result as $row) {
+                $data['records'][] = $row;
+            }
+            echo json_encode($data);
+        }
+        break;
 
-	
-	case "set_order_notice_details":
-		$prev_order_notice = $dbClass->getSingleRow("select order_noticed from order_master where order_id=$order_id");
-		if($prev_order_notice['order_noticed'] == 1){
-			$condition_array = array(
-				'order_id'=>$order_id
-			);				
-			$columns_value = array(
-				'order_noticed'=>2,
-				'order_noticed_time'=>$c_date
-			);			
-			$return = $dbClass->update("order_master", $columns_value, $condition_array);
-			echo $return;
-		}			
-			
-	break;
 
-	case "delete_order":		
-		$delete_permission = $dbClass->getUserGroupPermission(75);
-		if($delete_permission==1){
-			$condition_array = array(
-				'order_id'=>$order_id
-			);				
-			$columns_value = array(
-				'status'=>2
-			);		
-			$return = $dbClass->update("order_details", $columns_value, $condition_array);
-		}
-		if($return) echo "1";
-		else 		echo "0";
-	break;
-	
-	case "view_outlets": 
-		$data = array();
-		$details = $dbClass->getResultList("SELECT c.id, c.address FROM outlets c ORDER BY c.id");
-		foreach ($details as $row) {
-			$data['records'][] = $row;
-		}			
-		echo json_encode($data);
-	break;
-	
-	case "view_delivery_list": 
-		$dept_details = $dbClass->getResultList("select id, type, format(rate,2) rate from delivery_charge where status=1");
-		foreach ($dept_details as $row) {
-			$data['records'][] = $row;
-		}			
-		echo json_encode($data);
-	break;
-	
-	
-	case "customer_info":
-		$sql_query = "SELECT c.customer_id, c.full_name
+    case "set_order_notice_details":
+        $prev_order_notice = $dbClass->getSingleRow("select order_noticed from order_master where order_id=$order_id");
+        if($prev_order_notice['order_noticed'] == 1){
+            $condition_array = array(
+                'order_id'=>$order_id
+            );
+            $columns_value = array(
+                'order_noticed'=>2,
+                'order_noticed_time'=>$c_date
+            );
+            $return = $dbClass->update("order_master", $columns_value, $condition_array);
+            echo $return;
+        }
+
+        break;
+
+    case "delete_order":
+        $delete_permission = $dbClass->getUserGroupPermission(75);
+        if($delete_permission==1){
+            $condition_array = array(
+                'order_id'=>$order_id
+            );
+            $columns_value = array(
+                'status'=>2
+            );
+            $return = $dbClass->update("order_details", $columns_value, $condition_array);
+        }
+        if($return) echo "1";
+        else 		echo "0";
+        break;
+
+    case "view_outlets":
+        $data = array();
+        $details = $dbClass->getResultList("SELECT c.id, c.address FROM outlets c ORDER BY c.id");
+        foreach ($details as $row) {
+            $data['records'][] = $row;
+        }
+        echo json_encode($data);
+        break;
+
+    case "view_delivery_list":
+        $dept_details = $dbClass->getResultList("select id, type, format(rate,2) rate from delivery_charge where status=1");
+        foreach ($dept_details as $row) {
+            $data['records'][] = $row;
+        }
+        echo json_encode($data);
+        break;
+
+
+    case "customer_info":
+        $sql_query = "SELECT c.customer_id, c.full_name
 					FROM customer_infos c";
-		$stmt = $conn->prepare($sql_query);
-		$stmt->execute();
-		$json = array();
-		$result = $stmt->fetchAll(PDO::FETCH_ASSOC);			
-		$count = $stmt->rowCount();
-		if($count>0){
-			foreach ($result as $row) {
-				$json[] = array('id' => $row["customer_id"],'label' => $row["full_name"]);
-			}
-		} else {
-			$json[] = array('id' => "0",'label' => "No Product Found !!!");
-		}						
-		echo json_encode($json);
-	break;
-	
-	case "coupon_info":
-		$sql_query = "SELECT id, c_type, amount, CONCAT(cupon_no,' >> ',t_amount) c_info FROM 
+        $stmt = $conn->prepare($sql_query);
+        $stmt->execute();
+        $json = array();
+        $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        $count = $stmt->rowCount();
+        if($count>0){
+            foreach ($result as $row) {
+                $json[] = array('id' => $row["customer_id"],'label' => $row["full_name"]);
+            }
+        } else {
+            $json[] = array('id' => "0",'label' => "No Product Found !!!");
+        }
+        echo json_encode($json);
+        break;
+
+    case "coupon_info":
+        $sql_query = "SELECT id, c_type, amount, CONCAT(cupon_no,' >> ',t_amount) c_info FROM 
 						(
 							SELECT c.id, c.cupon_no, c.c_type, c.amount,
 							CASE 
@@ -367,86 +368,86 @@ switch ($q){
 							END t_amount
 							FROM cupons c WHERE c.`status`=1
 						) A";
-		$stmt = $conn->prepare($sql_query);
-		$stmt->execute();
-		$json = array();
-		$result = $stmt->fetchAll(PDO::FETCH_ASSOC);			
-		$count = $stmt->rowCount();
-		if($count>0){
-			foreach ($result as $row) {
-				$json[] = array('id' => $row["id"],'type' => $row["c_type"],'label' => $row["c_info"],'rate' => $row["amount"]);
-			}
-		} else {
-			$json[] = array('id' => "0",'label' => "No Coupon Found !!!");
-		}						
-		echo json_encode($json);
-	break;
-	
-	case "product_info":
-		$con = "WHERE CONCAT(p.name, p.product_id) LIKE '%$term%'";
-		if(isset($category_id) && $category_id !=0){
-			$con .= " AND  p.category_id = $category_id " ;
-		}
-		$sql_query = "SELECT p.product_id, concat(p.name,' (',c.name,')') p_name 
+        $stmt = $conn->prepare($sql_query);
+        $stmt->execute();
+        $json = array();
+        $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        $count = $stmt->rowCount();
+        if($count>0){
+            foreach ($result as $row) {
+                $json[] = array('id' => $row["id"],'type' => $row["c_type"],'label' => $row["c_info"],'rate' => $row["amount"]);
+            }
+        } else {
+            $json[] = array('id' => "0",'label' => "No Coupon Found !!!");
+        }
+        echo json_encode($json);
+        break;
+
+    case "product_info":
+        $con = "WHERE CONCAT(p.name, p.product_id) LIKE '%$term%'";
+        if(isset($category_id) && $category_id !=0){
+            $con .= " AND  p.category_id = $category_id " ;
+        }
+        $sql_query = "SELECT p.product_id, concat(p.name,' (',c.name,')') p_name 
 					FROM products p
 					LEFT JOIN category c ON c.id = p.category_id
 					$con
 					ORDER BY p.product_id";
-		//echo $sql_query;die;
-		$stmt = $conn->prepare($sql_query);
-		$stmt->execute();
-		$json = array();
-		$result = $stmt->fetchAll(PDO::FETCH_ASSOC);			
-		$count = $stmt->rowCount();
-		if($count>0){
-			foreach ($result as $row) {
-				$json[] = array('id' => $row["product_id"],'label' => $row["p_name"]);
-			}
-		} else {
-			$json[] = array('id' => "0",'label' => "No Product Found !!!");
-		}						
-		echo json_encode($json);
-	break;
-	
-	case "ad_product_info":
-		$sql_query = "SELECT p.product_id, p.name FROM products p WHERE CONCAT(name) LIKE '%$term%' ORDER BY p.product_id";
-		$stmt = $conn->prepare($sql_query);
-		$stmt->execute();
-		$json = array();
-		$result = $stmt->fetchAll(PDO::FETCH_ASSOC);			
-		$count = $stmt->rowCount();
-		if($count>0){
-			foreach ($result as $row) {
-				$json[] = array('id' => $row["product_id"],'label' => $row["name"]);
-			}
-		} else {
-			$json[] = array('id' => "0",'label' => "No Product Found !!!");
-		}						
-		echo json_encode($json);
-	break;	
-	
-	case "get_product_rate":
-		//var_dump($_REQUEST);die;
-		$sql_query ="SELECT discounted_rate 
+        //echo $sql_query;die;
+        $stmt = $conn->prepare($sql_query);
+        $stmt->execute();
+        $json = array();
+        $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        $count = $stmt->rowCount();
+        if($count>0){
+            foreach ($result as $row) {
+                $json[] = array('id' => $row["product_id"],'label' => $row["p_name"]);
+            }
+        } else {
+            $json[] = array('id' => "0",'label' => "No Product Found !!!");
+        }
+        echo json_encode($json);
+        break;
+
+    case "ad_product_info":
+        $sql_query = "SELECT p.product_id, p.name FROM products p WHERE CONCAT(name) LIKE '%$term%' ORDER BY p.product_id";
+        $stmt = $conn->prepare($sql_query);
+        $stmt->execute();
+        $json = array();
+        $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        $count = $stmt->rowCount();
+        if($count>0){
+            foreach ($result as $row) {
+                $json[] = array('id' => $row["product_id"],'label' => $row["name"]);
+            }
+        } else {
+            $json[] = array('id' => "0",'label' => "No Product Found !!!");
+        }
+        echo json_encode($json);
+        break;
+
+    case "get_product_rate":
+        //var_dump($_REQUEST);die;
+        $sql_query ="SELECT discounted_rate 
 					FROM product_rate r 
 					WHERE r.product_id = $product_id and size_id=$size_id and unit_id=$unit_id";
-					
-		$stmt = $conn->prepare($sql_query);
-		$stmt->execute();
-		$json = array();
-		$result = $stmt->fetchAll(PDO::FETCH_ASSOC);			
-		$count = $stmt->rowCount();
-		if($count>0){
-			foreach ($result as $row) {
-				echo $row["discounted_rate"];
-			}
-		} else {
-			echo  0;
-		}						
-	break;	
-	
-	case "category_info":
-		$sql_query = "SELECT id, CONCAT(head_name,' >> ',code) category_name 
+
+        $stmt = $conn->prepare($sql_query);
+        $stmt->execute();
+        $json = array();
+        $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        $count = $stmt->rowCount();
+        if($count>0){
+            foreach ($result as $row) {
+                echo $row["discounted_rate"];
+            }
+        } else {
+            echo  0;
+        }
+        break;
+
+    case "category_info":
+        $sql_query = "SELECT id, CONCAT(head_name,' >> ',code) category_name 
 					FROM (
 						SELECT c.id, c.code, 
 						CASE WHEN c.parent_id IS NULL THEN c.name WHEN c.parent_id IS NOT NULL THEN CONCAT(ec.name,' >> ',c.name) END head_name
@@ -455,30 +456,30 @@ switch ($q){
 						WHERE CONCAT(c.name, c.code) LIKE '%$term%'
 						ORDER BY c.id						
 					) A";
-		$stmt = $conn->prepare($sql_query);
-		$stmt->execute();
-		$json = array();
-		$result = $stmt->fetchAll(PDO::FETCH_ASSOC);			
-		$count = $stmt->rowCount();
-		if($count>0){
-			foreach ($result as $row) {
-				$json[] = array('id' => $row["id"],'label' => $row["category_name"]);
-			}
-		} else {
-			$json[] = array('id' => "0",'label' => "No Product Found !!!");
-		}						
-		echo json_encode($json);
-	break;
-	
-	case "update_order_status":			
-			$condition_array = array(
-				'order_id'=>$order_id
-			);				
-			$columns_value = array(
-				'order_status'=>$status_id
-			);			
-			$return = $dbClass->update("order_master", $columns_value, $condition_array);
-			echo $return;	
-	break;
+        $stmt = $conn->prepare($sql_query);
+        $stmt->execute();
+        $json = array();
+        $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        $count = $stmt->rowCount();
+        if($count>0){
+            foreach ($result as $row) {
+                $json[] = array('id' => $row["id"],'label' => $row["category_name"]);
+            }
+        } else {
+            $json[] = array('id' => "0",'label' => "No Product Found !!!");
+        }
+        echo json_encode($json);
+        break;
+
+    case "update_order_status":
+        $condition_array = array(
+            'order_id'=>$order_id
+        );
+        $columns_value = array(
+            'order_status'=>$status_id
+        );
+        $return = $dbClass->update("order_master", $columns_value, $condition_array);
+        echo $return;
+        break;
 }
 ?>

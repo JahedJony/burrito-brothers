@@ -99,28 +99,9 @@ else{
 						<div class="col-md-4 col-sm-4 col-xs-12">
 							<input type="text" id="short_name" name="short_name"  required class="form-control col-lg-12"/>
 						</div>
-					</div>	
-					<div class="form-group">
-						<label class="control-label col-md-2 col-sm-2 col-xs-6">Base Unit Name</label> 
-						<div class="col-md-4 col-sm-4 col-xs-6">
-							<input type="text" id="base_unit_name" name="base_unit_name" class="form-control col-lg-12"/> 
-							<input type="hidden" id="base_unit_id" name="base_unit_id" />
-						</div>
-						<label class="control-label col-md-2 col-sm-2 col-xs-6">Operator</label>
-						<div class="col-md-4 col-sm-4 col-xs-12">
-							<select id="operator" name="operator"  class="form-control col-lg-12">
-								<option value='mul'>Multiply</option>
-								<option value='div'>Divide</option>
-								<option value='add'>Add</option>
-								<option value='sub'>Subtract</option>
-							</select>
-						</div>
 					</div>
 					<div class="form-group">
-						<label class="control-label col-md-2 col-sm-2 col-xs-6">Operator Value</label>
-						<div class="col-md-4 col-sm-4 col-xs-12">
-							<input type="text" id="conversion_rate" name="conversion_rate"  class="form-control col-lg-12"/>
-						</div>
+
 													
 						<label class="control-label col-md-2 col-sm-2 col-xs-6" >Is Active?</label>
 						<div class="col-md-4 col-sm-4 col-xs-6">
