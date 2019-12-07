@@ -112,7 +112,6 @@ else{
                 <table id="order_Table" name="table_records" class="table table-bordered  responsive-utilities jambo_table table-striped  table-scroll ">
                     <thead >
                     <th class="column-title" width="">Invoice No</th>
-                    <th class="column-title" width="">Token No</th>
                     <th class="column-title" width="">Customer</th>
                     <th class="column-title" width="18%">Product</th>
                     <th class="column-title" width="8%">Order Date</th>
@@ -242,20 +241,6 @@ else{
 							 <i class="fa fa-sign-in"></i>
 							</button>
 						</span>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="control-label col-md-2 col-sm-2 col-xs-12">Token No<span class="required">*</span></label>
-                            <div class="col-md-4 col-sm-4 col-xs-12">
-                                <input type="text" id="token_no" name="token_no"  class="form-control col-lg-12"/>
-                            </div>
-                            <label class="control-label col-md-2 col-sm-2 col-xs-6">Sell Type<span class="required">*</span></label>
-                            <div class="col-md-4 col-sm-4 col-xs-4">
-                                <select class="form-control sell_type" name="sell_type" id="sell_type">
-                                    <option value=''>Select Option</option>
-                                    <option value='1'>POS</option>
-                                    <option value='2'>Order</option>
-                                </select>
                             </div>
                         </div>
                         <div class="form-group">
@@ -872,7 +857,6 @@ else{
 
         var current_page_no=1;
         load_order = function load_order(search_txt){
-            alert('1')
             $("#search_order_button").toggleClass('active');
             var order_Table_length = parseInt($('#order_Table_length').val());
             var ad_product_name = $("#ad_product_name").val();
@@ -900,7 +884,6 @@ else{
                     page_no:current_page_no
                 },
                 success: function(data) {
-                    alert('2')
                     var todate = "<?php echo date("Y-m-d"); ?>";
                     var user_name =  "<?php echo $user_name; ?>";
                     var html = "";
@@ -921,13 +904,12 @@ else{
 
                         if(!jQuery.isEmptyObject(data.records)){
 
-                            html +='<table width="100%" cellpadding="10" border="1px" style="margin-top:10px;border-collapse:collapse"><thead><tr><th style="text-align:center">Order No</th><th style="text-align:center">Token No</th><th style="text-align:center">Customer</th><th style="text-align:center">Product</th><th style="text-align:center">Order Date</th><th style="text-align:center">Delivery Date</th><th style="text-align:center">Payment Status</th><th style="text-align:center">Order Status</th></tr></thead><tbody>';
+                            html +='<table width="100%" cellpadding="10" border="1px" style="margin-top:10px;border-collapse:collapse"><thead><tr><th style="text-align:center">Order No</th><th style="text-align:center">Customer</th><th style="text-align:center">Product</th><th style="text-align:center">Order Date</th><th style="text-align:center">Delivery Date</th><th style="text-align:center">Payment Status</th><th style="text-align:center">Order Status</th></tr></thead><tbody>';
 
                             $.each(data.records, function(i,data){
                                 //alert(data)
                                 html += "<tr>";
                                 html +="<td style='text-align:left'>"+data.invoice_no+"</td>";
-                                html +="<td style='text-align:left'>"+data.token_no+"</td>";
                                 html +="<td style='text-align:left'>"+data.customer_name+"</td>";
                                 var name = data.p_name;
                                 var pname = name.replace(", ", "</br>");
@@ -961,7 +943,7 @@ else{
                         $("#search_order_button").toggleClass('active');
                         if(!jQuery.isEmptyObject(records_array)){
                             //create and set grid table row
-                            var colums_array=["order_id*identifier*hidden","invoice_no","token_no","customer_name","p_name","order_date","delivery_date","payment_status_text","order_status_text","total_order_amt"];
+                            var colums_array=["order_id*identifier*hidden","invoice_no","customer_name","p_name","order_date","delivery_date","payment_status_text","order_status_text","total_order_amt"];
                             //first element is for view , edit condition, delete condition
                             //"all" will show /"no" will show nothing
                             var condition_array=["all","","update_status", "1","delete_status","1"];
@@ -1030,15 +1012,6 @@ else{
             if($.trim($('#customer_id').val()) == ""){
                 success_or_error_msg('#form_submit_error','danger','Please Select Customer Name',"#customer_name");
             }
-            else if($.trim($('#token_no').val()) == "" ){
-                success_or_error_msg('#form_submit_error','danger','Please Insert Token No',"#token_no");
-            }
-            else if($.trim($('#token_no').val()) == "" ){
-                success_or_error_msg('#form_submit_error','danger','Please Insert Token No',"#token_no");
-            }
-            else if($.trim($('#sell_type').val()) == "" ){
-                success_or_error_msg('#form_submit_error','danger','Please Select Sell Type',"#sell_type");
-            }
             else if($.trim($('.product_id').val()) == ""){
                 success_or_error_msg('#form_submit_error','danger','Please Select Product Name',".product_name");
             }
@@ -1049,6 +1022,8 @@ else{
                 success_or_error_msg('#form_submit_error','danger','Please Select Product Unit',".unit_name");
             }
             else{
+                //alert('save1')
+
                 $.ajax({
                     url: project_url+"controller/orderController.php",
                     type:'POST',
@@ -1058,6 +1033,8 @@ else{
                     contentType:false,
                     processData:false,
                     success: function(data){
+                        //alert(data)
+
                         $('#save_order').removeAttr('disabled','disabled');
 
                         if($.isNumeric(data)==true && data>0){
@@ -1065,6 +1042,8 @@ else{
                             load_order("");
                             clear_form();
                         }
+                        //alert('save3')
+
                     }
                 });
 
@@ -1153,6 +1132,7 @@ else{
         //edit order
         edit_order = function edit_order(order_id){
             //order noticed update
+            alert(order_id)
             $.ajax({
                 url: project_url+"controller/orderController.php",
                 type:'POST',
@@ -1163,9 +1143,11 @@ else{
                     order_id:order_id
                 },
                 success: function(data){
+                    alert(data)
                     //alert('Noticed Successfully');
                 }
             });
+            alert('edit2')
 
             $('#delivery_address').hide();
             //$('#delivery_outlet').hide();
@@ -1173,6 +1155,8 @@ else{
 
 
             $('#orderTable > tbody').html("");
+            alert('edit3')
+
 
             $.ajax({
                 url: project_url+"controller/orderController.php",
@@ -1184,6 +1168,7 @@ else{
                     order_id: order_id
                 },
                 success: function(data){
+                    alert(data)
                     if(!jQuery.isEmptyObject(data.records)){
                         $.each(data.records, function(i,data){
 
@@ -1225,13 +1210,13 @@ else{
 
                             $('#customer_name').val(data.customer_name);
                             $('#customer_id').val(data.customer_id);
-                            $('#token_no').val(data.token_no);
                             $('#customer_id').val(data.customer_id);
-                            $('#sell_type').val(data.sell_type);
                             $('#delivery_date').val(data.delivery_date);
                             $('#delivery_option').val(data.delivery_type);
                             $('#outlet_option').val(data.outlet_id);
                             var option_html = '';
+                            alert('edit4')
+
                             if(data.delivery_type == 2){
                                 //$('#delivery_outlet').hide();
                                 $('#delivery_address').show();
@@ -1244,6 +1229,7 @@ else{
                                         q: "view_delivery_list",
                                     },
                                     success: function(data){
+                                        alert(data)
                                         if(!jQuery.isEmptyObject(data.records)){
                                             $('#delivery_option_list_div').show();
                                             $.each(data.records, function(i,data){

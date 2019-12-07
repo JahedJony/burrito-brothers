@@ -50,8 +50,6 @@ switch ($q){
                 'discount_amount'=>$discounted_amount,
                 'total_order_amt'=>$total_product_amount,
                 'invoice_no'=>$invoice_no,
-                'sell_type'=>$sell_type,
-                'token_no'=>$token_no
             );
 
             if($payment_status==2){
@@ -104,8 +102,7 @@ switch ($q){
                 'total_order_amt'=>$total_product_amount,
                 'total_paid_amount'=>$total_paid_amount,
                 'payment_time'=>$c_date,
-                'sell_type'=>$sell_type,
-                'token_no'=>$token_no
+
             );
 
             if(isset($outlet_option) && $outlet_option != 0){
@@ -158,6 +155,7 @@ switch ($q){
         break;
 
     case "grid_data":
+        //echo '1'; die;
         $start = ($page_no*$limit)-$limit;
         $end   = $limit;
         $data = array();
@@ -186,6 +184,9 @@ switch ($q){
             $condition .=	" CONCAT(order_id, customer_name, p_name, product_rate) LIKE '%$search_txt%' ";
         }*/
 
+        //echo '1'; die;
+
+
         $countsql = "SELECT count(order_id)
 					FROM(
 						SELECT m.order_id, m.customer_id, c.full_name as customer_name, m.invoice_no,
@@ -206,7 +207,7 @@ switch ($q){
 						ORDER BY m.order_id desc
 					)A
 					WHERE CONCAT(invoice_no, order_id, customer_name, p_name, product_rate) LIKE '%$search_txt%' $condition";
-        echo $countsql;die;
+        //echo $countsql;die;
         $stmt = $conn->prepare($countsql);
         $stmt->execute();
         $total_records = $stmt->fetchColumn();
@@ -218,9 +219,9 @@ switch ($q){
             $sql = 	"SELECT order_id, customer_id, customer_name, product_id, product_rate, size_id, unit_id, p_name, order_date,order_noticed,
 					delivery_date, delivery_type, outlet_id, outlet_name, address, remarks, order_status, payment_status, delivery_charge,
 					payment_method, payment_reference_no, invoice_no, payment_status_text, order_status_text, total_order_amt, total_paid_amount,
-					token_no, sell_type, $update_permission as update_status, $delete_permission as delete_status
+					 $update_permission as update_status, $delete_permission as delete_status
 					FROM(
-						SELECT m.order_id, m.customer_id, c.full_name as customer_name, m.delivery_type, m.outlet_id, m.token_no, m.sell_type,
+						SELECT m.order_id, m.customer_id, c.full_name as customer_name, m.delivery_type, m.outlet_id, 
 						CONCAT(m.outlet_id,' >> ',o.address) outlet_name, m.address, m.remarks, m.order_status, order_noticed,
 						m.payment_status, m.payment_method, m.payment_reference_no, m.invoice_no,
 						d.product_id,d.product_rate, d.size_id, d.unit_id, m.total_order_amt, m.total_paid_amount, m.delivery_charge,
@@ -257,7 +258,7 @@ switch ($q){
     case "get_order_details":
         $update_permission = $dbClass->getUserGroupPermission(76);
         if($update_permission==1){
-            $sql = "SELECT m.order_id, m.customer_id, m.token_no, m.sell_type,
+            $sql = "SELECT m.order_id, m.customer_id, 
 					c.full_name customer_name, d.product_id, c.contact_no customer_contact_no, c.address customer_address, 
 					GROUP_CONCAT(ca.name,' >> ',ca.id,'#',ca.id,'#',p.name,' (',ca.name,' )','#',p.product_id,'#',s.name,'#',d.size_id,'#',d.product_rate,'#',d.quantity,'#',u.short_name,'#',d.unit_id) order_info,
 					m.order_date, m.delivery_date, m.delivery_type, m.discount_amount, m.total_paid_amount, m.delivery_charge,
@@ -293,7 +294,11 @@ switch ($q){
 
     case "set_order_notice_details":
         $prev_order_notice = $dbClass->getSingleRow("select order_noticed from order_master where order_id=$order_id");
+        //echo $prev_order_notice ; die;
+
         if($prev_order_notice['order_noticed'] == 1){
+            //echo '1'; die;
+
             $condition_array = array(
                 'order_id'=>$order_id
             );
