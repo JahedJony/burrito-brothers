@@ -133,7 +133,7 @@ else{
     </div>
 </div>
 <?php } ?>
-<script src="js/customTable.js"></script> 
+<script src="js/customTable.js"></script>
 <script>
 /*
 develped by @momit

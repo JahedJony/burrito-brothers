@@ -30,7 +30,7 @@ $(document).ready(function () {
 if(!isset($_SESSION['user_id']) && $_SESSION['user_id'] == "") header("Location:".$activity_url."../view/login.php");
 else{
 	$user_type_name = "HMS Employee";
-	include("emp_profile.php");	
+	include("emp_profile.php");
 } 
 ?>
 

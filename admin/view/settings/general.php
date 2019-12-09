@@ -45,7 +45,7 @@ else{
                                 <label>Company Logo</label>
                                 <hr>
 
-                                <img src="<?php echo $site_url ?>images/no_image.png" width="70%" height="70%" class="img-thumbnail" id="logo">
+                                <img src="<?php echo $site_url ?>admin/images/no_image.png" width="70%" height="70%" class="img-thumbnail" id="logo">
                                 <input type="file" name="company_logo" id="company_logo">
                                 <br />
                                 <br />

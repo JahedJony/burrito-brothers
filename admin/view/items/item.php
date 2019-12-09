@@ -528,6 +528,7 @@ else{
             var ad_item_id = $("#ad_item_id").val();
             var is_active_status = $("input[name=is_active_status]:checked").val();
             var is_rate = $("input[name=is_rate]:checked").val();
+            //alert(project_url+"controller/itemController.php")
 
             $.ajax({
                 url: project_url+"controller/itemController.php",
@@ -547,6 +548,7 @@ else{
                     page_no:current_page_no
                 },
                 success: function(data) {
+                    alert(data)
                     var todate = "<?php echo date("Y-m-d"); ?>";
                     var user_name =  "<?php echo $user_name; ?>";
                     var html = "";
@@ -662,10 +664,7 @@ else{
 
 
     });
-    <!-- ------------------------------------------end --------------------------------------->
 
-
-    <!-- ------------------------------------------ start --------------------------------------->
     $(document).ready(function () {
 
         //insert item

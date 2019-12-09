@@ -12,11 +12,6 @@ $(document).ready(function(){
 				$(this).html('<div class="alert alert-danger">'+password_error+'</div>').fadeTo(900,1);
 			});
 		}
-		else if($('#season_id').val() == "0"){
-			$("#login_error").fadeTo(200,0.1,function(){ 
-				$(this).html('<div class="alert alert-danger">Entry Season then login</div>').fadeTo(900,1);
-			});
-		}
 		else{ 		
 			$.post("controller/loginController.php",{q:'login',company_id:$('#company_id').val(), season_id:$('#season_id').val(), user_name:$('#user_login').val(),password:$('#user_pass').val(),user_type:$('#user_type').val(), rand:Math.random() } ,function(data){
 		  		//alert(data)
@@ -26,7 +21,7 @@ $(document).ready(function(){
 						//add message and change the class of the box and start fading
 						$(this).html('<div class="alert alert-success">'+logging_in+'.....</div>').fadeTo(900,1,
 						function() { 
-							document.location='index.php?module=personal&view=profile';
+							document.location='../index.php?module=user&view=user';
 						});			
 					});
 				}

@@ -113,7 +113,7 @@ else{
                         </div>
                     </div>
                     <div class="col-md-5 imgDiv">
-                        <img src="<?php echo $website_url ?>images/no_image.png" width="100%" height="196px" class="img-fluid" id="bannerImg_img">
+                        <img src="<?php echo $website_url ?>admin/images/no_image.png" width="100%" height="196px" class="img-fluid" id="bannerImg_img">
                     </div>
                 </div>
                 <div class="form-group">

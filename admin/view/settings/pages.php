@@ -130,7 +130,7 @@ else{
 	} 
 	?>
 
-<script src="js/customTable.js"></script> 
+<script src="js/customTable.js"></script>
 <script>
 
 $(document).ready(function () {

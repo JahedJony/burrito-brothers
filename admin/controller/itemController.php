@@ -329,9 +329,13 @@ switch ($q){
             if($is_active_status !=2) $condition  .=" WHERE availability = $is_active_status ";
             if($ad_category_id != '') $condition  .=" and category_id = $ad_category_id ";
             if($ad_item_id != '')  $condition  .=" and item_id = $ad_item_id ";
+            //echo '4';die;
+
         }
         // textfield search for grid
         else{
+            //echo '5';die;
+
             $condition .=	" WHERE CONCAT(item_id, name, code, category_head_name) LIKE '%$search_txt%' ";
         }
 
@@ -349,7 +353,7 @@ switch ($q){
 						ORDER BY p.item_id DESC 
 					)A
 					$condition";
-        //echo $countsql;die;
+        echo $countsql;die;
         $stmt = $conn->prepare($countsql);
         $stmt->execute();
         $total_records = $stmt->fetchColumn();

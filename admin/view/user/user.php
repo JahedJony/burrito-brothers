@@ -202,7 +202,7 @@ else{
 		}
 	} 
 ?>
-<script src="js/customTable.js"></script>
+<script src="../admin/js/customTable.js"></script>
 <script>
 //------------------------------------- general & UI  --------------------------------------
 /*

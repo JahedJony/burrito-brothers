@@ -101,7 +101,7 @@ else{
 					</div>
 				</div>
 				<div class="col-md-3">
-					<img src="<?php echo $website_url ?>images/no_image.png" width="70%" height="70%" class="img-thumbnail" id="category_img">
+					<img src="<?php echo $website_url ?>admin/images/no_image.png" width="70%" height="70%" class="img-thumbnail" id="category_img">
 					<input type="file" name="category_image_upload" id="category_image_upload"> 
 				</div>
 			</div>
@@ -124,7 +124,7 @@ else{
 		}
 	} 
 ?>
-<script src="js/customTable.js"></script> 
+<script src="js/customTable.js"></script>
 <script>
 //------------------------------------- general & UI  --------------------------------------
 /*

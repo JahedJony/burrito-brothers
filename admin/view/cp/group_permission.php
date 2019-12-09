@@ -122,7 +122,7 @@ else{
 <?php
 	} 
 ?>
-<script src="js/customTable.js"></script> 
+<script src="js/customTable.js"></script>
 <script>
 //------------------------------------- general & UI  --------------------------------------
 /*

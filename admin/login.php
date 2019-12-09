@@ -2,7 +2,7 @@
 session_start();
 include 'includes/static_text.php';
 include("dbConnect.php");
-if(isset($_SESSION['user_id']) && $_SESSION['user_id'])header("Location:".$activity_url."dashbord.php");
+if(isset($_SESSION['user_id']) && $_SESSION['user_id'])header("Location:".$activity_url."index.php");
 
 
 ?>
