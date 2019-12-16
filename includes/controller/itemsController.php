@@ -5,7 +5,7 @@ include("../dbClass.php");
 
 $dbClass = new dbClass;	
 extract($_POST);
-
+/*
 if($q=="insert_review"){
 	$comments	 = htmlspecialchars($_POST['comment'],ENT_QUOTES);
 	$review_name	 = htmlspecialchars($_POST['review_name'],ENT_QUOTES);	
@@ -45,6 +45,27 @@ if($q=="getOrder_status"){
 	}	
 	//	var_dump($data);
 	echo json_encode($data);	
+}
+*/
+
+
+switch ($q){
+
+    case "category_view":
+        $data = array();
+        $sql = 	"SELECT id, name, code, photo,  c.id, c.code, c.name, ifnull(c.photo,'') photo
+					FROM category c	ORDER BY id desc";
+        //	echo $sql;die;
+        $stmt = $conn->prepare($sql);
+        $stmt->execute();
+        $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        foreach ($result as $row) {
+            $data[] = $row;
+        }
+        //$dbClass->print_arrays($data);die;
+        echo json_encode($data);
+        break;
+
 }
 
 ?>

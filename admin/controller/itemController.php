@@ -142,6 +142,7 @@ switch ($q){
 													LEFT JOIN order_details d on d.item_id = p.item_id  	
 													WHERE p.item_id = $item_id");
 
+
             if($is_order_result['category_id'] != $category_option){
                 if($is_order_result['order_id'] != "" || $is_order_result['order_id'] != NULL) { echo 3; die;}
             }
@@ -215,6 +216,7 @@ switch ($q){
             if(isset($_POST['sell_from_stock'])){
                 $sell_from_stock=1;
             }
+            //echo $item_name; die;
 
             $columns_value = array(
                 'name'=>$item_name,
@@ -264,6 +266,7 @@ switch ($q){
                         'discounted_rate'=>$discounted_rate[$key]
                     );
                     $return_rate = $dbClass->insert("item_rate", $columns_value);
+                    echo '1'; die;
                 }
             }
 
@@ -323,6 +326,8 @@ switch ($q){
         $category_grid_permission   = $dbClass->getUserGroupPermission(65);
 
         $condition = "";
+        //echo '1', die;
+
         //# advance search for grid
         if($search_txt == "Print" || $search_txt == "Advance_search"){
             // for advance condition
@@ -341,19 +346,19 @@ switch ($q){
 
         $countsql = "SELECT count(item_id)
 					FROM(
-						SELECT p.category_id, p.item_id, p.name, p.code, p.details, GROUP_CONCAT(s.name,' >> ',r.discounted_rate) p_rate, tags,p.availability,
+						SELECT i.category_id, i.item_id, i.name, i.code, i.details, GROUP_CONCAT(s.name,' >> ',r.discounted_rate) i_rate, tags,i.availability,
 						CASE WHEN c.parent_id IS NULL THEN c.name WHEN c.parent_id IS NOT NULL THEN CONCAT(ec.name,' >> ',c.name) END category_head_name,
-						(CASE p.availability WHEN 1 THEN 'Available' WHEN 0 THEN 'Not-Available' END) active_status	
-						FROM items p 
-						LEFT JOIN item_rate r on r.item_id = p.item_id
-						LEFT JOIN category c on c.id = p.category_id
+						(CASE i.availability WHEN 1 THEN 'Available' WHEN 0 THEN 'Not-Available' END) active_status	
+						FROM items i
+						LEFT JOIN item_rate r on r.item_id = i.item_id
+						LEFT JOIN category c on c.id = i.category_id
 						LEFT JOIN category ec ON c.parent_id = ec.id
 						LEFT JOIN size s on s.id = r.size_id
-						group by p.item_id
-						ORDER BY p.item_id DESC 
+						group by i.item_id
+						ORDER BY i.item_id DESC 
 					)A
 					$condition";
-        echo $countsql;die;
+        //echo $countsql;die;
         $stmt = $conn->prepare($countsql);
         $stmt->execute();
         $total_records = $stmt->fetchColumn();
@@ -362,22 +367,22 @@ switch ($q){
         $total_pages = $total_records/$limit;
         $data['total_pages'] = ceil($total_pages);
         if($category_grid_permission==1){
-            $sql = 	"SELECT category_id, item_id, name, code, category_head_name, p_details, p_rate, details,tags,active_status,availability,
+            $sql = 	"SELECT category_id, item_id, name, code, category_head_name, i_rate, details,tags,active_status,availability,
 					$update_permission as update_status, $delete_permission as delete_status
 					FROM(
-						SELECT p.category_id, p.item_id, p.name, p.code, p.details, GROUP_CONCAT(s.name,' >> ',r.discounted_rate) p_rate, GROUP_CONCAT(s.name,' >> ',r.stock_quantity) p_details, tags,p.availability,
+						SELECT i.category_id, i.item_id, i.name, i.code, i.details, GROUP_CONCAT(s.name,' >> ',r.discounted_rate) i_rate, tags,i.availability,
 						CASE WHEN c.parent_id IS NULL THEN c.name WHEN c.parent_id IS NOT NULL THEN CONCAT(ec.name,' >> ',c.name) END category_head_name,
-						(CASE p.availability WHEN 1 THEN 'Available' WHEN 0 THEN 'Not-Available' END) active_status	
-						FROM items p 
-						LEFT JOIN item_rate r on r.product_id = p.product_id
-						LEFT JOIN category c on c.id = p.category_id
+						(CASE i.availability WHEN 1 THEN 'Available' WHEN 0 THEN 'Not-Available' END) active_status	
+						FROM items i
+						LEFT JOIN item_rate r on r.item_id = i.item_id
+						LEFT JOIN category c on c.id = i.category_id
 						LEFT JOIN category ec ON c.parent_id = ec.id
 						LEFT JOIN size s on s.id = r.size_id
-						group by p.product_id
-						ORDER BY p.product_id desc
+						group by i.item_id
+						ORDER BY i.item_id DESC 
 					)A
 					$condition
-					ORDER BY product_id ASC
+					ORDER BY item_id ASC
 					LIMIT $start, $end";
             //echo $sql;die;
             $stmt = $conn->prepare($sql);
@@ -390,13 +395,14 @@ switch ($q){
         }
         break;
 
-    case "get_product_details":
+    case "get_item_details":
         $update_permission = $dbClass->getUserGroupPermission(64);
         if($update_permission==1){
-            $sql = "SELECT p.product_id, p.name, p.code, p.details, c.id category_id, p.availability,feature_image, tags
-					FROM products p
+            $sql = "SELECT p.item_id, p.name, p.code, p.details, c.id category_id, p.availability,feature_image, tags
+					FROM items p
 					LEFT JOIN category c ON c.id = p.category_id
-					WHERE p.product_id= $product_id";
+					WHERE p.item_id= $item_id";
+            //echo $sql; die;
             $stmt = $conn->prepare($sql);
             $stmt->execute();
             $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -407,15 +413,16 @@ switch ($q){
             $rate_details = $dbClass->getResultList("SELECT pr.size_id, s.name size_name, pr.unit_id ,
 													u.unit_name, pr.stock_quantity, pr.production_rate, 
 													pr.rate, pr.discount_type, pr.discount_amount, pr.discounted_rate
-													FROM product_rate pr
+													FROM item_rate pr
 													LEFT JOIN size s ON s.id = pr.size_id
 													LEFT JOIN units u ON u.id = pr.unit_id
-													WHERE pr.product_id ='$product_id'");
+													WHERE pr.item_id ='$item_id'");
+            //echo $rate_details; die;
             foreach ($rate_details as $row) {
                 $data['rate_details'][] = $row;
             }
 
-            $attachment_details = $dbClass->getResultList("select id img_id, product_image from product_image where product_id = '$product_id'");
+            $attachment_details = $dbClass->getResultList("select id img_id, item_image from item_image where item_id = '$item_id'");
             foreach ($attachment_details as $row) {
                 $data['attachment'][] = $row;
             }
@@ -425,9 +432,9 @@ switch ($q){
 															SELECT id, name, check_status 
 															FROM (
 																SELECT p.ingredient_id id, i.name, 1 check_status 
-																FROM product_ingredient p
+																FROM item_ingredient p
 																LEFT JOIN ingredient i on i.id = p.ingredient_id 
-																WHERE product_id = '$product_id'	
+																WHERE item_id = '$item_id'	
 																UNION
 																SELECT id, name, 0 check_status
 																FROM ingredient 
@@ -445,50 +452,50 @@ switch ($q){
         }
         break;
 
-    case "category_wise_product_code":
+    case "category_wise_item_code":
         $category_id 	= $_POST['category_id'];
         $category_code  = $_POST['category_code'];
 
-        $last_product_code = $dbClass->getSingleRow("SELECT MAX(SUBSTR(p.code,LENGTH(c.code)+1)) product_code	
-													FROM products p 
+        $last_item_code = $dbClass->getSingleRow("SELECT MAX(SUBSTR(p.code,LENGTH(c.code)+1)) item_code	
+													FROM items p 
 													LEFT JOIN category c on c.id = p.category_id
 													WHERE c.id = '$category_id' AND LEFT(p.code,LENGTH(c.code)) = c.code");
 
-        if($last_product_code['product_code'] == 'NULL' || $last_product_code['product_code'] == ''){
-            $new_product_code = $category_code.'0001';
+        if($last_item_code['item_code'] == 'NULL' || $last_item_code['item_code'] == ''){
+            $new_item_code = $category_code.'0001';
         }
         else{
-            $new_product_code = $category_code.$last_product_code['product_code']+1;
+            $new_item_code = $category_code.$last_item_code['item_code']+1;
         }
-        echo $new_product_code;
+        echo $new_item_code;
         break;
 
     case "delete_attached_file":
-        $attachment_name = $dbClass->getSingleRow("select product_image from product_image where id = $img_id");
+        $attachment_name = $dbClass->getSingleRow("select item_image from item_image where id = $img_id");
         $condition_array = array(
             'id'=>$img_id
         );
 
-        if($dbClass->delete("product_image", $condition_array)){
-            unlink("../images/product/".$attachment_name['product_image']);
-            unlink("../images/product/thumb/".$attachment_name['product_image']);
+        if($dbClass->delete("item_image", $condition_array)){
+            unlink("../images/product/".$attachment_name['item_image']);
+            unlink("../images/product/thumb/".$attachment_name['item_image']);
             echo 1;
         }
         else
             echo 0;
         break;
 
-    case "delete_product":
+    case "delete_item":
         $delete_permission = $dbClass->getUserGroupPermission(63);
         if($delete_permission==1){
             $condition_array = array(
-                'product_id'=>$product_id
+                'item_id'=>$item_id
             );
             $columns_value = array(
                 'availability'=>0
             );
-            $return = $dbClass->update("products", $columns_value, $condition_array);
-            /* $prev_attachment = $dbClass->getResultList("select product_image from product_image where product_id=$product_id");
+            $return = $dbClass->update("items", $columns_value, $condition_array);
+            /* $prev_attachment = $dbClass->getResultList("select item_image from item_image where item_id=$product_id");
             foreach($prev_attachment as $row){
                 unlink("../images/product/".$row['product_image']);
                 unlink("../images/product/thumb/".$attachment_name['product_image']);

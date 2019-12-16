@@ -142,6 +142,17 @@ class dbClass {
 		}		
 	}
 
+    public function print_arrays()
+    {
+        $args = func_get_args();
+        echo "<pre>";
+        foreach ($args as $arg) {
+            print_r($arg);
+        }
+        echo "</pre>";
+        die();
+    }
+
 }
 
 ?>

@@ -5,7 +5,8 @@
  */
 
 /** ******  left menu  *********************** **/
-$(function () {	
+$(function () {
+    //http://burritobrothers.test/admin/index.php?module=personal&view=profile
 	var current_page = location.search.split('view=')[1];
 	var current_mmod = location.search.split('module=');
 	if($.trim(current_mmod[1]) != "undefined" && $.trim(current_mmod[1]) != ""){

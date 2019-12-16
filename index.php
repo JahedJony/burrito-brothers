@@ -16,6 +16,7 @@ $mobile_info  = $dbClass->getDescription('store_contact');
 $about_us     = $dbClass->getDescriptionWithHtml(28);
 $address      = $dbClass->getDescription('store_address');
 $website_url  = $dbClass->getDescription('website_url');
+$website_title=$dbClass->getDescription('website_title');
 $logo         =$website_url."admin/".$dbClass->getDescription('company_logo');
 //$feature      = $dbClass->getDescription(47);
 //$special_menu = $dbClass->getDescription(48);
@@ -47,7 +48,7 @@ if(isset($_GET['search'])) $search_text = "";
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Burrito Brothers</title>
+    <title><?php echo $website_title; ?></title>
     <link href="plugin/bootstrap/bootstrap.css" rel="stylesheet">
     <link href="plugin/bootstrap/datepicker.css" rel="stylesheet">
     <link href="plugin/font-awesome/font-awesome.css" rel="stylesheet">
@@ -65,6 +66,7 @@ if(isset($_GET['search'])) $search_text = "";
     <!--[if lt IE 9]>
     <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
     <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+
     <![endif]-->
 </head>
 
@@ -356,7 +358,7 @@ if(isset($_GET['search'])) $search_text = "";
     <footer>
         <div class="footer-part wow fadeInDown" data-wow-duration="1000ms" data-wow-delay="300ms">
             <div class="icon-default icon-dark">
-                <img src="images/footer-logo.png" alt="">
+                <img src="<?php echo $logo; ?>"  alt="">
             </div>
             <div class="container">
                 <div class="footer-inner">
@@ -484,6 +486,10 @@ if(isset($_GET['search'])) $search_text = "";
 <script src="plugin/parallax/jquery.stellar.js"></script>
 <script src="js/app.js"></script>
 <script src="js/script.js"></script>
+<script src="js/url.js"></script>
+<script src="js/static_text.js"></script>
+
+
 <script>
     function loadPage(pageName) {
        // alert( "Load was performed." );
@@ -493,7 +499,7 @@ if(isset($_GET['search'])) $search_text = "";
         });
     }
 
-    loadPage('body_view');
+    //loadPage('body_view');
 
 
     function active_modal(type){

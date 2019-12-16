@@ -109,7 +109,7 @@ else{
                         <th class="column-title" width="15%">Item Name</th>
                         <th class="column-title" width="15%">Category Name</th>
                         <th class="column-title" width="">Details</th>
-                        <th class="column-title" width="25%">Item Details</th>
+                        <th class="column-title" width="25%">Rate</th>
                         <th class="column-title" width="10%">Availability</th>
                         <th class="column-title no-link last" width="10%"><span class="nobr"></span></th>
                     </tr>
@@ -144,7 +144,7 @@ else{
                             <div class="form-group">
                                 <label class="control-label col-md-2 col-sm-2 col-xs-12">Item Name<span class="required">*</span></label>
                                 <div class="col-md-4 col-sm-4 col-xs-12">
-                                    <input type="text" id="item_name" name="item" class="form-control col-lg-12"/>
+                                    <input type="text" id="item_name" name="item_name" class="form-control col-lg-12"/>
                                 </div>
                                 <label class="control-label col-md-2 col-sm-2 col-xs-6">Item Code<span class="required">*</span></label>
                                 <div class="col-md-4 col-sm-4 col-xs-12">
@@ -310,7 +310,7 @@ else{
                     type: "post",
                     async:false,
                     data: {
-                        q: "item_info",
+                        q: "product_info",
                         term: request.term,
                         category_id: category_id
                     },
@@ -548,7 +548,7 @@ else{
                     page_no:current_page_no
                 },
                 success: function(data) {
-                    alert(data)
+                    //alert(data)
                     var todate = "<?php echo date("Y-m-d"); ?>";
                     var user_name =  "<?php echo $user_name; ?>";
                     var html = "";
@@ -604,7 +604,7 @@ else{
                         $("#search_item_button").toggleClass('active');
                         if(!jQuery.isEmptyObject(records_array)){
                             //create and set grid table row
-                            var colums_array=["item_id*identifier*hidden","name","category_head_name","details","p_details","active_status"];
+                            var colums_array=["item_id*identifier*hidden","name","category_head_name","details","i_rate","active_status"];
                             //first element is for view , edit condition, delete condition
                             //"all" will show /"no" will show nothing
                             var condition_array=["","","update_status", "1","delete_status","1"];
@@ -692,6 +692,8 @@ else{
                 success_or_error_msg('#form_submit_error','danger',"Please select Rate",".rate");
             }
             else{
+                alert('ok');
+
                 $.ajax({
                     url: project_url+"controller/itemController.php",
                     type:'POST',
@@ -701,6 +703,8 @@ else{
                     contentType:false,
                     processData:false,
                     success: function(data){
+                        alert(data);
+
                         $('#save_item').removeAttr('disabled','disabled');
 
                         if($.isNumeric(data)==true && data == 3){

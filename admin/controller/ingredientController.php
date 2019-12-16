@@ -40,6 +40,7 @@ switch ($q){
 			else{
 				$photo  = "images/no_image.png";	
 			}
+			//echo $ingredient_price; die;
 			
 			$columns_value = array(
 				'name'=>$ingredient_name,
@@ -56,9 +57,14 @@ switch ($q){
 			}else "0";
 		}
 		else if(isset($ingredient_id) && $ingredient_id>0){
-			
-			if(isset($_FILES['ingredient_image_upload']) && $_FILES['ingredient_image_upload']['name']!= ""){
-				$desired_dir = "../images/ingredient";
+
+            //echo $ingredient_price; die;
+
+
+            if(isset($_FILES['ingredient_image_upload']) && $_FILES['ingredient_image_upload']['name']!= ""){
+                //echo $ingredient_price; die;
+
+                $desired_dir = "../images/ingredient";
 				chmod( "../images/ingredient", 0777);
 				$file_name = $_FILES['ingredient_image_upload']['name'];
 				$file_size =$_FILES['ingredient_image_upload']['size'];
@@ -88,7 +94,7 @@ switch ($q){
 			
 			if($photo != ""){	
 				if($prev_attachment['photo'] != "" && $prev_attachment['photo'] != "images/no_image.png"){
-					unlink("../".$prev_attachment['photo']);
+					//unlink("../".$prev_attachment['photo']);
 				}
 				$columns_value = array(
 					'photo' => $photo
@@ -101,7 +107,9 @@ switch ($q){
 			
 			$columns_value = array(
 				'name'=>$ingredient_name,
-				'code'=>$ingredient_code
+				'code'=>$ingredient_code,
+                'size_id'=>$ingredient_size_id,
+                'price'=>$ingredient_price
 			);
 			
 			$condition_array = array(
@@ -125,14 +133,15 @@ switch ($q){
 		$update_permission          = $dbClass->getUserGroupPermission(56);
 		
 		$ingredient_grid_permission   = $dbClass->getUserGroupPermission(57);
-		
+
 		$countsql = "SELECT count(id)
 					FROM(
-						SELECT c.id, c.code, c.name,c.price
+						SELECT c.id, c.code, c.name as ingredient_name, s.name as size_name, c.price as ingredient_price, c.photo
 						FROM ingredient c
+						LEFT JOIN size s on s.id = c.size_id
 						ORDER BY c.id
 					)A
-					WHERE CONCAT(id, code, name) LIKE '%$search_txt%'";
+					WHERE CONCAT(id, code, ingredient_name) LIKE '%$search_txt%'";
 		//echo $countsql;die;
 		$stmt = $conn->prepare($countsql);
 		$stmt->execute();
@@ -140,8 +149,11 @@ switch ($q){
 		$data['total_records'] = $total_records;
 		$data['entry_status'] = $entry_permission;	
 		$total_pages = $total_records/$limit;		
-		$data['total_pages'] = ceil($total_pages); 
+		$data['total_pages'] = ceil($total_pages);
 		if($ingredient_grid_permission==1){
+
+
+
 
 			$sql = 	"SELECT id, ingredient_name,size_name, code, ingredient_price, photo,
 					$update_permission as update_status, $delete_permission as delete_status
@@ -151,7 +163,7 @@ switch ($q){
 						LEFT JOIN size s on s.id = c.size_id
 						ORDER BY c.id
 					)A
-					WHERE CONCAT(id, ingredient_name, code) LIKE '%%'
+					WHERE CONCAT(id, code, ingredient_name) LIKE '%$search_txt%';
 					ORDER BY id desc
 					LIMIT $start, $end";
 					//echo $sql;die;
@@ -168,9 +180,12 @@ switch ($q){
 	case "get_ingredient_details":
 		$update_permission = $dbClass->getUserGroupPermission(56);
 		if($update_permission==1){
-			$sql = "SELECT c.id, c.code, c.name, ifnull(photo,'') photo
+			$sql = "SELECT c.id, c.code, c.name, ifnull(photo,'') photo, c.price as ingredient_price, s.name as ingredient_size_name, s.id as ingredient_size_id
 					FROM ingredient c
+					LEFT JOIN size s on s.id = c.size_id
 					WHERE c.id=$ingredient_id";
+
+			//echo $sql; die;
 			$stmt = $conn->prepare($sql);
 			$stmt->execute();
 			$result = $stmt->fetchAll(PDO::FETCH_ASSOC);	

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Dec 06, 2019 at 10:42 AM
+-- Generation Time: Dec 16, 2019 at 12:12 PM
 -- Server version: 8.0.17
 -- PHP Version: 7.3.10
 
@@ -49,7 +49,8 @@ INSERT INTO `appuser` (`user_id`, `user_name`, `user_password`, `user_level`, `l
 ('1000001', 'admin', 'e10adc3949ba59abbe56e057f20f883e', 'ROLE_USER', 0, 1, NULL, NULL, '1000001'),
 ('1000002', 'kajol', 'e10adc3949ba59abbe56e057f20f883e', 'General', 0, 1, NULL, NULL, '1000002'),
 ('1000003', 'jahed', 'e10adc3949ba59abbe56e057f20f883e', 'General', 0, 0, NULL, NULL, '1000001'),
-('1000004', 'biplob', 'e10adc3949ba59abbe56e057f20f883e', 'General', 0, 1, NULL, NULL, '1000002');
+('1000004', 'biplob', 'e10adc3949ba59abbe56e057f20f883e', 'General', 0, 1, NULL, NULL, '1000002'),
+('1000005', 'No one', 'e10adc3949ba59abbe56e057f20f883e', 'General', 0, 1, NULL, NULL, '1000001');
 
 -- --------------------------------------------------------
 
@@ -96,13 +97,13 @@ CREATE TABLE `category` (
 --
 
 INSERT INTO `category` (`id`, `code`, `name`, `parent_id`, `photo`, `status`) VALUES
-(25, '0001', 'Bakary', NULL, 'images/no_image.png', 1),
-(26, '0002', 'Burger', NULL, 'images/no_image.png', 1),
-(27, '0003', 'Pizza', NULL, 'images/no_image.png', 1),
-(28, '0004', 'Noodlse', NULL, 'images/no_image.png', 1),
-(29, '0005', 'Pasta', NULL, 'images/no_image.png', 1),
-(30, '0006', 'Fry Item', NULL, 'images/no_image.png', 1),
-(31, '0007', 'Lunch', NULL, 'images/no_image.png', 1);
+(25, '0001', 'Bakary', NULL, 'images/category/img53.png', 1),
+(26, '0002', 'Burger', NULL, 'images/category/img68.png', 1),
+(27, '0003', 'Pizza', NULL, 'images/category/img75.png', 1),
+(28, '0004', 'Noodlses', NULL, 'images/category/img67.png', 1),
+(29, '0005', 'Pasta', NULL, 'images/category/img66.png', 1),
+(30, '0006', 'Fry Item', NULL, 'images/category/img63.png', 1),
+(31, '0007', 'Lunch', NULL, 'images/category/1575967379img53.png', 1);
 
 -- --------------------------------------------------------
 
@@ -167,45 +168,12 @@ INSERT INTO `customer_infos` (`customer_id`, `full_name`, `username`, `password`
 (8, 'Shabir Alkama', 'Shabir', 'e10adc3949ba59abbe56e057f20f883e', 'Mohammadpur, Chanmia Housing, 41/10, Road # 1, 5-A. Dhaka - 1207', '0000-00-00', '', '01133', 'Shabiralkama@gmail.com', NULL, 1),
 (9, 'Anika Thasin', 'Anika', '827ccb0eea8a706c4c34a16891f84e7b', 'House-463, Road-31, Mohakhali Dohs', '0000-00-00', '', '01779574169', 'anikathasin.tonni@gmail.com', NULL, 1),
 (10, 'shabir', 'Alkama', 'addcec5c2816e7b9277a56b3b1f12a96', 'H# 1/B, R# 11, Nikunja-2, Khilkhet, Dhaka 1229', '0000-00-00', '', '01712341127', 'shabiralkama_5700@yahoo.com', NULL, 1),
-(11, 'Nazmul', 'Nazmul Ahsan', '25f9e794323b453885f5181f1b624d0b', 'Dhaka', '0000-00-00', '', '01613313666', 'it@nafisagroup.com', NULL, 1),
+(11, 'Nazmul', 'Nazmul Ahsan', '25f9e794323b453885f5181f1b624d0b', 'Dhaka', '0000-00-00', '', '01613313666', 'it@nafisagroup.com', NULL, 0),
 (12, 'mmmmomit', 'mmmmomit', 'e10adc3949ba59abbe56e057f20f883e', '', '0000-00-00', '', '0198034045', 'm.k@gmail.com', NULL, 1),
 (13, 'Walk In Customer', NULL, NULL, 'no address', '0000-00-00', 'images/no_image.png', '456456464', '', '', 1),
-(14, 'POS Customer', NULL, NULL, 'dfgdgdfg', '0000-00-00', 'images/no_image.png', '45645646', '', '', 1);
-
--- --------------------------------------------------------
-
---
--- Table structure for table `custom_cake`
---
-
-CREATE TABLE `custom_cake` (
-  `id` int(11) NOT NULL,
-  `cc_cake_weight` varchar(50) DEFAULT NULL,
-  `cc_cake_tyre` tinyint(1) DEFAULT NULL,
-  `cc_delevery_date` datetime DEFAULT NULL,
-  `cc_details` text NOT NULL,
-  `cc_name` varchar(200) NOT NULL,
-  `cc_email` varchar(200) NOT NULL,
-  `cc_mobile` varchar(20) NOT NULL,
-  `cc_image` varchar(200) DEFAULT NULL,
-  `status` tinyint(1) DEFAULT '1' COMMENT '1:not seen, 2:seen, 3:varified',
-  `active` tinyint(1) NOT NULL DEFAULT '1' COMMENT '1: Active, 0: Deleted',
-  `varified_by` varchar(20) DEFAULT NULL,
-  `varified_time` datetime DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
-  `remarks` text
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
---
--- Dumping data for table `custom_cake`
---
-
-INSERT INTO `custom_cake` (`id`, `cc_cake_weight`, `cc_cake_tyre`, `cc_delevery_date`, `cc_details`, `cc_name`, `cc_email`, `cc_mobile`, `cc_image`, `status`, `active`, `varified_by`, `varified_time`, `remarks`) VALUES
-(1, '0', 0, '2018-11-13 12:00:00', 'sdf sdf', 'sdf ', 'sdfs', '45435', 'images/custom/momit_singara.jpg', 2, 1, NULL, '2018-11-15 10:51:19', NULL),
-(2, '0', 0, '2018-11-25 12:00:00', 'hhhhhhhh', 'Mir Abu Sayef', 'mirabu.sayef@yahoo.com', '01630325935', 'images/custom/kit.jpg', 2, 1, NULL, '2018-11-25 17:01:12', NULL),
-(3, '3', 0, '2018-11-25 12:00:00', 'rectangular', 'shabir', 'shabiralkama@gmail.com', '01712341127', 'images/custom/8.jpg', 3, 1, '1000001', '2018-11-25 17:57:53', ''),
-(4, '', 1, '2018-11-29 03:30:00', 'Write up : happy birthday', 'shabir', 'shabiralkama@gmail.com', '01712341127', 'images/custom/5.jpg', 1, 1, NULL, NULL, NULL),
-(5, '5', 3, '2018-11-29 12:00:00', 'from momit', 'momit', 'momit.litu@gmails.com', '654541', 'images/no_image.png', 1, 1, NULL, NULL, NULL),
-(6, '', 0, '2018-12-03 12:00:00', 'square', 'happy birthday to sumaiya', 'shabiralkama@gmail.com', 'shabir', 'images/custom/15438304268.jpg', 1, 1, NULL, NULL, NULL);
+(14, 'POS Customer', NULL, NULL, 'dfgdgdfg', '0000-00-00', 'images/no_image.png', '45645646', '', '', 1),
+(15, 'chaki', NULL, NULL, '622, West shawrapara, mirpur', '2017-02-07', 'images/no_image.png', '234', '', '', 1),
+(16, 'chaki', NULL, NULL, '622, West shawrapara, mirpur', '2019-12-10', 'images/no_image.png', '234', '', '', 1);
 
 -- --------------------------------------------------------
 
@@ -430,7 +398,7 @@ CREATE TABLE `general_settings` (
 --
 
 INSERT INTO `general_settings` (`id`, `company_name`, `website_title`, `website_url`, `web_admin_email`, `web_admin_contact`, `store_name`, `store_address`, `store_longitude`, `store_latitude`, `store_contact`, `store_incharge_name`, `company_logo`, `yelp_url`, `fb_url`, `tweeter_url`, `instagram_url`, `meta_description`, `meta_keywards`, `currency`, `currency_symbol`, `decimal_placement`, `tax_enable`, `minimum_order_amount`, `takeout`, `delivery`, `dinein`, `card_payment`, `cash_payment`, `loyelty_payment`, `payment_card_visa`, `payment_card_master`, `payment_card_amex`, `payment_card_discover`, `point_reserve_value`, `redeem_value`, `tax_type`, `tax_amount`) VALUES
-(1, 'Burrito Brothers', 'Burrito Brothers', 'http://burritobrothers.test/', 'sagdf2fds', '12345', 'Burrito Brothers', '622, West shawrapara\r\nmirpur', '12.23', '13.123', '12345', 'kajol', 'images/banner/1574837831moumit.jpg', 'http://burritobrothers.test/', 'http://burritobrothers.test/', 'http://burritobrothers.test/', 'http://burritobrothers.test/', 'You can use a standard JS for..in loop - you don\'t need jQuery, though it has you covered too with its $.each() method. Either way gives you access to the property names and their corresponding values. Given you\'ve got nested objects you will probably want nested for..in or $.each() loops.\r\nYou don\'t make it at all clear what format your output should be, but here\'s a simple example that at least shows how to get the pieces you need:', 'food, pizza, takeout, group', 'USD', '$', 3, 0, 1.00, 1, 0, 1, 1, 0, 1, 1, 1, 1, 0, 10, 10, 0, 0);
+(1, 'Burrito Brothers', 'Burrito Brothers', 'http://burritobrothers.test/', 'burritobrothers@gmail.net', '12345', 'Burrito Brothers', '622, West shawrapara\r\nmirpur', '12.23', '13.123', '12345', 'kajol', 'images/banner/burritoLogo.png', 'http://burritobrothers.test/', 'http://burritobrothers.test/', 'http://burritobrothers.test/', 'http://burritobrothers.test/', 'You can use a standard JS for..in loop - you don\'t need jQuery, though it has you covered too with its $.each() method. Either way gives you access to the property names and their corresponding values. Given you\'ve got nested objects you will probably want nested for..in or $.each() loops.\r\nYou don\'t make it at all clear what format your output should be, but here\'s a simple example that at least shows how to get the pieces you need:', 'food, pizza, takeout, group', 'USD', '$', 3, 0, 1.00, 1, 0, 1, 1, 0, 1, 1, 1, 1, 0, 10, 10, 0, 0);
 
 -- --------------------------------------------------------
 
@@ -472,19 +440,190 @@ CREATE TABLE `ingredient` (
 --
 
 INSERT INTO `ingredient` (`id`, `code`, `name`, `size_id`, `price`, `photo`) VALUES
-(4, '10002', 'Eggs', NULL, NULL, 'images/no_image.png'),
-(7, '10005', 'Milk', NULL, NULL, 'images/no_image.png'),
-(8, '10007', 'Suger', NULL, NULL, 'images/no_image.png'),
-(11, '10009', 'Butter', NULL, NULL, 'images/no_image.png'),
-(15, '10013', 'Cheese', NULL, NULL, 'images/no_image.png'),
-(16, '10014', 'Chocolate', NULL, NULL, 'images/no_image.png'),
-(17, '10015', 'Dark Chocolate', NULL, NULL, 'images/no_image.png'),
-(24, '10022', 'Chicken', NULL, NULL, 'images/no_image.png'),
-(26, '10024', 'Vegetable', NULL, NULL, 'images/no_image.png'),
-(29, '10001', 'Beef', NULL, NULL, NULL),
-(38, '234', 'Chicken Slice', NULL, NULL, 'images/ingredient/'),
-(39, '344', 'Suger', 5, 22, 'images/no_image.png'),
-(40, '1234', 'Musrum', 3, 20, 'images/ingredient/');
+(4, '10002', 'Eggs', 6, 15, 'images/ingredient/download.jpeg'),
+(7, '10005', 'Milk', 8, 20, 'images/ingredient/milk.jpeg'),
+(11, '10009', 'Butter', 6, 25, 'images/ingredient/butter.jpeg'),
+(15, '10013', 'Cheese', 5, 50, 'images/ingredient/cheese.jpeg'),
+(16, '10014', 'Chocolate', 25, 80, 'images/ingredient/chocolete.jpeg'),
+(17, '10015', 'Dark Chocolate', 25, 100, 'images/ingredient/dark chocolere.jpeg'),
+(24, '10022', 'Chicken', 24, 40, 'images/ingredient/1576496500chicken slice.jpeg'),
+(26, '10024', 'Vegetable', 25, 20, 'images/ingredient/vegetable.jpeg'),
+(29, '10001', 'Beef', 5, 100, 'images/ingredient/beef.jpeg'),
+(39, '344', 'Suger', 5, 222, 'images/ingredient/suger.jpeg'),
+(40, '1234', 'Musrum', 3, 20, 'images/ingredient/musroom.jpeg');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `items`
+--
+
+CREATE TABLE `items` (
+  `item_id` int(11) NOT NULL,
+  `name` varchar(200) NOT NULL,
+  `code` varchar(200) NOT NULL,
+  `tags` varchar(200) NOT NULL,
+  `details` text,
+  `short_description` text,
+  `category_id` int(11) NOT NULL,
+  `brand_name` varchar(50) DEFAULT NULL,
+  `availability` tinyint(1) NOT NULL DEFAULT '1' COMMENT '1: available, 0: not avalable',
+  `sell_from_stock` tinyint(1) NOT NULL DEFAULT '1' COMMENT '1: Yes, 0: No',
+  `feature_image` varchar(50) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `items`
+--
+
+INSERT INTO `items` (`item_id`, `name`, `code`, `tags`, `details`, `short_description`, `category_id`, `brand_name`, `availability`, `sell_from_stock`, `feature_image`) VALUES
+(1, 'Pestry', '00001', '', 'dfgdfg', NULL, 25, NULL, 1, 0, ''),
+(2, 'Plain Cake', '0002', '', 'good test', NULL, 25, NULL, 1, 0, ''),
+(3, 'Product A', '101', '', 'hjhj khjkhjh', NULL, 26, NULL, 1, 0, ''),
+(4, 'AAAA', '2100', '', 'sd', NULL, 25, NULL, 1, 0, ''),
+(5, 'Bowl Rice', '000023', '', 'rice', NULL, 31, NULL, 1, 0, '');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `item_image`
+--
+
+CREATE TABLE `item_image` (
+  `id` int(11) NOT NULL,
+  `item_id` int(11) NOT NULL,
+  `item_image` varchar(55) NOT NULL,
+  `is_featured` tinyint(1) DEFAULT '0' COMMENT '1:featured, 0 not '
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `item_image`
+--
+
+INSERT INTO `item_image` (`id`, `item_id`, `item_image`, `is_featured`) VALUES
+(1, 1, '15723716584.jpg', 0),
+(2, 2, '15733204197.jpg', 0),
+(3, 5, 'chicken slice.jpeg', 0);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `item_ingredient`
+--
+
+CREATE TABLE `item_ingredient` (
+  `id` int(11) NOT NULL,
+  `item_id` int(11) NOT NULL,
+  `size_id` int(11) NOT NULL,
+  `price` int(11) NOT NULL,
+  `ingredient_id` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `item_ingredient`
+--
+
+INSERT INTO `item_ingredient` (`id`, `item_id`, `size_id`, `price`, `ingredient_id`) VALUES
+(58, 5, 0, 0, 7),
+(59, 5, 0, 0, 15),
+(60, 5, 0, 0, 17),
+(64, 3, 0, 0, 4),
+(65, 3, 0, 0, 15),
+(66, 3, 0, 0, 16),
+(67, 2, 0, 0, 4),
+(68, 2, 0, 0, 7),
+(69, 2, 0, 0, 8),
+(70, 2, 0, 0, 11),
+(71, 2, 0, 0, 15),
+(72, 2, 0, 0, 16),
+(73, 2, 0, 0, 17),
+(74, 2, 0, 0, 24),
+(75, 2, 0, 0, 26),
+(76, 2, 0, 0, 29);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `item_rate`
+--
+
+CREATE TABLE `item_rate` (
+  `id` int(11) NOT NULL,
+  `item_id` int(11) NOT NULL,
+  `size_id` int(11) NOT NULL,
+  `unit_id` int(11) NOT NULL,
+  `stock_quantity` int(11) NOT NULL,
+  `production_rate` float(10,2) NOT NULL,
+  `rate` float(10,2) NOT NULL,
+  `discount_type` tinyint(1) NOT NULL DEFAULT '1' COMMENT '1: flat_rate; 2:percentage_rate',
+  `discount_amount` float(10,2) NOT NULL,
+  `discounted_rate` float(10,2) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `item_rate`
+--
+
+INSERT INTO `item_rate` (`id`, `item_id`, `size_id`, `unit_id`, `stock_quantity`, `production_rate`, `rate`, `discount_type`, `discount_amount`, `discounted_rate`) VALUES
+(25, 4, 1, 3, 6, 875.00, 950.00, 1, 5.00, 875.00),
+(27, 5, 1, 3, 2, 120.00, 150.00, 1, 0.00, 150.00),
+(30, 3, 1, 3, 8, 0.00, 100.00, 1, 50.00, 50.00),
+(31, 3, 14, 3, 9, 0.00, 100.00, 2, 10.00, 10.00),
+(34, 2, 1, 3, 5, 120.00, 150.00, 1, 0.00, 150.00),
+(35, 1, 7, 3, 2, 1510.00, 1720.00, 1, 0.00, 1720.00);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `item_review`
+--
+
+CREATE TABLE `item_review` (
+  `id` int(11) NOT NULL,
+  `item_id` int(11) NOT NULL,
+  `review_details` text,
+  `review_point` int(1) NOT NULL,
+  `review_by_name` varchar(200) NOT NULL,
+  `review_by_email` varchar(200) NOT NULL,
+  `review_date` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `item_stock`
+--
+
+CREATE TABLE `item_stock` (
+  `id` int(11) NOT NULL,
+  `item_rate_id` int(11) NOT NULL,
+  `date` date DEFAULT NULL,
+  `quantity` int(11) DEFAULT NULL,
+  `note` varchar(45) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `item_stock`
+--
+
+INSERT INTO `item_stock` (`id`, `item_rate_id`, `date`, `quantity`, `note`) VALUES
+(1, 8, '2019-11-20', 5, 'item added'),
+(2, 7, '2019-11-21', 33, 'item added'),
+(3, 8, '2019-11-13', 6, 'item added'),
+(4, 7, '2019-11-20', 33, 'item added'),
+(5, 8, '2019-11-13', 6, 'item added'),
+(6, 7, '2019-11-20', 33, 'item added'),
+(7, 8, '2019-11-13', -6, 'item damaged'),
+(8, 7, '2019-11-20', 33, 'item added'),
+(9, 9, '2019-11-13', 3, 'item added'),
+(10, 9, '2019-11-12', 22, 'item added'),
+(25, 8, '2019-11-14', 33, 'sdf'),
+(26, 7, '2019-11-22', 2, 'update'),
+(27, 9, '2019-11-21', 10, 'item receive from shopno'),
+(28, 12, '2019-11-21', -12, 'item receive from shopno'),
+(29, 16, '2019-11-21', 2, 'add item'),
+(30, 13, '2019-11-21', 2, 'add item'),
+(31, 12, '2019-11-21', 3, 'add item');
 
 -- --------------------------------------------------------
 
@@ -519,11 +658,11 @@ INSERT INTO `notification` (`id`, `product_rate_id`, `details`, `status`, `date_
 CREATE TABLE `order_details` (
   `id` int(11) NOT NULL,
   `order_id` int(11) NOT NULL,
-  `product_id` int(11) NOT NULL,
+  `item_id` int(11) NOT NULL,
   `size_id` int(11) NOT NULL,
   `unit_id` int(11) NOT NULL,
   `quantity` int(11) NOT NULL,
-  `product_rate` float(8,2) NOT NULL DEFAULT '0.00',
+  `item_rate` float(8,2) NOT NULL DEFAULT '0.00',
   `status` tinyint(1) DEFAULT '1' COMMENT '1:active,  2: canceled '
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -531,12 +670,7 @@ CREATE TABLE `order_details` (
 -- Dumping data for table `order_details`
 --
 
-INSERT INTO `order_details` (`id`, `order_id`, `product_id`, `size_id`, `unit_id`, `quantity`, `product_rate`, `status`) VALUES
-(66, 30, 1, 7, 3, 1, 1720.00, 1),
-(67, 30, 2, 1, 3, 12, 150.00, 1),
-(68, 30, 1, 500, 3, 1, 1720.00, 1),
-(69, 30, 2, 0, 3, 12, 150.00, 1),
-(70, 30, 1, 7, 3, 3, 1720.00, 1),
+INSERT INTO `order_details` (`id`, `order_id`, `item_id`, `size_id`, `unit_id`, `quantity`, `item_rate`, `status`) VALUES
 (83, 30, 1, 7, 3, 1, 1720.00, 1);
 
 -- --------------------------------------------------------
@@ -576,210 +710,9 @@ CREATE TABLE `order_master` (
 --
 
 INSERT INTO `order_master` (`order_id`, `customer_id`, `order_date`, `delivery_date`, `delivery_type`, `outlet_id`, `delivery_charge_id`, `cupon_id`, `discount_amount`, `delivery_charge`, `total_order_amt`, `total_paid_amount`, `tax_amount`, `address`, `remarks`, `order_status`, `order_noticed`, `order_noticed_time`, `payment_time`, `payment_status`, `payment_method`, `payment_reference_no`, `invoice_no`) VALUES
-(30, 14, '2019-11-10 19:21:09', '2019-11-10 12:00:00', 3, NULL, 3, NULL, 50.00, 0.00, 8680.00, 3470.00, 0.00, '', 'dfgdfg', 2, 2, '2019-11-10 08:28:14', '2019-11-10 12:59:24', 2, 3, '4544545', 'INV111900001');
-
--- --------------------------------------------------------
-
---
--- Table structure for table `outlets`
---
-
-CREATE TABLE `outlets` (
-  `id` int(11) NOT NULL,
-  `address` varchar(500) NOT NULL,
-  `outlet_name` varchar(200) DEFAULT NULL,
-  `longitud` varchar(50) NOT NULL,
-  `incharge_name` varchar(200) DEFAULT NULL,
-  `image` varchar(200) DEFAULT NULL,
-  `mobile` varchar(11) NOT NULL,
-  `latitude` varchar(50) NOT NULL,
-  `status` tinyint(1) NOT NULL DEFAULT '1' COMMENT '1: Active; 0:In-Active'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
---
--- Dumping data for table `outlets`
---
-
-INSERT INTO `outlets` (`id`, `address`, `outlet_name`, `longitud`, `incharge_name`, `image`, `mobile`, `latitude`, `status`) VALUES
-(1, '4/1 Salimullah Road, Mohammadpur, Dhaka', 'Mohammodpur ', '90.363841', '', 'images/outlets/outlate1.jpg', '01613313677', '23.759467', 1),
-(2, 'Shaplar More, Kamarpara, Uttara, Dhaka', 'Uttara', '', '', 'images/outlets/outlate2.jpg', '01613313676', '', 1),
-(3, 'H # 41, R # 04, B # 6, South Banasree, Dhaka', 'Banasree # 1', '', '', 'images/outlets/outlate3.jpg', '', '', 1),
-(4, 'H # 227, R # 16, B # K, South Banasree, Dhaka', 'Banasree # 2', '', '', 'images/outlets/outlate4.jpg', '', '', 1);
-
--- --------------------------------------------------------
-
---
--- Table structure for table `products`
---
-
-CREATE TABLE `products` (
-  `product_id` int(11) NOT NULL,
-  `name` varchar(200) NOT NULL,
-  `code` varchar(200) NOT NULL,
-  `tags` varchar(200) NOT NULL,
-  `details` text,
-  `short_description` text,
-  `category_id` int(11) NOT NULL,
-  `brand_name` varchar(50) DEFAULT NULL,
-  `availability` tinyint(1) NOT NULL DEFAULT '1' COMMENT '1: available, 0: not avalable',
-  `sell_from_stock` tinyint(1) NOT NULL DEFAULT '1' COMMENT '1: Yes, 0: No',
-  `feature_image` varchar(50) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
---
--- Dumping data for table `products`
---
-
-INSERT INTO `products` (`product_id`, `name`, `code`, `tags`, `details`, `short_description`, `category_id`, `brand_name`, `availability`, `sell_from_stock`, `feature_image`) VALUES
-(1, 'Pestry', '00001', '', '', NULL, 25, NULL, 1, 1, ''),
-(2, 'Plain Cake', '0002', '', '', NULL, 25, NULL, 1, 1, ''),
-(3, 'Product A', '101', '', 'hjhj khjkhjh', NULL, 26, NULL, 1, 0, ''),
-(4, 'AAAA', '2100', '', '', NULL, 25, NULL, 1, 0, '');
-
--- --------------------------------------------------------
-
---
--- Table structure for table `product_image`
---
-
-CREATE TABLE `product_image` (
-  `id` int(11) NOT NULL,
-  `product_id` int(11) NOT NULL,
-  `product_image` varchar(55) NOT NULL,
-  `is_featured` tinyint(1) DEFAULT '0' COMMENT '1:featured, 0 not '
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
---
--- Dumping data for table `product_image`
---
-
-INSERT INTO `product_image` (`id`, `product_id`, `product_image`, `is_featured`) VALUES
-(1, 1, '15723716584.jpg', 0),
-(2, 2, '15733204197.jpg', 0);
-
--- --------------------------------------------------------
-
---
--- Table structure for table `product_ingredient`
---
-
-CREATE TABLE `product_ingredient` (
-  `id` int(11) NOT NULL,
-  `product_id` int(11) NOT NULL,
-  `ingredient_id` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
---
--- Dumping data for table `product_ingredient`
---
-
-INSERT INTO `product_ingredient` (`id`, `product_id`, `ingredient_id`) VALUES
-(13, 1, 4),
-(14, 1, 8),
-(15, 1, 11),
-(16, 1, 17),
-(17, 2, 4),
-(18, 2, 7),
-(19, 2, 8),
-(20, 2, 11),
-(21, 2, 15),
-(22, 2, 16),
-(23, 2, 17),
-(24, 2, 24),
-(25, 2, 26),
-(26, 2, 29),
-(30, 3, 4),
-(31, 3, 15),
-(32, 3, 16),
-(37, 4, 16),
-(38, 4, 29);
-
--- --------------------------------------------------------
-
---
--- Table structure for table `product_rate`
---
-
-CREATE TABLE `product_rate` (
-  `id` int(11) NOT NULL,
-  `product_id` int(11) NOT NULL,
-  `size_id` int(11) NOT NULL,
-  `unit_id` int(11) NOT NULL,
-  `stock_quantity` int(11) NOT NULL DEFAULT '0',
-  `production_rate` float(10,2) NOT NULL,
-  `rate` float(10,2) NOT NULL,
-  `discount_type` tinyint(1) NOT NULL DEFAULT '1' COMMENT '1: flat_rate; 2:percentage_rate',
-  `discount_amount` float(10,2) NOT NULL,
-  `discounted_rate` float(10,2) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
---
--- Dumping data for table `product_rate`
---
-
-INSERT INTO `product_rate` (`id`, `product_id`, `size_id`, `unit_id`, `stock_quantity`, `production_rate`, `rate`, `discount_type`, `discount_amount`, `discounted_rate`) VALUES
-(7, 1, 7, 3, 40, 1510.00, 1720.00, 1, 0.00, 1720.00),
-(8, 1, 5, 3, 223, 510.00, 620.00, 1, 0.00, 620.00),
-(9, 2, 1, 3, 32, 120.00, 150.00, 1, 0.00, 150.00),
-(12, 3, 1, 3, 20, 0.00, 100.00, 1, 0.00, 100.00),
-(13, 3, 14, 3, 20, 0.00, 80.00, 1, 0.00, 80.00),
-(16, 4, 1, 3, 104, 875.00, 950.00, 1, 5.00, 875.00),
-(17, 4, 0, 0, 0, 0.00, 0.00, 1, 0.00, 0.00);
-
--- --------------------------------------------------------
-
---
--- Table structure for table `product_review`
---
-
-CREATE TABLE `product_review` (
-  `id` int(11) NOT NULL,
-  `product_id` int(11) NOT NULL,
-  `review_details` text,
-  `review_point` int(1) NOT NULL,
-  `review_by_name` varchar(200) NOT NULL,
-  `review_by_email` varchar(200) NOT NULL,
-  `review_date` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `product_stock`
---
-
-CREATE TABLE `product_stock` (
-  `id` int(11) NOT NULL,
-  `product_rate_id` int(11) NOT NULL,
-  `date` date DEFAULT NULL,
-  `quantity` int(11) DEFAULT NULL,
-  `note` varchar(45) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-
---
--- Dumping data for table `product_stock`
---
-
-INSERT INTO `product_stock` (`id`, `product_rate_id`, `date`, `quantity`, `note`) VALUES
-(1, 8, '2019-11-20', 5, 'product added'),
-(2, 7, '2019-11-21', 33, 'product added'),
-(3, 8, '2019-11-13', 6, 'product added'),
-(4, 7, '2019-11-20', 33, 'product added'),
-(5, 8, '2019-11-13', 6, 'product added'),
-(6, 7, '2019-11-20', 33, 'product added'),
-(7, 8, '2019-11-13', -6, 'product damaged'),
-(8, 7, '2019-11-20', 33, 'product added'),
-(9, 9, '2019-11-13', 3, 'product added'),
-(10, 9, '2019-11-12', 22, 'product added'),
-(25, 8, '2019-11-14', 33, 'sdf'),
-(26, 7, '2019-11-22', 2, 'update'),
-(27, 9, '2019-11-21', 10, 'Product receive from shopno'),
-(28, 12, '2019-11-21', 12, 'Product receive from shopno'),
-(29, 16, '2019-11-21', 2, 'add product'),
-(30, 13, '2019-11-21', 2, 'add product'),
-(31, 12, '2019-11-21', 3, 'add product'),
-(32, 7, '2019-11-22', 5, 'none'),
-(33, 7, '2019-11-21', 10, 'none');
+(30, 14, '2019-11-10 19:21:09', '2019-11-10 12:00:00', 3, NULL, 3, NULL, 50.00, 0.00, 8680.00, 3470.00, 0.00, '', 'dfgdfg', 3, 2, '2019-11-10 08:28:14', '2019-11-10 12:59:24', 2, 3, '4544545', 'INV111900001'),
+(31, 5, '2019-12-07 13:14:57', '2019-12-07 12:00:00', 3, NULL, 3, NULL, 0.00, 0.00, 1720.00, 0.00, 0.00, '', '', 1, 2, '2019-12-07 01:18:30', NULL, 1, 3, '', 'INV121900002'),
+(32, 15, '2019-12-07 14:22:54', '2019-12-07 12:00:00', 1, NULL, 1, 1111, 0.00, 0.00, 2595.00, 0.00, 0.00, '', '', 1, 1, NULL, NULL, 1, 3, '', 'INV121900003');
 
 -- --------------------------------------------------------
 
@@ -814,7 +747,10 @@ INSERT INTO `size` (`id`, `code`, `name`) VALUES
 (19, '10018', '1 kg'),
 (20, '10019', '2 kg'),
 (21, '10020', '3 kg'),
-(22, '10021', '4 kg');
+(22, '10021', '4 kg'),
+(23, '10022', '100 mg'),
+(24, '10023', '100 gm'),
+(25, '10024', '50 gm ');
 
 -- --------------------------------------------------------
 
@@ -846,7 +782,8 @@ INSERT INTO `units` (`id`, `unit_name`, `short_name`, `base_unit`, `operator`, `
 (6, 'Mililiter', 'ml', 5, 'div', 1000.00, NULL, 1),
 (7, 'box', 'bx', 0, 'div', 0.00, NULL, 1),
 (8, 'Slice', 'slc', NULL, 'mul', NULL, NULL, 1),
-(9, 'Pound', 'lb', NULL, NULL, NULL, NULL, 1);
+(9, 'Pounds', 'lb', NULL, NULL, NULL, NULL, 1),
+(10, 'Mili gram', 'mg', NULL, NULL, NULL, 'none', 1);
 
 -- --------------------------------------------------------
 
@@ -866,7 +803,8 @@ CREATE TABLE `user_group` (
 
 INSERT INTO `user_group` (`id`, `group_name`, `status`) VALUES
 (21, 'admin', 0),
-(24, 'Sells man', 0);
+(24, 'Sells man', 0),
+(25, 'chef', 0);
 
 -- --------------------------------------------------------
 
@@ -892,7 +830,14 @@ INSERT INTO `user_group_member` (`id`, `group_id`, `emp_id`, `status`) VALUES
 (9, 24, '1000001', 0),
 (10, 24, '1000002', 0),
 (11, 24, '1000003', 0),
-(12, 24, '1000004', 1);
+(12, 24, '1000004', 1),
+(13, 21, '1000005', 0),
+(14, 24, '1000005', 1),
+(15, 25, '1000001', 0),
+(16, 25, '1000002', 0),
+(17, 25, '1000003', 0),
+(18, 25, '1000004', 0),
+(19, 25, '1000005', 0);
 
 -- --------------------------------------------------------
 
@@ -1016,7 +961,59 @@ INSERT INTO `user_group_permission` (`id`, `group_id`, `action_id`, `status`) VA
 (679, 24, 99, 0),
 (680, 24, 100, 0),
 (681, 24, 101, 0),
-(682, 24, 102, 0);
+(682, 24, 102, 0),
+(683, 21, 103, 0),
+(684, 24, 103, 0),
+(685, 25, 10, 0),
+(686, 25, 11, 0),
+(687, 25, 12, 0),
+(688, 25, 13, 0),
+(689, 25, 14, 0),
+(690, 25, 15, 0),
+(691, 25, 16, 0),
+(692, 25, 43, 0),
+(693, 25, 44, 0),
+(694, 25, 45, 0),
+(695, 25, 50, 0),
+(696, 25, 51, 0),
+(697, 25, 52, 0),
+(698, 25, 53, 0),
+(699, 25, 54, 0),
+(700, 25, 55, 0),
+(701, 25, 56, 0),
+(702, 25, 57, 0),
+(703, 25, 58, 0),
+(704, 25, 59, 0),
+(705, 25, 60, 0),
+(706, 25, 61, 0),
+(707, 25, 62, 0),
+(708, 25, 63, 0),
+(709, 25, 64, 0),
+(710, 25, 65, 0),
+(711, 25, 66, 0),
+(712, 25, 67, 0),
+(713, 25, 68, 0),
+(714, 25, 69, 0),
+(715, 25, 74, 0),
+(716, 25, 75, 0),
+(717, 25, 76, 0),
+(718, 25, 77, 0),
+(719, 25, 78, 0),
+(720, 25, 79, 0),
+(721, 25, 80, 0),
+(722, 25, 81, 0),
+(723, 25, 82, 0),
+(724, 25, 83, 0),
+(725, 25, 84, 0),
+(726, 25, 85, 0),
+(727, 25, 86, 0),
+(728, 25, 87, 0),
+(729, 25, 98, 0),
+(730, 25, 99, 0),
+(731, 25, 100, 0),
+(732, 25, 101, 0),
+(733, 25, 102, 0),
+(734, 25, 103, 0);
 
 -- --------------------------------------------------------
 
@@ -1045,10 +1042,11 @@ CREATE TABLE `user_infos` (
 --
 
 INSERT INTO `user_infos` (`emp_id`, `full_name`, `designation_name`, `address`, `age`, `nid_no`, `photo`, `contact_no`, `email`, `blood_group`, `health_card_no`, `is_active_home_page`, `remarks`) VALUES
-('1000001', 'Momit', 'Software Engineer', '', '', '', 'images/employee/moumit.jpg', '01737151125', 'shofiqueshahin@gmail.com', 'B+', '201800001', 0, 'aaaaaaaaaa'),
-('1000002', 'kajol kumar chaki', 'software engineer ', '', '', '23489', 'images/employee/DA90208.jpg', '01757808214', 'kajolchaki@gmail.com', 'o+', NULL, 0, 'none'),
-('1000003', 'jahed', 'Chef', '', '', '345678', 'images/employee/558.jpg', '32456', 'sfho@dsaf.dsf', 'A-', NULL, 0, ''),
-('1000004', 'biplob', 'Store Keeper', '622, West shawrapara, mirpur', '', '2345', '', '21345', 'kumar@mail.com', 'A-', NULL, 0, 'sf');
+('1000001', 'Momit', 'Software Engineer', '', '', '', 'images/employee/moumit.jpg', '01737151125', 'shofiqueshahin@gmail.com', 'B+', '201800001', 1, 'aaaaaaaaaa'),
+('1000002', 'kajol kumar chaki', 'software engineer ', '', '', '23489', 'images/employee/DA90208.jpg', '01757808214', 'kajolchaki@gmail.com', 'o+', NULL, 1, 'none'),
+('1000003', 'jahed', 'Chef', '', '', '345678', 'images/employee/558.jpg', '32456', 'sfho@dsaf.dsf', 'A-', NULL, 1, ''),
+('1000004', 'biplob', 'Store Keeper', '622, West shawrapara, mirpur', '', '2345', '', '21345', 'kumar@mail.com', 'A-', NULL, 1, 'sf'),
+('1000005', 'No one', 'sells man', '', '', '123456', 'images/employee/1576491314Mithu PP.jpg', '2345466', 'kumar@mail.com', 'A-', NULL, 0, 'none');
 
 -- --------------------------------------------------------
 
@@ -1130,7 +1128,8 @@ INSERT INTO `web_actions` (`id`, `activity_name`, `module_id`, `status`) VALUES
 (99, 'Expense CRUD', 7, 0),
 (100, 'Unit CRUD', 6, 0),
 (101, 'Stock adjustment', 3, 0),
-(102, 'Stock Grid', 3, 0);
+(102, 'Stock Grid', 3, 0),
+(103, 'user Grid', 1, 0);
 
 -- --------------------------------------------------------
 
@@ -1282,12 +1281,6 @@ ALTER TABLE `customer_infos`
   ADD PRIMARY KEY (`customer_id`);
 
 --
--- Indexes for table `custom_cake`
---
-ALTER TABLE `custom_cake`
-  ADD PRIMARY KEY (`id`);
-
---
 -- Indexes for table `delivery_charge`
 --
 ALTER TABLE `delivery_charge`
@@ -1347,9 +1340,39 @@ ALTER TABLE `ingredient`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `order_details`
+-- Indexes for table `items`
 --
-ALTER TABLE `order_details`
+ALTER TABLE `items`
+  ADD PRIMARY KEY (`item_id`);
+
+--
+-- Indexes for table `item_image`
+--
+ALTER TABLE `item_image`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `item_ingredient`
+--
+ALTER TABLE `item_ingredient`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `item_rate`
+--
+ALTER TABLE `item_rate`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `item_review`
+--
+ALTER TABLE `item_review`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `item_stock`
+--
+ALTER TABLE `item_stock`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -1357,48 +1380,6 @@ ALTER TABLE `order_details`
 --
 ALTER TABLE `order_master`
   ADD PRIMARY KEY (`order_id`);
-
---
--- Indexes for table `outlets`
---
-ALTER TABLE `outlets`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indexes for table `products`
---
-ALTER TABLE `products`
-  ADD PRIMARY KEY (`product_id`);
-
---
--- Indexes for table `product_image`
---
-ALTER TABLE `product_image`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indexes for table `product_ingredient`
---
-ALTER TABLE `product_ingredient`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indexes for table `product_rate`
---
-ALTER TABLE `product_rate`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indexes for table `product_review`
---
-ALTER TABLE `product_review`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indexes for table `product_stock`
---
-ALTER TABLE `product_stock`
-  ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `size`
@@ -1492,13 +1473,7 @@ ALTER TABLE `cupons`
 -- AUTO_INCREMENT for table `customer_infos`
 --
 ALTER TABLE `customer_infos`
-  MODIFY `customer_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
-
---
--- AUTO_INCREMENT for table `custom_cake`
---
-ALTER TABLE `custom_cake`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `customer_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 
 --
 -- AUTO_INCREMENT for table `delivery_charge`
@@ -1555,94 +1530,82 @@ ALTER TABLE `ingredient`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=42;
 
 --
--- AUTO_INCREMENT for table `order_details`
+-- AUTO_INCREMENT for table `items`
 --
-ALTER TABLE `order_details`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=84;
+ALTER TABLE `items`
+  MODIFY `item_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+
+--
+-- AUTO_INCREMENT for table `item_image`
+--
+ALTER TABLE `item_image`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
+-- AUTO_INCREMENT for table `item_ingredient`
+--
+ALTER TABLE `item_ingredient`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=77;
+
+--
+-- AUTO_INCREMENT for table `item_rate`
+--
+ALTER TABLE `item_rate`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=36;
+
+--
+-- AUTO_INCREMENT for table `item_review`
+--
+ALTER TABLE `item_review`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `item_stock`
+--
+ALTER TABLE `item_stock`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;
 
 --
 -- AUTO_INCREMENT for table `order_master`
 --
 ALTER TABLE `order_master`
-  MODIFY `order_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=31;
-
---
--- AUTO_INCREMENT for table `outlets`
---
-ALTER TABLE `outlets`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
-
---
--- AUTO_INCREMENT for table `products`
---
-ALTER TABLE `products`
-  MODIFY `product_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
-
---
--- AUTO_INCREMENT for table `product_image`
---
-ALTER TABLE `product_image`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
-
---
--- AUTO_INCREMENT for table `product_ingredient`
---
-ALTER TABLE `product_ingredient`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=39;
-
---
--- AUTO_INCREMENT for table `product_rate`
---
-ALTER TABLE `product_rate`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
-
---
--- AUTO_INCREMENT for table `product_review`
---
-ALTER TABLE `product_review`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT for table `product_stock`
---
-ALTER TABLE `product_stock`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=34;
+  MODIFY `order_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=33;
 
 --
 -- AUTO_INCREMENT for table `size`
 --
 ALTER TABLE `size`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
 
 --
 -- AUTO_INCREMENT for table `units`
 --
 ALTER TABLE `units`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT for table `user_group`
 --
 ALTER TABLE `user_group`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
 
 --
 -- AUTO_INCREMENT for table `user_group_member`
 --
 ALTER TABLE `user_group_member`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
 
 --
 -- AUTO_INCREMENT for table `user_group_permission`
 --
 ALTER TABLE `user_group_permission`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=683;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=735;
 
 --
 -- AUTO_INCREMENT for table `web_actions`
 --
 ALTER TABLE `web_actions`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=103;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=104;
 
 --
 -- AUTO_INCREMENT for table `web_menu`

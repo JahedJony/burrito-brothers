@@ -28,17 +28,7 @@
 
                 </ul>
             </li>
-            <!--<li><a><i class="fa fa-th-list"></i>PURCHASE <span class="fa fa-chevron-down"></span></a>
-                <ul class="nav child_menu" style="display: none">
-                    <li><a href="index.php?module=purchase&view=purchases">Purchases</a></li>
-                    <li><a href="index.php?module=purchase&view=purchase_receives">Purchase Receives</a></li>
-                    <li><a href="index.php?module=purchase&view=purchase_bills">Purchase Bills</a></li>
-                    <li><a href="index.php?module=purchase&view=expenses">Expenses</a></li>
-                    <li><a href="index.php?module=purchase&view=expenses_bills">Expense Bills</a></li>
-                    <hr></hr>
-                    <li><a href="index.php?module=purchase&view=soil_report">Purchase Reports</a></li>
-                </ul>
-            </li>-->
+
 
 			<li><a><i class="fa  fa-cog"></i>SETTINGS<span class="fa fa-chevron-down"></span></a>
 				<ul class="nav child_menu" style="display: none">

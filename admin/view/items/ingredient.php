@@ -245,6 +245,7 @@ $(document).ready(function () {
 				cache:false,
 				contentType:false,processData:false,
 				success: function(data){
+				    //alert(data)
 					$('#save_ingredient').removeAttr('disabled','disabled');
 					
 					if($.isNumeric(data)==true && data>0){
@@ -270,12 +271,16 @@ $(document).ready(function () {
 				ingredient_id: ingredient_id
 			},
 			success: function(data){
+			   // alert(data)
 				if(!jQuery.isEmptyObject(data.records)){
 					$.each(data.records, function(i,data){
 
 						$('#ingredient_name').val(data.name);
 						$('#ingredient_id').val(data.id);
 						$('#ingredient_code').val(data.code);
+                        $('#ingredient_size_name').val(data.ingredient_size_name);
+                        $('#ingredient_size_id').val(data.ingredient_size_id);
+                        $('#ingredient_price').val(data.ingredient_price);
 						
 						if(data.photo == ""){
 							$('#ingredient_img').attr("src",project_url+'images/no_image.png');
@@ -309,6 +314,7 @@ $(document).ready(function () {
 					else{
 						success_or_error_msg('#page_notification_div',"danger","Not Deleted...");						
 					}
+                    load_ingredient("");
 				 }	
 			});
 		} 	

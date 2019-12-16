@@ -48,7 +48,7 @@ switch ($q){
                 'payment_status'=>$payment_status,
                 'payment_reference_no'=>$payment_referance_no,
                 'discount_amount'=>$discounted_amount,
-                'total_order_amt'=>$total_product_amount,
+                'total_order_amt'=>$total_item_amount,
                 'invoice_no'=>$invoice_no,
             );
 
@@ -66,14 +66,14 @@ switch ($q){
             $return_master = $dbClass->insert("order_master", $columns_value);
 
             if($return_master){
-                foreach($product_id as $key=>$value){
+                foreach($item_id as $key=>$value){
                     $columns_value = array(
                         'order_id'=>$return_master,
-                        'product_id'=>$product_id[$key],
+                        'item_id'=>$item_id[$key],
                         'quantity'=>$quantity[$key],
                         'size_id'=>$size_id[$key],
                         'unit_id'=>$unit_id[$key],
-                        'product_rate'=>$rate[$key]
+                        'item_rate'=>$rate[$key]
                     );
                     $return_details = $dbClass->insert("order_details", $columns_value);
                 }
@@ -99,7 +99,7 @@ switch ($q){
                 'payment_status'=>$payment_status,
                 'payment_reference_no'=>$payment_referance_no,
                 'discount_amount'=>$discounted_amount,
-                'total_order_amt'=>$total_product_amount,
+                'total_order_amt'=>$total_item_amount,
                 'total_paid_amount'=>$total_paid_amount,
                 'payment_time'=>$c_date,
 
@@ -132,14 +132,14 @@ switch ($q){
                 );
                 $return_dlt = $dbClass->delete("order_details", $condition_array);
                 if($return_dlt){
-                    foreach($product_id as $key=>$value){
+                    foreach($item_id as $key=>$value){
                         $columns_value = array(
                             'order_id'=>$order_id,
-                            'product_id'=>$product_id[$key],
+                            'item_id'=>$item_id[$key],
                             'quantity'=>$quantity[$key],
                             'size_id'=>$size_id[$key],
                             'unit_id'=>$unit_id[$key],
-                            'product_rate'=>$rate[$key]
+                            'item_rate'=>$rate[$key]
                         );
                         $condition_array = array(
                             'order_id'=>$order_id
@@ -172,7 +172,7 @@ switch ($q){
         if($search_txt == "Print" || $search_txt == "Advance_search"){
             // for advance condition
             $search_txt = "";
-            if($ad_product_id != '') 	 	$condition  .=" and product_id = $ad_product_id ";
+            if($ad_item_id != '') 	 	$condition  .=" and item_id = $ad_item_id ";
             if($ad_order_date != '')  		$condition  .=" and date(order_date) ='$ad_order_date'";
             //if($ad_delivery_date != '') 	$condition  .=" and date(delivery_date) = '$ad_delivery_date'";
             if($ad_is_payment != 0)  		$condition  .=" and payment_status = $ad_is_payment";
@@ -181,7 +181,7 @@ switch ($q){
         }
         // textfield search for grid
         /*else{
-            $condition .=	" CONCAT(order_id, customer_name, p_name, product_rate) LIKE '%$search_txt%' ";
+            $condition .=	" CONCAT(order_id, customer_name, p_name, item_rate) LIKE '%$search_txt%' ";
         }*/
 
         //echo '1'; die;
@@ -190,23 +190,23 @@ switch ($q){
         $countsql = "SELECT count(order_id)
 					FROM(
 						SELECT m.order_id, m.customer_id, c.full_name as customer_name, m.invoice_no,
-						d.product_id,d.product_rate, d.size_id,  d.unit_id, m.order_date, m.delivery_date, 
-						GROUP_CONCAT(p.name,' (',s.name,' - ',FORMAT(d.product_rate,2),')') p_name,
+						d.item_id,d.item_rate, d.size_id,  d.unit_id, m.order_date, m.delivery_date, 
+						GROUP_CONCAT(p.name,' (',s.name,' - ',FORMAT(d.item_rate,2),')') p_name,
 						m.delivery_type, m.outlet_id, CONCAT(m.outlet_id,' >> ',o.address) outlet_name, order_noticed,
 						m.address, m.remarks, m.order_status, m.payment_status, m.payment_method, m.payment_reference_no
 						FROM order_master m
 						LEFT JOIN order_details d ON d.order_id = m.order_id
 						LEFT JOIN customer_infos c ON c.customer_id = m.customer_id
 						LEFT JOIN outlets o ON o.id = m.outlet_id
-						LEFT JOIN product_rate r ON (r.product_id = d.product_id AND r.size_id=d.size_id AND r.unit_id=d.unit_id)
-						LEFT JOIN products p ON p.product_id = d.product_id
+						LEFT JOIN item_rate r ON (r.item_id = d.item_id AND r.size_id=d.size_id AND r.unit_id=d.unit_id)
+						LEFT JOIN items p ON p.item_id = d.item_id
 						LEFT JOIN size s ON s.id = r.size_id
 						LEFT JOIN units u ON u.id = r.unit_id
 						WHERE d.status=1
 						GROUP BY d.order_id
 						ORDER BY m.order_id desc
 					)A
-					WHERE CONCAT(invoice_no, order_id, customer_name, p_name, product_rate) LIKE '%$search_txt%' $condition";
+					WHERE CONCAT(invoice_no, order_id, customer_name, p_name, item_rate) LIKE '%$search_txt%' $condition";
         //echo $countsql;die;
         $stmt = $conn->prepare($countsql);
         $stmt->execute();
@@ -216,7 +216,7 @@ switch ($q){
         $total_pages = $total_records/$limit;
         $data['total_pages'] = ceil($total_pages);
         if($category_grid_permission==1){
-            $sql = 	"SELECT order_id, customer_id, customer_name, product_id, product_rate, size_id, unit_id, p_name, order_date,order_noticed,
+            $sql = 	"SELECT order_id, customer_id, customer_name, item_id, item_rate, size_id, unit_id, p_name, order_date,order_noticed,
 					delivery_date, delivery_type, outlet_id, outlet_name, address, remarks, order_status, payment_status, delivery_charge,
 					payment_method, payment_reference_no, invoice_no, payment_status_text, order_status_text, total_order_amt, total_paid_amount,
 					 $update_permission as update_status, $delete_permission as delete_status
@@ -224,16 +224,16 @@ switch ($q){
 						SELECT m.order_id, m.customer_id, c.full_name as customer_name, m.delivery_type, m.outlet_id, 
 						CONCAT(m.outlet_id,' >> ',o.address) outlet_name, m.address, m.remarks, m.order_status, order_noticed,
 						m.payment_status, m.payment_method, m.payment_reference_no, m.invoice_no,
-						d.product_id,d.product_rate, d.size_id, d.unit_id, m.total_order_amt, m.total_paid_amount, m.delivery_charge,
+						d.item_id,d.item_rate, d.size_id, d.unit_id, m.total_order_amt, m.total_paid_amount, m.delivery_charge,
 						CASE m.payment_status WHEN 1 THEN 'Not Paid' WHEN 2 THEN 'Paid' END payment_status_text,
 						CASE m.order_status WHEN 1 THEN 'Ordered' WHEN 2 THEN 'Ready' WHEN 3 THEN 'Picked' END order_status_text,
-						GROUP_CONCAT(p.name,' (',s.name,' - ',format(d.product_rate,2),')' SEPARATOR ', ') p_name, m.order_date, m.delivery_date
+						GROUP_CONCAT(p.name,' (',s.name,' - ',format(d.item_rate,2),')' SEPARATOR ', ') p_name, m.order_date, m.delivery_date
 						FROM order_master m
 						LEFT JOIN order_details d ON d.order_id = m.order_id
 						LEFT JOIN customer_infos c ON c.customer_id = m.customer_id
 						LEFT JOIN outlets o ON o.id = m.outlet_id
-						LEFT JOIN product_rate r ON (r.product_id = d.product_id AND r.size_id=d.size_id AND r.unit_id=d.unit_id)
-						LEFT JOIN products p ON p.product_id = d.product_id
+						LEFT JOIN item_rate r ON (r.item_id = d.item_id AND r.size_id=d.size_id AND r.unit_id=d.unit_id)
+						LEFT JOIN items p ON p.item_id = d.item_id
 						LEFT JOIN size s ON s.id = r.size_id
 						LEFT JOIN units u ON u.id = r.unit_id
 						WHERE d.status=1
@@ -241,7 +241,7 @@ switch ($q){
 						ORDER BY m.order_id desc
 
 					)A
-					WHERE CONCAT(invoice_no, order_id, customer_name, p_name, product_rate) LIKE '%$search_txt%' $condition
+					WHERE CONCAT(invoice_no, order_id, customer_name, p_name, item_rate) LIKE '%$search_txt%' $condition
 					ORDER BY order_id desc
 					LIMIT $start, $end";
             //echo $sql;die;
@@ -259,8 +259,8 @@ switch ($q){
         $update_permission = $dbClass->getUserGroupPermission(76);
         if($update_permission==1){
             $sql = "SELECT m.order_id, m.customer_id, 
-					c.full_name customer_name, d.product_id, c.contact_no customer_contact_no, c.address customer_address, 
-					GROUP_CONCAT(ca.name,' >> ',ca.id,'#',ca.id,'#',p.name,' (',ca.name,' )','#',p.product_id,'#',s.name,'#',d.size_id,'#',d.product_rate,'#',d.quantity,'#',u.short_name,'#',d.unit_id) order_info,
+					c.full_name customer_name, d.item_id, c.contact_no customer_contact_no, c.address customer_address, 
+					GROUP_CONCAT(ca.name,' >> ',ca.id,'#',ca.id,'#',p.name,' (',ca.name,' )','#',p.item_id,'#',s.name,'#',d.size_id,'#',d.item_rate,'#',d.quantity,'#',u.short_name,'#',d.unit_id) order_info,
 					m.order_date, m.delivery_date, m.delivery_type, m.discount_amount, m.total_paid_amount, m.delivery_charge,
 					ifnull(m.outlet_id,0) outlet_id, o.address, m.address, m.delivery_charge_id, m.tax_amount,  ifnull(cu.cupon_no,'') cupon_no, ifnull(cu.amount,'') cu_amount, cu.c_type cu_type,  m.cupon_id,
 					m.remarks, m.order_status, m.payment_status, m.payment_method as payment_method_id,  
@@ -271,8 +271,8 @@ switch ($q){
 					LEFT JOIN order_details d ON d.order_id = m.order_id
 					LEFT JOIN customer_infos c ON c.customer_id = m.customer_id
 					LEFT JOIN outlets o ON o.id = m.outlet_id
-					LEFT JOIN products p ON p.product_id = d.product_id
-					LEFT JOIN product_rate r ON (r.product_id = d.product_id AND r.size_id=d.size_id AND r.unit_id=d.unit_id)
+					LEFT JOIN items p ON p.item_id = d.item_id
+					LEFT JOIN item_rate r ON (r.item_id = d.product_id AND r.size_id=d.size_id AND r.unit_id=d.unit_id)
 					LEFT JOIN size s ON s.id = r.size_id
 					LEFT JOIN category ca ON ca.id = p.category_id
 					LEFT JOIN cupons cu ON cu.cupon_no = m.cupon_id 
