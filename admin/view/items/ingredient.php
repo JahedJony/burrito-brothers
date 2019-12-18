@@ -245,7 +245,7 @@ $(document).ready(function () {
 				cache:false,
 				contentType:false,processData:false,
 				success: function(data){
-				    //alert(data)
+				    alert(data)
 					$('#save_ingredient').removeAttr('disabled','disabled');
 					
 					if($.isNumeric(data)==true && data>0){
@@ -271,7 +271,7 @@ $(document).ready(function () {
 				ingredient_id: ingredient_id
 			},
 			success: function(data){
-			   // alert(data)
+			    alert(data)
 				if(!jQuery.isEmptyObject(data.records)){
 					$.each(data.records, function(i,data){
 
@@ -314,7 +314,6 @@ $(document).ready(function () {
 					else{
 						success_or_error_msg('#page_notification_div',"danger","Not Deleted...");						
 					}
-                    load_ingredient("");
 				 }	
 			});
 		} 	

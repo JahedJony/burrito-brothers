@@ -7,6 +7,8 @@ $dbClass = new dbClass;
 if(isset($_SESSION['customer_id']) && $_SESSION['customer_id']) $is_logged_in_customer = 1; // here will be the customer id that will come from session when the customer will login
 else $is_logged_in_customer = "";
 
+
+
 //$is_logged_in_customer = "";
 
 //email, mobile, address, fearure, title, $subtitle, $facebook, $twitter, $instagram, $googleplus,

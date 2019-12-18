@@ -272,7 +272,7 @@ switch ($q){
 					LEFT JOIN customer_infos c ON c.customer_id = m.customer_id
 					LEFT JOIN outlets o ON o.id = m.outlet_id
 					LEFT JOIN items p ON p.item_id = d.item_id
-					LEFT JOIN item_rate r ON (r.item_id = d.product_id AND r.size_id=d.size_id AND r.unit_id=d.unit_id)
+					LEFT JOIN item_rate r ON (r.item_id = d.item_id AND r.size_id=d.size_id AND r.unit_id=d.unit_id)
 					LEFT JOIN size s ON s.id = r.size_id
 					LEFT JOIN category ca ON ca.id = p.category_id
 					LEFT JOIN cupons cu ON cu.cupon_no = m.cupon_id 
@@ -358,7 +358,7 @@ switch ($q){
                 $json[] = array('id' => $row["customer_id"],'label' => $row["full_name"]);
             }
         } else {
-            $json[] = array('id' => "0",'label' => "No Product Found !!!");
+            $json[] = array('id' => "0",'label' => "No item Found !!!");
         }
         echo json_encode($json);
         break;
@@ -388,16 +388,16 @@ switch ($q){
         echo json_encode($json);
         break;
 
-    case "product_info":
-        $con = "WHERE CONCAT(p.name, p.product_id) LIKE '%$term%'";
+    case "item_info":
+        $con = "WHERE CONCAT(p.name, p.item_id) LIKE '%$term%'";
         if(isset($category_id) && $category_id !=0){
             $con .= " AND  p.category_id = $category_id " ;
         }
-        $sql_query = "SELECT p.product_id, concat(p.name,' (',c.name,')') p_name 
-					FROM products p
+        $sql_query = "SELECT p.item_id, concat(p.name,' (',c.name,')') p_name 
+					FROM items p
 					LEFT JOIN category c ON c.id = p.category_id
 					$con
-					ORDER BY p.product_id";
+					ORDER BY p.item_id";
         //echo $sql_query;die;
         $stmt = $conn->prepare($sql_query);
         $stmt->execute();
@@ -406,16 +406,16 @@ switch ($q){
         $count = $stmt->rowCount();
         if($count>0){
             foreach ($result as $row) {
-                $json[] = array('id' => $row["product_id"],'label' => $row["p_name"]);
+                $json[] = array('id' => $row["item_id"],'label' => $row["p_name"]);
             }
         } else {
-            $json[] = array('id' => "0",'label' => "No Product Found !!!");
+            $json[] = array('id' => "0",'label' => "No item Found !!!");
         }
         echo json_encode($json);
         break;
 
-    case "ad_product_info":
-        $sql_query = "SELECT p.product_id, p.name FROM products p WHERE CONCAT(name) LIKE '%$term%' ORDER BY p.product_id";
+    case "ad_item_info":
+        $sql_query = "SELECT p.item_id, p.name FROM items p WHERE CONCAT(name) LIKE '%$term%' ORDER BY p.item_id";
         $stmt = $conn->prepare($sql_query);
         $stmt->execute();
         $json = array();
@@ -423,19 +423,19 @@ switch ($q){
         $count = $stmt->rowCount();
         if($count>0){
             foreach ($result as $row) {
-                $json[] = array('id' => $row["product_id"],'label' => $row["name"]);
+                $json[] = array('id' => $row["item_id"],'label' => $row["name"]);
             }
         } else {
-            $json[] = array('id' => "0",'label' => "No Product Found !!!");
+            $json[] = array('id' => "0",'label' => "No item Found !!!");
         }
         echo json_encode($json);
         break;
 
-    case "get_product_rate":
+    case "get_item_rate":
         //var_dump($_REQUEST);die;
         $sql_query ="SELECT discounted_rate 
-					FROM product_rate r 
-					WHERE r.product_id = $product_id and size_id=$size_id and unit_id=$unit_id";
+					FROM item_rate r 
+					WHERE r.item_id = $item_id and size_id=$size_id and unit_id=$unit_id";
 
         $stmt = $conn->prepare($sql_query);
         $stmt->execute();
@@ -471,7 +471,7 @@ switch ($q){
                 $json[] = array('id' => $row["id"],'label' => $row["category_name"]);
             }
         } else {
-            $json[] = array('id' => "0",'label' => "No Product Found !!!");
+            $json[] = array('id' => "0",'label' => "No item Found !!!");
         }
         echo json_encode($json);
         break;

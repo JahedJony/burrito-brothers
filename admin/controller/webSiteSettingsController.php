@@ -486,7 +486,7 @@ switch($q){
                 $desired_dir = "../images/banner";
                 $desired_dir_thumb = "../images/banner/thumb";
                 chmod( "../images/banner", 0777);
-                //chmod( "../images/product/thumb", 0777);
+                //chmod( "../images/item/thumb", 0777);
 
                 $file_name = $_FILES['bannerImg_image_upload']['name'];
                 $file_size =$_FILES['bannerImg_image_upload']['size'];
@@ -533,7 +533,7 @@ switch($q){
                 $desired_dir = "../images/banner";
                 $desired_dir_thumb = "../images/banner/thumb";
                 chmod( "../images/banner", 0777);
-                chmod( "../images/product/thumb", 0777);
+                chmod( "../images/item/thumb", 0777);
 
                 $file_name = $_FILES['bannerImg_image_upload']['name'];
                 $file_size =$_FILES['bannerImg_image_upload']['size'];

@@ -66,6 +66,59 @@ switch ($q){
         echo json_encode($data);
         break;
 
+
+    case "menu_view":
+        //echo $menu; die;
+        $data = array();
+        $sql = 	"SELECT i.item_id, i.name, r.rate, ifnull(im.item_image,'') photo 
+            FROM items i
+            LEFT JOIN category c ON c.id=i.category_id
+            LEFT JOIN (
+                SELECT item_id, MIN(rate) as rate
+                FROM item_rate
+                GROUP BY item_id
+                )r ON r.item_id = i.item_id
+            LEFT JOIN item_image im ON i.item_id = im.item_id
+            WHERE c.name= '$menu'
+            ORDER BY i.item_id";
+        //echo $sql;die;
+        $stmt = $conn->prepare($sql);
+        $stmt->execute();
+        $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        foreach ($result as $row) {
+            $data[] = $row;
+        }
+        //$dbClass->print_arrays($data);die;
+        echo json_encode($data);
+        break;
+
+    case "single_menu_view":
+        echo $menu; die;
+        $data = array();
+        $sql = 	"SELECT i.item_id, i.name, r.rate, ifnull(im.item_image,'') photo 
+            FROM items i
+            LEFT JOIN category c ON c.id=i.category_id
+            LEFT JOIN (
+                SELECT item_id, MIN(rate) as rate
+                FROM item_rate
+                GROUP BY item_id
+                )r ON r.item_id = i.item_id
+            LEFT JOIN item_image im ON i.item_id = im.item_id
+            WHERE c.name= '$menu'
+            ORDER BY i.item_id";
+        //echo $sql;die;
+        $stmt = $conn->prepare($sql);
+        $stmt->execute();
+        $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        foreach ($result as $row) {
+            $data[] = $row;
+        }
+        //$dbClass->print_arrays($data);die;
+        echo json_encode($data);
+        break;
+
+
+
 }
 
 ?>

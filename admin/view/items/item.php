@@ -335,7 +335,7 @@ else{
         });
 
         $('#addRateRow').click(function(){
-            $('#rateTable > tbody').append("<tr><td><input type='text' name='size[]' required class='form-control col-lg-12 size'/><input type='hidden' name='size_id[]' class='form-control col-lg-12 size_id'/></td><td><input type='text' name='unit[]' required class='form-control col-lg-12 unit'/><input type='hidden' name='unit_id[]' class='form-control col-lg-12 unit_id'/></td></td><td><input type='text' name='stock_quantity_val[]' disabled class='form-control col-lg-12 text-right stock_quantity_val'/><input type='hidden' name='stock_quantity[]' value='0' class='form-control col-lg-12 text-right stock_quantity'/></td></td><td><input type='text' name='production_rate[]' required class='form-control col-lg-12 text-right production_rate'/></td><td><input type='text' name='rate[]' value='0.00' required class='form-control col-lg-12 text-right rate'/></td><td><select class='form-control discount_type' name='discount_type[]'><option value='1'>Flat</option><option value='2'>Percentage</option></select></td><td><input type='text' name='discount_amount[]' value = '0.00' required class='form-control col-lg-12 text-right discount_amount'/></td><td><input type='text' name='discounted_rate[]' value = '0.00' required class='form-control col-lg-12 text-right discounted_rate'/></td><td><span class='input-group-btn'><button type='button' class='btn btn-danger btn-xs remove_row'><span class='glyphicon glyphicon-minus'></span></button></span></td></tr>");
+            $('#rateTable > tbody').append("<tr><td><input type='text' name='size[]' required class='form-control col-lg-12 size'/><input type='hidden' name='size_id[]' class='form-control col-lg-12 size_id'/></td><td><input type='text' name='unit[]' required class='form-control col-lg-12 unit'/><input type='hidden' name='unit_id[]' class='form-control col-lg-12 unit_id'/></td></td><td><input type='text' value='0' name='stock_quantity_val[]' disabled class='form-control col-lg-12 text-right stock_quantity_val'/><input type='hidden' name='stock_quantity[]' value='0' class='form-control col-lg-12 text-right stock_quantity'/></td></td><td><input type='text' name='production_rate[]' required class='form-control col-lg-12 text-right production_rate'/></td><td><input type='text' name='rate[]' value='0.00' required class='form-control col-lg-12 text-right rate'/></td><td><select class='form-control discount_type' name='discount_type[]'><option value='1'>Flat</option><option value='2'>Percentage</option></select></td><td><input type='text' name='discount_amount[]' value = '0.00' required class='form-control col-lg-12 text-right discount_amount'/></td><td><input type='text' name='discounted_rate[]' value = '0.00' required class='form-control col-lg-12 text-right discounted_rate'/></td><td><span class='input-group-btn'><button type='button' class='btn btn-danger btn-xs remove_row'><span class='glyphicon glyphicon-minus'></span></button></span></td></tr>");
 
             $('.remove_row').click(function(){
                 $(this).parent().parent().parent().remove();
@@ -862,12 +862,14 @@ else{
 
         delete_item = function delete_item(item_id){
             if (confirm("Do you want to delete the record? ") == true) {
+                alert('ok1')
                 $.ajax({
                     url: project_url+"controller/itemController.php",
                     type:'POST',
                     async:false,
                     data: "q=delete_item&item_id="+item_id,
                     success: function(data){
+                        alert(data)
                         if($.trim(data) == 1){
                             success_or_error_msg('#page_notification_div',"success","Deleted Successfully");
                             load_item("");

@@ -59,14 +59,17 @@ switch ($q){
                 'feature_image'=>$feature_image
             );
             $return_item = $dbClass->insert("items", $columns_value);
+//echo $return_item; die;
 
             if(isset($ingredient)){
+                //echo 'ing'; die;
                 foreach($ingredient as $row){
                     $columns_value = array(
                         'item_id'=>$return_item,
                         'ingredient_id'=>$row
                     );
                     $return_ingredient = $dbClass->insert("item_ingredient", $columns_value);
+                    //echo $return_ingredient; die;
                 }
             }
 
@@ -122,8 +125,10 @@ switch ($q){
                         'discount_amount'=>$discount_amount[$key],
                         'discounted_rate'=>$production_rate[$key],
                     );
+                    //echo $columns_value['size_id']; die;
                     $return_rate = $dbClass->insert("item_rate", $columns_value);
                 }
+                //echo $columns_value['size_id']; die;
             }
 
             if($return_rate){
@@ -136,6 +141,8 @@ switch ($q){
         }
         else if(isset($item_id) && $item_id>0){
             //var_dump($_REQUEST);die;
+            //echo '333'; die;
+
 
             $is_order_result = $dbClass->getSingleRow("select distinct(d.order_id) order_id, p.category_id 
 													FROM items p
@@ -148,6 +155,7 @@ switch ($q){
             }
 
             if(isset($_FILES['feature_image_upload']) && $_FILES['feature_image_upload']['name'] != ""){
+               // echo '11'; die;
 
                 $prev_feature_attachment = $dbClass->getSingleRow("select feature_image from items where item_id = $item_id");
                 if($prev_feature_attachment['feature_image'] != "" || $prev_feature_attachment['feature_image'] != NULL){
@@ -186,11 +194,17 @@ switch ($q){
                 $return_image = $dbClass->update("items", $columns_value,$condition_array);
             }
             else{
+                //echo '11'; die;
+
                 if(!isset($_POST['is_feature'])){
                     $prev_feature_attachment = $dbClass->getSingleRow("select feature_image from items where item_id = $item_id");
                     //var_dump($prev_feature_attachment);die;
+                    //echo '11'; die;
+
                     if($prev_feature_attachment['feature_image'] != "" || $prev_feature_attachment['feature_image'] != NULL){
                         // not working properly
+                        //echo '11'; die;
+
                         $columns_value = array(
                             'feature_image'=>""
                         );
@@ -205,7 +219,10 @@ switch ($q){
                         //-----------------------
                     }
                 }
+
             }
+
+
 
             $is_active=0;
             if(isset($_POST['is_active'])){
@@ -231,6 +248,8 @@ switch ($q){
                 'item_id'=>$item_id
             );
             $return_item = $dbClass->update("items", $columns_value,$condition_array);
+           // echo '13q1'; die;
+
 
             if(isset($ingredient)){
                 $condition_array = array(
@@ -239,15 +258,24 @@ switch ($q){
                 $return = $dbClass->delete("item_ingredient", $condition_array);
 
                 foreach($ingredient as $row){
+                    //echo $price; die;
                     $columns_value = array(
                         'item_id'=>$item_id,
-                        'ingredient_id'=>$row
+                        'ingredient_id'=>$row,
                     );
+                    //echo '13q1'; die;
+
                     $return_ingredient = $dbClass->insert("item_ingredient", $columns_value);
+
+
                 }
             }
+            //echo $size_id; die;
+            //echo '13q1'; die;
 
             if(isset($size_id)){
+                //echo $size_id; die;
+
                 $condition_array = array(
                     'item_id'=>$item_id
                 );
@@ -266,9 +294,9 @@ switch ($q){
                         'discounted_rate'=>$discounted_rate[$key]
                     );
                     $return_rate = $dbClass->insert("item_rate", $columns_value);
-                    echo '1'; die;
                 }
             }
+            //echo '1'; die;
 
             $attachments = "";
             if(isset($_FILES['attached_file']) && $_FILES['attached_file']['name'][0] != ""){
@@ -382,7 +410,7 @@ switch ($q){
 						ORDER BY i.item_id DESC 
 					)A
 					$condition
-					ORDER BY item_id ASC
+					ORDER BY item_id DESC
 					LIMIT $start, $end";
             //echo $sql;die;
             $stmt = $conn->prepare($sql);
@@ -477,8 +505,8 @@ switch ($q){
         );
 
         if($dbClass->delete("item_image", $condition_array)){
-            unlink("../images/product/".$attachment_name['item_image']);
-            unlink("../images/product/thumb/".$attachment_name['item_image']);
+            unlink("../images/item/".$attachment_name['item_image']);
+            unlink("../images/item/thumb/".$attachment_name['item_image']);
             echo 1;
         }
         else
@@ -487,6 +515,7 @@ switch ($q){
 
     case "delete_item":
         $delete_permission = $dbClass->getUserGroupPermission(63);
+        //echo $delete_permission; die;
         if($delete_permission==1){
             $condition_array = array(
                 'item_id'=>$item_id
@@ -495,19 +524,19 @@ switch ($q){
                 'availability'=>0
             );
             $return = $dbClass->update("items", $columns_value, $condition_array);
-            /* $prev_attachment = $dbClass->getResultList("select item_image from item_image where item_id=$product_id");
+            /* $prev_attachment = $dbClass->getResultList("select item_image from item_image where item_id=$item_id");
             foreach($prev_attachment as $row){
-                unlink("../images/product/".$row['product_image']);
-                unlink("../images/product/thumb/".$attachment_name['product_image']);
+                unlink("../images/item/".$row['item_image']);
+                unlink("../images/item/thumb/".$attachment_name['item_image']);
             }
             $condition_array = array(
-                'product_id'=>$product_id
+                'item_id'=>$item_id
             );
 
-            $return = $dbClass->delete("product_ingredient", $condition_array);
-            $return = $dbClass->delete("product_rate", $condition_array);
-            $return = $dbClass->delete("product_image", $condition_array);
-            $return = $dbClass->delete("products", $condition_array); */
+            $return = $dbClass->delete("item_ingredient", $condition_array);
+            $return = $dbClass->delete("item_rate", $condition_array);
+            $return = $dbClass->delete("item_image", $condition_array);
+            $return = $dbClass->delete("items", $condition_array); */
         }
         if($return) echo "1";
         else 		echo "0";
