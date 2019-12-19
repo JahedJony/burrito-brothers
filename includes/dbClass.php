@@ -13,6 +13,7 @@ class dbClass {
 	}
 
 	function getSingleRow($sql){
+	    //echo $sql; die;
 		$stmt = $this->dbCon->prepare($sql);
 		$stmt->execute();
 		$result = $stmt->fetch(PDO::FETCH_ASSOC);

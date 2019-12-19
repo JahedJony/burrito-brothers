@@ -1,13 +1,16 @@
 <?php
+session_start();
+include("../includes/dbConnect.php");
+include("../includes/dbClass.php");
+$dbClass = new dbClass;
 
 if(!isset($_SESSION['customer_id']) && $_SESSION['customer_id']!=""){ ob_start(); header("Location:error.php"); exit();}
-echo $_SESSION['customer_id']; die;
+//echo $_SESSION['customer_id']; die;
 
 
 $customer_info = $dbClass->getSingleRow("select * from customer_infos where customer_id=".$_SESSION['customer_id']);
 $customer_id = $_SESSION['customer_id'];
-
-//var_dump($customer_info);
+//var_dump($customer_info)
 
 $order_id = '';
 if(isset($_GET['order_id']) && $_GET['order_id']!="") $order_id =  $_GET['order_id'];
@@ -15,9 +18,7 @@ if(isset($_GET['order_id']) && $_GET['order_id']!="") $order_id =  $_GET['order_
 //var_dump($customer_info);
 ?>
 <!-- Start Main -->
-<main>
-    <div class="main-part">
-        <!-- Start Breadcrumb Part -->
+<!-- Start Breadcrumb Part -->
         <section class="breadcrumb-part" data-stellar-offset-parent="true" data-stellar-background-ratio="0.5" style="background-image: url('images/banner8.jpg');">
             <div class="container">
                 <div class="breadcrumb-inner">
@@ -36,7 +37,7 @@ if(isset($_GET['order_id']) && $_GET['order_id']!="") $order_id =  $_GET['order_
             <div class="container">
                 <div class="col-md-9 col-sm-8 col-xs-12 wow fadeInDown" data-wow-duration="1000ms" data-wow-delay="300ms">
                     <div class="team-single-info" style="margin: 10px 0 !important;">
-                        <div class="row main_content">
+                        <div class="row" id="account_contents">
 
                         </div>
                     </div>
@@ -47,14 +48,12 @@ if(isset($_GET['order_id']) && $_GET['order_id']!="") $order_id =  $_GET['order_
                             <li class='sub-menu  profile active'><a href='javascript:void(0)' onclick="show_my_accounts('profile' ,''); load_customer_profile();	">Profile</a></li>
                             <li class="sub-menu orders"><a  href='javascript:void(0)'  onclick="show_my_accounts('orders', '')">Orders</a></li>
                             <li class="sub-menu tracking"><a href='javascript:void(0)'  onclick="show_my_accounts('tracking', '')">Order Tracking</a></li>
-                            <li class="sub-menu logout"><a href='logout.php'>Logout</a></li>
+                            <li class="sub-menu logout"><a href='views/logout.php'>Logout</a></li>
                         </ul>
                     </div>
                 </div>
             </div>
         </section>
-    </div>
-</main>
 <!-- End Main -->
 
 <script>
@@ -64,15 +63,16 @@ if(isset($_GET['order_id']) && $_GET['order_id']!="") $order_id =  $_GET['order_
     show_my_accounts = function show_my_accounts(page_name, order_id){
         $(".sub-menu").removeClass('active');
         if(page_name == 'tracking'){
-            $('.main_content').load(page_name+'.php?order_id='+order_id);
+            $('#account_contents').load('views/'+page_name+'.php?order_id='+order_id);
         }
         else{
-            $('.main_content').load(page_name+'.php');
+            $('#account_contents').load('views/'+page_name+'.php');
         }
         $("."+page_name).addClass('active');
     };
 
     show_my_accounts('profile',order_id)
+
 
     $(document).on('click','#track_btn', function(){
         if($.trim($('#order_tracking_number').val()) == ""){

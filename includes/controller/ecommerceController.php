@@ -12,42 +12,42 @@ case "addToCart":
 	if(!isset($_SESSION['cart']) || empty($_SESSION['cart']))$cart = array();
 	else 													 $cart = $_SESSION['cart'];
 	
-	$cart_key = $product_id.'_'.$size_rate_id;
+	$cart_key = $item_id.'_'.$rate;
 	if (array_key_exists($cart_key,$cart)){
-		$updatable_product = $cart[$cart_key];
+		$updatable_item = $cart[$cart_key];
 		
 		if($quantity==0){
 			unset($cart[$cart_key]);
 		}
 		else{
-			$discounted_rate = $updatable_product['discounted_rate'];
-			$total_quantity = ($quantity+$updatable_product['quantity']);
+			$discounted_rate = $updatable_item['discounted_rate'];
+			$total_quantity = ($quantity+$updatable_item['quantity']);
 			$cart[$cart_key]['quantity'] 	  = $total_quantity;
-			$toal_amount = $total_quantity*$updatable_product['discounted_rate'];
-			$cart[$cart_key]['product_total'] = $toal_amount;
+			$toal_amount = $total_quantity*$updatable_item['discounted_rate'];
+			$cart[$cart_key]['item_total'] = $toal_amount;
 			$_SESSION['cart'] = $cart;
 		}
 	}
 	else{
 		$selected_product = array();
-		$product_details_info = $dbClass->getSingleRow("select pr.product_id, pim.product_image, prt.rate, prt.discounted_rate,  s.name as size_name, pr.name as product_name
-														from products pr
-														left join product_image pim on pim.product_id=pr.product_id
-														left join product_rate prt on   prt.product_id=pr.product_id
+		$item_details_info = $dbClass->getSingleRow("select pr.item_id, pim.item_image, prt.rate, prt.discounted_rate,  s.name as size_name, pr.name as item_name
+														from items pr
+														left join item_image pim on pim.item_id=pr.item_id
+														left join item_rate prt on   prt.item_id=pr.item_id
 														left join size s on s.id=prt.size_id
-														where  pr.product_id=$product_id and prt.id=$size_rate_id
-														group by pr.product_id,  prt.id");
-		$selected_product['product_id'] = $product_id;
-		$selected_product['cart_key'] = $cart_key;
-		$selected_product['product_name'] = $product_details_info['product_name'];
-		$selected_product['product_image'] = $product_details_info['product_image'];
-		$selected_product['orignal_rate'] = $product_details_info['rate'];
-		$selected_product['discounted_rate'] = $product_details_info['discounted_rate'];
-		$selected_product['size'] = $product_details_info['size_name'];
-		$selected_product['quantity'] = $quantity;
-		$selected_product['product_total'] = ($product_details_info['discounted_rate']*$quantity);
+														where  pr.item_id=$item_id and prt.rate=$rate
+														group by pr.item_id,  prt.id");
+		$selected_item['item_id'] = $item_id;
+		$selected_item['cart_key'] = $cart_key;
+		$selected_item['item_name'] = $item_details_info['item_name'];
+		$selected_item['item_image'] = $item_details_info['item_image'];
+		$selected_item['orignal_rate'] = $item_details_info['rate'];
+		$selected_item['discounted_rate'] = $item_details_info['discounted_rate'];
+		$selected_item['size'] = $item_details_info['size_name'];
+		$selected_item['quantity'] = $quantity;
+		$selected_item['item_total'] = ($item_details_info['discounted_rate']*$quantity);
 
-		$cart[$product_id.'_'.$size_rate_id]=$selected_product;
+		$cart[$item_id.'_'.$size_rate_id]=$selected_item;
 		$_SESSION['cart'] = $cart;
 	}
 	$data['records'] = $cart;		

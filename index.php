@@ -123,41 +123,9 @@ if(isset($_GET['search'])) $search_text = "";
                                 <a href="#" data-toggle="modal" data-target="#booktable"><img src="images/icon-table.png" alt="">Book a Table</a>
                             </div>
                             <div class="shop-cart header-collect">
-                                <a href="#"><img src="images/icon-basket.png" alt="">2 items - $ 20.89</a>
+                                <a href="cart.php"><img src="/images/icon-basket.png" alt=""><span id="total_item_in_cart"></span> items</a>
                                 <div class="cart-wrap">
-                                    <div class="cart-blog">
-                                        <div class="cart-item">
-                                            <div class="cart-item-left">
-                                                <img src="images/img59.png" alt="">
-                                            </div>
-                                            <div class="cart-item-right">
-                                                <h6>Caramel Chesse Cake</h6>
-                                                <span>$ 14.00</span>
-                                            </div>
-                                            <span class="delete-icon"></span>
-                                        </div>
-                                        <div class="cart-item">
-                                            <div class="cart-item-left">
-                                                <img src="images/img60.png" alt="">
-                                            </div>
-                                            <div class="cart-item-right">
-                                                <h6>Caramel Chesse Cake</h6>
-                                                <span>$ 14.00</span>
-                                            </div>
-                                            <span class="delete-icon"></span>
-                                        </div>
-                                        <div class="subtotal">
-                                            <div class="col-md-6 col-sm-6 col-xs-6">
-                                                <h6>Subtotal :</h6>
-                                            </div>
-                                            <div class="col-md-6 col-sm-6 col-xs-6">
-                                                <span>$ 140.00</span>
-                                            </div>
-                                        </div>
-                                        <div class="cart-btn">
-                                            <a href="#" class="btn-black view">VIEW ALL</a>
-                                            <a href="#" class="btn-main checkout">CHECK OUT</a>
-                                        </div>
+                                    <div class="cart-blog" id="cart_div" >
                                     </div>
                                 </div>
                             </div>
@@ -490,6 +458,7 @@ if(isset($_GET['search'])) $search_text = "";
 <script src="js/script.js"></script>
 <script src="js/url.js"></script>
 <script src="js/static_text.js"></script>
+<script src="js/cart.js"></script>
 
 
 <script>
@@ -562,6 +531,11 @@ if(isset($_GET['search'])) $search_text = "";
             });
         }
     })
+
+
+
+    showCart()
+
 
 
 </script>

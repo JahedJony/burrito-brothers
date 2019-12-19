@@ -2,32 +2,18 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="289ea524-a539-47c6-a345-6f05b3774d37" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/admin/images/item/1576556840gallery30.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/admin/images/item/1576557060gallery30.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/admin/images/item/1576557272gallery30.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/admin/images/item/chicken.jpeg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/admin/images/item/gallery30.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/admin/images/item/gallery5.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/admin/images/item/img63.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/admin/images/item/thumb/1576556840gallery30.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/admin/images/item/thumb/1576557060gallery30.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/admin/images/item/thumb/1576557272gallery30.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/admin/images/item/thumb/chicken.jpeg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/admin/images/item/thumb/gallery30.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/admin/images/item/thumb/gallery5.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/admin/images/item/thumb/img63.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/admin/images/item/thumb/vegetable.jpeg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/admin/images/item/vegetable.jpeg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/views/account.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/js/cart.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/views/logout.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/views/orders.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/views/profile.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/views/tracking.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/admin/controller/itemController.php" beforeDir="false" afterPath="$PROJECT_DIR$/admin/controller/itemController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/admin/controller/orderController.php" beforeDir="false" afterPath="$PROJECT_DIR$/admin/controller/orderController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/admin/controller/webSiteSettingsController.php" beforeDir="false" afterPath="$PROJECT_DIR$/admin/controller/webSiteSettingsController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/admin/view/items/ingredient.php" beforeDir="false" afterPath="$PROJECT_DIR$/admin/view/items/ingredient.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/admin/view/items/item.php" beforeDir="false" afterPath="$PROJECT_DIR$/admin/view/items/item.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/includes/controller/itemsController.php" beforeDir="false" afterPath="$PROJECT_DIR$/includes/controller/itemsController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/includes/controller/ecommerceController.php" beforeDir="false" afterPath="$PROJECT_DIR$/includes/controller/ecommerceController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/includes/dbClass.php" beforeDir="false" afterPath="$PROJECT_DIR$/includes/dbClass.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/index.php" beforeDir="false" afterPath="$PROJECT_DIR$/index.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/js/url.js" beforeDir="false" afterPath="$PROJECT_DIR$/js/url.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/views/account.php" beforeDir="false" afterPath="$PROJECT_DIR$/views/account.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/views/categories.php" beforeDir="false" afterPath="$PROJECT_DIR$/views/categories.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/views/menu.php" beforeDir="false" afterPath="$PROJECT_DIR$/views/menu.php" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -56,7 +42,7 @@
   <component name="PropertiesComponent">
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/admin/controller" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/views" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.detected.package.tslint" value="true" />
     <property name="node.js.path.for.package.eslint" value="project" />
@@ -65,19 +51,19 @@
     <property name="node.js.selected.package.tslint" value="(autodetect)" />
   </component>
   <component name="RecentsManager">
-    <key name="CopyFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$" />
-      <recent name="$PROJECT_DIR$/theme" />
-      <recent name="$PROJECT_DIR$/controller" />
-      <recent name="$PROJECT_DIR$/view/order" />
-      <recent name="$PROJECT_DIR$/view/items" />
-    </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/views" />
       <recent name="$PROJECT_DIR$/body" />
       <recent name="$PROJECT_DIR$" />
       <recent name="$PROJECT_DIR$/admin" />
       <recent name="$PROJECT_DIR$/controller" />
+    </key>
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/views" />
+      <recent name="$PROJECT_DIR$" />
+      <recent name="$PROJECT_DIR$/theme" />
+      <recent name="$PROJECT_DIR$/controller" />
+      <recent name="$PROJECT_DIR$/view/order" />
     </key>
   </component>
   <component name="RunDashboard">
@@ -113,7 +99,7 @@
       <workItem from="1575716013272" duration="1715000" />
       <workItem from="1575870409263" duration="18615000" />
       <workItem from="1575957419023" duration="21452000" />
-      <workItem from="1576420054371" duration="25664000" />
+      <workItem from="1576420054371" duration="37317000" />
     </task>
     <servers />
   </component>
