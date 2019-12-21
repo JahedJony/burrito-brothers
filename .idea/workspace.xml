@@ -2,19 +2,11 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="289ea524-a539-47c6-a345-6f05b3774d37" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/js/cart.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/views/logout.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/views/orders.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/views/profile.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/views/tracking.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/admin/view/items/item.php" beforeDir="false" afterPath="$PROJECT_DIR$/admin/view/items/item.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/includes/controller/ecommerceController.php" beforeDir="false" afterPath="$PROJECT_DIR$/includes/controller/ecommerceController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/includes/dbClass.php" beforeDir="false" afterPath="$PROJECT_DIR$/includes/dbClass.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/index.php" beforeDir="false" afterPath="$PROJECT_DIR$/index.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/js/url.js" beforeDir="false" afterPath="$PROJECT_DIR$/js/url.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/views/account.php" beforeDir="false" afterPath="$PROJECT_DIR$/views/account.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/views/categories.php" beforeDir="false" afterPath="$PROJECT_DIR$/views/categories.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/views/menu.php" beforeDir="false" afterPath="$PROJECT_DIR$/views/menu.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/js/cart.js" beforeDir="false" afterPath="$PROJECT_DIR$/js/cart.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/views/cart.php" beforeDir="false" afterPath="$PROJECT_DIR$/views/cart.php" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -42,7 +34,7 @@
   <component name="PropertiesComponent">
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/views" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/admin/theme/js" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.detected.package.tslint" value="true" />
     <property name="node.js.path.for.package.eslint" value="project" />
@@ -59,11 +51,11 @@
       <recent name="$PROJECT_DIR$/controller" />
     </key>
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/admin/theme/js" />
       <recent name="$PROJECT_DIR$/views" />
       <recent name="$PROJECT_DIR$" />
       <recent name="$PROJECT_DIR$/theme" />
       <recent name="$PROJECT_DIR$/controller" />
-      <recent name="$PROJECT_DIR$/view/order" />
     </key>
   </component>
   <component name="RunDashboard">
@@ -99,7 +91,7 @@
       <workItem from="1575716013272" duration="1715000" />
       <workItem from="1575870409263" duration="18615000" />
       <workItem from="1575957419023" duration="21452000" />
-      <workItem from="1576420054371" duration="37317000" />
+      <workItem from="1576420054371" duration="47539000" />
     </task>
     <servers />
   </component>

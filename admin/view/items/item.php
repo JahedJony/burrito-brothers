@@ -692,7 +692,7 @@ else{
                 success_or_error_msg('#form_submit_error','danger',"Please select Rate",".rate");
             }
             else{
-                alert('ok');
+                //alert('ok');
 
                 $.ajax({
                     url: project_url+"controller/itemController.php",

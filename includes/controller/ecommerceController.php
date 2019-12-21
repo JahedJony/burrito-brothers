@@ -56,6 +56,7 @@ break;
 
 
 case "viewCartSummery":
+    //echo 1; die;
 	if(!isset($_SESSION['cart']) || empty($_SESSION['cart']))$cart = array();
 	else 													 $cart = $_SESSION['cart'];
 	$data['records'] = $cart;		

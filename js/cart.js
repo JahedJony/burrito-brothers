@@ -1,5 +1,5 @@
 function showCart(){
-    alert('ok')
+    //alert('ok')
     $.ajax({
         url: "includes/controller/ecommerceController.php",
         dataType: "json",
