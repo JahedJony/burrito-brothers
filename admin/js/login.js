@@ -21,7 +21,7 @@ $(document).ready(function(){
 						//add message and change the class of the box and start fading
 						$(this).html('<div class="alert alert-success">'+logging_in+'.....</div>').fadeTo(900,1,
 						function() { 
-							document.location='../index.php?module=user&view=user';
+							document.location='./index.php?module=user&view=user';
 						});			
 					});
 				}

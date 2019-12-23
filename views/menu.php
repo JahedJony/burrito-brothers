@@ -2,7 +2,7 @@
 <!-- Start Menu Part -->
 <section class="special-menu home-icon">
     <div class="icon-default">
-        <img src="../images/scroll-arrow.png" alt="">
+        <img src="./images/scroll-arrow.png" alt="">
     </div>
     <div class="container">
         <div class="portfolioContainer row" id="menus">

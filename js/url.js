@@ -1,17 +1,22 @@
 $(function () {
     //http://burritobrothers.test/admin/index.php?module=personal&view=profile
     //alert('ss')
+    //alert(location.search)
+
     var url_info = location.search.split('?')[1];
-    //alert(url_info)
     if(!url_info) {
         var url = location.search
         if(window.location.pathname.split('/')[1] =='account.php'){
             $("#content").load("views/account.php");
-
+        }
+        else if(window.location.pathname.split('/')[1] =='cart.php'){
+            $("#content").load("views/cart.php");
+        }
+        else if(window.location.pathname.split('/')[1] =='checkout.php'){
+            $("#content").load("views/checkout.php");
         }
         else{
             $("#content").load("views/home.php");
-
         }
     }
     else{
