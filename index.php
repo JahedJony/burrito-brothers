@@ -19,6 +19,10 @@ $about_us     = $dbClass->getDescriptionWithHtml(28);
 $address      = $dbClass->getDescription('store_address');
 $website_url  = $dbClass->getDescription('website_url');
 $website_title=$dbClass->getDescription('website_title');
+$store_address=$dbClass->getDescription('store_address');
+$item_image_display=$dbClass->getDescription('item_image_display');
+
+
 $logo         =$website_url."admin/".$dbClass->getDescription('company_logo');
 //$feature      = $dbClass->getDescription(47);
 //$special_menu = $dbClass->getDescription(48);
@@ -111,7 +115,7 @@ if(isset($_GET['search'])) $search_text = "";
 
                             </div>
                         </div>
-                     </div>
+                    </div>
                 </div>
             </div>
 
@@ -120,12 +124,12 @@ if(isset($_GET['search'])) $search_text = "";
                     <div class="header-info">
                         <div class="header-info-inner">
                             <div class="book-table header-collect book-md">
-                                <a href="#" data-toggle="modal" data-target="#booktable"><img src="images/icon-table.png" alt="">Book a Table</a>
+                                <a href="#" data-toggle="modal" data-target="#booktable"><img src="images/icon-table.png" alt="">Open</a>
                             </div>
                             <div class="shop-cart header-collect">
-                                <a href="cart.php"><img src="/images/icon-basket.png" alt=""><span id="total_item_in_cart"></span> items</a>
+                                <a href="cart.php"><img src="images/icon-basket.png" alt=""><span id="total_item_in_cart"></span> items</a>
                                 <div class="cart-wrap">
-                                    <div class="cart-blog" id="cart_div" >
+                                    <div class="cart-blog" id="cart_div" style="max-width: 250px" >
                                     </div>
                                 </div>
                             </div>
@@ -322,7 +326,7 @@ if(isset($_GET['search'])) $search_text = "";
     <div id="content" style="min-height: 600px">
 
 
-</div>
+    </div>
     <!-- End Main -->
     <!-- Start Footer -->
     <footer>
@@ -333,26 +337,25 @@ if(isset($_GET['search'])) $search_text = "";
             <div class="container">
                 <div class="footer-inner">
                     <div class="footer-info">
-                        <h3>La boom Restaurant</h3>
-                        <p>329 Queensberry Street, North Melbourne VIC 3051, Australia.</p>
-                        <p><a href="#">123 456 7890</a></p>
-                        <p><a href="#">support@laboom.com</a></p>
+                        <h3><?php echo $website_title; ?></h3>
+                        <p><?php echo $store_address; ?></p>
+                        <p><a href="#"><?php echo $mobile_info; ?></a></p>
+                        <p><a href="#"><?php echo $email_info; ?></a></p>
                     </div>
                 </div>
                 <div class="copy-right">
                     <div class="row">
                         <div class="col-md-6 col-sm-6 col-xs-12 copyright-before">
-                            <span>Copyright © 2017 Polygon Theme. All rights reserved.</span>
+                            <span>Copyright © 2020 <?php echo $website_title; ?>. All rights reserved.</span>
                         </div>
                         <div class="col-md-6 col-sm-6 col-xs-12 copyright-after">
                             <div class="social-round">
                                 <ul>
-                                    <li><a href="#"><i class="fa fa-facebook" aria-hidden="true"></i></a></li>
-                                    <li><a href="#"><i class="fa fa-twitter" aria-hidden="true"></i></a></li>
-                                    <li><a href="#"><i class="fa fa-instagram" aria-hidden="true"></i></a></li>
-                                    <li><a href="#"><i class="fa fa-pinterest" aria-hidden="true"></i></a></li>
-                                    <li><a href="#"><i class="fa fa-dribbble" aria-hidden="true"></i></a></li>
-                                    <li><a href="#"><i class="fa fa-google" aria-hidden="true"></i></a></li>
+
+                                    <li><a href="<?php echo $facebook; ?>"><i class="fa fa-facebook" aria-hidden="true"></i></a></li>
+                                    <li><a href="<?php echo $twitter; ?>"><i class="fa fa-twitter" aria-hidden="true"></i></a></li>
+                                    <li><a href="<?php echo $instagram; ?>"><i class="fa fa-instagram" aria-hidden="true"></i></a></li>
+                                    <li><a href="<?php echo $yelp; ?>"><i class="fa fa-yelp"></i></a></li>
                                 </ul>
                             </div>
                         </div>
@@ -462,8 +465,22 @@ if(isset($_GET['search'])) $search_text = "";
 
 
 <script>
+    <?php
+    if($item_image_display==1){
+        ?>
+        item_image_display="display: block"
+        <?php
+    }
+    else{
+        ?>
+        item_image_display="display: none"
+        <?php
+
+    }
+    ?>
+    //alert(item_image_display)
     function loadPage(pageName) {
-       // alert( "Load was performed." );
+        // alert( "Load was performed." );
 
         $( "#content" ).load( "body/"+pageName+".php", function() {
             //alert( "Load was performed." );

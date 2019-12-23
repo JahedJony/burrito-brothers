@@ -131,7 +131,7 @@
 
 
 <script>
-    function Cart(){
+    function cartView(){
         //alert('ok')
         $.ajax({
             url: "includes/controller/ecommerceController.php",
@@ -155,7 +155,7 @@
                         html+=' <tr>\n' +
                             '                            <th>PRODUCT</th>\n' +
                             '                            <td>\n' +
-                            '                                <div class="product-cart">\n' +
+                            '                                <div class="product-cart" style="'+ item_image_display +'">\n' +
                             '                                    <img src="/admin/images/item/'+datas.item_image+'" alt="" style="height: 80px; width: 140px; border-radius: 10px">\n' +
                             '                                </div>\n' +
                             '                                <div class="product-cart-title">\n' +
@@ -204,7 +204,7 @@
             }
         });
     }
-    Cart()
+    cartView()
     $('#apply_cupon').click(function(){
         var cupon_code = $('#cupon_code').val();
         if(cupon_code !=""){

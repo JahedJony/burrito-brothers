@@ -90,6 +90,13 @@ else{
                             <div class="col-md-8 col-sm-8 col-xs-12" style="margin-bottom: 10px">
                                 <input type="text" id="tweeter_url" name="tweeter_url" required class="form-control col-lg-12"/>
                             </div>
+                            <label class="control-label col-md-4 col-sm-4 col-xs-12">Item Image Display<span class="required">*</span></label>
+                            <div class="col-md-8 col-sm-8 col-xs-12" style="margin-bottom: 10px">
+                                <select class="form-control" name="item_image_display" id="item_image_display">
+                                    <option value='1'>Show Image</option>
+                                    <option value='0'>Hide Image</option>
+                                </select>
+                            </div>
 
                         </div>
                         <div class="col-md-6 col-sm-6 col-xs-6">

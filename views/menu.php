@@ -1,85 +1,52 @@
 
-        <!-- Start Menu Part -->
-        <section class="special-menu home-icon">
-            <div class="icon-default">
-                <img src="../images/scroll-arrow.png" alt="">
-            </div>
-            <div class="container">
-                <div class="portfolioContainer row" data-defaultfilter=".breakfast" id="menus">
-                    <!--div class="col-md-4 col-sm-4 col-xs-12 isotope-item breakfast dinner wow fadeInDown" data-wow-duration="1000ms" data-wow-delay="300ms">
-                        <div class="menu-round">
-                            <div class="menu-round-img">
-                                <img src="../images/img27.jpg" alt="">
-                            </div>
-                            <div class="menu-round-info">
-                                <h5>Lasal Cheese <span>$ 15.00</span></h5>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-4 col-sm-4 col-xs-12 isotope-item breakfast lunch wow fadeInDown" data-wow-duration="1000ms" data-wow-delay="300ms">
-                        <div class="menu-round">
-                            <div class="menu-round-img">
-                                <img src="../images/img28.jpg" alt="">
-                            </div>
-                            <div class="menu-round-info">
-                                <h5>Lasal Cheese <span>$ 15.00</span></h5>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-4 col-sm-4 col-xs-12 isotope-item dessert breakfast wow fadeInDown" data-wow-duration="1000ms" data-wow-delay="300ms">
-                        <div class="menu-round">
-                            <div class="menu-round-img">
-                                <img src="../images/img29.jpg" alt="">
-                            </div>
-                            <div class="menu-round-info">
-                                <h5>Lasal Cheese <span>$ 15.00</span></h5>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-4 col-sm-4 col-xs-12 isotope-item dinner breakfast wow fadeInDown" data-wow-duration="1000ms" data-wow-delay="300ms">
-                        <div class="menu-round">
-                            <div class="menu-round-img">
-                                <img src="../images/img30.jpg" alt="">
-                            </div>
-                            <div class="menu-round-info">
-                                <h5>Lasal Cheese <span>$ 15.00</span></h5>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-4 col-sm-4 col-xs-12 isotope-item freshfood breakfast dessert wow fadeInDown" data-wow-duration="1000ms" data-wow-delay="300ms">
-                        <div class="menu-round">
-                            <div class="menu-round-img">
-                                <img src="../images/img31.jpg" alt="">
-                            </div>
-                            <div class="menu-round-info">
-                                <h5>Lasal Cheese <span>$ 15.00</span></h5>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-4 col-sm-4 col-xs-12 isotope-item freshfood breakfast wow fadeInDown" data-wow-duration="1000ms" data-wow-delay="300ms">
-                        <div class="menu-round">
-                            <div class="menu-round-img">
-                                <img src="../images/img32.jpg" alt="">
-                            </div>
-                            <div class="menu-round-info">
-                                <h5>Lasal Cheese <span>$ 15.00</span></h5>
-                            </div>
-                        </div>
-                    </div-->
-                </div>
-
-            </div>
-        </section>
-        <!-- End Menu Part -->
-
-        <!-- End Discount Part -->
+<!-- Start Menu Part -->
+<section class="special-menu home-icon">
+    <div class="icon-default">
+        <img src="../images/scroll-arrow.png" alt="">
     </div>
+    <div class="container">
+        <div class="portfolioContainer row" id="menus">
+
+            <!--<div class="col-md-6 col-sm-6 col-xs-12 isotope-item dessert">
+                <div class="menu-list">
+                                        <span class="menu-list-product">
+                                            <img src="../images/img81.png" alt="">
+                                        </span>
+                    <h5>CHInese Egg Cake <span>$ 15.00</span></h5>
+                    <p>Pellentesque habitant morbi tristique senectus et netus et malesuada fames</p>
+                </div>
+            </div>
+            <div class="col-md-6 col-sm-6 col-xs-12 isotope-item dinner">
+                <div class="menu-list">
+                                        <span class="menu-list-product">
+                                            <img src="../images/img82.png" alt="">
+                                        </span>
+                    <h5>Beef SpaghettI <span>$ 45.00</span></h5>
+                    <p>Pellentesque habitant morbi tristique senectus et netus et malesuada fames</p>
+                </div>
+            </div>
+
+            -->
+        </div>
+
+    </div>
+</section>
+<!-- End Menu Part -->
+
+<!-- End Discount Part -->
+</div>
 
 <script src="js/app.js"></script>
 <script src="js/script.js"></script>
 <script src="js/cart.js"></script>
 
 <script>
+    //alert(item_image_display)
+    var width=''
+    if(item_image_display=="display: none"){
+        width='style="padding-left: 0px"'
+    }
+
     var menus = location.search.split('category=')[1];
     menus = menus.split('__').join(' ')
 
@@ -100,18 +67,19 @@
             '                </div>\n'
 
 
-        var html='<div class="col-md-4 col-sm-4 col-xs-12 isotope-item breakfast dinner wow fadeInDown" data-wow-duration="1000ms" data-wow-delay="300ms">\n' +
-            '                        <div class="menu-round" style="background-color: #e4b95b; border-radius: 15px">\n' +
-            '                            <div class="menu-round-img">\n' +
-            '                                <img src="'+ project_url+'admin/images/item/'+data['photo']+'" alt="" style="height: 220px; width:100%">\n' +
-            '                            </div>\n' +
-            '                            <div class="menu-round-info">\n' +
-            '                                <a href="index.php?page=item&id='+ data['item_id']+'"><h5>'+ data['name']+' <span style="color: white">'+data['rate']+'</span></h5></a>\n' +
-            '                            </div>\n' +
-            '                        </div>\n' +
-            '                    </div>'
+        var html='<div class="col-md-6 col-sm-6 col-xs-12 isotope-item breakfast">\n' +
+            '         <div class="menu-list" '+width+'>\n' +
+            '              <span class="menu-list-product" style="'+ item_image_display +'">\n' +
+            '                <img  src="'+ project_url+'admin/images/item/'+data['photo']+'" onclick="cart('+data['item_id']+','+data['rate']+')" alt="" style="border-radius: 50px; min-height: 100px">\n' +
+            '              </span>\n' +
+            '              <a href="index.php?page=item&id='+ data['item_id']+'">' +
+            '                   <h5>'+ data['name']+' <span>'+data['rate']+'</span></h5>' +
+            '               </a>\n' +
+            '              <p>'+ data['details']+'</p>\n' +
+            '          </div>\n' +
+            '        </div>\n'
 
-        return html_op;
+        return html;
 
     }
     cart = function cart(id, price){

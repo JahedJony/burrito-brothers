@@ -1,4 +1,10 @@
 function showCart(){
+
+    var width=''
+    if(item_image_display=="display: none"){
+        width='style="width: 0px"'
+
+    }
     //alert('ok')
     $.ajax({
         url: "includes/controller/ecommerceController.php",
@@ -18,7 +24,7 @@ function showCart(){
                     //alert(datas.item_image)
 
                     sub_total += parseFloat(datas.discounted_rate)*(datas.quantity);
-                    html += '<div class="cart-item"><div class="cart-item-left"><img src="/admin/images/item/'+datas.item_image+'" alt=""></div><div class="cart-item-right"><h6>'+datas.item_name+'</h6><span> '+datas.discounted_rate+' * '+datas.quantity+' = '+sub_total+'</span></div><span class="delete-icon" onclick="deleteItem('+"'"+datas.cart_key+"'"+')"></span></div>';
+                    html += '<div class="cart-item"><div class="cart-item-left" '+width+'><img src="/admin/images/item/'+datas.item_image+'" alt="" style="'+ item_image_display +';border-radius: 10px"></div><div class="cart-item-right"  ><h6>'+datas.item_name+'</h6><span> '+datas.discounted_rate+' * '+datas.quantity+' = '+sub_total+'</span></div><span class="delete-icon" onclick="deleteItem('+"'"+datas.cart_key+"'"+')"></span></div>';
                     count++;
                     total += sub_total ;
                 });

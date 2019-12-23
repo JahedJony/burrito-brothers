@@ -24,65 +24,48 @@
                     </ul>
                 </div>
                 <div class="row">
-                    <div class="col-md-7 col-sm-7 col-xs-12 wow fadeInDown" data-wow-duration="1000ms" data-wow-delay="300ms">
-                        <div class="shop-checkout-left">
-                            <h6>Returning customer? Click here to <a href="login_register.html">login</a></h6>
-                            <form class="form-checkout" name="form" method="post">
-                                <div class="row">
-                                    <div class="col-md-12 col-sm-12 col-xs-12">
-                                        <h5>Billing Details</h5>
+                    <div class="col-md-7 col-sm-7 col-xs-12 wow fadeInDown tab-part tab-content" data-wow-duration="1000ms" data-wow-delay="300ms">
+                        <ul class="nav nav-tabs" role="tablist">
+                            <li role="presentation">
+                                    <a href="#description" aria-controls="description" role="tab" data-toggle="tab">Description</a>
+                                </li>
+                            <li role="presentation" class="active">
+                                <a href="#reviews" aria-controls="reviews" role="tab" data-toggle="tab">Reviews ( 5 )</a>
+                            </li>
+                        </ul>
+                                <div role="tabpanel" class="tab-pane" id="description">
+                                    <div class="title text-left">
+                                        <h3 class="text-coffee">Description About Product</h3>
                                     </div>
-                                    <div class="col-md-6 col-sm-12 col-xs-12">
-                                        <input type="text" name="txt" placeholder="First Name">
+                                    <p>Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Vestibulum tortor quam, feugiat vitae, ultricies eget, tempor sit amet, ante. Donec eu libero sit amet quam egestas semper. Aenean ultricies mi vitae est. Mauris placerat eleifend leo.</p>
+                                </div>
+                                <div role="tabpanel" class="tab-pane active" id="reviews">
+                                    <div class="title text-center">
+                                        <h3 class="text-coffee">2 Comment</h3>
                                     </div>
-                                    <div class="col-md-6 col-sm-12 col-xs-12">
-                                        <input type="text" name="txt" placeholder="Last Name">
-                                    </div>
-                                    <div class="col-md-12 col-sm-12 col-xs-12">
-                                        <input type="text" name="txt" placeholder="Company Name">
-                                    </div>
-                                    <div class="col-md-6 col-sm-12 col-xs-12">
-                                        <input type="email" name="email" placeholder="Email">
-                                    </div>
-                                    <div class="col-md-6 col-sm-12 col-xs-12">
-                                        <input type="text" name="text" placeholder="Phone">
-                                    </div>
-                                    <div class="col-md-12 col-sm-12 col-xs-12">
-                                        <select class="select-dropbox">
-                                            <option>Country</option>
-                                            <option>India</option>
-                                            <option>USA</option>
-                                            <option>London</option>
-                                        </select>
-                                    </div>
-                                    <div class="col-md-12 col-sm-12 col-xs-12">
-                                        <textarea placeholder="Address"></textarea>
-                                    </div>
-                                    <div class="col-md-12 col-sm-12 col-xs-12">
-                                        <select class="select-dropbox">
-                                            <option>Province</option>
-                                            <option>list 1</option>
-                                            <option>list 2</option>
-                                            <option>list 3</option>
-                                        </select>
-                                    </div>
-                                    <div class="col-md-12 col-sm-12 col-xs-12">
-                                        <label>
-                                            <input type="checkbox" name="checkbox">Create an account ?</label>
-                                    </div>
-                                    <div class="col-md-12 col-sm-12 col-xs-12">
-                                        <h5>Shipping Address</h5>
-                                    </div>
-                                    <div class="col-md-12 col-sm-12 col-xs-12">
-                                        <label>
-                                            <input type="checkbox" name="checkbox">Ship to a different address ?</label>
-                                    </div>
-                                    <div class="col-md-12 col-sm-12 col-xs-12">
-                                        <textarea placeholder="Order Notes"></textarea>
+                                    <div class="comment-blog">
+                                        <div class="comment-inner-list">
+                                            <div class="comment-img">
+                                                <img src="../images/comment-img1.png" alt="">
+                                            </div>
+                                            <div class="comment-info">
+                                                <h5>Anna Taylor</h5>
+                                                <span class="comment-date">AUGUST 9, 2016 10:57 AM</span>
+                                                <p>Aqua Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+                                            </div>
+                                        </div>
+                                        <div class="comment-inner-list">
+                                            <div class="comment-img">
+                                                <img src="../images/comment-img1.png" alt="">
+                                            </div>
+                                            <div class="comment-info">
+                                                <h5>Anna Taylor</h5>
+                                                <span class="comment-date">AUGUST 9, 2016 10:57 AM</span>
+                                                <p>Aqua Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
-                            </form>
-                        </div>
                     </div>
                     <div class="col-md-5 col-sm-5 col-xs-12 wow fadeInDown" data-wow-duration="1000ms" data-wow-delay="300ms">
                         <div class="shop-checkout-right">

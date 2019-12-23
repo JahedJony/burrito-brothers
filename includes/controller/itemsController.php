@@ -70,7 +70,7 @@ switch ($q){
     case "menu_view":
         //echo $menu; die;
         $data = array();
-        $sql = 	"SELECT i.item_id, i.name, r.rate, ifnull(im.item_image,'') photo 
+        $sql = 	"SELECT i.item_id, i.name, CONCAT(LEFT(i.details,110),' . . . ') as details, r.rate, ifnull(im.item_image,'') photo 
             FROM items i
             LEFT JOIN category c ON c.id=i.category_id
             LEFT JOIN (

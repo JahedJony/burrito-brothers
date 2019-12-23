@@ -77,6 +77,7 @@ switch ($q){
                 'fb_url'=>$fb_url,
                 'tweeter_url'=>$tweeter_url,
                 'instagram_url'=>$instagram_url,
+                'item_image_display'=>$item_image_display,
                 'meta_description'=>$meta_description,
                 'meta_keywards'=>$meta_keywards,
                 'currency'=>$currency,
