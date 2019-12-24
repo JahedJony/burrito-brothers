@@ -86,6 +86,7 @@ if($q=="forget_password"){
 
 
 if($q=="registration"){
+
 	$username	 = htmlspecialchars($_POST['cust_username'],ENT_QUOTES);
 	$email	 = htmlspecialchars($_POST['cust_email'],ENT_QUOTES);
 	
@@ -104,9 +105,28 @@ if($q=="registration"){
 		'status'=>1,
 		'password'=>md5($cust_password)
 	);	
-	//var_dump($columns_value);die;	
-	$return = $dbClass->insert("customer_infos", $columns_value);	
-	if($return) echo "1";
+	//var_dump($columns_value);die;
+	$return = $dbClass->insert("customer_infos", $columns_value);
+    //echo $return; die;
+
+
+
+    if($return) {
+        $query="select customer_id, password, email from customer_infos WHERE (customer_id= '".$return."')";
+        $stmt = $conn->prepare($query);
+        $stmt->execute();
+        $data = array();
+        $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        foreach ($result as $row) {
+            $data['records'][] = $row;
+        }
+        //if username exists
+        if($stmt -> rowCount()>0){
+            $_SESSION['customer_id']=$row['customer_id'];
+            $_SESSION['customer_email']=$row['email'];
+        }
+        echo "1";
+    }
 	else 	echo "0";	
 }
 

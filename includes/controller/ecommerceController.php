@@ -390,6 +390,7 @@ break;
 
 
 case "get_customer_details":
+    //echo '1'; die;
 	$customer_details = $dbClass->getResultList("SELECT c.customer_id, c.full_name, c.contact_no, c.age, c.address,
 												c.`status`, c.photo, c.email, c.remarks,
 												(CASE c.`status` WHEN 1 THEN 'Active' WHEN  0 THEN 'Inactive' END) status_text

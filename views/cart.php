@@ -112,7 +112,7 @@
                         <h5>TOTAL <span>$140.00</span></h5>
                     </div>
                     <div class="proceed-check">
-                        <a href="checkout.php" class="btn-primary-gold btn-medium">PROCEED TO CHECKOUT</a>
+                        <a href="index.php?page=checkout" class="btn-primary-gold btn-medium">PROCEED TO CHECKOUT</a>
                     </div>
                 </div>
             </div>

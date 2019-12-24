@@ -106,7 +106,7 @@ if(isset($_GET['search'])) $search_text = "";
                                     <li class="language-menu">
                                         <?php
                                         if($is_logged_in_customer != "")
-                                            echo '<a href="account.php" class="current-lang" id="my_acc"><i class="fa fa-user" aria-hidden="true" ></i> My Account</a>';
+                                            echo '<a href="index.php?page=account" class="current-lang" id="my_acc"><i class="fa fa-user" aria-hidden="true" ></i> My Account</a>';
                                         else
                                             echo '<a href="#" onclick="active_modal(1)" data-toggle="modal" data-target="#loginModal" class="current-lang" id="log_reg"><i class="fa fa-user" aria-hidden="true"></i> Login / Register</a>';
                                         ?>
@@ -127,7 +127,7 @@ if(isset($_GET['search'])) $search_text = "";
                                 <a href="#" data-toggle="modal" data-target="#booktable"><img src="images/icon-table.png" alt="">Open</a>
                             </div>
                             <div class="shop-cart header-collect">
-                                <a href="cart.php"><img src="images/icon-basket.png" alt=""><span id="total_item_in_cart"></span> items</a>
+                                <a href="index.php?page=cart"><img src="images/icon-basket.png" alt=""><span id="total_item_in_cart"></span> items</a>
                                 <div class="cart-wrap">
                                     <div class="cart-blog" id="cart_div" style="max-width: 250px" >
                                     </div>
@@ -549,10 +549,222 @@ if(isset($_GET['search'])) $search_text = "";
         }
     })
 
+    // send mail if forget password
+    $('#foget_pass_submit').click(function(event){
+        event.preventDefault();
+        var formData = new FormData($('#forget-pass-form')[0]);
+        formData.append("q","forget_password");
+        if($.trim($('#forget_email').val()) == ""){
+            success_or_error_msg('#foget_pass_submit_error','danger',"Please enter email address","#forget_email");
+        }
+        else{
+            $.ajax({
+                url: "includes/controller/customerController.php",
+                type:'POST',
+                data:formData,
+                async:false,
+                cache:false,
+                contentType:false,processData:false,
+                success: function(data){
+                    if($.isNumeric(data)==true && data==2){
+                        success_or_error_msg('#foget_pass_submit_error',"danger","Please provide a valid email address","#forget_email" );
+                    }
+                    else if($.isNumeric(data)==true && data==1){
+                        $('.sent_password').addClass("hide");
+                        $('.sent_password_msg').removeClass("hide");
+                    }
+                }
+            });
+        }
+    })
+
+    // send mail if forget password
+    $('#register_submit').click(function(event){
+        event.preventDefault();
+        var formData = new FormData($('#register-form')[0]);
+        formData.append("q","registration");
+        if($.trim($('#cust_name').val()) == ""){
+            success_or_error_msg('#registration_submit_error','danger',"Please enter name","#cust_name");
+        }
+        else if($.trim($('#cust_username').val()) == ""){
+            success_or_error_msg('#registration_submit_error','danger',"Please enter username","#cust_username");
+        }
+        else if($.trim($('#cust_email').val()) == ""){
+            success_or_error_msg('#registration_submit_error','danger',"Please enter email address","#cust_email");
+        }
+        else if($.trim($('#cust_password').val()) == ""){
+            success_or_error_msg('#registration_submit_error','danger',"Please enter pasword","#cust_password");
+        }
+        else if($.trim($('#cust_conf_password').val()) == ""){
+            success_or_error_msg('#registration_submit_error','danger',"Please confirm password ","#cust_conf_password");
+        }
+        else if($.trim($('#cust_password').val()) != $.trim($('#cust_conf_password').val())){
+            success_or_error_msg('#registration_submit_error','danger',"Please enter same password","#cust_conf_password");
+        }
+        else if($.trim($('#cust_contact').val()) == ""){
+            success_or_error_msg('#registration_submit_error','danger',"Please enter valid contact no","#cust_contact");
+        }
+        else{
+            $.ajax({
+                url: "includes/controller/customerController.php",
+                type:'POST',
+                data:formData,
+                async:false,
+                cache:false,
+                contentType:false,processData:false,
+                success: function(data){
+                    alert(data)
+                    if($.isNumeric(data)==true && data==2){
+                        success_or_error_msg('#registration_submit_error',"danger","Username is already exist, please try with another one","#cust_username" );
+                    }
+                    else if($.isNumeric(data)==true && data==3){
+                        success_or_error_msg('#registration_submit_error',"danger","Email is already exist, please try with another one","#cust_email" );
+                    }
+                    else if($.isNumeric(data)==true && data==1){
+                        $('.done_registration').addClass("hide");
+                        $('.done_registration_msg').removeClass("hide");
+                    }
+                    else{
+                        success_or_error_msg('#registration_submit_error',"danger","Registration is not completed. please check your information again.","#cust_email" );
+                    }
+                }
+            });
+        }
+    })
+
+    //send mail to cakencookies from contact page
+    $('#contact_submit').click(function(event){
+        event.preventDefault();
+        var formData = new FormData($('#contact-form')[0]);
+        formData.append("q","contact_us_mail");
+        if($.trim($('#first_name').val()) == ""){
+            success_or_error_msg('#contact_submit_error','danger',"Please type name","#first_name");
+        }
+        else if($.trim($('#email').val()) == ""){
+            success_or_error_msg('#contact_submit_error','danger',"Please type email","#email");
+        }
+        else if($.trim($('#mobile').val()) == ""){
+            success_or_error_msg('#contact_submit_error','danger',"Please enter mobile no.","#mobile");
+        }
+        else if($.trim($('#subject').val()) == ""){
+            success_or_error_msg('#contact_submit_error','danger',"Please type subject.","#subject");
+        }
+        else if($.trim($('#message').val()) == ""){
+            success_or_error_msg('#contact_submit_error','danger',"Please type message.","#message");
+        }
+        else{
+            $.ajax({
+                url: "includes/controller/customerController.php",
+                type:'POST',
+                data:formData,
+                async:false,
+                cache:false,
+                contentType:false,processData:false,
+                success: function(data){
+                    if($.isNumeric(data)==true && data==1){
+                        success_or_error_msg('#contact_submit_error',"success","Mail has sent","" );
+                        $('#contact-form')[0].reset();
+                    }
+                    else if($.isNumeric(data)==true && data==2){
+                        success_or_error_msg('#contact_submit_error',"danger","Mail has sent","" );
+                    }
+                }
+            });
+        }
+    })
+
+    //custome cake
+    $('#cc_submit').click(function(event){
+        event.preventDefault();
+        var formData = new FormData($('#custome-cake-form')[0]);
+        formData.append("q","insert_custom_cake");
+        if($.trim($('#cc_details').val()) == ""){
+            success_or_error_msg('#cc_submit_error','danger',"Please type details","#cc_details");
+        }
+        else if($.trim($('#cc_name').val()) == ""){
+            success_or_error_msg('#cc_submit_error','danger',"Please type name","#cc_name");
+        }
+        else if($.trim($('#cc_mobile').val()) == ""){
+            success_or_error_msg('#cc_submit_error','danger',"Please enter mobile no.","#cc_mobile");
+        }
+        else if($.trim($('#cc_email').val()) == ""){
+            success_or_error_msg('#cc_submit_error','danger',"Please type email.","#cc_email");
+        }
+        else{
+            $.ajax({
+                url: "includes/controller/customerController.php",
+                type:'POST',
+                data:formData,
+                async:false,
+                cache:false,
+                contentType:false,processData:false,
+                success: function(data){
+                    if($.isNumeric(data)==true && data==1){
+                        success_or_error_msg('#cc_submit_error',"success","Request has benn accepted, please keep in touch. We will contact with you shortly","" );
+                        $('#custome-cake-form')[0].reset();
+                    }
+                    else if($.isNumeric(data)==true && data==2){
+                        success_or_error_msg('#cc_submit_error',"danger","Error! ","" );
+                    }
+                }
+            });
+        }
+    })
+
+
+
+    $(document).on('click','#order_print', function(){
+        var divContents = $("#order-div").html();
+        var printWindow = window.open('', '', 'height=400,width=800');
+        printWindow.document.write('<html><head><title>DIV Contents</title>');
+        printWindow.document.write('</head><body style="padding:10px">');
+        printWindow.document.write('<link href="plugin/bootstrap/bootstrap.css" rel="stylesheet">');
+        printWindow.document.write(divContents);
+        printWindow.document.write('</body></html>');
+        printWindow.document.close();
+        printWindow.print();
+    });
+
+
+    $('.category a').on('click',function(){
+        window.location = $(this).attr('href');
+    });
+
+    $('#searchSubmit').on('click',function(){
+        window.location = 'search.php?search='+$('#searchbox'). val();
+    });
+
+
+
+
+    $('.modal').on('shown.bs.modal', function (e) {
+        //alert(1111)
+        $('.date-picker').daterangepicker({
+            singleDatePicker: true,
+            /*	autoUpdateInput: false,*/
+            calender_style: "picker_3",
+            timePicker:true,
+            locale: {
+                format: 'YYYY-MM-DD h:mm',
+                separator: " - ",
+            }
+        });
+    });
+
+
 
 
     showCart()
 
 
+    function success_or_error_msg(div_to_show, class_name, message, field_id){
+        $(div_to_show).addClass('alert alert-custom alert-'+class_name).html(message).show("slow");
+        //$(window).scrollTop(200);
+        var set_interval = setInterval(function(){
+            $(div_to_show).removeClass('alert alert-custom alert-'+class_name).html("").hide( "slow" );
+            if(field_id!=""){ $(field_id).focus();}
+            clearInterval(set_interval);
+        }, 2000);
+    }
 
 </script>

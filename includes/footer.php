@@ -720,9 +720,6 @@ $(document).on('click','#order_print', function(){
 });
 
 
-
-
-
 $('.category a').on('click',function(){
 	window.location = $(this).attr('href');
 });
