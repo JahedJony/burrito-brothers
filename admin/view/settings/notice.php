@@ -130,7 +130,7 @@ else{
 			<div class="form-group" id="event_div">
                 <label class="control-label col-md-2 col-sm-2 col-xs-6">Expire Event</label>
                 <div class="col-md-6 col-sm-6 col-xs-12">
-                    <input id="expire_date" name="expire_date" readonly="readonly" placeholder="Click To Select Date" class="date-picker form-control col-md-6 col-xs-12" type="text" />
+                    <input id="expire_date" name="expire_date" readonly="readonly" placeholder="Click To Select Date" class="item form-control col-md-6 col-xs-12" type="text" />
                 </div>
             </div>
             <div class="ln_solid"></div>
@@ -170,7 +170,7 @@ $(document).ready(function () {
 
 	$('#expire_date').val("");
     //datepicker
-    $('.date-picker').daterangepicker({
+    $('.item').daterangepicker({
         singleDatePicker: true,
         /*	autoUpdateInput: false,*/
         calender_style: "picker_3",

@@ -13,6 +13,7 @@
 		<p>Contact No: <a href="#" id="contact_no"></a>
 		<br> E-mail: <a href="#" id="email"></a></p>
 		<p > Address: <span id="address"></span></p>
+        <p > Loyalty Points: <span id="loyalty_points"></span></p>
 	</div>
 	<br /><br />
 	<a href='javascript:void(0)'  onclick="show_my_accounts('update-profile'); set_customer_data();" class="btn-medium btn-skin pull-left">Update your information</a>
@@ -35,6 +36,7 @@ $(document).ready(function () {
 				customer_id: customer_id,
 			},
 			success: function(data){
+			    //alert(data.loyalty_points)
 				if(!jQuery.isEmptyObject(data.records)){
 					$.each(data.records, function(i,data){ 				
 						$('#customer_id').html(data.customer_id);
@@ -43,9 +45,10 @@ $(document).ready(function () {
 						$('#email').html(data.email);
 						$('#address').html(data.address);
 						$('#customer_status').html(data.status_text);
-						
-						if(data.photo == ""){
-							$('#customer_img').attr("src",'admin/images/no_image.png');
+                        $('#loyalty_points').html(data.loyalty_points);
+
+                        if(data.photo == ""){
+							$('#customer_img').attr("src",'./admin/images/no_image.png');
 						}else{
 							$('#customer_img').attr("src","admin/"+data.photo);
 						}

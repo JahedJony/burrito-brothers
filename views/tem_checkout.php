@@ -1,29 +1,6 @@
-<?php
-session_start();
-include("../includes/dbConnect.php");
-include("../includes/dbClass.php");
-$dbClass = new dbClass;
-
-if(isset($_SESSION['customer_id']) && $_SESSION['customer_id']){
-    $is_logged_in_customer = 1; // here will be the customer id that will come from session when the customer will login
-    $customer_info = $dbClass->getSingleRow("select * from customer_infos where customer_id=".$_SESSION['customer_id']);
-    $customer_id = $_SESSION['customer_id'];
-}
-else $is_logged_in_customer = "";
-
-
-//var_dump($customer_info)
-
-$order_id = '';
-if(isset($_GET['order_id']) && $_GET['order_id']!="") $order_id =  $_GET['order_id'];
-
-//var_dump($customer_info);
-?>
-
 <main>
     <div class="main-part">
         <!-- Start Breadcrumb Part -->
-
         <!-- End Breadcrumb Part -->
         <section class="home-icon shop-cart bg-skeen">
             <div class="icon-default icon-skeen">
@@ -32,240 +9,110 @@ if(isset($_GET['order_id']) && $_GET['order_id']!="") $order_id =  $_GET['order_
             <div class="container">
                 <div class="checkout-wrap wow fadeInDown" data-wow-duration="1000ms" data-wow-delay="300ms">
                     <ul class="checkout-bar">
-                        <li class="done-proceed">Shopping Cart</li>
-                        <li class="active">Checkout</li>
+                        <li class="active">Shopping Cart</li>
+                        <li>Checkout</li>
                         <li>Order Complete</li>
                     </ul>
                 </div>
-                <div class="row">
-                    <div class="col-md-12 col-sm-12 col-xs-12 wow fadeInDown  tab-content" data-wow-duration="1000ms" data-wow-delay="300ms">
-                        <ul class="nav nav-tabs" role="tablist" style="margin-right: 43%; margin-left: 1%; margin-top: 20px; font-size: 20px; border-radius: 15px 15px 0px 0px"">
-                        <li role="presentation" class="active" id="userDetails" style="border-radius: 15px 15px 0px 0px">
-                            <a href="#description" aria-controls="account" role="tab" data-toggle="tab">Your Details</a>
-                        </li>
-                        <li role="presentation" id="pickup_info" style="border-radius: 15px 15px 0px 0px">
-                            <a href="#reviews" aria-controls="pickUp" role="tab" data-toggle="tab">Pick Up Information</a>
-                        </li>
-                        <li role="presentation" id="payments" style="border-radius: 15px 15px 0px 0px">
-                            <a href="#reviews" aria-controls="payments" role="tab" data-toggle="tab">Payments</a>
-                        </li>
-                        </ul>
-                        <div class="col-md-7 col-sm-7 col-xs-12" style="background-color: white; border-radius: 12px; padding-top: 25px">
+                <div class="shop-cart-list wow fadeInDown" data-wow-duration="1000ms" data-wow-delay="300ms">
+                    <table class="shop-cart-table">
+                        <thead>
+                        <tr>
+                            <th>PRODUCT</th>
+                            <th>PRICE</th>
+                            <th>QUANTITY</th>
+                            <th>TOTAL</th>
+                        </tr>
+                        </thead>
+                        <tbody id="cart_table">
 
-                            <div role="tabpanel" class="tab-pane" id="description">
+                        <!-- <tr>
+                             <th>PRODUCT</th>
+                             <td>
+                                 <div class="product-cart">
+                                     <img src="../images/img71.png" alt="">
+                                 </div>
+                                 <div class="product-cart-title">
+                                     <span>Blanched Garlic</span>
+                                 </div>
+                             </td>
+                             <th>PRICE</th>
+                             <td>
+                                 <strong>$59</strong>
+                                 <del>$5400.00</del>
+                             </td>
+                             <th>QUANTITY</th>
+                             <td>
+                                 <div class="price-textbox">
+                                     <span class="minus-text"><i class="icon-minus"></i></span>
+                                     <input name="txt" placeholder="1" type="text">
+                                     <span class="plus-text"><i class="icon-plus"></i></span>
+                                 </div>
+                             </td>
+                             <th>TOTAL</th>
+                             <td>
+                                 $59
+                             </td>
+                             <td class="shop-cart-close"><i class="icon-cancel-5"></i></td>
+                         </tr>
+                         <tr>
+                             <th>PRODUCT</th>
+                             <td>
+                                 <div class="product-cart">
+                                     <img src="../images/img72.png" alt="">
+                                 </div>
+                                 <div class="product-cart-title">
+                                     <span>Blanched Garlic</span>
+                                 </div>
+                             </td>
+                             <th>PRICE</th>
+                             <td>
+                                 <strong>$59</strong>
+                                 <del>$5400.00</del>
+                             </td>
+                             <th>QUANTITY</th>
+                             <td>
+                                 <div class="price-textbox">
+                                     <span class="minus-text"><i class="icon-minus"></i></span>
+                                     <input name="txt" placeholder="1" type="text">
+                                     <span class="plus-text"><i class="icon-plus"></i></span>
+                                 </div>
+                             </td>
+                             <th>TOTAL</th>
+                             <td>
+                                 $59
+                             </td>
+                             <td class="shop-cart-close"><i class="icon-cancel-5"></i></td>
+                         </tr>
 
-
-                                <h6>You must have to login or register if you are new customer. </h6>
-                                <br />
-                                <button class="button-default btn-large btn-primary-gold" data-toggle="modal" data-target="#loginModal" >LOGIN</button>
-                                <br /><br />
-                                <h4 class="center">OR</h4>
-                                <button class="button-default btn-large btn-primary-gold" data-toggle="modal" data-target="#registerModal" >REGISTER</button>
-                                <br />
-                                <br />
-                                <div id="login_div">
-                                    <div id="done_login">
-                                        <div class="title text-center">
-                                            <h3 class="text-coffee">Login</h3>
-                                        </div>
-                                        <form class="login-form" method="post" name="login_form" id="login_form">
-                                            <div class="row">
-                                                <div >
-                                                    <div class="col-md-12 col-sm-12 col-xs-12">
-                                                        <input type="text" name="username" id="username_" placeholder="Username or email address" class="input-fields" required >
-                                                    </div>
-                                                    <div class="col-md-12 col-sm-12 col-xs-12">
-                                                        <input type="password" name="password" id="password_" placeholder="********" class="input-fields" required >
-                                                    </div>
-                                                    <div class="col-md-12 col-sm-12 col-xs-12">
-                                                        <div class="row">
-                                                            <div class="col-md-6 col-sm-6 col-xs-12">
-                                                                <label>
-                                                                    <input type="checkbox" name="chkbox">Remember me</label>
-                                                            </div>
-                                                            <div class="col-md-6 col-sm-6 col-xs-12">
-                                                                <a href="javascript:void(0)" onclick="active_modal(2)"class="pull-right" data-toggle="modal" data-target="#forget_passModal" id="send_password"><i class="fa fa-user" aria-hidden="true"></i> Lost your password?</a>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-12 col-sm-12 col-xs-12">
-                                                    <div id="loginerror_" class="text-center" style="display:none"></div>
-                                                    <input type="submit" name="submit" id="login" value="LOGIN" class="button-default button-default-submit">
-                                                </div>
-                                            </div>
-                                        </form>
-                                        <div class="divider-login">
-                                            <hr>
-                                            <span>Or</span>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-md-12 col-sm-12 col-xs-12">
-                                                <a href="javascript:void(0)" onclick="active_modal(3)" class="facebook-btn btn-change button-default " id="log_reg"><i class="fa fa-user" aria-hidden="true"></i> Dont have an account? Register yourself</a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-12 col-sm-12 col-xs-12 center hide" 	id="done_login_msg" >
-                                        <div class="alert alert-success alert-custom">
-                                            <p>You have logged in successfully</p>
-                                        </div>
-                                        <a href="account.php" id="" class="facebook-btn btn-change button-default"><i class="fa fa-user"></i>Browse your account?</a>
-                                    </div>
-                                </div>
-                                <div id="register_div" style="display: none">
-                                    <div class="title text-center">
-                                        <h3 class="text-coffee">Register</h3>
-                                    </div>
-                                    <div class="done_registration">
-                                        <form class="register-form" method="post" name="register-form" id="register-form">
-                                            <div class="row">
-                                                <div class="col-md-12 col-sm-12 col-xs-12">
-                                                    <input type="text" name="cust_name" id="cust_name" placeholder="Name" class="input-fields" required>
-                                                </div>
-                                                <div class="col-md-12 col-sm-12 col-xs-12">
-                                                    <input type="text" name="cust_username" id="cust_username" placeholder="User Name" class="input-fields" required>
-                                                </div>
-                                                <div class="col-md-12 col-sm-12 col-xs-12">
-                                                    <input type="email" name="cust_email" id="cust_email" placeholder="Email address" class="input-fields" required>
-                                                </div>
-                                                <div class="col-md-12 col-sm-12 col-xs-12">
-                                                    <input type="password" name="cust_password" id="cust_password" placeholder="Password" class="input-fields" required>
-                                                </div>
-                                                <div class="col-md-12 col-sm-12 col-xs-12">
-                                                    <input type="password" name="cust_conf_password" id="cust_conf_password"  placeholder="Confirm Password" class="input-fields" required>
-                                                </div>
-                                                <div class="col-md-12 col-sm-12 col-xs-12">
-                                                    <input type="number" name="cust_contact" id="cust_contact" pattern="[0-9]{11}" placeholder="Contact No" class="input-fields" required>
-                                                </div>
-                                                <div class="col-md-12 col-sm-12 col-xs-12">
-                                                    <input type="text" name="cust_address" id="cust_address" placeholder="Address" class="input-fields" >
-                                                </div>
-                                                <div class="col-md-12 col-sm-12 col-xs-12">
-
-                                                    <div id="registration_submit_error" class="text-center" style="display:none"></div>
-                                                    <input type="submit" name="submit" id="register_submit" class="button-default button-default-submit" value="Register now">
-                                                </div>
-                                            </div>
-                                        </form>
-                                        <p>By clicking on <b>Register Now</b> button you are accepting the <a href="terms.php">Terms &amp; Conditions</a></p>
-                                    </div>
-                                    <div class="col-md-12 col-sm-12 col-xs-12 done_registration_msg center hide" >
-                                        <div class="alert alert-success">
-                                            <p>Your registration is completed. Please login with provided credentials</p>
-                                        </div>
-                                        <a href="javascript:void(0)" onclick="active_modal(1)" class="facebook-btn btn-change button-default " data-toggle="modal" data-target="#loginModal" id="do_login"><i class="fa fa-user" aria-hidden="true"></i> Login</a>
-                                    </div>
-                                </div>
-                                <div id="forget_pass_div" style="display: none">
-                                    <div class="title text-center">
-                                        <h3 class="text-coffee">Enter email address</h3>
-                                    </div>
-                                    <form class="register-form" method="post" name="forget-pass-form" id="forget-pass-form">
-                                        <div class="row">
-                                            <div class="sent_password">
-                                                <div class="col-md-12 col-sm-12 col-xs-12 ">
-                                                    <input type="email" name="forget_email" id="forget_email" placeholder="Enter email address" class="input-fields">
-                                                </div>
-                                                <div class="col-md-12 col-sm-12 col-xs-12 ">
-                                                    <div id="foget_pass_submit_error" class="text-center" style="display:none"></div>
-                                                    <input type="submit" name="submit" id="foget_pass_submit"  class="button-default button-default-submit" value="Send Password">
-                                                </div>
-                                            </div>
-                                            <div class="col-md-12 col-sm-12 col-xs-12 sent_password_msg center hide" >
-                                                <div class="alert alert-success">
-                                                    <p>A new password has been sent to your provided email address. please check and login</p>
-                                                </div>
-                                                <a href="javascript:void(0)" onclick="active_modal(1)" class="facebook-btn btn-change button-default " data-toggle="modal" data-target="#loginModal" id="do_login"><i class="fa fa-user" aria-hidden="true"></i> Login</a>
-                                            </div>
-                                        </div>
-                                    </form>
-                                </div>
-                                <div id="profile" style="display: none" class="team-single-right">
-                                    <h3 id='customer_name'></h3>
-                                    <h6 >Customer Id # <span id='customer_id' ></span> </h6>
-                                    <h6 >Customer Status : <span id='customer_status' ></span> </h6>
-                                    <p>Contact No: <a href="#" id="contact_no"></a>
-                                        <br> E-mail: <a href="#" id="email"></a></p>
-                                    <p > Address: <span id="address"></span></p>
-                                </div>
-                            </div>
-                            <div role="tabpanel" style="display: none" class="tab-pane active" id="reviews">
-                                <div class="title text-center">
-                                    <h3 class="text-coffee">2 Comment</h3>
-                                </div>
-                                <div class="comment-blog">
-                                    <div class="comment-inner-list">
-                                        <div class="comment-img">
-                                            <img src="../images/comment-img1.png" alt="">
-                                        </div>
-                                        <div class="comment-info">
-                                            <h5>Anna Taylor</h5>
-                                            <span class="comment-date">AUGUST 9, 2016 10:57 AM</span>
-                                            <p>Aqua Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
-                                        </div>
-                                    </div>
-                                    <div class="comment-inner-list">
-                                        <div class="comment-img">
-                                            <img src="../images/comment-img1.png" alt="">
-                                        </div>
-                                        <div class="comment-info">
-                                            <h5>Anna Taylor</h5>
-                                            <span class="comment-date">AUGUST 9, 2016 10:57 AM</span>
-                                            <p>Aqua Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+                         -->
+                        </tbody>
+                    </table>
+                    <div class="product-cart-detail">
+                        <div class="cupon-part">
+                            <input type="text" name="txt" id="coupon_code" placeholder="Cupon Code">
                         </div>
-                        <div class="col-md-5 col-sm-5 col-xs-12 wow fadeInDown" data-wow-duration="1000ms" data-wow-delay="300ms">
-                            <div class="shop-checkout-right">
-                                <div class="shop-checkout-box">
-                                    <h5>YOUR ORDER</h5>
-                                    <div class="shop-checkout-title">
-                                        <h6>PRODUCT <span>TOTAL</span></h6>
-                                    </div>
-                                    <div class="shop-checkout-row">
-                                        <p><span>Rocha Sleeve Sweater</span> x1 <small>$140.00</small></p>
-                                        <p><span>Mauris Tincidunt</span> x6 <small>$140.00</small></p>
-                                    </div>
-                                    <div class="checkout-total">
-                                        <h6>CART SUBTOTAL <small>$140.00</small></h6>
-                                    </div>
-                                    <div class="checkout-total">
-                                        <h6>SHIPPING <small>Free Shipping</small></h6>
-                                    </div>
-                                    <div class="checkout-total">
-                                        <h6>ORDER TOTAL <small class="price-big">$140.00</small></h6>
-                                    </div>
-                                </div>
-                                <div class="shop-checkout-box">
-                                    <h5>PAYMENT METHODS</h5>
-                                    <label>
-                                        <input type="radio" name="radio">Direct Bank Transfer</label>
-                                    <p>Make your payment directly into our bank account. Please use your cleared in our account.</p>
-                                    <div class="payment-mode">
-                                        <label>
-                                            <input type="radio" name="radio">Check Payments</label>
-                                    </div>
-                                    <div class="payment-mode">
-                                        <label>
-                                            <input type="radio" name="radio">Cash on Delivery</label>
-                                    </div>
-                                    <div class="payment-mode">
-                                        <label>
-                                            <input type="radio" name="radio"> PayPal</label> <a href="#"><img src="../images/paycart.png" alt=""></a><a href="#">What is PayPal?</a>
-                                    </div>
-                                    <div class="checkout-terms">
-                                        <label>
-                                            <input type="checkbox" name="checkbox">I’ve read and accept the terms &amp; conditions *</label>
-                                    </div>
-                                    <div class="checkout-button">
-                                        <button class="button-default btn-large btn-primary-gold">PROCEED TO PAYMENT</button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
+                        <a href="#" class="btn-medium btn-dark-coffee" id="coupon_add">Apply Coupon</a>
+                        <a href="#" class="btn-medium btn-skin pull-right">UPDATE cart</a>
+                    </div>
+                </div>
+                <div class="cart-total wow fadeInDown" data-wow-duration="1000ms" data-wow-delay="300ms">
+                    <div class="cart-total-title">
+                        <h5>CART TOTALS</h5>
+                    </div>
+                    <div class="product-cart-total">
+                        <small>Total products</small>
+                        <span>$140.00</span>
+                    </div>
+                    <div class="product-cart-total">
+                        <small>Total shipping</small>
+                        <span>$15.00</span>
+                    </div>
+                    <div class="grand-total">
+                        <h5>TOTAL <span>$140.00</span></h5>
+                    </div>
+                    <div class="proceed-check">
+                        <a href="index.php?page=checkout" class="btn-primary-gold btn-medium">PROCEED TO CHECKOUT</a>
                     </div>
                 </div>
             </div>
@@ -273,127 +120,170 @@ if(isset($_GET['order_id']) && $_GET['order_id']!="") $order_id =  $_GET['order_
     </div>
 </main>
 
+
 <script>
-    $('#login').click(function(event){
-        event.preventDefault();
-        var formData = new FormData($('#login_form')[0]);
-        formData.append("q","login_customer");
-        if($.trim($('#username_').val()) == ""){
-            alert('user')
+    function cartView(){
+        //alert('ok')
+        $.ajax({
+            url: "includes/controller/ecommerceController.php",
+            dataType: "json",
+            type: "post",
+            async:false,
+            data: {
+                q: "viewCartSummery"
+            },
+            success: function(data) {
+                //alert(data);
+                if(!jQuery.isEmptyObject(data.records)){
+                    var html = '';
+                    var total = 0;
+                    var sub_total = 0;
+                    var count =0
+                    $.each(data.records, function(i,datas){
+                        // alert(datas.item_id)
 
-            success_or_error_msg('#loginerror_','danger',"Please type user name","#emp_name");
-        }
-        if($.trim($('#password_').val()) == ""){
-            alert('pass')
+                        sub_total += parseFloat(datas.discounted_rate)*(datas.quantity);
+                        html+=' <tr>\n' +
+                            '                            <th>PRODUCT</th>\n' +
+                            '                            <td>\n' +
+                            '                                <div class="product-cart" style="'+ item_image_display +'">\n' +
+                            '                                    <img src="/admin/images/item/'+datas.item_image+'" alt="" style="height: 80px; width: 140px; border-radius: 10px">\n' +
+                            '                                </div>\n' +
+                            '                                <div class="product-cart-title">\n' +
+                            '                                    <span>'+datas.item_name+'</span>\n' +
+                            '                                </div>\n' +
+                            '                            </td>\n' +
+                            '                            <th>PRICE</th>\n' +
+                            '                            <td>\n' +
+                            '                                <strong>'+datas.discounted_rate+'</strong>\n' +
+                            '                                <del>$5400.00</del>\n' +
+                            '                            </td>\n' +
+                            '                            <th>QUANTITY</th>\n' +
+                            '                            <td>\n' +
+                            '                                <div class="price-textbox">\n' +
+                            '                                    <span class="minus-text" onclick="minusProd('+datas.item_id+')"><i class="icon-minus"></i></span>' +
+                            '                                    <input type="hidden" name="cart_key[]" value="'+ datas.item_id+'"/>\n' +
+                            '                                    <input name="quantity[]" id="quantity_'+datas.item_id+'" placeholder="'+datas.quantity+'" type="text" value="1">\n' +
+                            '                                    <span class="plus-text" onclick="addProd('+datas.item_id+')"><i class="icon-plus"></i></span>\n' +
+                            '                                </div>\n' +
+                            '                            </td>\n' +
+                            '                            <th>TOTAL</th>\n' +
+                            '                            <td>\n' +
+                            '                                '+datas.discounted_rate+' * '+datas.quantity+'\n' +
+                            '                            </td>\n' +
+                            '                            <td class="shop-cart-close"><i class="icon-cancel-5"></i></td>\n' +
+                            '                        </tr>'
 
-            success_or_error_msg('#loginerror_','danger',"Please type password","#password");
-        }
-        else{
-            alert('login')
+                        /*html += '<div class="cart-item"><div class="cart-item-left"><img src="/admin/images/item/'+datas.item_image+'" alt=""></div><div class="cart-item-right"><h6>'+datas.item_name+'</h6><span> '+datas.discounted_rate+' * '+datas.quantity+' = '+sub_total+'</span></div><span class="delete-icon" onclick="deleteItem('+"'"+datas.cart_key+"'"+')"></span></div>';
+                        */
+                        count++;
+                        total += sub_total ;
+                    });
+                    $('#quantity_15').val(15)
+                    $('#cart_table').html(html);
 
+                    total = total.toFixed(2);
+                    html += '<div class="subtotal"><div class="col-md-6 col-sm-6 col-xs-6"><h6>Subtotal :</h6></div><div class="col-md-6 col-sm-6 col-xs-6"><span>Tk '+total+'</span></div></div>';
+                    html  += '<div class="cart-btn"><div class="col-sm-6"><a href="cart.php" class="btn-main checkout">VIEW ALL</a></div><div class="col-sm-6"><a href="checkout.php" class="btn-main checkout">CHECK OUT</a></div></div>';
+                    $('#total_item_in_cart').html(count);
+                }
+                else{
+                    $('#total_item_in_cart').html(0);
+                    html = "<h6>You have no items in your cart</h6>";
+                }
+                $('#cart_div').html(html);
+
+            }
+        });
+    }
+    cartView()
+    $('#apply_cupon').click(function(){
+        var cupon_code = $('#cupon_code').val();
+        if(cupon_code !=""){
             $.ajax({
-                url: "./includes/controller/customerController.php",
+                url: "includes/controller/ecommerceController.php",
                 type:'POST',
-                data:formData,
                 async:false,
-                cache:false,
-                contentType:false,processData:false,
+                data: "q=apply_cupon&cupon_code="+cupon_code,
                 success: function(data){
-                    alert(data)
-                    if($.isNumeric(data)==true && data==3){
-                        success_or_error_msg('#loginerror_',"danger","Invalid username","#user_name" );
-                    }
-                    else if($.isNumeric(data)==true && data==2){
-                        success_or_error_msg('#loginerror_',"danger","Invalid password","#password" );
-                    }
-                    else if($.isNumeric(data)==true && data==1){
-                        display_div()
-                        $("#profile").css("display", "block");
-                        load_customer_profile();
-                        $('#done_login').addClass("hide");
-                        $('#done_login_msg').removeClass("hide");
-                        $('.language-menu').html('<a href="account.php" class="current-lang" id="my_acc"><i class="fa fa-user" aria-hidden="true" ></i> My Account</a>');
-                        if($('#islogged_in').length > 0 ){
-                            $('#islogged_in').val(1);
-                            $('.logged_in_already').addClass('hide');
-                        }
-                    }
+                    /*if($.trim(data) == 1)*/
+                    location.reload();
                 }
             });
         }
     })
 
-
-    load_customer_profile = function load_customer_profile(){
+    // send mail if forget password
+    $('#update_cart').click(function(event){
+        event.preventDefault();
+        var formData = new FormData($('#cart_detail')[0]);
+        formData.append("q","update_cart");
         $.ajax({
-            url:"./includes/controller/ecommerceController.php",
+            url: "includes/controller/ecommerceController.php",
+            type:'POST',
+            data:formData,
+            async:false,
+            cache:false,
+            contentType:false,processData:false,
+            success: function(data){
+                if(data==1)  location.reload();
+            }
+        });
+    })
+
+    function deleteProductFromCart(cart_key){
+        $.ajax({
+            url: "includes/controller/ecommerceController.php",
             dataType: "json",
             type: "post",
             async:false,
             data: {
-                q: "get_customer_details",
-                customer_id: customer_id,
+                q: "removeFromCart",
+                cart_key:cart_key
             },
-            success: function(data){
+            success: function(data) {
+                $('#tr_'+cart_key).remove();
                 if(!jQuery.isEmptyObject(data.records)){
-                    $.each(data.records, function(i,data){
-                        $('#customer_id').html(data.customer_id);
-                        $('#customer_name').html(data.full_name);
-                        $('#contact_no').html(data.contact_no);
-                        $('#email').html(data.email);
-                        $('#address').html(data.address);
-                        $('#customer_status').html(data.status_text);
-
-                        if(data.photo == ""){
-                            $('#customer_img').attr("src",'admin/images/no_image.png');
-                        }else{
-                            $('#customer_img').attr("src","admin/"+data.photo);
-                        }
-                        $('#customer_img').attr("width", "70%","height","70%");
+                    var html = '';
+                    var total = 0;
+                    var sub_total = 0;
+                    var count =0
+                    $.each(data.records, function(i,datas){
+                        sub_total += parseFloat(datas.discounted_rate)*(datas.quantity);
+                        html += '<div class="cart-item"><div class="cart-item-left"><img src="admin/images/product/'+datas.product_image+'" alt=""></div><div class="cart-item-right"><h6>'+datas.product_name+'</h6><span> '+datas.discounted_rate+' * '+datas.quantity+' = '+sub_total+'</span></div><span class="delete-icon" onclick="deleteProductFromCart('+"'"+datas.cart_key+"'"+')"></span></div>';
+                        count++;
+                        total += sub_total ;
                     });
+                    //var cupon_amount = datas.cupon_amount;
+                    //if()
+                    total = total.toFixed(2);
+                    $('#cart_total').html(total);
+                    $('#discount_total').html(total);
+                    $('#grand_total').html(total);
 
+                    html += '<div class="subtotal"><div class="col-md-6 col-sm-6 col-xs-6"><h6>Subtotal :</h6></div><div class="col-md-6 col-sm-6 col-xs-6"><span>Tk '+total+'</span></div></div>';
+                    html  += '<div class="cart-btn"><a href="cart.php" class="btn-main checkout">VIEW ALL</a><a href="checkout.php" class="btn-main checkout">CHECK OUT</a></div>';
+                    $('#total_product_in_cart').html(count);
+                }
+                else{
+                    html = "<div class='alert alert-danger center' style='width:100%; min-height:100px'>There is no product in your cart</div>";
+                    $('#product_container').html(html);
                 }
             }
         });
     }
-    display_div = function display_div(){
-        $("#login_div").css("display", "none");
-        $("#register_div").css("display", "none");
-        $("#forget_pass_div").css("display", "none");
-        $("#profile").css("display", "none");
+
+    function addProd(cart_key){
+        alert(cart_key)
+        var qty = parseFloat($('#quantity_'+cart_key).val());
+        alert(qty)
+        $('#quantity_'+cart_key).val(qty+1);
     }
 
-    registration = function () {
-        display_div()
-        $("#register_div").css("display", "block");
+    function minusProd(cart_key){
+        var qty = parseFloat($('#quantity_'+cart_key).val());
+        if(qty>1)  $('#quantity_'+cart_key).val(qty-1);
     }
-    forgetPass = function () {
-        display_div()
-        $("#forget_pass_div").css("display", "block");
-    }
-    <?php
-    if($is_logged_in_customer != ""){
-    ?>
-    var customer_id = "<?php echo $customer_id; ?>";
-    var order_id = "<?php echo $order_id; ?>";
-    display_div()
-    $("#profile").css("display", "block");
-    load_customer_profile();
-    <?php
-    }
-    else{
-    ?>
-    display_div()
-    $("#login_div").css("display", "block");
-    //alert('ok3')
 
-    <?php
-    }?>
 </script>
-
-
-
-
-
-
 

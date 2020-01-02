@@ -11,7 +11,7 @@ $(document).ready(function () {
 	var user_id 	= "<?php echo $_SESSION['user_id']; ?>";	
 	var user_type  = "<?php echo $_SESSION['user_type']; ?>";	
 
-	$('.date-picker').daterangepicker({
+	$('.item').daterangepicker({
 		singleDatePicker: true,
 		calender_style: "picker_3",
 		locale: {

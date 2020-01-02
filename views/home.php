@@ -18,9 +18,9 @@ $store_address=$dbClass->getDescription('store_address');
 
 ?>
 
-<div class="main-part">
+
     <!-- Start Slider Part -->
-    <section class="home-slider">
+<section class="home-slider">
         <div class="tp-banner-container">
             <div class="tp-banner">
                 <ul>
@@ -66,7 +66,7 @@ $store_address=$dbClass->getDescription('store_address');
     </section>
     <!-- End Slider Part -->
     <!-- Start Welcome Part -->
-    <section id="reach-to" class="welcome-part home-icon">
+<section id="reach-to" class="welcome-part home-icon">
         <div class="icon-default">
             <a href="#reach-to" class="scroll"><img src="./images/scroll-arrow.png" alt=""></a>
         </div>
@@ -103,7 +103,7 @@ $store_address=$dbClass->getDescription('store_address');
     </section>
     <!-- End Welcome Part -->
     <!-- Start Hot Items -->
-    <section class="special-menu bg-skeen home-icon wow fadeInDown" data-wow-duration="1000ms" data-wow-delay="300ms">
+<section class="special-menu bg-skeen home-icon wow fadeInDown" data-wow-duration="1000ms" data-wow-delay="300ms">
         <div class="icon-default icon-skeen">
             <img src="./images/icon6.png" alt="">
         </div>
@@ -113,16 +113,6 @@ $store_address=$dbClass->getDescription('store_address');
                 <h6>The role of a good cook ware in the preparation of a sumptuous meal cannot be over emphasized then one consider white bread</h6>
             </div>
             <div class="menu-wrapper">
-                <div class="portfolioFilter">
-                    <div class="portfolioFilter-inner">
-                        <a href="javascript:;" data-filter="*" class="current">All</a>
-                        <a href="javascript:;" data-filter=".breakfast">BREAKFAST</a>
-                        <a href="javascript:;" data-filter=".dessert">DESSERT</a>
-                        <a href="javascript:;" data-filter=".dinner">DINNER</a>
-                        <a href="javascript:;" data-filter=".freshfood">FRESHFOOD</a>
-                        <a href="javascript:;" data-filter=".lunch">LUNCH</a>
-                    </div>
-                </div>
                 <div class="portfolioContainer row">
                     <div class="col-md-6 col-sm-6 col-xs-12 isotope-item breakfast">
                         <div class="menu-list">
@@ -201,7 +191,7 @@ $store_address=$dbClass->getDescription('store_address');
     </section>
     <!-- End Hot Items -->
     <!-- Start Services -->
-    <section class="bg-skeen home-icon wow fadeInDown" data-wow-duration="1000ms" data-wow-delay="300ms" style="background-color: rgba(142,142,142,0.6)">
+<section class="bg-skeen home-icon wow fadeInDown" data-wow-duration="1000ms" data-wow-delay="300ms" style="background-color: rgba(244,242,237,1)">
         <div class="icon-default icon-skeen">
             <img src="./images/scroll-arrow.png" alt="">
         </div>
@@ -238,9 +228,9 @@ $store_address=$dbClass->getDescription('store_address');
     </section>
     <!-- End Services -->
     <!-- Start Feature list -->
-    <section class="bg-skeen feature-list text-center home-icon wow fadeInDown" data-wow-duration="1000ms" data-wow-delay="300ms">
-        <div class="icon-default icon-skeen">
-            <img src="./images/icon22.png" alt="">
+<section class="bg-skeen feature-list text-center home-icon wow fadeInDown" data-wow-duration="1000ms" data-wow-delay="300ms" style="background-color: white;">
+        <div class="icon-default icon-skeen" style="background-color: white">
+            <img src="./images/icon22.png" alt="" style="background-color: white">
         </div>
         <div class="container">
             <div class="build-title">
@@ -289,7 +279,7 @@ $store_address=$dbClass->getDescription('store_address');
     </section>
     <!-- End Feature list -->
     <!-- Start Captures -->
-    <section class="instagram-main home-icon wow fadeInDown" data-wow-duration="1000ms" data-wow-delay="300ms">
+<section class="instagram-main home-icon wow fadeInDown" data-wow-duration="1000ms" data-wow-delay="300ms">
         <div class="icon-default">
             <img src="./images/icon23.png" alt="">
         </div>
@@ -425,7 +415,7 @@ $store_address=$dbClass->getDescription('store_address');
         </div>
     </section>
     <!-- End Captures -->
-</div>
+
 
 <script src="js/app.js"></script>
 <script src="js/script.js"></script>

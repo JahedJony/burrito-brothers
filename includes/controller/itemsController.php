@@ -70,11 +70,11 @@ switch ($q){
     case "menu_view":
         //echo $menu; die;
         $data = array();
-        $sql = 	"SELECT i.item_id, i.name, CONCAT(LEFT(i.details,110),' . . . ') as details, r.rate, ifnull(im.item_image,'') photo 
+        $sql = 	"SELECT i.item_id, i.name, CONCAT(LEFT(i.details,110),' . . . ') as details, r.rate,r.rate_id, ifnull(im.item_image,'') photo 
             FROM items i
             LEFT JOIN category c ON c.id=i.category_id
             LEFT JOIN (
-                SELECT item_id, MIN(rate) as rate
+                SELECT item_id, MIN(rate) as rate, id as rate_id
                 FROM item_rate
                 GROUP BY item_id
                 )r ON r.item_id = i.item_id
@@ -116,6 +116,19 @@ switch ($q){
         //$dbClass->print_arrays($data);die;
         echo json_encode($data);
         break;
+
+    case "getOrder_status":
+            $sql = "select order_status,order_noticed, payment_status, ifnull(payment_method,3) payment_method from order_master where invoice_no='$order_tracking_number'";
+            $stmt = $conn->prepare($sql);
+            $stmt->execute();
+            $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            foreach ($result as $row) {
+                $data['records'][] = $row;
+            }
+            //	var_dump($data);
+            echo json_encode($data);
+    break;
+
 
 
 

@@ -10,7 +10,9 @@ $loggedUser = $dbClass->getUserId();
 extract($_REQUEST);
 switch ($q){
     case "insert_or_update":
+        //echo '33'; die;
         if(isset($coupon_id) && $coupon_id == ""){
+            //echo '33'; die;
 
             $check_coupon_name_availability = $dbClass->getSingleRow("select count(cupon_no) as no_of_coupon from cupons where cupon_no='$coupon_no'");
             if($check_coupon_name_availability['no_of_coupon']!=0) { echo 5; die;}
@@ -20,7 +22,7 @@ switch ($q){
                 $is_active = 1;
             }
             if(!$customer_id)	$customer_id = NULL;
-
+            //echo $customer_id; die;
             $columns_value = array(
                 'cupon_no'=>$coupon_no,
                 'customer_id'=>$customer_id,
@@ -29,7 +31,8 @@ switch ($q){
                 'end_date'=>$end_date,
                 'c_type'=>$coupon_type,
                 'amount'=>$amount,
-                'status'=>$is_active
+                'status'=>$is_active,
+                'min_order_amount'=>$min_order_amount
             );
 
             $return = $dbClass->insert("cupons", $columns_value);
@@ -51,10 +54,15 @@ switch ($q){
             if(isset($_POST['is_active'])){
                 $is_active = 1;
             }
+            //echo gettype((int)$customer_id); die;
+            if(!$customer_id || $customer_id=""){
+                $customer_id= NULL;
+                //echo $customer_id; die;
+            }
 
             $columns_value = array(
                 'cupon_no'=>$coupon_no,
-                'customer_id'=>$customer_id,
+                'customer_id'=>(int)$customer_id,
                 'entry_date'=>$entry_date,
                 'start_date'=>$start_date,
                 'end_date'=>$end_date,
@@ -62,11 +70,11 @@ switch ($q){
                 'amount'=>$amount,
                 'status'=>$is_active
             );
+            //echo '33'; die;
 
             $condition_array = array(
                 'id'=>$coupon_id
             );
-
             $return = $dbClass->update("cupons", $columns_value,$condition_array);
 
             if($return) echo "2";
@@ -130,7 +138,7 @@ switch ($q){
     case "get_coupon_details":
         $update_permission = $dbClass->getUserGroupPermission(80);
         if($update_permission==1){
-            $sql = "SELECT c.id, c.cupon_no, c.c_type, c.start_date, c.end_date, c.entry_date, c.amount,c.`status`,
+            $sql = "SELECT c.id, c.cupon_no,c.min_order_amount, c.c_type, c.start_date, c.end_date, c.entry_date, c.amount,c.`status`,
 					CASE c.`status` WHEN 1 THEN 'Active' WHEN 0 THEN 'In-Active' END status_text, 
 					CASE c.c_type WHEN 1 THEN 'Flat Price' WHEN 2 THEN 'Percentage' END c_type_name,
 					i.customer_id, ifnull(i.full_name,'') customer_name	

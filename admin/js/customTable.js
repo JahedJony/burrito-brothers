@@ -52,7 +52,7 @@
 		}, 50);
 	})
 
-$('.date-picker').daterangepicker({
+$('.item').daterangepicker({
 	singleDatePicker: true,
 	calender_style: "picker_3",
 	locale: {

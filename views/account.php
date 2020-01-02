@@ -19,25 +19,35 @@ if(isset($_GET['order_id']) && $_GET['order_id']!="") $order_id =  $_GET['order_
 ?>
 <!-- Start Main -->
 <!-- Start Breadcrumb Part -->
-        <section class="breadcrumb-part" data-stellar-offset-parent="true" data-stellar-background-ratio="0.5" style="background-image: url('images/banner8.jpg');">
-            <div class="container">
-                <div class="breadcrumb-inner">
+        <section class="breadcrumb-part" id="welcome_heading_big" data-stellar-offset-parent="true" data-stellar-background-ratio="0.5" style="background-image: url('images/banner8.jpg');">
+            <div class="container" id="welcome_container_big">
+                <div class="breadcrumb-inner" >
                     <h2><span style='color:#8c5d2d'>Welcome</span><br> <?php echo $customer_info['full_name']; ?></h2>
                     <a href="index.php">Home</a>
                     <span>My Acount</span>
                 </div>
             </div>
         </section>
+        <section class="breadcrumb-part" id="welcome_heading_small" data-stellar-offset-parent="true" data-stellar-background-ratio="0.5" style="background-image: url('images/banner8.jpg'); height: 180px; margin-bottom: 0px">
+            <div class="container">
+                <div class="breadcrumb-inner" >
+            <h4 style="margin: 0px"><span style='color:#8c5d2d'>Welcome</span> <?php echo $customer_info['full_name']; ?></h4>
+            <a href="index.php" style="margin-top: 2px">Home</a>
+            <span>My Acount</span>
+        </div>
+            </div>
+        </section>
         <!-- End Breadcrumb Part -->
         <!-- Start term condition -->
-        <section class="term-condition home-icon">
+        <section class="term-condition home-icon" style="padding-top: 40px">
             <div class="icon-default">
                 <a href="#"><img src="images/scroll-arrow.png" alt=""></a>
             </div>
-            <div class="container">
-                <div class="col-md-9 col-sm-8 col-xs-12 wow fadeInDown" data-wow-duration="1000ms" data-wow-delay="300ms">
-                    <div class="team-single-info" style="margin: 10px 0 !important;">
-                        <div class="row" id="account_contents">
+            <div class="container account_container">
+
+                <div class="col-md-9 col-sm-8 col-xs-12 wow fadeInDown" data-wow-duration="1000ms" data-wow-delay="300ms" style="border-radius: 15px">
+                    <div class="team-single-info  alert-warning" style="margin: 10px 0 !important; padding: 10px; border-radius: 15px">
+                        <div class="row  alert-warning" id="account_contents" style="padding: 15px;border-radius: 10px">
 
                         </div>
                     </div>
@@ -52,6 +62,7 @@ if(isset($_GET['order_id']) && $_GET['order_id']!="") $order_id =  $_GET['order_
                         </ul>
                     </div>
                 </div>
+
             </div>
         </section>
 <!-- End Main -->
@@ -59,6 +70,23 @@ if(isset($_GET['order_id']) && $_GET['order_id']!="") $order_id =  $_GET['order_
 <script>
     var customer_id = "<?php echo $customer_id; ?>";
     var order_id = "<?php echo $order_id; ?>";
+
+    var sWidth = window.screen.width;
+    //alert("sWidth is: " + sWidth);
+    if(sWidth<801){
+        $('#welcome_heading_big').css('display','none')
+        $('#welcome_heading_small').css('display','block')
+        $('#table_big').css('display', 'none')
+        $('#table_small').css('display', 'block')
+    }
+    else {
+        $('#welcome_heading_big').css('display','block')
+        $('#welcome_heading_small').css('display','none')
+        $('#table_big').css('display', 'block')
+        $('#table_small').css('display', 'none')
+    }
+
+
 
     show_my_accounts = function show_my_accounts(page_name, order_id){
         $(".sub-menu").removeClass('active');
@@ -79,9 +107,10 @@ if(isset($_GET['order_id']) && $_GET['order_id']!="") $order_id =  $_GET['order_
             return false;
         }
         else{
+            //alert('ok')
             order_no = $.trim($('#order_tracking_number').val());
             $.ajax({
-                url: "includes/controller/productController.php",
+                url: "./includes/controller/itemsController.php",
                 dataType: "json",
                 type: "post",
                 async:false,
@@ -90,8 +119,12 @@ if(isset($_GET['order_id']) && $_GET['order_id']!="") $order_id =  $_GET['order_
                     order_tracking_number:order_no
                 },
                 success: function(data){
+                    //alert(data)
+
                     if(!jQuery.isEmptyObject(data.records)){
                         $.each(data.records, function(i,datas){
+                            //alert(datas.order_status)
+
                             var li=""; var message = "";
 
                             if(datas.payment_method == 3 ){
@@ -100,7 +133,7 @@ if(isset($_GET['order_id']) && $_GET['order_id']!="") $order_id =  $_GET['order_
                                     message = "You have received your order! Have fun";
                                 }
                                 else if(datas.order_status == 2){
-                                    li = "<li class='done-proceed'>Order Placed</li><li class='done-proceed'>Order Received</li><li class='done-proceed'>Ready</li><li >Delivered</li><li>Payment</li>";
+                                    li = "<li class='done-proceed col-sm-3 col-xs-4'>Order Placed</li><li class='done-proceed col-sm-3 col-xs-4' >Payment</li><li class='done-proceed col-sm-3 col-xs-4'>Order Received</li><li class='done-proceed col-sm-3 col-xs-4'>Ready</li><li class='col-sm-3 col-xs-4' >Delivered</li>";
                                     message = "Your order is ready for delevery/pickup";
                                 }
                                 else if(datas.order_status == 1 && datas.payment_status == 1 ){
@@ -122,7 +155,7 @@ if(isset($_GET['order_id']) && $_GET['order_id']!="") $order_id =  $_GET['order_
                                     message = "You have received your order! Have fun";
                                 }
                                 else if(datas.order_status == 2){
-                                    li = "<li class='done-proceed'>Order Placed</li><li class='done-proceed'>Payment</li><li class='done-proceed'>Order Received</li><li class='done-proceed'>Ready</li><li >Delivered</li>";
+                                    li = "<li class='done-proceed col-sm-3'>Order Placed</li><li class='done-proceed col-sm-3'>Payment</li><li class='done-proceed col-sm-3'>Order Received</li><li class='done-proceed col-sm-3'>Ready</li><li class='col-sm-3' style='max-width: 10px' >Delivered</li>";
                                     message = "Your order is ready for delevery/pickup";
                                 }
                                 else if(datas.order_status == 1 && datas.payment_status == 1 ){

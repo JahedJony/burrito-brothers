@@ -64,6 +64,8 @@ switch ($q){
 
             //var_dump($columns_value);die;
             $return_master = $dbClass->insert("order_master", $columns_value);
+            //echo $return_master; die;
+            //echo $item_id; die;
 
             if($return_master){
                 foreach($item_id as $key=>$value){
@@ -99,7 +101,7 @@ switch ($q){
                 'payment_status'=>$payment_status,
                 'payment_reference_no'=>$payment_referance_no,
                 'discount_amount'=>$discounted_amount,
-                'total_order_amt'=>$total_item_amount,
+                'total_order_amt'=>$grand_total_amount,
                 'total_paid_amount'=>$total_paid_amount,
                 'payment_time'=>$c_date,
 
@@ -125,19 +127,23 @@ switch ($q){
             );
 
             $return_master = $dbClass->update("order_master", $columns_value,$condition_array);
+            //echo $item_id; die;
 
             if($return_master){
                 $condition_array = array(
                     'order_id'=>$order_id
                 );
                 $return_dlt = $dbClass->delete("order_details", $condition_array);
+
                 if($return_dlt){
                     foreach($item_id as $key=>$value){
+                        $item_rate_id = $dbClass->getSingleRow(' select r.id from item_rate r where r.size_id = '.$size_id[$key].' and r.discounted_rate = '.$rate[$key]);
+                        //echo $item_rate_id['id']; die;
                         $columns_value = array(
                             'order_id'=>$order_id,
                             'item_id'=>$item_id[$key],
                             'quantity'=>$quantity[$key],
-                            'size_id'=>$size_id[$key],
+                            'item_rate_id'=>$item_rate_id['id'],
                             'unit_id'=>$unit_id[$key],
                             'item_rate'=>$rate[$key]
                         );
@@ -155,7 +161,6 @@ switch ($q){
         break;
 
     case "grid_data":
-        //echo '1'; die;
         $start = ($page_no*$limit)-$limit;
         $end   = $limit;
         $data = array();
@@ -167,6 +172,7 @@ switch ($q){
         $category_grid_permission   = $dbClass->getUserGroupPermission(77);
 
         $condition = "";
+        //echo '1'; die;
 
         //# advance search for grid
         if($search_txt == "Print" || $search_txt == "Advance_search"){
@@ -189,22 +195,21 @@ switch ($q){
 
         $countsql = "SELECT count(order_id)
 					FROM(
-						SELECT m.order_id, m.customer_id, c.full_name as customer_name, m.invoice_no,
-						d.item_id,d.item_rate, d.size_id,  d.unit_id, m.order_date, m.delivery_date, 
+						  SELECT m.order_id, m.customer_id, c.full_name as customer_name, m.invoice_no,
+						d.item_id,d.item_rate, d.item_rate_id,  d.unit_id, m.order_date, m.delivery_date, 
 						GROUP_CONCAT(p.name,' (',s.name,' - ',FORMAT(d.item_rate,2),')') p_name,
-						m.delivery_type, m.outlet_id, CONCAT(m.outlet_id,' >> ',o.address) outlet_name, order_noticed,
+						m.delivery_type, m.outlet_id, order_noticed,
 						m.address, m.remarks, m.order_status, m.payment_status, m.payment_method, m.payment_reference_no
 						FROM order_master m
 						LEFT JOIN order_details d ON d.order_id = m.order_id
 						LEFT JOIN customer_infos c ON c.customer_id = m.customer_id
-						LEFT JOIN outlets o ON o.id = m.outlet_id
-						LEFT JOIN item_rate r ON (r.item_id = d.item_id AND r.size_id=d.size_id AND r.unit_id=d.unit_id)
+						LEFT JOIN item_rate r ON (r.item_id = d.item_id AND r.id=d.item_rate_id AND r.unit_id=d.unit_id)
 						LEFT JOIN items p ON p.item_id = d.item_id
 						LEFT JOIN size s ON s.id = r.size_id
 						LEFT JOIN units u ON u.id = r.unit_id
 						WHERE d.status=1
 						GROUP BY d.order_id
-						ORDER BY m.order_id desc
+						ORDER BY m.order_id DESC
 					)A
 					WHERE CONCAT(invoice_no, order_id, customer_name, p_name, item_rate) LIKE '%$search_txt%' $condition";
         //echo $countsql;die;
@@ -216,26 +221,23 @@ switch ($q){
         $total_pages = $total_records/$limit;
         $data['total_pages'] = ceil($total_pages);
         if($category_grid_permission==1){
-            $sql = 	"SELECT order_id, customer_id, customer_name, item_id, item_rate, size_id, unit_id, p_name, order_date,order_noticed,
-					delivery_date, delivery_type, outlet_id, outlet_name, address, remarks, order_status, payment_status, delivery_charge,
-					payment_method, payment_reference_no, invoice_no, payment_status_text, order_status_text, total_order_amt, total_paid_amount,
-					 $update_permission as update_status, $delete_permission as delete_status
+            $sql = 	"SELECT order_id, customer_id, customer_name, item_id, item_rate, item_rate_id, p_name, order_date,order_noticed,
+					delivery_date, delivery_type, address, remarks, order_status, payment_status, delivery_charge,
+					payment_method, payment_reference_no, invoice_no, payment_status_text, order_status_text, total_paid_amount,
+					$update_permission as update_status, $delete_permission as delete_status
 					FROM(
-						SELECT m.order_id, m.customer_id, c.full_name as customer_name, m.delivery_type, m.outlet_id, 
-						CONCAT(m.outlet_id,' >> ',o.address) outlet_name, m.address, m.remarks, m.order_status, order_noticed,
+						 SELECT m.order_id, m.customer_id, c.full_name as customer_name, m.delivery_type, m.address, m.remarks, m.order_status, order_noticed,
 						m.payment_status, m.payment_method, m.payment_reference_no, m.invoice_no,
-						d.item_id,d.item_rate, d.size_id, d.unit_id, m.total_order_amt, m.total_paid_amount, m.delivery_charge,
+						d.item_id,d.item_rate, d.item_rate_id, m.total_paid_amount, m.delivery_charge,
 						CASE m.payment_status WHEN 1 THEN 'Not Paid' WHEN 2 THEN 'Paid' END payment_status_text,
 						CASE m.order_status WHEN 1 THEN 'Ordered' WHEN 2 THEN 'Ready' WHEN 3 THEN 'Picked' END order_status_text,
 						GROUP_CONCAT(p.name,' (',s.name,' - ',format(d.item_rate,2),')' SEPARATOR ', ') p_name, m.order_date, m.delivery_date
 						FROM order_master m
 						LEFT JOIN order_details d ON d.order_id = m.order_id
 						LEFT JOIN customer_infos c ON c.customer_id = m.customer_id
-						LEFT JOIN outlets o ON o.id = m.outlet_id
-						LEFT JOIN item_rate r ON (r.item_id = d.item_id AND r.size_id=d.size_id AND r.unit_id=d.unit_id)
+						LEFT JOIN item_rate r on r.id = d.item_rate_id
 						LEFT JOIN items p ON p.item_id = d.item_id
 						LEFT JOIN size s ON s.id = r.size_id
-						LEFT JOIN units u ON u.id = r.unit_id
 						WHERE d.status=1
 						GROUP BY d.order_id
 						ORDER BY m.order_id desc
@@ -260,9 +262,9 @@ switch ($q){
         if($update_permission==1){
             $sql = "SELECT m.order_id, m.customer_id, 
 					c.full_name customer_name, d.item_id, c.contact_no customer_contact_no, c.address customer_address, 
-					GROUP_CONCAT(ca.name,' >> ',ca.id,'#',ca.id,'#',p.name,' (',ca.name,' )','#',p.item_id,'#',s.name,'#',d.size_id,'#',d.item_rate,'#',d.quantity,'#',u.short_name,'#',d.unit_id) order_info,
+					GROUP_CONCAT(ca.name,' >> ',ca.id,'#',ca.id,'#',p.name,' (',ca.name,' )','#',p.item_id,'#',s.name,'#',r.size_id,'#',d.item_rate,'#',d.quantity,'#',u.short_name,'#',d.unit_id) order_info,
 					m.order_date, m.delivery_date, m.delivery_type, m.discount_amount, m.total_paid_amount, m.delivery_charge,
-					ifnull(m.outlet_id,0) outlet_id, o.address, m.address, m.delivery_charge_id, m.tax_amount,  ifnull(cu.cupon_no,'') cupon_no, ifnull(cu.amount,'') cu_amount, cu.c_type cu_type,  m.cupon_id,
+					  m.address, m.delivery_charge_id, m.tax_amount,  ifnull(cu.cupon_no,'') cupon_no, ifnull(cu.amount,'') cu_amount, cu.c_type cu_type,  m.cupon_id,
 					m.remarks, m.order_status, m.payment_status, m.payment_method as payment_method_id,  
 					m.payment_reference_no, m.invoice_no, m.total_order_amt,
 					case payment_status when payment_status=1 then 'Not Paid' else 'Paid' end paid_status, 
@@ -270,14 +272,13 @@ switch ($q){
 					FROM order_master m
 					LEFT JOIN order_details d ON d.order_id = m.order_id
 					LEFT JOIN customer_infos c ON c.customer_id = m.customer_id
-					LEFT JOIN outlets o ON o.id = m.outlet_id
 					LEFT JOIN items p ON p.item_id = d.item_id
-					LEFT JOIN item_rate r ON (r.item_id = d.item_id AND r.size_id=d.size_id AND r.unit_id=d.unit_id)
+					LEFT JOIN item_rate r ON (r.item_id = d.item_id AND r.id=d.item_rate_id AND r.unit_id=d.unit_id)
 					LEFT JOIN size s ON s.id = r.size_id
 					LEFT JOIN category ca ON ca.id = p.category_id
 					LEFT JOIN cupons cu ON cu.cupon_no = m.cupon_id 
 					LEFT JOIN units u ON u.id = r.unit_id
-					WHERE d.status=1 and m.order_id= $order_id 
+					WHERE d.status=1 and m.order_id= $order_id  
 					GROUP BY d.order_id
 					ORDER BY m.order_id ";
             //echo $sql;die;
@@ -295,6 +296,7 @@ switch ($q){
     case "set_order_notice_details":
         $prev_order_notice = $dbClass->getSingleRow("select order_noticed from order_master where order_id=$order_id");
         //echo $prev_order_notice ; die;
+    //echo 1;die;
 
         if($prev_order_notice['order_noticed'] == 1){
             //echo '1'; die;

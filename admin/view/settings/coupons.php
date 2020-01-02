@@ -107,17 +107,17 @@ else{
                                 </div>
                                 <label class="control-label col-md-2 col-sm-2 col-xs-12">Entry Date<span class="required">*</span></label>
                                 <div class="col-md-4 col-sm-4 col-xs-12">
-                                    <input type="text" id="entry_date" name="entry_date" class="date-picker form-control col-lg-12"/>
+                                    <input type="text" id="entry_date" name="entry_date" class="item form-control col-lg-12"/>
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label class="control-label col-md-2 col-sm-2 col-xs-12">Start Date<span class="required">*</span></label>
                                 <div class="col-md-4 col-sm-4 col-xs-12">
-                                    <input type="text" id="start_date" name="start_date" class="date-picker form-control col-lg-12"/>
+                                    <input type="text" id="start_date" name="start_date" class="item form-control col-lg-12"/>
                                 </div>
                                 <label class="control-label col-md-2 col-sm-2 col-xs-12">End Date<span class="required">*</span></label>
                                 <div class="col-md-4 col-sm-4 col-xs-12">
-                                    <input type="text" id="end_date" name="end_date" class="date-picker form-control col-lg-12"/>
+                                    <input type="text" id="end_date" name="end_date" class="item form-control col-lg-12"/>
                                 </div>
                             </div>
                             <div class="form-group">
@@ -131,6 +131,12 @@ else{
                                 <label class="control-label col-md-2 col-sm-2 col-xs-12">Amount<span class="required">*</span></label>
                                 <div class="col-md-4 col-sm-4 col-xs-12">
                                     <input type="text" id="amount" name="amount" class="form-control col-lg-12"/>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label col-md-2 col-sm-2 col-xs-12">Minimum Order Amount<span class="required">*</span></label>
+                                <div class="col-md-4 col-sm-4 col-xs-12">
+                                    <input type="text" id="min_order_amount" name="min_order_amount" class="form-control col-lg-12"/>
                                 </div>
                             </div>
                             <div class="form-group">
@@ -300,6 +306,9 @@ else{
             else if($.trim($('#amount').val()) == ""){
                 success_or_error_msg('#form_submit_error','danger',"Please Insert Amount","#amount");
             }
+            else if($.trim($('#min_order_amount').val()) == ""){
+                success_or_error_msg('#form_submit_error','danger',"Please Insert Minimum Order Amount","#min_order_amount");
+            }
             else{
                 $.ajax({
                     url: project_url+"controller/couponController.php",
@@ -310,6 +319,7 @@ else{
                     contentType:false,
                     processData:false,
                     success: function(data){
+                        alert(data)
                         $('#save_coupon').removeAttr('disabled','disabled');
 
                         if($.isNumeric(data)==true && data==5){
@@ -352,6 +362,7 @@ else{
                             $('#entry_date').val(data.entry_date);
                             $('#amount').val(data.amount);
                             $('#coupon_type').val(data.c_type);
+                            $('#min_order_amount').val(data.min_order_amount);
 
                             if(data.status==1){
                                 $('#is_active').iCheck('check');

@@ -9,7 +9,7 @@ session_destroy();
 ?>
 <script src="../js/static_text.js"></script>
 <script>
-	alert(project_url)
+	//alert(project_url)
 	window.location.replace(project_url+'index.php');
 </script>
 

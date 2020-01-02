@@ -109,7 +109,7 @@
                                     <a href="#" data-toggle="modal" data-target="#booktable" id="c_cake_modal_open_btn"><img src="/images/custom_cake.png" width="30" alt="">Custom Cake</a>
                                 </div>
                                 <div class="shop-cart header-collect">
-                                    <a href="cart.php"><img src="/images/icon-basket.png" alt=""><span id="total_product_in_cart"></span> items</a>
+                                    <a href="cart.php"><img src="/images/icon-basket.png" alt=""><span id="total_item_in_cart"></span> items</a>
                                     <div class="cart-wrap">
                                         <div class="cart-blog" id="cart_div" >
                                         </div>

@@ -48,12 +48,12 @@ else{
                             <label class="control-label col-md-1 col-sm-1 col-xs-6"></label>
                             <label class="control-label col-md-2 col-sm-2 col-xs-6" style="text-align:right">Product</label>
                             <div class="col-md-3 col-sm-3 col-xs-6">
-                                <input class="form-control input-sm" type="text" name="ad_product_name" id="ad_product_name"/>
-                                <input type="hidden" name="ad_product_id" id="ad_product_id"/>
+                                <input class="form-control input-sm" type="text" name="ad_item_name" id="ad_item_name"/>
+                                <input type="hidden" name="ad_item_id" id="ad_item_id"/>
                             </div>
                             <label class="control-label col-md-2 col-sm-2 col-xs-6" style="text-align:right">Order Date</label>
                             <div class="col-md-3 col-sm-3 col-xs-6">
-                                <input class="form-control input-sm ad-date-picker" type="text" name="ad_order_date" id="ad_order_date"  />
+                                <input class="form-control input-sm ad-item" type="text" name="ad_order_date" id="ad_order_date"  />
                             </div>
                             <label class="control-label col-md-1 col-sm-1 col-xs-6"></label>
                         </div><br/>
@@ -246,7 +246,7 @@ else{
                         <div class="form-group">
                             <label class="control-label col-md-2 col-sm-2 col-xs-12">Delivery Date<span class="required">*</span></label>
                             <div class="col-md-4 col-sm-4 col-xs-12">
-                                <input type="text" id="delivery_date" name="delivery_date"  class="date-picker form-control col-lg-12"/>
+                                <input type="text" id="delivery_date" name="delivery_date"  class="item form-control col-lg-12"/>
                             </div>
                             <label class="control-label col-md-2 col-sm-2 col-xs-6">Delivery Type<span class="required">*</span></label>
                             <div class="col-md-4 col-sm-4 col-xs-4">
@@ -369,23 +369,6 @@ else{
     =>load grid with paging
     =>search records
     */
-
-
-        $('.date-picker').daterangepicker({
-            singleDatePicker: true,
-            /*autoUpdateInput: false,*/
-            calender_style: "picker_3",
-            timePicker:true,
-            locale: {
-                format: 'YYYY-MM-DD h:mm',
-                separator: " - ",
-            }
-        });
-
-        $('.ad-date-picker').datepicker({
-            singleDatePicker: true,
-            dateFormat: "yy-mm-dd"
-        });
 
         $('#show_invoice').hide();
 
@@ -594,7 +577,7 @@ else{
 
         // add group row
         $('#addRow').click(function(){
-            $('#orderTable > tbody').append("<tr><td><input type='text' name='product_name[]' class='form-control col-lg-12 product_name'/><input type='hidden' name='product_id[]' class='product_id'/><td><input type='text' name='size_name[]' required class='size_name form-control col-lg-12'/><input type='hidden' name='size_id[]' class='size_id'/></td><td><input type='text' name='unit_name[]' required class='form-control col-lg-12 unit_name'/><input type='hidden' class='unit_id' name='unit_id[]'/></td><td><input type='text' name='rate[]'  value='0.00' required class='form-control col-lg-12 text-right rate'/></td><td><input type='text' name='quantity[]' class='form-control col-lg-12 quantity' value='1' /></td><td><input type='text' name='total[]' value = '0.00' required class='form-control col-lg-12 text-right total' readonly='readonly'/></td><td><span class='input-group-btn'><button type='button' class='btn btn-danger btn-xs remove_row'><span class='glyphicon glyphicon-minus'></span></button></span></td></tr>");
+            $('#orderTable > tbody').append("<tr><td><input type='text' name='product_name[]' class='form-control col-lg-12 product_name'/><input type='hidden' name='item_id[]' class='item_id'/><td><input type='text' name='size_name[]' required class='size_name form-control col-lg-12'/><input type='hidden' name='size_id[]' class='size_id'/></td><td><input type='text' name='unit_name[]' required class='form-control col-lg-12 unit_name'/><input type='hidden' class='unit_id' name='unit_id[]'/></td><td><input type='text' name='rate[]'  value='0.00' required class='form-control col-lg-12 text-right rate'/></td><td><input type='text' name='quantity[]' class='form-control col-lg-12 quantity' value='1' /></td><td><input type='text' name='total[]' value = '0.00' required class='form-control col-lg-12 text-right total' readonly='readonly'/></td><td><span class='input-group-btn'><button type='button' class='btn btn-danger btn-xs remove_row'><span class='glyphicon glyphicon-minus'></span></button></span></td></tr>");
             //$('#orderTable > tfoot > tr ').next().html('');
 
             $('.remove_row').click(function(){
@@ -633,16 +616,16 @@ else{
                 select: function(event, ui) {
                     var unit_id = ui.item.id;
                     $(this).next().val(unit_id);
-                    product_id = $(this).parent().siblings().find('.product_id').val();
+                    item_id = $(this).parent().siblings().find('.item_id').val();
                     size_id    = $(this).parent().siblings().find('.size_id').val();
                     var rate_obj =$(this);
                     //get_product_rate(product_id,size_id,unit_id);
-                    if(product_id != "" && size_id != "" && unit_id != ""){
+                    if(item_id != "" && size_id != "" && unit_id != ""){
                         $.ajax({
                             url: project_url+"controller/orderController.php",
                             type:'POST',
                             async:false,
-                            data: "q=get_product_rate&product_id="+product_id+"&size_id="+size_id+"&unit_id="+unit_id,
+                            data: "q=get_product_rate&item_id="+item_id+"&size_id="+size_id+"&unit_id="+unit_id,
                             success: function(rate){
                                 if($.trim(rate)!=0){
                                     rate_obj.parent().siblings().find('.rate').val(rate);
@@ -721,16 +704,16 @@ else{
                 select: function(event, ui) {
                     var size_id = ui.item.id;
                     $(this).next().val(size_id);
-                    product_id = $(this).parent().siblings().find('.product_id').val();
+                    item_id = $(this).parent().siblings().find('.item_id').val();
                     unit_id    = $(this).parent().siblings().find('.unit_id').val();
 
                     var rate_obj =$(this);
-                    if(product_id != "" && size_id != "" && unit_id != ""){
+                    if(item_id != "" && size_id != "" && unit_id != ""){
                         $.ajax({
                             url: project_url+"controller/orderController.php",
                             type:'POST',
                             async:false,
-                            data: "q=get_product_rate&product_id="+product_id+"&size_id="+size_id+"&unit_id="+unit_id,
+                            data: "q=get_product_rate&item_id="+item_id+"&size_id="+size_id+"&unit_id="+unit_id,
                             success: function(rate){
                                 if($.trim(rate)!=0){
                                     rate_obj.parent().siblings().find('.rate').val(rate);
@@ -857,14 +840,16 @@ else{
 
         var current_page_no=1;
         load_order = function load_order(search_txt){
+            //alert('order')
             $("#search_order_button").toggleClass('active');
             var order_Table_length = parseInt($('#order_Table_length').val());
             var ad_product_name = $("#ad_product_name").val();
             var ad_order_date = $("#ad_order_date").val();
-            var ad_delivery_date = $("#ad_delivery_date").val();
-            var ad_product_id = $("#ad_product_id").val();
+            //var ad_delivery_date = $("#ad_delivery_date").val();
+            var ad_item_id = $("#ad_item_id").val();
             var ad_is_payment = $("input[name=ad_is_payment]:checked").val();
             var ad_is_order = $("input[name=ad_is_order]:checked").val();
+            //alert('order2')
 
             $.ajax({
                 url: project_url+"controller/orderController.php",
@@ -874,9 +859,9 @@ else{
                 data: {
                     q: "grid_data",
                     ad_order_date: ad_order_date,
-                    ad_delivery_date: ad_delivery_date,
+                    //ad_delivery_date: ad_delivery_date,
                     ad_product_name: ad_product_name,
-                    ad_product_id: ad_product_id,
+                    ad_item_id: ad_item_id,
                     ad_is_payment: ad_is_payment,
                     ad_is_order: ad_is_order,
                     search_txt: search_txt,
@@ -884,6 +869,7 @@ else{
                     page_no:current_page_no
                 },
                 success: function(data) {
+                   // alert(data)
                     var todate = "<?php echo date("Y-m-d"); ?>";
                     var user_name =  "<?php echo $user_name; ?>";
                     var html = "";
@@ -1012,8 +998,8 @@ else{
             if($.trim($('#customer_id').val()) == ""){
                 success_or_error_msg('#form_submit_error','danger','Please Select Customer Name',"#customer_name");
             }
-            else if($.trim($('.product_id').val()) == ""){
-                success_or_error_msg('#form_submit_error','danger','Please Select Product Name',".product_name");
+            else if($.trim($('.item_id').val()) == ""){
+                success_or_error_msg('#form_submit_error','danger','Please Select Item Name',".product_name");
             }
             else if($.trim($('.size_id').val()) == ""){
                 success_or_error_msg('#form_submit_error','danger','Please Select Product Size',".size_name");
@@ -1033,7 +1019,7 @@ else{
                     contentType:false,
                     processData:false,
                     success: function(data){
-                        //alert(data)
+                        alert(data)
 
                         $('#save_order').removeAttr('disabled','disabled');
 
@@ -1132,7 +1118,7 @@ else{
         //edit order
         edit_order = function edit_order(order_id){
             //order noticed update
-            alert(order_id)
+            //alert(order_id)
             $.ajax({
                 url: project_url+"controller/orderController.php",
                 type:'POST',
@@ -1143,11 +1129,11 @@ else{
                     order_id:order_id
                 },
                 success: function(data){
-                    alert(data)
+                    //alert(data)
                     //alert('Noticed Successfully');
                 }
             });
-            alert('edit2')
+            //alert('edit2')
 
             $('#delivery_address').hide();
             //$('#delivery_outlet').hide();
@@ -1155,7 +1141,7 @@ else{
 
 
             $('#orderTable > tbody').html("");
-            alert('edit3')
+            //alert('edit3')
 
 
             $.ajax({
@@ -1215,36 +1201,9 @@ else{
                             $('#delivery_option').val(data.delivery_type);
                             $('#outlet_option').val(data.outlet_id);
                             var option_html = '';
-                            alert('edit4')
+                            //alert('edit4')
 
-                            if(data.delivery_type == 2){
-                                //$('#delivery_outlet').hide();
-                                $('#delivery_address').show();
-                                $.ajax({
-                                    url: project_url+"controller/orderController.php",
-                                    dataType: "json",
-                                    type: "post",
-                                    async:false,
-                                    data:{
-                                        q: "view_delivery_list",
-                                    },
-                                    success: function(data){
-                                        alert(data)
-                                        if(!jQuery.isEmptyObject(data.records)){
-                                            $('#delivery_option_list_div').show();
-                                            $.each(data.records, function(i,data){
-                                                //alert(data.id)
-                                                option_html += '<option value="'+data.id+'">'+data.type+' >> '+data.rate+'</option>';
-                                            });
-                                        }
-                                        $('#delivery_option_list').after().html(option_html);
-                                    }
-                                });
-                                $('#address').val(data.address);
-                                $('#delivery_option_list').val(data.delivery_charge_id)
-
-                            }
-                            else if(data.delivery_type == 1){
+                            if(data.delivery_type == 1){
                                 $('#delivery_outlet').show();
                                 $('#delivery_address').hide();
                                 $('#delivery_option_list').after().html('');
@@ -1269,14 +1228,14 @@ else{
                             $('#payment_status').val(data.payment_status);
                             $('#total_paid_amount').val(data.total_paid_amount);
 
-
+                            alert(data.order_info)
                             order_infos	 = data.order_info;
                             var order_arr = order_infos.split(',');
 
                             $.each(order_arr, function(i,orderInfo){
                                 var order_info_arr = orderInfo.split('#');
                                 var total = ((parseFloat(order_info_arr[6])*parseFloat(order_info_arr[7])));
-                                $('#orderTable > tbody').append("<tr><td><input type='text' name='product_name[]' class='form-control col-lg-12 product_name' value='"+order_info_arr[2]+"'/><input type='hidden' name='product_id[]' class='product_id' value='"+order_info_arr[3]+"'/></td><td><input type='text' name='size_name[]' value='"+order_info_arr[4]+"' required class='size_name form-control col-lg-12'/><input type='hidden' name='size_id[]' value='"+order_info_arr[5]+"' class='size_id'/></td><td><input type='text' name='unit_name[]' value='"+order_info_arr[8]+"' required class='form-control col-lg-12 unit_name'/><input type='hidden' class='unit_id' name='unit_id[]' value='"+order_info_arr[9]+"'/></td><td><input type='text' name='rate[]' readonly value='"+order_info_arr[6]+"' required class='form-control col-lg-12 text-right rate'/></td><td><input type='text' name='quantity[]' class='form-control col-lg-12 quantity' value='"+order_info_arr[7]+"' /></td><td><input type='text' name='total[]' value='"+total+"' required class='form-control col-lg-12 text-right total' readonly='readonly'/></td><td><span class='input-group-btn'><button type='button' class='btn btn-danger btn-xs remove_row'><span class='glyphicon glyphicon-minus'></span></button></span></td></tr>");
+                                $('#orderTable > tbody').append("<tr><td><input type='text' name='product_name[]' class='form-control col-lg-12 product_name' value='"+order_info_arr[2]+"'/><input type='hidden' name='item_id[]' class='item_id' value='"+order_info_arr[3]+"'/></td><td><input type='text' name='size_name[]' value='"+order_info_arr[4]+"' required class='size_name form-control col-lg-12'/><input type='hidden' name='size_id[]' value='"+order_info_arr[5]+"' class='size_id'/></td><td><input type='text' name='unit_name[]' value='"+order_info_arr[8]+"' required class='form-control col-lg-12 unit_name'/><input type='hidden' class='unit_id' name='unit_id[]' value='"+order_info_arr[9]+"'/></td><td><input type='text' name='rate[]' readonly value='"+order_info_arr[6]+"' required class='form-control col-lg-12 text-right rate'/></td><td><input type='text' name='quantity[]' class='form-control col-lg-12 quantity' value='"+order_info_arr[7]+"' /></td><td><input type='text' name='total[]' value='"+total+"' required class='form-control col-lg-12 text-right total' readonly='readonly'/></td><td><span class='input-group-btn'><button type='button' class='btn btn-danger btn-xs remove_row'><span class='glyphicon glyphicon-minus'></span></button></span></td></tr>");
                                 //order_total += parseFloat(total);
                             });
 
@@ -1356,7 +1315,7 @@ else{
 
                             $(".size_name").autocomplete({
                                 search: function() {
-                                    product_id  = $(this).parent().prev().find('.product_id').val();
+                                    item_id  = $(this).parent().prev().find('.item_id').val();
                                     //alert(product_id)
                                 },
                                 source: function(request, response) {
@@ -1368,7 +1327,7 @@ else{
                                         data: {
                                             q: "size_rate_info",
                                             term: request.term,
-                                            product_id: product_id
+                                            item_id: item_id
                                         },
                                         success: function(data) {
                                             response(data);

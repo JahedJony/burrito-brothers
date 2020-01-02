@@ -20,38 +20,33 @@ if(isset($_GET['order_id']) && $_GET['order_id']!="") $order_id =  $_GET['order_
 //var_dump($customer_info);
 ?>
 
-<main>
-    <div class="main-part">
-        <!-- Start Breadcrumb Part -->
 
-        <!-- End Breadcrumb Part -->
-        <section class="home-icon shop-cart bg-skeen">
-            <div class="icon-default icon-skeen">
-                <img src="../images/scroll-arrow.png" alt="">
-            </div>
-            <div class="container">
-                <div class="checkout-wrap wow fadeInDown" data-wow-duration="1000ms" data-wow-delay="300ms">
-                    <ul class="checkout-bar">
-                        <li class="done-proceed">Shopping Cart</li>
-                        <li class="active">Checkout</li>
+<section class="home-icon shop-cart bg-skeen" style="background-color: rgba(244,242,237,1)">
+    <div class="icon-default icon-skeen">
+        <img src="../images/scroll-arrow.png" alt="">
+    </div>
+    <div class="container">
+          <div class="checkout-wrap wow fadeInDown" data-wow-duration="1000ms" data-wow-delay="300ms">
+               <ul class="checkout-bar">
+                        <li class="done-proceed"><a href="index.php?page=cart">Shopping Cart</a></li>
+                        <li class="active"><a href="index.php?page=checkout">Checkout</a></li>
                         <li>Order Complete</li>
                     </ul>
-                </div>
-                <div class="row">
-                    <div class="col-md-12 col-sm-12 col-xs-12 wow fadeInDown  tab-content" data-wow-duration="1000ms" data-wow-delay="300ms">
-                        <ul class="nav nav-tabs" role="tablist" style="margin-right: 43%; margin-left: 1%; margin-top: 20px; font-size: 20px; border-radius: 15px 15px 0px 0px"">
-                            <li role="presentation" class="active" id="userDetails" style="border-radius: 15px 15px 0px 0px">
+          </div>
+          <div class="row">
+               <div class="col-md-12 col-sm-12 col-xs-12 wow fadeInDown  tab-content" data-wow-duration="1000ms" data-wow-delay="300ms" >
+                     <ul class="nav nav-tabs" role="tablist" style="margin-right: 43%; margin-top: 20px; font-size: 20px; border-radius: 15px 15px 0px 0px">
+                            <li role="presentation" onclick="user_details()" id="userDetails" style="background-color: #EAEAEA">
                                 <a href="#description" aria-controls="account" role="tab" data-toggle="tab">Your Details</a>
                             </li>
-                            <li role="presentation" id="pickup_info" style="border-radius: 15px 15px 0px 0px">
-                                <a href="#reviews" aria-controls="pickUp" role="tab" data-toggle="tab">Pick Up Information</a>
+                            <li role="presentation" onclick="take_out()" id="take_out_menu" style="background-color: #EAEAEA">
+                                <a href="#reviews" aria-controls="pickUp" role="tab" data-toggle="tab">Take Out</a>
                             </li>
-                            <li role="presentation" id="payments" style="border-radius: 15px 15px 0px 0px">
+                            <li role="presentation" onclick="payments()" id="payments_menu" style="background-color: #EAEAEA">
                                 <a href="#reviews" aria-controls="payments" role="tab" data-toggle="tab">Payments</a>
                             </li>
                         </ul>
-                        <div class="col-md-7 col-sm-7 col-xs-12" style="background-color: white; border-radius: 12px; padding-top: 25px">
-
+                        <div class="col-md-7 col-sm-7 col-xs-12" style="background-color: white; border-radius: 0px 12px 12px 12px; padding-top: 25px; padding-bottom: 20px">
                         <div role="tabpanel" class="tab-pane" id="description">
 
                             <div id="login_div" style="padding-bottom: 20px">
@@ -91,7 +86,7 @@ if(isset($_GET['order_id']) && $_GET['order_id']!="") $order_id =  $_GET['order_
                                         <span>Or</span>
                                     </div>
                                     <div class="row">
-                                        <div class="col-md-12 col-sm-12 col-xs-12">
+                                        <div class="col-md-12 col-sm-12 col-xs-12" >
                                             <a onclick="registration()" class="facebook-btn btn-change button-default " id="log_reg_"><i class="fa fa-user" aria-hidden="true"></i> Dont have an account? Register yourself</a>
                                         </div>
                                     </div>
@@ -144,8 +139,13 @@ if(isset($_GET['order_id']) && $_GET['order_id']!="") $order_id =  $_GET['order_
                                     <div class="alert alert-success">
                                         <p>Your registration is completed. Please login with provided credentials</p>
                                     </div>
-                                    <a href="javascript:void(0)" onclick="active_modal(1)" class="facebook-btn btn-change button-default " data-toggle="modal" data-target="#loginModal" id="do_login"><i class="fa fa-user" aria-hidden="true"></i> Login</a>
                                 </div>
+                                <div class="row">
+                                    <div class="col-md-12 col-sm-12 col-xs-12" >
+                                        <a onclick="login()" class="facebook-btn btn-change button-default " id="log_reg_"><i class="fa fa-user" aria-hidden="true"></i> Login Here</a>
+                                    </div>
+                                </div>
+
                             </div>
                             <div id="forget_pass_div" style="display: none">
                                 <div class="title text-center">
@@ -169,43 +169,79 @@ if(isset($_GET['order_id']) && $_GET['order_id']!="") $order_id =  $_GET['order_
                                         </div>
                                     </div>
                                 </form>
+                                <div class="row">
+                                    <div class="col-md-12 col-sm-12 col-xs-12" >
+                                        <a onclick="login()" class="facebook-btn btn-change button-default " id="log_reg_"><i class="fa fa-user" aria-hidden="true"></i> Login Here</a>
+                                    </div>
+                                </div>
                             </div>
-                            <div id="profile" style="display: none" class="team-single-right">
+                            <div id="profile" style="display: none" class="team-single-right" >
                                 <h3 id='customer_name'></h3>
                                 <h6 >Customer Id # <span id='customer_id' ></span> </h6>
                                 <h6 >Customer Status : <span id='customer_status' ></span> </h6>
                                 <p>Contact No: <a href="#" id="contact_no"></a>
                                     <br> E-mail: <a href="#" id="email"></a></p>
                                 <p > Address: <span id="address"></span></p>
+                                <p > Loyalty Points: <span id="loyalty_points"></span></p>
+
+                                <div class="checkout-button">
+                                    <button class="button-default btn-large btn-primary-gold" name="proceed_payments" id="proceed_payments" onclick="take_out()">PROCEED TO TAKE-OUT</button>
+                                </div>
+
                             </div>
-                        </div>
-                        <div role="tabpanel" style="display: none" class="tab-pane active" id="reviews">
-                                    <div class="title text-center">
-                                        <h3 class="text-coffee">2 Comment</h3>
-                                    </div>
-                                    <div class="comment-blog">
-                                        <div class="comment-inner-list">
-                                            <div class="comment-img">
-                                                <img src="../images/comment-img1.png" alt="">
-                                            </div>
-                                            <div class="comment-info">
-                                                <h5>Anna Taylor</h5>
-                                                <span class="comment-date">AUGUST 9, 2016 10:57 AM</span>
-                                                <p>Aqua Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
-                                            </div>
-                                        </div>
-                                        <div class="comment-inner-list">
-                                            <div class="comment-img">
-                                                <img src="../images/comment-img1.png" alt="">
-                                            </div>
-                                            <div class="comment-info">
-                                                <h5>Anna Taylor</h5>
-                                                <span class="comment-date">AUGUST 9, 2016 10:57 AM</span>
-                                                <p>Aqua Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
-                                            </div>
-                                        </div>
+
+                            <form method="post" name="checkout-form" id="checkout-form">
+
+                            <div id="take_out" style="display: none">
+                                <div class="col-md-12 col-sm-12 col-xs-12">
+                                    <h5>Takeout Details</h5>
+                                </div>
+                                <div class="col-md-12 col-sm-12 col-xs-12">
+                                    <br />
+                                    <label style=" font-size: 20px"> Confirm TakeOut Location </label>
+                                    <div class="payment-mode">
+                                          <input type="checkbox" name="take_out_location" id="take_out_location"><label id="take_out_location_" style="padding-left: 10px; padding-top: 10px; font-size: 18px"></label>
                                     </div>
                                 </div>
+                                <div class="col-md-12 col-sm-12 col-xs-12">
+                                    <br />
+                                    <label style=" font-size: 20px"> Please select date and time </label>
+                                    <input type="text" name="pickup_date_time" id="pickup_date_time" placeholder="Date and Time" class="input-fields date-picker" required value="2020-01-07 12:00:00">
+                                </div>
+
+                                <div class="col-md-12 col-sm-12 col-xs-12">
+                                    <label style=" font-size: 20px"> Order Notes </label>
+                                    <textarea placeholder="Order Notes" name="secial_notes" id="secial_notes"></textarea>
+                                </div>
+
+                                <div class="checkout-button">
+                                    <input class="button-default btn-large btn-primary-gold" type="button" value="PROCEED TO PAYMENT" onclick="payments()">
+                                </div>
+
+                            </div>
+                            <div id="payments" style="display: none">
+                                <h4>Payment Methods</h4>
+                                <input type="hidden"  id="grand_total">
+                                <div class="payment_body" id="payment_body"></div>
+                                <div id="payment_alert" class="text-center" style="display:none"></div>
+
+                                <div class="checkout-terms">
+                                    <input type="checkbox" name="tarm_condition" id="tarm_condition"><label style="padding-left: 10px; padding-top: 10px; font-size: 18px">I’ve read and accept the terms &amp; conditions *</label>
+                                </div>
+                                <input type="hidden" name="total_order_amt" id="total_order_amt">
+                                 <input type="hidden" name="tax_amount" id="tax_amount">
+                                 <input type="hidden" name="total_paid_amount" id="total_paid_amount">
+
+
+                                <div class="checkout-button">
+                                    <div id="logn_reg_error" class="text-center" style="display:none"></div>
+                                    <input type="submit" name="submit" id="checkout_submit" class="button-default btn-large btn-primary-gold" value="PLACE ORDER">
+
+                                </div>
+                            </div>
+                            </form>
+
+                        </div>
                        </div>
                         <div class="col-md-5 col-sm-5 col-xs-12 wow fadeInDown" data-wow-duration="1000ms" data-wow-delay="300ms">
                             <div class="shop-checkout-right">
@@ -214,60 +250,40 @@ if(isset($_GET['order_id']) && $_GET['order_id']!="") $order_id =  $_GET['order_
                                     <div class="shop-checkout-title">
                                         <h6>PRODUCT <span>TOTAL</span></h6>
                                     </div>
-                                    <div class="shop-checkout-row">
-                                        <p><span>Rocha Sleeve Sweater</span> x1 <small>$140.00</small></p>
-                                        <p><span>Mauris Tincidunt</span> x6 <small>$140.00</small></p>
+                                    <div class="shop-checkout-row" id="cart_summary">
+
                                     </div>
                                     <div class="checkout-total">
-                                        <h6>CART SUBTOTAL <small>$140.00</small></h6>
+                                        <h6>CART SUBTOTAL <small id="cart_total_"></small></h6>
                                     </div>
                                     <div class="checkout-total">
-                                        <h6>SHIPPING <small>Free Shipping</small></h6>
+                                        <h6>DISCOUNT <small id="discount_"></small></h6>
                                     </div>
                                     <div class="checkout-total">
-                                        <h6>ORDER TOTAL <small class="price-big">$140.00</small></h6>
+                                        <h6>TAX <small id="tax_"></small></h6>
+
                                     </div>
-                                </div>
-                                <div class="shop-checkout-box">
-                                    <h5>PAYMENT METHODS</h5>
-                                    <label>
-                                        <input type="radio" name="radio">Direct Bank Transfer</label>
-                                    <p>Make your payment directly into our bank account. Please use your cleared in our account.</p>
-                                    <div class="payment-mode">
-                                        <label>
-                                            <input type="radio" name="radio">Check Payments</label>
+                                    <div class="checkout-total">
+                                        <h6>TIPS <small id="tips_"></small></h6>
                                     </div>
-                                    <div class="payment-mode">
-                                        <label>
-                                            <input type="radio" name="radio">Cash on Delivery</label>
-                                    </div>
-                                    <div class="payment-mode">
-                                        <label>
-                                            <input type="radio" name="radio"> PayPal</label> <a href="#"><img src="../images/paycart.png" alt=""></a><a href="#">What is PayPal?</a>
-                                    </div>
-                                    <div class="checkout-terms">
-                                        <label>
-                                            <input type="checkbox" name="checkbox">I’ve read and accept the terms &amp; conditions *</label>
-                                    </div>
-                                    <div class="checkout-button">
-                                        <button class="button-default btn-large btn-primary-gold">PROCEED TO PAYMENT</button>
+                                    <div class="checkout-total">
+                                        <h6>ORDER TOTAL <small class="price-big" id="total_amount_"></small></h6>
                                     </div>
                                 </div>
                             </div>
                         </div>
 
                     </div>
-                </div>
-            </div>
-        </section>
+          </div>
     </div>
-</main>
+</section>
 
 <script>
+var loyalty_points=0;
+var loyalty_point_value=0;
+var loyalty_reserve_value=0;
 
-
-
-    load_customer_profile = function load_customer_profile(id){
+load_customer_profile = function load_customer_profile(id){
         $.ajax({
                 url:"./includes/controller/ecommerceController.php",
                 dataType: "json",
@@ -286,6 +302,8 @@ if(isset($_GET['order_id']) && $_GET['order_id']!="") $order_id =  $_GET['order_
                             $('#email').html(data.email);
                             $('#address').html(data.address);
                             $('#customer_status').html(data.status_text);
+                            $('#loyalty_points').html(data.loyalty_points);
+                            loyalty_points = data.loyalty_points;
                             if(data.photo == ""){
                                 $('#customer_img').attr("src",'admin/images/no_image.png');
                             }else{
@@ -295,29 +313,183 @@ if(isset($_GET['order_id']) && $_GET['order_id']!="") $order_id =  $_GET['order_
                         });
 
                     }
+                    //alert(loyalty_points)
                 }
             });
     }
-    display_div = function display_div(){
+display_div = function display_div(){
         $("#login_div").css("display", "none");
         $("#register_div").css("display", "none");
         $("#forget_pass_div").css("display", "none");
         $("#profile").css("display", "none");
+        $("#take_out").css("display", "none");
+        $("#payments").css("display", "none");
+        document.getElementById("userDetails").classList.remove('active');
+        document.getElementById("take_out_menu").classList.remove('active');
+        document.getElementById("payments_menu").classList.remove('active');
     }
-    login = function login() {
+user_details = function user_details(){
+        if(customer_id && customer_id>0){
+            //alert(customer_id)
+            display_div()
+            //document.getElementById("userDetails").classList.add('active');
+            //$("#profile").css("display", "block");
+        }
+        else {
+            display_div()
+            login()
+        }
+    }
+login = function login() {
         display_div()
+        document.getElementById("userDetails").classList.add('active');
         $("#login_div").css("display", "block");
     }
-    registration = function registration() {
+registration = function registration() {
         display_div()
+        document.getElementById("userDetails").classList.add('active');
         $("#register_div").css("display", "block");
     }
-    forgetPass = function forgetPass() {
+forgetPass = function forgetPass() {
         display_div()
+        document.getElementById("userDetails").classList.add('active');
         $("#forget_pass_div").css("display", "block");
     }
+take_out = function take_out(){
+    load_customer_profile()
+    display_div()
+    document.getElementById("take_out_menu").classList.add('active');
+    $("#take_out").css("display", "block");
+    }
+payments = function payments(){
+    display_div()
+    document.getElementById("payments_menu").classList.add('active');
+    $("#payments").css("display", "block");
 
-    $('#login').click(function(event){
+    if(loyalty_points/loyalty_point_value<$('#total_paid_amount').val()){
+        $('#loyalty_redio').attr('disabled',true);
+    }
+
+
+}
+
+general_settings = function general_settings(){
+    $.ajax({
+        url:"./includes/controller/ecommerceController.php",
+        dataType: "json",
+        type: "post",
+        async:false,
+        data: {
+            q: "get_settings_details",
+        },
+        success: function(data){
+            //alert($('#total_paid_amount').val())
+            //alert(loyalty_points)
+            //alert(loyalty_point_value)
+            html=''
+            if(!jQuery.isEmptyObject(data.records)){
+                $.each(data.records, function(i,data){
+                    loyalty_point_value=data.redeem_value;
+                    loyalty_reserve_value=data.point_reserve_value;
+                    $('#take_out_location_').html(data.store_address);
+                    if(data.cash_payment==1){
+                        html+='<div class="payment-mode">\n' +
+                            '       <input type="radio" name="payment_method" value="1" onclick="payment_check()"><label style="padding-left: 10px; padding-top: 10px; font-size: 18px">Cash on Delivery</label>\n' +
+                            '  </div>'
+                    }
+                    if(data.loyelty_payment==1 ){
+                        html+='<div class="payment-mode">\n' +
+                            '      <input type="radio" name="payment_method" id="loyalty_redio" value="2"  onclick="payment_check()"><label style="padding-left: 10px; padding-top: 10px; font-size: 18px">Use Loyalty Point</label>\n' +
+                            '  </div>'
+                    }
+                    if(data.card_payment==1){
+                        html+='<div class="payment-mode">\n' +                      
+                            '      <input type="radio" name="payment_method" value="3"  onclick="payment_check()"><label style="padding-left: 10px; padding-top: 10px; font-size: 18px">Credit Card</label>'
+                        if(data.payment_card_visa==1){
+                            html+='<img src="./images/payments/visa.png" style="height: 30px">'
+                        }
+                        if(data.payment_card_master==1){
+                            html+='<img src="./images/payments/mastercard.png" style="height: 30px">'
+                        }
+                        if(data.payment_card_amex==1){
+                            html+='<img src="./images/payments/amex.png" style="height: 30px">'
+                        }
+                        if(data.payment_card_discover==1){
+                            html+='<img src="./images/payments/discover.png" style="height: 30px">'
+                        }
+                        html+='</div>'
+                    }
+                });
+
+            }
+            $('#payment_body').html(html);
+
+        }
+    });
+
+}
+
+
+order_summary = function order_summary(){
+    $.ajax({
+        url: "./includes/controller/ecommerceController.php",
+        dataType: "json",
+        type: "post",
+        async:false,
+        data: {
+            q: "viewCartSummery"
+        },
+        success: function(data) {
+            //alert(data);
+            if(!jQuery.isEmptyObject(data.records)){
+                var html = '';
+                var total = 0;
+                var sub_total = 0;
+                var count =0
+                $.each(data.records, function(i,datas){
+                    //alert(datas.quantity)
+
+                    sub_total += parseFloat(datas.discounted_rate)*(datas.quantity);
+
+                    html+='<p><span>'+datas.item_name+'</span> x'+datas.quantity+' <small>'+ currency_symbol+''+datas.discounted_rate * datas.quantity+'</small></p>\n'
+                });
+                $('#cart_summary').html(html);
+            }
+            $.ajax({
+                url: "./includes/controller/ecommerceController.php",
+                dataType: "json",
+                type: "post",
+                async:false,
+                data: {
+                    q: "viewPriceSummery"
+                },
+                success: function(data) {
+                    if(data){
+                        //$('#items_price').html(data['total_price'])
+                        $('#cart_total_').html(currency_symbol+''+data['total_price']);
+                        $('#discount_').html(currency_symbol+''+data['discount'])
+                        $('#tax_').html(currency_symbol+''+data['tax_amount'])
+                        $('#total_amount_').html(currency_symbol+''+data['discounted_price'])
+                        $('#total_order_amt').val(data['total_price'])
+                        $('#tax_amount').val(data['tax_amount'])
+                        $('#total_paid_amount').val(data['discounted_price'])
+
+                    }   
+                }
+            });
+
+
+        }
+    });
+
+}
+
+order_summary()
+//load_customer_profile()
+general_settings()
+
+
+$('#login').click(function(event){
         event.preventDefault();
         var formData = new FormData($('#login_form')[0]);
         formData.append("q","login_customer");
@@ -353,14 +525,15 @@ if(isset($_GET['order_id']) && $_GET['order_id']!="") $order_id =  $_GET['order_
                         window.location.href = project_url+ "checkout.php";
 
 
+
                     }
                 }
             });
         }
     })
 
-    $('#foget_pass_submit_').click(function(event){
-        event.preventDefault();
+$('#foget_pass_submit_').click(function(event){
+    event.preventDefault();
         var formData = new FormData($('#forget_pass_form')[0]);
         formData.append("q","forget_password");
         if($.trim($('#forget_email_').val()) == ""){
@@ -385,79 +558,172 @@ if(isset($_GET['order_id']) && $_GET['order_id']!="") $order_id =  $_GET['order_
                         $('.sent_password_msg').removeClass("hide");
                         setTimeout(function() { login() }, 3000);
                     }
-                }
+                                        }
             });
         }
     })
+// send mail if forget password
+$('#register_submit_').click(function(event){
+    event.preventDefault();
+    var formData = new FormData($('#register_form')[0]);
+    formData.append("q","registration");
+    if($.trim($('#cust_name_').val()) == ""){
+        success_or_error_msg('#registration_submit_error_','danger',"Please enter name","#cust_name");
+    }
+    else if($.trim($('#cust_username_').val()) == ""){
+        success_or_error_msg('#registration_submit_error_','danger',"Please enter username","#cust_username");
+    }
+    else if($.trim($('#cust_email_').val()) == ""){
+        success_or_error_msg('#registration_submit_error_','danger',"Please enter email address","#cust_email");
+    }
+    else if($.trim($('#cust_password_').val()) == ""){
+        success_or_error_msg('#registration_submit_error_','danger',"Please enter pasword","#cust_password");
+    }
+    else if($.trim($('#cust_conf_password_').val()) == ""){
+        success_or_error_msg('#registration_submit_error_','danger',"Please confirm password ","#cust_conf_password");
+    }
+    else if($.trim($('#cust_password_').val()) != $.trim($('#cust_conf_password_').val())){
+        success_or_error_msg('#registration_submit_error_','danger',"Please enter same password","#cust_conf_password");
+    }
+    else if($.trim($('#cust_contact_').val()) == ""){
+        success_or_error_msg('#registration_submit_error_','danger',"Please enter valid contact no","#cust_contact");
+    }
+    else{
+        $.ajax({
+            url: "./includes/controller/customerController.php",
+            type:'POST',
+            data:formData,
+            async:false,
+            cache:false,
+            contentType:false,processData:false,
+            success: function(data){
+                alert(data)
+                if($.isNumeric(data)==true && data==2){
+                    success_or_error_msg('#registration_submit_error',"danger","Username is already exist, please try with another one","#cust_username" );
+                }
+                else if($.isNumeric(data)==true && data==3){
+                    success_or_error_msg('#registration_submit_error',"danger","Email is already exist, please try with another one","#cust_email" );
+                }
+                else if($.isNumeric(data)==true && data==1){
+                    $('.done_registration').addClass("hide");
+                    $('.done_registration_msg').removeClass("hide");
+                    window.location.href = project_url+ "checkout.php";
+                }
+                else{
+                    success_or_error_msg('#registration_submit_error',"danger","Registration is not completed. please check your information again.","#cust_email" );
+                }
+            }
+        });
+    }
+})
 
-    // send mail if forget password
-    $('#register_submit_').click(function(event){
-        event.preventDefault();
-        var formData = new FormData($('#register_form')[0]);
-        formData.append("q","registration");
-        if($.trim($('#cust_name_').val()) == ""){
-            success_or_error_msg('#registration_submit_error_','danger',"Please enter name","#cust_name");
-        }
-        else if($.trim($('#cust_username_').val()) == ""){
-            success_or_error_msg('#registration_submit_error_','danger',"Please enter username","#cust_username");
-        }
-        else if($.trim($('#cust_email_').val()) == ""){
-            success_or_error_msg('#registration_submit_error_','danger',"Please enter email address","#cust_email");
-        }
-        else if($.trim($('#cust_password_').val()) == ""){
-            success_or_error_msg('#registration_submit_error_','danger',"Please enter pasword","#cust_password");
-        }
-        else if($.trim($('#cust_conf_password_').val()) == ""){
-            success_or_error_msg('#registration_submit_error_','danger',"Please confirm password ","#cust_conf_password");
-        }
-        else if($.trim($('#cust_password_').val()) != $.trim($('#cust_conf_password_').val())){
-            success_or_error_msg('#registration_submit_error_','danger',"Please enter same password","#cust_conf_password");
-        }
-        else if($.trim($('#cust_contact_').val()) == ""){
-            success_or_error_msg('#registration_submit_error_','danger',"Please enter valid contact no","#cust_contact");
-        }
-        else{
-            $.ajax({
-                url: "./includes/controller/customerController.php",
-                type:'POST',
-                data:formData,
-                async:false,
-                cache:false,
-                contentType:false,processData:false,
-                success: function(data){
-                    alert(data)
-                    if($.isNumeric(data)==true && data==2){
-                        success_or_error_msg('#registration_submit_error',"danger","Username is already exist, please try with another one","#cust_username" );
-                    }
-                    else if($.isNumeric(data)==true && data==3){
-                        success_or_error_msg('#registration_submit_error',"danger","Email is already exist, please try with another one","#cust_email" );
-                    }
-                    else if($.isNumeric(data)==true && data==1){
-                        $('.done_registration').addClass("hide");
-                        $('.done_registration_msg').removeClass("hide");
-                        window.location.href = project_url+ "checkout.php";
-                    }
-                    else{
-                        success_or_error_msg('#registration_submit_error',"danger","Registration is not completed. please check your information again.","#cust_email" );
-                    }
+/*
+$('#checkout-form input[name=payment_method]').on('change', function() {
+    alert('payment')
+    if($('input[name=payment_method]:checked', '#checkout-form').val()==2){
+        alert('loyalty')
+    }
+    success_or_error_msg('#logn_reg_error','danger',"You must confirm the takeout location. ","#pickup_date_time");
+
+    // payment method change code will be here
+    //alert($('input[name=payment_method]:checked', '#checkout-form').val());
+});
+*/
+payment_check = function payment_check(){
+    //loyalty point deduction message will be here
+    //alert(loyalty_point_value)
+    //alert($('input[name=payment_method]:checked', '#checkout-form').val())
+}
+$('#checkout_submit').click(function(event){
+
+    $("#content").load("views/checkout_confirm.php");
+
+    event.preventDefault();
+    //$('#grand_total').val($('#total_amount_').html());
+      //  alert($('#grand_total').val())
+    var loyalty_value =Math.floor( $('#total_paid_amount').val()/loyalty_reserve_value);
+    var loyalty_deduct = 0;
+    if($('input[name=payment_method]:checked', '#checkout-form').val()==2){
+        loyalty_deduct = Math.ceil($('#total_paid_amount').val()*loyalty_point_value);
+    }
+    //alert(loyalty_value)
+
+    delevery_type = $("[name='delevery_type']:checked").val();
+    payment_type  = $("[name='payment_type']:checked").val();
+    var formData = new FormData($('#checkout-form')[0]);
+    formData.append("q","checkout");
+    formData.append("loyalty_point",loyalty_value);
+    formData.append("loyalty_deduct",loyalty_deduct);
+    formData.append("grand_total",$('#total_amount_').html());
+
+    if($('input[name=payment_method]:checked', '#checkout-form').val()){
+        formData.append("payment_method",$('input[name=payment_method]:checked', '#checkout-form').val());
+
+    }
+
+
+    //console.log(formData)
+
+    if($.trim($('#islogged_in').val()) == "0"){
+        success_or_error_msg('#logn_reg_error','danger',"You must have to login or register if you are new customer. ","#forget_email");
+    }
+    else if(!$('input[name=take_out_location]:checked', '#checkout-form').val()){
+        success_or_error_msg('#logn_reg_error','danger',"You must confirm the takeout location. ","#pickup_date_time");
+    }
+    else if($.trim($('#pickup_date_time').val()) == ""){
+        success_or_error_msg('#logn_reg_error','danger',"You must enter the delivery/pickup date time. ","#pickup_date_time");
+    }
+    else if( delevery_type== 2 && $('#delivery_address').val() == ""){
+        success_or_error_msg('#logn_reg_error','danger',"You must enter the delivery address. ","#delivery_address");
+    }
+    else if(!$('input[name=payment_method]:checked', '#checkout-form').val()){
+        success_or_error_msg('#logn_reg_error','danger',"You must select a payment method. ","#reference_no");
+    }
+    else if(!$('input[name=tarm_condition]:checked', '#checkout-form').val()){
+        success_or_error_msg('#logn_reg_error','danger',"Please confirm the tarms and conditions ","#reference_no");
+    }
+    else{
+        $.ajax({
+            url: "includes/controller/ecommerceController.php",
+            type:'POST',
+            data:formData,
+            async:false,
+            cache:false,
+            contentType:false,processData:false,
+            success: function(data){
+                console.log(data)
+                if(data==0){
+                    success_or_error_msg('#logn_reg_error',"danger","Order Faild. please check your information properly","#checkout_submit" );
                 }
-            });
-        }
-    })
+                else{
+                    alert('done')
+                    $("#content").load("views/checkout_confirm.php");
+
+                    //window.location = "completed.php?complete=success&order_id="+$.trim(data);
+                }
+            }
+        });
+    }
+})
+
     <?php
     if($is_logged_in_customer != ""){
-        ?>
-        var customer_id = "<?php echo $customer_id; ?>";
-        var order_id = "<?php echo $order_id; ?>";
-        display_div()
-        $("#profile").css("display", "block");
-        load_customer_profile();
+    ?>
+    var customer_id = "<?php echo $customer_id; ?>";
+    var order_id = "<?php echo $order_id; ?>";
+    //user_details()
+    take_out();
+    $('#userDetails').css("display", "none");
+    //alert('pro')
+
     <?php
     }
     else{
-        ?>
+    ?>
+    //alert('login')
     display_div()
-        $("#login_div").css("display", "block");
+    login()
+    //$("#login_div").css("display", "block");
     //alert('ok3')
 
     <?php

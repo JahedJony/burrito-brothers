@@ -733,7 +733,7 @@ $('#searchSubmit').on('click',function(){
 
 $('.modal').on('shown.bs.modal', function (e) {
 	//alert(1111)
-     $('.date-picker').daterangepicker({
+     $('.item').daterangepicker({
 		singleDatePicker: true,
 	/*	autoUpdateInput: false,*/
 		calender_style: "picker_3",
@@ -750,7 +750,7 @@ $('.modal').on('shown.bs.modal', function (e) {
 /*
 
 $(document).on('click','#c_cake_modal_open_btn',function(){
-	$('.date-picker').daterangepicker({
+	$('.item').daterangepicker({
 		singleDatePicker: true,
 		calender_style: "picker_3",
 		timePicker:true,

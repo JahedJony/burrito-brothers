@@ -1,5 +1,15 @@
 
 <!-- Start Menu Part -->
+
+<section class="breadcrumb-part" data-stellar-offset-parent="true" data-stellar-background-ratio="0.5" style="background-image: url('../images/breadbg1.jpg');max-height: 220px">
+    <div class="container">
+        <div class="breadcrumb-inner">
+            <h2>CATEGORY ITEMS</h2>
+            <a href="index.php?page=home">Home</a>
+            <span>Category Items</span>
+        </div>
+    </div>
+</section>
 <section class="special-menu home-icon">
     <div class="icon-default">
         <img src="./images/scroll-arrow.png" alt="">
@@ -34,7 +44,7 @@
 <!-- End Menu Part -->
 
 <!-- End Discount Part -->
-</div>
+
 
 <script src="js/app.js"></script>
 <script src="js/script.js"></script>
@@ -62,7 +72,7 @@
             '                                </div>\n' +
             '                            </div>\n' +
             '                        </div>\n' +
-            '                                <a href="index.php?page=item&id='+ data['item_id']+'"><h5>'+ data['name']+' <span style="color: white">'+data['rate']+'</span></h5></a>\n' +
+            '                                <a href="index.php?page=item&id='+ data['item_id']+'"><h5>'+ data['name']+' <span style="color: white">'+ currency_symbol+''+data['rate']+'</span></h5></a>\n' +
             '                    </div>\n' +
             '                </div>\n'
 
@@ -70,10 +80,10 @@
         var html='<div class="col-md-6 col-sm-6 col-xs-12 isotope-item breakfast">\n' +
             '         <div class="menu-list" '+width+'>\n' +
             '              <span class="menu-list-product" style="'+ item_image_display +'">\n' +
-            '                <img  src="'+ project_url+'admin/images/item/'+data['photo']+'" onclick="cart('+data['item_id']+','+data['rate']+')" alt="" style="border-radius: 50px; min-height: 100px">\n' +
+            '                <img  src="'+ project_url+'admin/images/item/'+data['photo']+'" onclick="cart('+data['item_id']+','+data['rate_id']+')" alt="" style="border-radius: 50px; min-height: 100px">\n' +
             '              </span>\n' +
             '              <a href="index.php?page=item&id='+ data['item_id']+'">' +
-            '                   <h5>'+ data['name']+' <span>'+data['rate']+'</span></h5>' +
+            '                   <h5>'+ data['name']+' <span>'+ currency_symbol+''+data['rate']+'</span></h5>' +
             '               </a>\n' +
             '              <p>'+ data['details']+'</p>\n' +
             '          </div>\n' +
@@ -82,11 +92,11 @@
         return html;
 
     }
-    cart = function cart(id, price){
+    cart = function cart(id, rate_id){
         //gialert(price)
 
         $.ajax({
-            url: "includes/controller/ecommerceController.php",
+            url: "./includes/controller/ecommerceController.php",
             dataType: "json",
             type: "post",
             async:false,
@@ -94,7 +104,7 @@
                 q: "addToCart",
                 item_id:id,
                 quantity:1,
-                rate:price
+                rate_id:rate_id
             },
             success: function(data) {
                 //alert(data)

@@ -1,17 +1,15 @@
-<div class="main-part">
-    <!-- Start Breadcrumb Part -->
-    <section class="breadcrumb-part" data-stellar-offset-parent="true" data-stellar-background-ratio="0.5" style="background-image: url('../images/breadbg1.jpg');">
-        <div class="container">
+ <section class="breadcrumb-part" data-stellar-offset-parent="true" data-stellar-background-ratio="0.5" style="background-image: url('../images/breadbg1.jpg');max-height: 220px">
+    <div class="container">
             <div class="breadcrumb-inner">
-                <h2>SHOP</h2>
-                <a href="#">Home</a>
-                <span>Shop</span>
+                <h2>HOME CATEGORY</h2>
+                <a href="index.php?page=home">Home</a>
+                <span>Home Category</span>
             </div>
         </div>
-    </section>
+ </section>
     <!-- End Breadcrumb Part -->
-    <section class="home-icon blog-main-section shop-page">
-        <div class="icon-default">
+ <section class="home-icon blog-main-section shop-page">
+        <div class="icon-default" >
             <img src="../images/scroll-arrow.png" alt="">
         </div>
         <div class="container" id="catagories">
@@ -124,7 +122,6 @@
             </div>-->
         </div>
     </section>
-</div>
 
 <script>
     load_category = function load_category() {

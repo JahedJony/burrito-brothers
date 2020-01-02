@@ -73,6 +73,9 @@ if(isset($_GET['search'])) $search_text = "";
     <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
     <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 
+
+
+
     <![endif]-->
 </head>
 
@@ -87,6 +90,8 @@ if(isset($_GET['search'])) $search_text = "";
 </div>
 <div class="wrapper">
     <!-- Start Header -->
+
+
     <header>
         <div class="header-part header-reduce sticky">
             <div class="header-top">
@@ -161,14 +166,15 @@ if(isset($_GET['search'])) $search_text = "";
             </div>
         </div>
     </header>
+
     <!-- End Header -->
     <!-- Start Main -->
 
     <!-- Start login modal -->
-    <div class="modal fade booktable" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="booktable">
+    <div class="modal fade booktable" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="booktable" >
         <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-body">
+            <div class="modal-content" id="login_modal_responsive">
+                <div class="modal-body" >
                     <div id="login-div" class="">
                         <div id="done_login">
                             <div class="title text-center">
@@ -227,7 +233,7 @@ if(isset($_GET['search'])) $search_text = "";
     <!-- register modal -->
     <div class="modal fade booktable" id="registerModal" tabindex="-2" role="dialog" aria-labelledby="booktable">
         <div class="modal-dialog" role="document">
-            <div class="modal-content">
+            <div class="modal-content" id="registration_modal_responsive">
                 <div class="modal-body">
                     <div id="register-div">
                         <div class="title text-center">
@@ -282,7 +288,7 @@ if(isset($_GET['search'])) $search_text = "";
     <!-- Start forgetr pass modal -->
     <div class="modal fade booktable" id="forget_passModal" tabindex="-1" role="dialog" aria-labelledby="booktable">
         <div class="modal-dialog" role="document">
-            <div class="modal-content">
+            <div class="modal-content" id="passwore_recovary_modal_responsive">
                 <div class="modal-body">
                     <div id="forget-pass-div">
                         <div class="title text-center">
@@ -323,10 +329,10 @@ if(isset($_GET['search'])) $search_text = "";
 
     <!-- End Header -->
     <!-- Start Main -->
-    <div id="content" style="min-height: 600px">
-
+    <div class="main-part" id="content" style="min-height: 600px;" >
 
     </div>
+
     <!-- End Main -->
     <!-- Start Footer -->
     <footer>
@@ -478,6 +484,15 @@ if(isset($_GET['search'])) $search_text = "";
 
     }
     ?>
+
+    var sWidth = window.screen.width;
+    //alert("sWidth is: " + sWidth);
+    if(sWidth<801){
+        $('#login_modal_responsive').css('width', sWidth-20+'px')
+        $('#registration_modal_responsive').css('width',sWidth-20+'px')
+        $('#passwore_recovary_modal_responsive').css('width', sWidth-20+'px')
+    }
+
     //alert(item_image_display)
     function loadPage(pageName) {
         // alert( "Load was performed." );
@@ -735,6 +750,16 @@ if(isset($_GET['search'])) $search_text = "";
     });
 
 
+    $('.date-picker').daterangepicker({
+        singleDatePicker: true,
+        /*autoUpdateInput: false,*/
+        calender_style: "picker_3",
+        timePicker:true,
+        locale: {
+            format: 'YYYY-MM-DD h:mm',
+            separator: " - ",
+        }
+    });
 
 
     $('.modal').on('shown.bs.modal', function (e) {
