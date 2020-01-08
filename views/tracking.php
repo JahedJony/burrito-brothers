@@ -10,7 +10,7 @@ if(isset($_GET['order_id']) && $_GET['order_id']!="") $order_id =  $_GET['order_
         <input type="text"  class="form-control col-lg-12" id="order_tracking_number" placeholder="Order Tracking Number" value="<?php echo $order_id; ?>">
     </div>
     <div class="col-md-4">
-        <button type="submit" class="btn-black view" id="track_btn">Track Your Order</button>
+        <button type="submit" class="btn-black view" id="track_btn" style="font-size: 13px">Track Your Order</button>
     </div>
 </div>
 <section class="home-icon shop-cart bg-skeen">

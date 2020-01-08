@@ -65,7 +65,7 @@
         var html_op ='                <div class="col-md-4 col-sm-4 col-xs-12 wow fadeInDown" data-wow-duration="1000ms" data-wow-delay="300ms">\n' +
             '                    <div class="shop-main-list" style="background-color: #e4b95b; border-radius: 15px">\n' +
             '                        <div class="shop-product" style="border-radius: 15px 15px 0px 0px">\n' +
-            '                            <img src="'+ project_url+'admin/images/item/'+data['photo']+'" alt=""style="height: 220px; width:100%">\n' +
+            '                            <img src="'+ project_url+'admin/'+data['photo']+'" alt=""style="height: 220px; width:100%">\n' +
             '                            <div class="cart-overlay-wrap" style="border-radius: 0px">\n' +
             '                                <div class="cart-overlay" >\n' +
             '                                    <p onclick="cart('+data['item_id']+','+data['rate']+')" class="shop-cart-btn">Add to Cart</p>\n' +
@@ -80,7 +80,7 @@
         var html='<div class="col-md-6 col-sm-6 col-xs-12 isotope-item breakfast">\n' +
             '         <div class="menu-list" '+width+'>\n' +
             '              <span class="menu-list-product" style="'+ item_image_display +'">\n' +
-            '                <img  src="'+ project_url+'admin/images/item/'+data['photo']+'" onclick="cart('+data['item_id']+','+data['rate_id']+')" alt="" style="border-radius: 50px; min-height: 100px">\n' +
+            '                <img  src="'+ project_url+'admin/'+data['photo']+'" onclick="cart('+data['item_id']+','+data['rate_id']+')" alt="" style="border-radius: 50px; min-height: 100px">\n' +
             '              </span>\n' +
             '              <a href="index.php?page=item&id='+ data['item_id']+'">' +
             '                   <h5>'+ data['name']+' <span>'+ currency_symbol+''+data['rate']+'</span></h5>' +

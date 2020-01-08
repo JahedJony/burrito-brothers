@@ -53,7 +53,7 @@ switch ($q){
         }
         $data['records'] = $cart;
         echo json_encode($data);
-        break;
+    break;
 
 
     case "viewCartSummery":
@@ -328,7 +328,9 @@ switch ($q){
                 $_SESSION['cart'] = $cart;
                 $_SESSION['latest_order_id'] = $return_master;
                 $_SESSION['payment'] 		 = $paid;
-
+//
+//
+//echo $_SESSION['latest_order_id']; die;
 
 
                 // send mail to customer account
@@ -591,8 +593,123 @@ switch ($q){
     break;
 
 
+//this portion will remove while final submission......
+    case "db_update_all_items":
+        $sql = "SELECT id,NAME, description, catitems  FROM btr_sellercats   WHERE  id IN(32,33,34,36,37,38,39,40,41,42,43,44,45,6,46)";
+        //echo $sql;die;
+        $stmt = $conn->prepare($sql);
+        $stmt->execute();
+        $categories = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        foreach ($categories as $category) {
+            $items_id = explode(',',$category['catitems']);
+            $columns_value['name'] = $category['NAME'];
+            $columns_value['id'] = $category['id'];
+            $columns_value['photo']='images/category/noFood.png';
+
+            $category_id = $dbClass->insert("category", $columns_value);
+            //var_dump($return_master);die;
+
+            foreach ($items_id as $single_item){
+                if ($single_item!=""){
+
+                    //$sql = "SELECT id,1 as category_id, NAME, description, sideitems FROM btr_selleritems WHERE id = ".$single_item;
+
+                    $sql = "SELECT id,".$category_id." as category_id, NAME, description, sideitems FROM btr_selleritems WHERE id = ".$single_item;
+                    //echo $sql;die;
+                    $stmt = $conn->prepare($sql);
+                    $stmt->execute();
+                    $items = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+                    $option_list =  explode(',',$items[0]['sideitems']);
+
+                    $i_columns_value['name']=$items[0]['NAME'];
+                    $i_columns_value['details']=$items[0]['description'];
+                    $i_columns_value['category_id']=$items[0]['category_id'];
+                    $i_columns_value['feature_image']='images/category/noFood.png';
+                    $i_item_id = $dbClass->insert("items", $i_columns_value);
 
 
+                    //var_dump($i_item_id); die;
+                    //$items[0]['NAME'] is item name $category['id'] is category id
+                    //var_dump($category['id']);
+                    //var_dump($category['id'].'->'.$items[0]['id']);
+                    foreach ($option_list as $single_option) {
+                        if ($single_option != "") {
+                            //var_dump($single_option);die;
+                            $sql = "SELECT id, name, type, checked_limit, min_checked_limit, is_required FROM btr_sellersides WHERE id = ".$single_option;
+                            //echo $sql;die;
+                            $stmt = $conn->prepare($sql);
+                            $stmt->execute();
+                            $ingredient_list = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+                            //var_dump($ingredient_list); die;
+                            if($ingredient_list[0]['is_required']=="") $ingredient_list[0]['is_required']=0;
+
+                            $o_columns_value['name'] = $ingredient_list[0]['name'];
+                            $o_columns_value['item_id'] = $i_item_id;
+                            $o_columns_value['is_required'] = $ingredient_list[0]['is_required'];
+                            $o_columns_value['minimum_choice'] = $ingredient_list[0]['min_checked_limit'];
+                            $o_columns_value['maximum_choice'] = $ingredient_list[0]['checked_limit'];
+                            $o_columns_value['type'] = $ingredient_list[0]['type'];
+
+                            $option_id = $dbClass->insert("item_options", $o_columns_value);
+
+                            //var_dump($ingredient_list[0]['id']);die;
+
+                            $sql = "SELECT id,name,price,listid FROM btr_sellersideitems WHERE sid=".$ingredient_list[0]['id'];
+                            $stmt = $conn->prepare($sql);
+                            $stmt->execute();
+                            $option_items_list = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+
+
+
+                            //var_dump($option_item_id);
+                            //$option_list =  explode(',',$items[0]['sideitems']);
+                            foreach ($option_items_list as $single_option_items_list){
+                                $ov_column_value['option_id']=$option_id;
+                                $ov_column_value['ingredient_id']=$single_option_items_list['listid'];
+                                $ov_column_value['name']=$single_option_items_list['name'];
+                                $ov_column_value['price']=$single_option_items_list['price'];
+
+                                $option_item_id = $dbClass->insert("options_items", $ov_column_value);
+                                var_dump($option_item_id);
+                            }
+                            //var_dump($items[0]['id']);
+                            //var_dump($ingredient_list);
+                        }
+                    }
+
+                    //var_dump($items);
+                }
+            }
+            //$data['records'][] = $row;
+
+
+
+
+        }
+    //echo json_encode($items_id); die;
+        break;
+
+
+
+    case "db_update_ingredient_add":
+        echo 'done'; die;
+        $sql = "INSERT INTO ingredient (id, name, price) SELECT id, side as name, cost as price FROM btr_sellersides_lists";
+        //echo $sql;die;
+        $stmt = $conn->prepare($sql);
+        $stmt->execute();
+        $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        //$return_master = $dbClass->insert("ingredient", $result);
+
+        $dbClass->print_arrays($result[0]['id']);
+
+        foreach ($result as $row) {
+            $data['records'][] = $row;
+        }
+        echo json_encode($data['records'][0]);
+    break;
 
 }
 

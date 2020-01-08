@@ -70,7 +70,7 @@ switch ($q){
     case "menu_view":
         //echo $menu; die;
         $data = array();
-        $sql = 	"SELECT i.item_id, i.name, CONCAT(LEFT(i.details,110),' . . . ') as details, r.rate,r.rate_id, ifnull(im.item_image,'') photo 
+        $sql = 	"SELECT i.item_id, i.name, CONCAT(LEFT(i.details,110),' . . . ') as details, ifnull(r.rate,'')rate, ifnull(r.rate_id,'0') rate_id, ifnull(i.feature_image,'') photo 
             FROM items i
             LEFT JOIN category c ON c.id=i.category_id
             LEFT JOIN (
@@ -129,8 +129,43 @@ switch ($q){
             echo json_encode($data);
     break;
 
+    case "menu_options_view":
+        //echo 1; die;
+        $data = [];
+        $item_id = 12;
+        // get item details
+        $sql = 	"Select i.item_id, i.name, i.details from items i where i.item_id=$item_id";
+        $stmt = $conn->prepare($sql);
+        $stmt->execute();
+        $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        $data['item']=$result[0];
 
-
+        //get options name and id
+        $sql = 	"SELECT id as option_id, name as option_name,item_id, is_required, minimum_choice, maximum_choice 
+                    FROM item_options 
+                    where item_options.item_id=$item_id 
+                    GROUP BY item_options.id";
+        $stmt = $conn->prepare($sql);
+        $stmt->execute();
+        $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        //$data['item']=$result[0];
+        $data['option']=$result;
+        //var_dump($data['option'][0]['option_id']);die;
+        //$tem_data = [];
+        $i = 0;
+        foreach ($result as $option){
+            $data['option'][$i]['ingredient']=[];
+            $option_id = $option['option_id'];
+            $sql = 	"SELECT id, name, ingredient_id, price from options_items where option_id=$option_id";
+            $stmt = $conn->prepare($sql);
+            $stmt->execute();
+            $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            array_push($data['option'][$i]['ingredient'], $result);
+            $i+=1;
+        }
+        //$data['option']=$tem_data;
+        echo json_encode($data);
+     break;
 
 }
 

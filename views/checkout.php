@@ -617,26 +617,12 @@ $('#register_submit_').click(function(event){
     }
 })
 
-/*
-$('#checkout-form input[name=payment_method]').on('change', function() {
-    alert('payment')
-    if($('input[name=payment_method]:checked', '#checkout-form').val()==2){
-        alert('loyalty')
-    }
-    success_or_error_msg('#logn_reg_error','danger',"You must confirm the takeout location. ","#pickup_date_time");
-
-    // payment method change code will be here
-    //alert($('input[name=payment_method]:checked', '#checkout-form').val());
-});
-*/
 payment_check = function payment_check(){
     //loyalty point deduction message will be here
     //alert(loyalty_point_value)
     //alert($('input[name=payment_method]:checked', '#checkout-form').val())
 }
 $('#checkout_submit').click(function(event){
-
-    $("#content").load("views/checkout_confirm.php");
 
     event.preventDefault();
     //$('#grand_total').val($('#total_amount_').html());
@@ -696,7 +682,7 @@ $('#checkout_submit').click(function(event){
                     success_or_error_msg('#logn_reg_error',"danger","Order Faild. please check your information properly","#checkout_submit" );
                 }
                 else{
-                    alert('done')
+                    //alert('done')
                     $("#content").load("views/checkout_confirm.php");
 
                     //window.location = "completed.php?complete=success&order_id="+$.trim(data);

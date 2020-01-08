@@ -49,7 +49,6 @@ if(isset($_GET['search'])) $search_text = "";
 <html lang="en">
 
 
-<!-- Mirrored from laboom.sk-web-solutions.com/index.html by HTTrack Website Copier/3.x [XR&CO'2014], Sat, 08 Sep 2018 06:19:23 GMT -->
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -69,6 +68,9 @@ if(isset($_GET['search'])) $search_text = "";
     <link href="plugin/animation/animate.min.css" rel="stylesheet">
     <link href="css/theme.css" rel="stylesheet">
     <link href="css/responsive.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link href='https://fonts.googleapis.com/css?family=Exo' rel='stylesheet'>
+
     <!--[if lt IE 9]>
     <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
     <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>

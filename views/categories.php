@@ -13,113 +13,6 @@
             <img src="../images/scroll-arrow.png" alt="">
         </div>
         <div class="container" id="catagories">
-            <!--<div class="portfolioContainer row" data-defaultfilter=".breakfast">
-                <div class="col-md-3 col-sm-4 col-xs-12 breakfast dessert dinner wow fadeInDown" data-wow-duration="1000ms" data-wow-delay="300ms">
-                    <div class="shop-main-list">
-                        <div class="shop-product">
-                            <img src="../images/img56.png" alt="">
-                            <div class="cart-overlay-wrap">
-                                <div class="cart-overlay">
-                                    <a href="#" class="shop-cart-btn">ADD TO CART</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-3 col-sm-4 col-xs-12 breakfast dinner lunch wow fadeInDown" data-wow-duration="1000ms" data-wow-delay="300ms">
-                    <div class="shop-main-list">
-                        <div class="shop-product">
-                            <img src="../images/img57.png" alt="">
-                            <div class="cart-overlay-wrap">
-                                <div class="cart-overlay">
-                                    <a href="#" class="shop-cart-btn">ADD TO CART</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-3 col-sm-4 col-xs-12 breakfast dessert wow fadeInDown" data-wow-duration="1000ms" data-wow-delay="300ms">
-                    <div class="shop-main-list">
-                        <div class="shop-product">
-                            <img src="../images/img58.png" alt="">
-                            <div class="cart-overlay-wrap">
-                                <div class="cart-overlay">
-                                    <a href="#" class="shop-cart-btn">ADD TO CART</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-3 col-sm-4 col-xs-12 breakfast dinner wow fadeInDown" data-wow-duration="1000ms" data-wow-delay="300ms">
-                    <div class="shop-main-list">
-                        <div class="shop-product">
-                            <img src="../images/img59.png" alt="">
-                            <div class="cart-overlay-wrap">
-                                <div class="cart-overlay">
-                                    <a href="#" class="shop-cart-btn">ADD TO CART</a>
-                                </div>
-                            </div>
-                        </div>
-
-                    </div>
-                </div>
-                <div class="col-md-3 col-sm-4 col-xs-12 breakfast freshfood wow fadeInDown" data-wow-duration="1000ms" data-wow-delay="300ms">
-                    <div class="shop-main-list">
-                        <div class="shop-product">
-                            <img src="../images/img60.png" alt="">
-                            <div class="cart-overlay-wrap">
-                                <div class="cart-overlay">
-                                    <a href="#" class="shop-cart-btn">ADD TO CART</a>
-                                </div>
-                            </div>
-                        </div>
-                        <a href="#"><h5>Paper Pouch</h5></a>
-                        <h5><strong>$ 15.00</strong></h5>
-                    </div>
-                </div>
-                <div class="col-md-3 col-sm-4 col-xs-12 breakfast lunch wow fadeInDown" data-wow-duration="1000ms" data-wow-delay="300ms">
-                    <div class="shop-main-list">
-                        <div class="shop-product">
-                            <img src="../images/img61.png" alt="">
-                            <div class="cart-overlay-wrap">
-                                <div class="cart-overlay">
-                                    <a href="#" class="shop-cart-btn">ADD TO CART</a>
-                                </div>
-                            </div>
-                        </div>
-                        <a href="#"><h5>Paper Pouch</h5></a>
-                        <h5><strong>$ 15.00</strong></h5>
-                    </div>
-                </div>
-                <div class="col-md-3 col-sm-4 col-xs-12 breakfast freshfood wow fadeInDown" data-wow-duration="1000ms" data-wow-delay="300ms">
-                    <div class="shop-main-list">
-                        <div class="shop-product">
-                            <img src="../images/img62.png" alt="">
-                            <div class="cart-overlay-wrap">
-                                <div class="cart-overlay">
-                                    <a href="#" class="shop-cart-btn">ADD TO CART</a>
-                                </div>
-                            </div>
-                        </div>
-                        <a href="#"><h5>Paper Pouch</h5></a>
-                        <h5><strong>$ 15.00</strong></h5>
-                    </div>
-                </div>
-                <div class="col-md-3 col-sm-4 col-xs-12 breakfast lunch wow fadeInDown" data-wow-duration="1000ms" data-wow-delay="300ms">
-                    <div class="shop-main-list">
-                        <div class="shop-product">
-                            <img src="../images/img63.png" alt="">
-                            <div class="cart-overlay-wrap">
-                                <div class="cart-overlay">
-                                    <a href="#" class="shop-cart-btn">ADD TO CART</a>
-                                </div>
-                            </div>
-                        </div>
-                        <a href="#"><h5>Paper Pouch</h5></a>
-                        <h5><strong>$ 15.00</strong></h5>
-                    </div>
-                </div>
-            </div>-->
         </div>
     </section>
 
@@ -151,7 +44,7 @@
         var html='                <div class="col-md-3 col-sm-4 col-xs-12 wow fadeInDown" data-wow-duration="1000ms" data-wow-delay="300ms">\n' +
             '                    <div class="shop-main-list" style="background-color: #e4b95b; border-radius: 15px">\n' +
             '                        <div class="shop-product" style="border-radius: 15px 15px 0px 0px">\n' +
-            '                            <img src="'+ project_url+'admin/'+data['photo']+'" alt="">\n' +
+            '                            <img src="'+ project_url+'admin/'+data['photo']+'" alt="" style="border-radius: 17px 17px 17px 17px">\n' +
             '                            <div class="cart-overlay-wrap">\n' +
             '                                <div class="cart-overlay" >\n' +
             '                                    <a href="index.php?page=menu&category='+ name+'" class="shop-cart-btn">Choose Menu</a>\n' +
