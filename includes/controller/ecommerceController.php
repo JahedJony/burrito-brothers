@@ -8,50 +8,89 @@ extract($_REQUEST);
 
 switch ($q){
     case "addToCart":
-        //$_SESSION['cart'] = "";
-        if(!isset($_SESSION['cart']) || empty($_SESSION['cart']))$cart = array();
-        else 													 $cart = $_SESSION['cart'];
 
-        $cart_key = $item_id.'_'.$rate_id;
+        if(!isset($_SESSION['cart']) || empty($_SESSION['cart']))$cart = array();
+        else $cart = $_SESSION['cart'];
+
+        //var_dump($selected_item_list);die;
+        $tem_cart = array();
+        foreach($selected_item_list as $item){
+            foreach ($item as $single_item){
+                if(!is_numeric($single_item['item_id'])) continue;
+                $tem_cart[$single_item['item_id'].'_'.$single_item['price']]['item_name']=$single_item['name'];
+                $tem_cart[$single_item['item_id'].'_'.$single_item['price']]['cart_key']=$single_item['item_id'].'_'.$single_item['price'];
+                $tem_cart[$single_item['item_id'].'_'.$single_item['price']]['discounted_rate']=$single_item['price'];
+                $tem_cart[$single_item['item_id'].'_'.$single_item['price']]['item_id']=$single_item['item_id'];
+                $tem_cart[$single_item['item_id'].'_'.$single_item['price']]['quantity']=$single_item['quantity'];
+                $tem_cart[$single_item['item_id'].'_'.$single_item['price']]['item_image']=$single_item['image'];
+                $tem_cart[$single_item['item_id'].'_'.$single_item['price']]['item_total']=$single_item['price']*$tem_cart[$cart_key_tem]['quantity'];
+            }
+        }
+        foreach ($tem_cart as $item){
+            if (array_key_exists($item[cart_key],$cart)){
+
+                $updatable_item = $cart[$item[cart_key]];
+
+                if($quantity==0){
+                    unset($cart[$item[cart_key]]);
+                }
+                else{
+                    $discounted_rate                      = $updatable_item['discounted_rate'];
+                    $total_quantity                       = ($quantity+$updatable_item['quantity']);
+                    $cart[$item[cart_key]]['quantity']    = $total_quantity;
+                    $total_amount                         = $total_quantity*$updatable_item['discounted_rate'];
+                    $cart[$item[cart_key]]['item_total']  = $total_amount;
+                    $_SESSION['cart']                     = $cart;
+                }
+            }
+            else{
+                $cart[$item[cart_key]]=$item;
+                $_SESSION['cart'] = $cart;
+            }
+            var_dump($item[cart_key]);
+        }
+        //var_dump($tem_cart);die;
+
+        $cart_key = $item_id.'_'.$discounted_rate;
         if (array_key_exists($cart_key,$cart)){
+
             $updatable_item = $cart[$cart_key];
 
             if($quantity==0){
                 unset($cart[$cart_key]);
             }
             else{
-                $discounted_rate = $updatable_item['discounted_rate'];
-                $total_quantity = ($quantity+$updatable_item['quantity']);
-                $cart[$cart_key]['quantity'] 	  = $total_quantity;
-                $toal_amount = $total_quantity*$updatable_item['discounted_rate'];
-                $cart[$cart_key]['item_total'] = $toal_amount;
-                $_SESSION['cart'] = $cart;
+                $discounted_rate                = $updatable_item['discounted_rate'];
+                $total_quantity                 = ($quantity+$updatable_item['quantity']);
+                $cart[$cart_key]['quantity']    = $total_quantity;
+                $total_amount                    = $total_quantity*$updatable_item['discounted_rate'];
+                $cart[$cart_key]['item_total']  = $total_amount;
+                $_SESSION['cart']               = $cart;
             }
         }
         else{
+            //echo 23; die;
+
             $selected_item = array();
-            $item_details_info = $dbClass->getSingleRow("select pr.item_id, pim.item_image, prt.rate, prt.discounted_rate, prt.unit_id,  s.name as size_name, pr.name as item_name
-														from items pr
-														left join item_image pim on pim.item_id=pr.item_id
-														left join item_rate prt on   prt.item_id=pr.item_id
-														left join size s on s.id=prt.size_id
-														where  pr.item_id=$item_id and prt.id=$rate_id
-														group by pr.item_id,  prt.id");
+
             $selected_item['item_id'] = $item_id;
             $selected_item['cart_key'] = $cart_key;
-            $selected_item['item_name'] = $item_details_info['item_name'];
-            $selected_item['unit_id'] = $item_details_info['unit_id'];
-            $selected_item['item_image'] = $item_details_info['item_image'];
-            $selected_item['orignal_rate'] = $item_details_info['rate'];
-            $selected_item['discounted_rate'] = $item_details_info['discounted_rate'];
-            $selected_item['size'] = $item_details_info['size_name'];
+            $selected_item['item_name'] = $item_name;
+            $selected_item['unit_id'] = 1;
+            $selected_item['item_image'] = $item_image;
+            $selected_item['orignal_rate'] = $orignal_rate;
+            $selected_item['discounted_rate'] = $discounted_rate;
+            $selected_item['size'] = 1;
             $selected_item['quantity'] = $quantity;
-            $selected_item['item_total'] = ($item_details_info['discounted_rate']*$quantity);
-
-            $cart[$item_id.'_'.$rate_id]=$selected_item;
+            $selected_item['ingredient'] = $ingredient;
+            $selected_item['item_total'] = ($selected_item['discounted_rate']*$quantity);
+            $cart[$cart_key]=$selected_item;
             $_SESSION['cart'] = $cart;
         }
+        //$_SESSION['cart']='';
         $data['records'] = $cart;
+        //echo 1;die;
+    var_dump($data);
         echo json_encode($data);
     break;
 
@@ -112,7 +151,6 @@ switch ($q){
         if(!isset($_SESSION['cart']) || empty($_SESSION['cart']))$cart = array();
         else 													 $cart = $_SESSION['cart'];
 
-        //echo $cart[$cart_key]; die;
 
         if (array_key_exists($cart_key,$cart)){
             unset($cart[$cart_key]);
@@ -289,19 +327,38 @@ switch ($q){
        }
 
         $return_master = $dbClass->insert("order_master", $columns_value);
+       //var_dump($return_master);
+        $column_array = array(
+            'order_id'=>$return_master,
+            'details'=>'Order placed',
+            'target_user'=>'admin',
+            'user_id'=>$_SESSION['customer_id']
+        );
+        $dbClass->insert("notification", $column_array);
+
         //echo $return_master; die;
         if($return_master){
             //echo 545; die;
 
             foreach($cart as $key=>$item){
+                //var_dump($item['ingredient']['ingredient_name']);die;
+                if($item['ingredient']['id_list']){
+                    $ing_list= $item['ingredient']['id_list'];
+                    $ingredient_name= $item['ingredient']['ingredient_name'];
+                }
+                else{
+                    $ing_list= '';
+                    $ingredient_name='';
+                }
                 $cart_key_arr = explode('_',$key);
                 $item_size_rate_id = $cart_key_arr[1];
                 $columns_value = array(
                     'order_id'=>$return_master,
                     'item_id'=>$item['item_id'],
                     'quantity'=>$item['quantity'],
-                    'unit_id'=>$item['unit_id'],
-                    'item_rate_id'=>$item_size_rate_id,
+                    'ingredient_list'=>$ing_list,
+                    'ingredient_name'=>$ingredient_name,
+                    'item_rate_id'=>0,
                     'item_rate'=>$item['discounted_rate']
                 );
                 $return_details = $dbClass->insert("order_details", $columns_value);
@@ -331,6 +388,7 @@ switch ($q){
 //
 //
 //echo $_SESSION['latest_order_id']; die;
+                echo $invoice_no;
 
 
                 // send mail to customer account
@@ -461,7 +519,7 @@ switch ($q){
         //echo 1; die;
         $sql = "SELECT m.order_id, m.customer_id, 
                 c.full_name customer_name, d.item_id, c.contact_no customer_contact_no, c.address customer_address,  m.order_id,
-                GROUP_CONCAT(ca.name,' >> ',ca.id,'#',ca.id,'#',p.name,' (',ca.name,' )','#',p.item_id,'#',s.name,'#',d.item_rate_id,'#',d.item_rate,'#',d.quantity) order_info,
+                GROUP_CONCAT(ca.name,' >> ',ca.id,'#',ca.id,'#',p.name,' (',ca.name,' )','#',p.item_id,'#',d.item_rate,'#',d.quantity,'#',d.ingredient_name) order_info,
                 m.order_date, m.delivery_date, m.delivery_type, m.discount_amount, m.total_paid_amount,
                 m.outlet_id, m.address, m.delivery_charge_id, m.tax_amount,
                 m.remarks, m.order_status, m.payment_status, m.payment_method, 
@@ -472,8 +530,6 @@ switch ($q){
                 LEFT JOIN order_details d ON d.order_id = m.order_id
                 LEFT JOIN customer_infos c ON c.customer_id = m.customer_id
                 LEFT JOIN items p ON p.item_id = d.item_id
-                LEFT JOIN item_rate r on r.id = d.item_rate_id
-                LEFT JOIN size s ON s.id = r.size_id
                 LEFT JOIN category ca ON ca.id = p.category_id
                 WHERE m.invoice_no= '$order_id'
                 GROUP BY d.order_id
@@ -614,7 +670,13 @@ switch ($q){
 
                     //$sql = "SELECT id,1 as category_id, NAME, description, sideitems FROM btr_selleritems WHERE id = ".$single_item;
 
-                    $sql = "SELECT id,".$category_id." as category_id, NAME, description, sideitems FROM btr_selleritems WHERE id = ".$single_item;
+                    $sql = "SELECT p.price, s.id,".$category_id." as category_id, s.NAME, s.description, s.sideitems FROM btr_selleritems s 
+                            LEFT JOIN( 
+                            SELECT itemid,price from btr_selleritemprice  
+                            )p 
+                            on p.itemid= s.id
+                            WHERE s.id = ".$single_item;
+
                     //echo $sql;die;
                     $stmt = $conn->prepare($sql);
                     $stmt->execute();
@@ -623,6 +685,7 @@ switch ($q){
                     $option_list =  explode(',',$items[0]['sideitems']);
 
                     $i_columns_value['name']=$items[0]['NAME'];
+                    $i_columns_value['price']=round($items[0]['price'],2);
                     $i_columns_value['details']=$items[0]['description'];
                     $i_columns_value['category_id']=$items[0]['category_id'];
                     $i_columns_value['feature_image']='images/category/noFood.png';

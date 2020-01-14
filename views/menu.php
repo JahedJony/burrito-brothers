@@ -72,7 +72,7 @@
             '                                </div>\n' +
             '                            </div>\n' +
             '                        </div>\n' +
-            '                                <a href="index.php?page=item&id='+ data['item_id']+'"><h5>'+ data['name']+' <span style="color: white">'+ currency_symbol+''+data['rate']+'</span></h5></a>\n' +
+            '                                <a href="index.php?page=item&id='+ data['item_id']+'"><h5 class="text-capitalize">'+ data['name']+' <span style="color: white">'+ currency_symbol+''+data['rate']+'</span></h5></a>\n' +
             '                    </div>\n' +
             '                </div>\n'
 
@@ -83,7 +83,7 @@
             '                <img  src="'+ project_url+'admin/'+data['photo']+'" onclick="cart('+data['item_id']+','+data['rate_id']+')" alt="" style="border-radius: 50px; min-height: 100px">\n' +
             '              </span>\n' +
             '              <a href="index.php?page=item&id='+ data['item_id']+'">' +
-            '                   <h5>'+ data['name']+' <span>'+ currency_symbol+''+data['rate']+'</span></h5>' +
+            '                   <h5 class="text-capitalize">'+ data['name']+' <span>'+ currency_symbol+''+data['rate']+'</span></h5>' +
             '               </a>\n' +
             '              <p>'+ data['details']+'</p>\n' +
             '          </div>\n' +
@@ -115,7 +115,7 @@
                     var count =0
                     $.each(data.records, function(i,datas){
                         sub_total += parseFloat(datas.discounted_rate)*(datas.quantity);
-                        html += '<div class="cart-item"><div class="cart-item-left"><img src="admin/images/product/'+datas.product_image+'" alt=""></div><div class="cart-item-right"><h6>'+datas.product_name+'</h6><span> '+datas.discounted_rate+' * '+datas.quantity+' = '+sub_total+'</span></div><span class="delete-icon" onclick="deleteProduct('+"'"+datas.cart_key+"'"+')"></span></div>';
+                        html += '<div class="cart-item"><div class="cart-item-left"><img src="admin/images/item/'+datas.product_image+'" alt=""></div><div class="cart-item-right"><h6>'+datas.product_name+'</h6><span> '+datas.discounted_rate+' * '+datas.quantity+' = '+sub_total+'</span></div><span class="delete-icon" onclick="deleteProduct('+"'"+datas.cart_key+"'"+')"></span></div>';
                         count++;
                         total += sub_total ;
                     });

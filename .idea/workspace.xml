@@ -2,40 +2,19 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="289ea524-a539-47c6-a345-6f05b3774d37" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/images/burrito8.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/images/catering.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/images/catering1.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/images/catering2.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/images/team1.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/images/team1_old.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/images/team2.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/views/aboutus.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/views/catering.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/views/contact.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/views/group_order.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/views/itemview.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/views/temptest.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/views/update-profile.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/admin/images/item/noFood.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/views/item.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/admin/images/category/1575967379img53.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/admin/images/category/img53.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/admin/images/category/img63.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/admin/images/category/img66.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/admin/images/category/img67.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/admin/images/category/img68.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/admin/images/category/img75.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/common_view/top_menu.php" beforeDir="false" afterPath="$PROJECT_DIR$/common_view/top_menu.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/css/theme.css" beforeDir="false" afterPath="$PROJECT_DIR$/css/theme.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/fonts/Graviola-Regular.svg" beforeDir="false" afterPath="$PROJECT_DIR$/fonts/Graviola-Regular.svg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/admin/controller/orderController.php" beforeDir="false" afterPath="$PROJECT_DIR$/admin/controller/orderController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/admin/view/order/orders.php" beforeDir="false" afterPath="$PROJECT_DIR$/admin/view/order/orders.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/includes/controller/ecommerceController.php" beforeDir="false" afterPath="$PROJECT_DIR$/includes/controller/ecommerceController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/includes/controller/itemsController.php" beforeDir="false" afterPath="$PROJECT_DIR$/includes/controller/itemsController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/index.php" beforeDir="false" afterPath="$PROJECT_DIR$/index.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/views/categories.php" beforeDir="false" afterPath="$PROJECT_DIR$/views/categories.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/views/checkout.php" beforeDir="false" afterPath="$PROJECT_DIR$/views/checkout.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/views/checkout_confirm.php" beforeDir="false" afterPath="$PROJECT_DIR$/views/checkout_confirm.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/js/cart.js" beforeDir="false" afterPath="$PROJECT_DIR$/js/cart.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/js/url.js" beforeDir="false" afterPath="$PROJECT_DIR$/js/url.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/views/cart.php" beforeDir="false" afterPath="$PROJECT_DIR$/views/cart.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/views/itemview.php" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/views/menu.php" beforeDir="false" afterPath="$PROJECT_DIR$/views/menu.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/views/profile.php" beforeDir="false" afterPath="$PROJECT_DIR$/views/profile.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/views/tracking.php" beforeDir="false" afterPath="$PROJECT_DIR$/views/tracking.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/views/orders.php" beforeDir="false" afterPath="$PROJECT_DIR$/views/orders.php" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -63,7 +42,7 @@
   <component name="PropertiesComponent">
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/views" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/admin/images/item" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.detected.package.tslint" value="true" />
     <property name="node.js.path.for.package.eslint" value="project" />
@@ -73,11 +52,11 @@
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/admin/images/item" />
       <recent name="$PROJECT_DIR$/views" />
       <recent name="$PROJECT_DIR$/images" />
       <recent name="$PROJECT_DIR$/images/payments" />
       <recent name="$PROJECT_DIR$/admin/theme/js" />
-      <recent name="$PROJECT_DIR$" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/views" />
@@ -121,7 +100,11 @@
       <workItem from="1575870409263" duration="18615000" />
       <workItem from="1575957419023" duration="21452000" />
       <workItem from="1576420054371" duration="180899000" />
-      <workItem from="1577950729157" duration="54829000" />
+      <workItem from="1577950729157" duration="97912000" />
+      <workItem from="1578805223707" duration="171000" />
+      <workItem from="1578805640395" duration="100000" />
+      <workItem from="1578806417504" duration="598000" />
+      <workItem from="1578890872372" duration="22254000" />
     </task>
     <servers />
   </component>

@@ -132,9 +132,9 @@ switch ($q){
     case "menu_options_view":
         //echo 1; die;
         $data = [];
-        $item_id = 12;
+        $item_id = $item_id;
         // get item details
-        $sql = 	"Select i.item_id, i.name, i.details from items i where i.item_id=$item_id";
+        $sql = 	"Select i.item_id,i.price, i.name, i.details from items i where i.item_id=$item_id";
         $stmt = $conn->prepare($sql);
         $stmt->execute();
         $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -163,6 +163,31 @@ switch ($q){
             array_push($data['option'][$i]['ingredient'], $result);
             $i+=1;
         }
+
+        $sql = 	"Select name from category where id=45";
+        $stmt = $conn->prepare($sql);
+        $stmt->execute();
+        $result_cat = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        //$data['side_item'][0]=$result;
+    //var_dump($result_cat[0]['name']); die;
+
+        $sql = 	"Select i.item_id,i.price, i.name, i.details from items i where i.category_id=45";
+        $stmt = $conn->prepare($sql);
+        $stmt->execute();
+        $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        $data['side_item'][$result_cat[0]['name']]=$result;
+
+        $sql = 	"Select name from category where id=6";
+        $stmt = $conn->prepare($sql);
+        $stmt->execute();
+        $result_cat = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+        $sql = 	"Select i.item_id,i.price, i.name, i.details from items i where i.category_id=6";
+        $stmt = $conn->prepare($sql);
+        $stmt->execute();
+        $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        $data['side_item'][$result_cat[0]['name']]=$result;
+
         //$data['option']=$tem_data;
         echo json_encode($data);
      break;

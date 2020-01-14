@@ -4,13 +4,16 @@ include("../includes/dbConnect.php");
 include("../includes/dbClass.php");
 $dbClass = new dbClass;
 $is_logged_in_customer = "";
+$website_url  = $dbClass->getDescription('website_url');
+$logo         =$website_url."admin/".$dbClass->getDescription('company_logo');
+
 
 if(!isset($_SESSION['customer_id']) && $_SESSION['customer_id']!=""){ ob_start(); header("Location:index.php"); exit();}
 else $is_logged_in_customer = 1;
 $customer_id = $_SESSION['customer_id'];	
 $orders_info = $dbClass->getResultList("SELECT invoice_no order_no, order_id, order_date,delivery_date, 
 										CASE delivery_type WHEN 1 THEN 'Takeout' WHEN 2 THEN 'Delevery' END delevery_type, 
-										CASE order_status WHEN 1 THEN 'Ordered' WHEN 2 THEN 'Ready' WHEN 3 THEN 'Delevered' END order_status, 
+										CASE order_status WHEN 1 THEN 'Ordered' WHEN 2 THEN 'Received' WHEN 3 THEN 'Preparing' WHEN 4 THEN 'Ready' WHEN 5 THEN 'Delivered'END order_status, 
 										total_order_amt,total_paid_amount
 										FROM order_master
 										WHERE customer_id=$customer_id 
@@ -129,19 +132,19 @@ else{
             <div class="modal-body">
                 <div id="order-div">
                     <div class="title text-center">
-                        <h3 class="text-coffee left"> <a href="index.php"><img src="/images/logo.png" alt=""></a></h3>
+                        <h3 class="text-coffee left"> <a href="index.php"><img src="<?php echo ($logo); ?>" alt="" style="height: 100px; width: 100px"></a></h3>
                         <h4 class="text-coffee left">Order No # <span id="ord_title_vw"></span></h4>
                     </div>
                     <div class="done_registration ">
                         <div class="doc_content">
-                            <div class="col-md-12">
-                                <div class="col-md-6">
+                            <div class="col-md-12" style="margin-left: 0px; padding: 0px; margin-bottom: 20px">
+                                <div class="col-md-6" style="margin: 0px; padding: 0px">
                                     <h4>Order Details:</h4>
                                     <div class="byline">
                                         <span id="ord_date"></span><br/>
                                         <span id="dlv_date"></span> <br/>
                                         <span id="dlv_ps"></span> <br/>
-                                        <span id="dlv_pm"></span>
+                                        <span id="dlv_pm"></span><br/>
                                     </div>
                                 </div>
                                 <div class="col-md-6" style="text-align:right">
@@ -149,16 +152,16 @@ else{
                                     <address id="customer_detail_vw">
                                     </address>
                                 </div>
+
                             </div>
                             <div id="ord_detail_vw">
                                 <table class="table table-bordered" >
                                     <thead>
                                     <tr>
-                                        <th align="center">Product</th>
-                                        <th width="18%" align="center">Size</th>
+                                        <th align="center">Items</th>
                                         <th width="10%" align="center">Quantity</th>
-                                        <th width="18%" style="text-align:right">Rate</th>
-                                        <th width="18%"  style="text-align:right">Total</th>
+                                        <th width="12%" style="text-align:right">Rate</th>
+                                        <th width="12%"  style="text-align:right">Price</th>
                                     </tr>
                                     </thead>
                                     <tbody>
@@ -207,6 +210,7 @@ else{
             },
             success: function(data){
                 //alert(data.item_id)
+                console.log(data)
                 if(!jQuery.isEmptyObject(data.records)){
                     $.each(data.records, function(i,data){
                         $('#ord_title_vw').html(data.invoice_no);
@@ -214,7 +218,7 @@ else{
                         $('#dlv_date').html("Delivery time: "+data.delivery_date);
                         $('#dlv_ps').html("Payment Status: "+data.paid_status);
                         $('#dlv_pm').html("Payment Method: "+data.payment_method);
-                        $('#customercustomer_detail_vw').html(" "+data.customer_name+"<br/><b>Mobile:</b> "+data.customer_contact_no+"<br/><b>Address:</b> "+data.customer_address);
+                        $('#customer_detail_vw').html(" "+data.customer_name+"<br/><b>Mobile:</b> "+data.customer_contact_no+"<br/><b>Address:</b> "+data.customer_address);
                         $('#note_vw').html(data.remarks);
 
                         var order_tr = "";
@@ -223,18 +227,13 @@ else{
                         var order_arr = order_infos.split(',');
                         $.each(order_arr, function(i,orderInfo){
                             var order_info_arr = orderInfo.split('#');
-                            var total = ((parseFloat(order_info_arr[6])*parseFloat(order_info_arr[7])));
-                            order_tr += '<tr><td>'+order_info_arr[2]+'</td><td align="left">'+order_info_arr[4]+'</td><td align="center">'+order_info_arr[7]+'</td><td align="right">'+order_info_arr[6]+'</td><td align="right">'+total.toFixed(2)+'</td></tr>';
+                            var total = ((parseFloat(order_info_arr[4])*parseFloat(order_info_arr[5])));
+                            order_tr += '<tr><td class="text-capitalize">'+order_info_arr[2]+' <br>'+order_info_arr[6]+'</td><td align="center">'+order_info_arr[5]+'</td><td align="right">'+order_info_arr[4]+'</td><td align="right">'+total+'</td></tr>';
                             order_total += total;
                         });
                         var total_order_bill = ((parseFloat(order_total)+parseFloat(data.delivery_charge))-parseFloat(data.discount_amount));
                         var total_paid = data.total_paid_amount;
-                        order_tr += '<tr><td colspan="4" align="right" ><b>Total Product Bill</b></td><td align="right"><b>'+order_total.toFixed(2)+'</b></td></tr>';
-                        order_tr += '<tr><td colspan="4" align="right" ><b>Discount Amount</b></td><td align="right"><b>'+data.discount_amount+'</b></td></tr>';
-                        order_tr += '<tr><td colspan="4" align="right" ><b>Delivery Charge</b></td><td align="right"><b>'+data.delivery_charge+'</b></td></tr>';
-                        order_tr += '<tr><td colspan="4" align="right" ><b>Total Order Bill</b></td><td align="right"><b>'+total_order_bill.toFixed(2)+'</b></td></tr>';
-                        order_tr += '<tr><td colspan="4" align="right" ><b>Total Paid</b></td><td align="right"><b>'+total_paid+'</b></td></tr>';
-                        order_tr += '<tr><td colspan="4" align="right" ><b>Balance</b></td><td align="right"><b>'+(total_order_bill-total_paid).toFixed(2)+'</b></td></tr>';
+                        order_tr += '<tr><td colspan="3" align="right" ><b>Total Amount</b></td><td align="right"><b>'+total_paid+'</b></td></tr>';
                         $('#ord_detail_vw>table>tbody').append(order_tr);
 
 

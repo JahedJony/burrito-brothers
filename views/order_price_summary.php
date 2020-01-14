@@ -26,10 +26,10 @@
             },
             success: function(data) {
                 if(data){
-                    $('#items_price').html(currency_symbol+''+ data['total_price'])
-                    $('#discount').html(currency_symbol+'' +data['discount'])
-                    $('#tax').html(currency_symbol+''+ data['tax_amount'])
-                    $('#total_amount').html(currency_symbol+'' +data['discounted_price'])
+                    $('#items_price').html(currency_symbol+''+ data['total_price'].toFixed(2))
+                    $('#discount').html(currency_symbol+'' +data['discount'].toFixed(2))
+                    $('#tax').html(currency_symbol+''+ data['tax_amount'].toFixed(2))
+                    $('#total_amount').html(currency_symbol+'' +data['discounted_price'].toFixed(2))
                 }
             }
         });

@@ -31,6 +31,7 @@ function showCart(){
             q: "viewCartSummery"
         },
         success: function(data) {
+            //alert('cart index')
             if(!jQuery.isEmptyObject(data.records)){
                 var html = '';
                 var total = 0;
@@ -38,7 +39,8 @@ function showCart(){
                 var count =0
                 $.each(data.records, function(i,datas){
                     //alert(i)
-                    sub_total += parseFloat(datas.discounted_rate)*(datas.quantity);
+                    sub_total = parseFloat(datas.discounted_rate)*(datas.quantity);
+                    //alert(sub_total)
                     html += '<div class="cart-item"><div class="cart-item-left" '+width+'><img src="/admin/images/item/'+datas.item_image+'" alt="" style="'+ item_image_display +';border-radius: 10px"></div><div class="cart-item-right"  ><h6>'+datas.item_name+'</h6><span> '+ currency_symbol+''+datas.discounted_rate+' * '+datas.quantity+' = '+ currency_symbol+''+sub_total+'</span></div><span class="delete-icon" onclick=deleteItem("'+i+'")></span></div>';
                     count++;
                     total += sub_total ;
@@ -59,6 +61,7 @@ function showCart(){
 }
 
 function deleteItem(cart_key){
+    //alert('ok')
     //alert(cart_key)
     $.ajax({
         url: "./includes/controller/ecommerceController.php",

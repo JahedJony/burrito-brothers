@@ -27,11 +27,17 @@ $(function () {
             $("#content").load("views/"+main_view[0].split('page=')[1]+".php");
             //alert('ok')
         }else {
-            //alert(main_view[1].split('=')[0]);
+            //alert(main_view[0]);
             if(main_view[1].split('=')[0]=='category'){
                 //alert(main_view[1])
                 var data=main_view[1].split('category=')
                 data = data[1].split('__').join(' ')
+                $("#content").load("views/"+main_view[0].split('page=')[1]+".php");
+            }
+            else if(main_view[0].split('=')[1]=='item') {
+                //alert(main_view[1])
+                //var data=main_view[1].split('id=')
+                //data = data[1].split('__').join(' ')
                 $("#content").load("views/"+main_view[0].split('page=')[1]+".php");
             }
             else if(main_view[1].split('=')[0]=='id') {

@@ -19,7 +19,6 @@ else{
 
     ?>
 
-
     <div class="x_panel">
         <div class="x_title">
             <h2>Order</h2>
@@ -134,47 +133,56 @@ else{
             </div>
         </div>
     </div>
-
-
-    <!-- Start Order details -->
     <div class="modal fade booktable" id="order_modal" tabindex="-2" role="dialog" aria-labelledby="booktable">
         <div class="modal-dialog" role="document" style="width:80% !important">
             <div class="modal-content">
                 <div class="modal-body">
-                    <div id="order-div">
+                    <div id="order-div" style="margin-bottom: 30px">
                         <div class="title text-center">
-                            <h3 class="text-coffee center"><img src="../images/logo.png" alt=""></h3>
-                            <h4 class="text-coffee center">Order No # <span id="ord_title_vw"></span></h4>
+                            <h3 class="text-coffee left"> <a href="index.php"><img src="<?php echo ($logo); ?>" alt="" style="height: 100px; width: 100px"></a></h3>
+                            <h4 class="text-coffee left">Order No # <span id="ord_title_vw"></span></h4>
                         </div>
                         <div class="done_registration ">
                             <div class="doc_content">
-                                <!--<div class="col-md-12">
-                                    <div class="col-md-6">
+                                <div class="col-md-12" style="margin-left: 0px; padding: 0px; margin-bottom: 20px">
+                                    <div class="col-md-6" style="margin: 0px; padding: 0px">
                                         <h4>Order Details:</h4>
-                                        <div class="byline">
+                                        <div class="">
                                             <span id="ord_date"></span><br/>
                                             <span id="dlv_date"></span> <br/>
                                             <span id="dlv_ps"></span> <br/>
-                                            <span id="dlv_pm"></span>
+                                            <span id="dlv_pm"></span><br/>
                                         </div>
                                     </div>
                                     <div class="col-md-6" style="text-align:right">
-                                        <h4>Customer Details:</h4>
-                                        <address id="customer_detail_vw">
-                                        </address>
+
+                                        <div class="col-md-10 col-sm-10 col-xs-6">
+
+                                            <input type="hidden" id="order_status_id" name="order_status_id" value="1" />
+                                            <input type="hidden" id="order_id_edit">
+                                            <button class="btn btn-primary btn-lg dropdown-toggle" style="width:190px" type="button" id="dropdown_status" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">Change Status
+                                                <span class="caret"></span>
+                                            </button>
+                                            <ul class="dropdown-menu" aria-labelledby="dropdown_status">
+                                                <li id="order_received"><a href="javascript:void(0)" onclick="update_order_status(2)">Received</a></li>
+                                                <li id="order_preparing"><a href="javascript:void(0)" onclick="update_order_status(3)">Preparing</a></li>
+                                                <li id="order_ready"><a href="javascript:void(0)" onclick="update_order_status(4)">Ready</a></li>
+                                                <li id="order_delivered"><a href="javascript:void(0)" onclick="update_order_status(5)">Delivered</a></li>
+                                            </ul>
+                                            <button id="order_status_option" type="button" style="min-width:60px" class="btn btn-success btn-lg disabled">Ordered</button>
+                                        </div>
+
                                     </div>
 
-                                </div>	-->
+                                </div>
                                 <div id="ord_detail_vw">
                                     <table class="table table-bordered" >
                                         <thead>
                                         <tr>
-                                            <th align="center">Product</th>
-                                            <th width="18%" align="center">Size</th>
-                                            <th width="18%" align="center">Unit</th>
+                                            <th align="center">Items</th>
                                             <th width="10%" align="center">Quantity</th>
-                                            <th width="15%" style="text-align:right">Rate</th>
-                                            <th width="15%"  style="text-align:right">Total</th>
+                                            <th width="12%" style="text-align:right">Rate</th>
+                                            <th width="12%"  style="text-align:right">Price</th>
                                         </tr>
                                         </thead>
                                         <tbody>
@@ -183,624 +191,37 @@ else{
                                     <p>Note: <span id="note_vw"></span></p>
                                     <p>Print Time : <?php echo date("Y-m-d h:m:s"); ?></p>
                                     <br />
-                                    <p style="font-weight:bold; text-align:center">Thank you. Hope we will see you soon again. </p>
                                 </div>
                             </div>
+                            <div class="col-md-12 center"> <button type="button" class="btn btn-warning" id="order_print"><i class="fa fa-lg fa-print"></i></button></div>
+
                         </div>
+
                     </div>
-                    <div style="text-align:center"><button type="button" class="btn btn-warning" id="order_print"><i class="fa fa-lg fa-print"></i></button></div>
-                </div>
-                <div class="modal-footer">
-                    <input type="hidden" id="modal_doc_id" />
-                    <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+
                 </div>
             </div>
         </div>
     </div>
-    <!-- End order -->
 
-    <?php if($dbClass->getUserGroupPermission(74) == 1){ ?>
-        <div class="x_panel order_entry_cl">
-            <div class="x_title">
-                <h2>Order Entry</h2>
-                <ul class="nav navbar-right panel_toolbox">
-                    <li>
-                        <a class="collapse-link" id="toggle_form"><i class="fa fa-chevron-down"></i></a>
-                    </li>
-                </ul>
-                <div class="clearfix"></div>
-            </div>
-            <div class="x_content" id="iniial_collapse">
-                <form method="POST" id="order_form" name="order_form" enctype="multipart/form-data" class="form-horizontal form-label-left">
-                    <div class="row">
-                        <div class="form-group">
-                            <label class="control-label col-md-2 col-sm-2 col-xs-6"></label>
-                            <div class="col-md-10 col-sm-10 col-xs-6">
+    <?php
 
-                                <input type="hidden" id="order_status_id" name="order_status_id" value="1" />
-                                <button class="btn btn-primary btn-lg dropdown-toggle" style="width:190px" type="button" id="dropdown_status" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">Change Status
-                                    <span class="caret"></span>
-                                </button>
-                                <ul class="dropdown-menu" aria-labelledby="dropdown_status">
-                                    <li id="order_ready"><a href="javascript:void(0)" onclick="update_order_status(2)">Ready</a></li>
-                                    <li id="order_picked"><a href="javascript:void(0)" onclick="update_order_status(3)">Delivered</a></li>
-                                </ul>
-                                <button id="order_status_option" type="button" style="min-width:60px" class="btn btn-success btn-lg disabled">Ordered</button>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="form-group">
-                            <label class="control-label col-md-2 col-sm-2 col-xs-12">Customer<span class="required">*</span></label>
-                            <div class="col-md-10 col-sm-10 col-xs-12 input-group">
-                                <input type="text" id="customer_name" name="customer_name" class="form-control"/>
-                                <input type="hidden" id="customer_id" name="customer_id"/>
-                                <span class="input-group-btn">
-							<button type="button" class="btn btn-primary has-spinner" id="add_customer_button">
-							 <span class="spinner"><i class="fa fa-spinner fa-spin fa-fw "></i></span>
-							 <i class="fa fa-sign-in"></i>
-							</button>
-						</span>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="control-label col-md-2 col-sm-2 col-xs-12">Delivery Date<span class="required">*</span></label>
-                            <div class="col-md-4 col-sm-4 col-xs-12">
-                                <input type="text" id="delivery_date" name="delivery_date"  class="item form-control col-lg-12"/>
-                            </div>
-                            <label class="control-label col-md-2 col-sm-2 col-xs-6">Delivery Type<span class="required">*</span></label>
-                            <div class="col-md-4 col-sm-4 col-xs-4">
-                                <select class="form-control delivery_option" name="delivery_option" id="delivery_option">
-                                    <option value='3'>Dine-In</option>
-                                    <option value='1'>Takeout</option>
-                                    <option value='2'>Delivery</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="form-group" id="delivery_option_list_div" style="display:none">
-                            <label class="control-label col-md-2 col-sm-2 col-xs-6">Delivery Option<span class="required">*</span></label>
-                            <div class="col-md-4 col-sm-4 col-xs-4">
-                                <select class="form-control delivery_option_list" name="delivery_option_list" id="delivery_option_list">
-
-                                </select>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="control-label col-md-2 col-sm-2 col-xs-6">Order Products</label>
-                            <div class="table-responsive">
-                                <table class="table table-bordered" id="orderTable">
-                                    <thead>
-                                    <tr>
-                                        <th width="">Product</th>
-                                        <th width="15%">Size</th>
-                                        <th width="15%">Unit</th>
-                                        <th width="10%">Rate</th>
-                                        <th width="10%">Quantity</th>
-                                        <th width="10%">Total</th>
-                                        <th width="5%"><button id='addRow' type='button' class='btn btn-info btn-xs'><span class='glyphicon glyphicon-plus'></span></button></th>
-                                    </tr>
-                                    </thead>
-                                    <tbody>
-
-                                    </tbody>
-                                    <tfoot>
-
-                                    </tfoot>
-                                </table>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="control-label col-md-2 col-sm-2 col-xs-12">Coupon</label>
-                            <div class="col-md-4 col-sm-4 col-xs-12">
-                                <input type="text" id="coupon_name" name="coupon_name" class="form-control col-lg-12"/>
-                                <input type="hidden" id="coupon_type" name="coupon_type"/>
-                                <input type="hidden" id="coupon_amount" name="coupon_amount"/>
-                                <input type="hidden" id="coupon_id" name="coupon_id"/>
-                            </div>
-                            <button type="button" id="apply_button"  class="btn btn-info">Apply</button>
-                        </div>
-                        <div class="form-group" id="delivery_address" style="display:none">
-                            <label class="control-label col-md-2 col-sm-2 col-xs-6">Delivery Address<span class="required">*</span></label>
-                            <div class="col-md-10 col-sm-10 col-xs-12">
-                                <input type="text" id="address" name="address" class="form-control col-lg-12"/>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="control-label col-md-2 col-sm-2 col-xs-12">Payment Method</label>
-                            <div class="col-md-4 col-sm-4 col-xs-12">
-                                <select class="form-control" name="payment_option" id="payment_option">
-                                    <option value='3'>Cash</option>
-                                    <option value='1'>bKash</option>
-                                    <option value='2'>Rocket</option>
-
-                                </select>
-                            </div>
-                            <label class="control-label col-md-2 col-sm-2 col-xs-12">Payment Reference No</label>
-                            <div class="col-md-4 col-sm-4 col-xs-12">
-                                <input type="text" id="payment_referance_no" name="payment_referance_no" class="form-control col-lg-12"/>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="control-label col-md-2 col-sm-2 col-xs-6">Payment Status<span class="required">*</span></label>
-                            <div class="col-md-4 col-sm-4 col-xs-4">
-                                <select class="form-control" name="payment_status" id="payment_status">
-                                    <option value='1'>Not Paid</option>
-                                    <option value='2'>Paid</option>
-                                </select>
-                            </div>
-                            <label class="control-label col-md-2 col-sm-2 col-xs-6">Paid Amount</label>
-                            <div class="col-md-4 col-sm-4 col-xs-6">
-                                <input type="text" id="total_paid_amount" name="total_paid_amount" class="form-control col-lg-12"/>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="control-label col-md-2 col-sm-2 col-xs-12">Remarks</label>
-                            <div class="col-md-10 col-sm-10 col-xs-12">
-                                <input  type="hidden"   id="order_id"    name="order_id" />
-                                <textarea rows="2" cols="100" id="remarks" name="remarks" class="form-control col-lg-12"></textarea>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <div class="ln_solid"></div>
-                        <div class="col-md-7 col-sm-7 col-xs-12" style="text-align:right">
-                            <button type="submit" id="save_order"   class="btn btn-success">Save</button>
-                            <button type="button" id="clear_button" class="btn btn-primary">Clear</button>
-                            <button type="button" id="show_invoice" class="btn btn-info">Invoice </button>
-                        </div>
-                        <div class="col-md-5 col-sm-5 col-xs-12">
-                            <div id="form_submit_error" class="text-center" style="display:none"></div>
-                        </div>
-                    </div>
-                </form>
-            </div>
-        </div>
-
-        <?php
-    }
 }
 ?>
 <script src="js/customTable.js"></script>
 <script src="js/autosuggest.js"></script>
 <script>
-    //------------------------------------- general & UI  --------------------------------------
-    /*
-    develped by @momit
-    =>load grid with paging
-    =>search records
-    */
 
-        $('#show_invoice').hide();
+    $('#show_invoice').hide();
 
         //$('#delivery_date').val('');
 
-        $('#order_form').iCheck({
-            checkboxClass: 'icheckbox_flat-green',
-            radioClass: 'iradio_flat-green'
-        });
-
-        $('.flat_radio').iCheck({
-            //checkboxClass: 'icheckbox_flat-green'
-            radioClass: 'iradio_flat-green'
-        });
-
-        $("#ad_product_name").autocomplete({
-            search: function() {
-
-            },
-            source: function(request, response) {
-                $.ajax({
-                    url: project_url+'controller/orderController.php',
-                    dataType: "json",
-                    type: "post",
-                    async:false,
-                    data: {
-                        q: "ad_product_info",
-                        term: request.term
-                    },
-                    success: function(data) {
-                        response(data);
-                    }
-                });
-            },
-            minLength: 3,
-            select: function(event, ui) {
-                var id = ui.item.id;
-                $(this).next().val(id);
-            }
-        });
-
-        $("#customer_name").autocomplete({
-            search: function() {
-
-            },
-            source: function(request, response) {
-                $.ajax({
-                    url: project_url+'controller/autosuggests.php',
-                    dataType: "json",
-                    type: "post",
-                    async:false,
-                    data: {
-                        q: "customer_infos",
-                        term: request.term
-                    },
-                    success: function(data) {
-                        response(data);
-                    }
-                });
-            },
-            minLength: 3,
-            select: function(event, ui) {
-                var id = ui.item.id;
-                $(this).next().val(id);
-            }
-        });
-
-        $("#coupon_name").autocomplete({
-            search: function() {
-            },
-            source: function(request, response) {
-                $.ajax({
-                    url: project_url+'controller/orderController.php',
-                    dataType: "json",
-                    type: "post",
-                    async:false,
-                    data: {
-                        q: "coupon_info",
-                        term: request.term
-                    },
-                    success: function(data) {
-                        response(data);
-                    }
-                });
-            },
-            minLength: 3,
-            select: function(event, ui) {
-                var id = ui.item.id;
-                var type = ui.item.type;
-                $(this).next().val(type);
-                var rate = ui.item.rate;
-                //alert(rate)
-                $('#coupon_amount').val(rate);
-                $('#coupon_id').val(id);
-            }
-        });
-
-        //load customer module in button click
-        $( "#add_customer_button" ).click(function() {
-            var new_url = project_url+"index.php?module=orders&view=customer";
-            window.open(new_url, '_blank');
-        });
-
-
     $(document).ready(function () {
 
-        var total_product_amount 	= 0.00;
-        var delivery_charge_amount 	= 0.00;
-        var tax_amount 				= 0.00;
-        var coupon_amount 			= 0.00;
-        var total_paid_amount 		= 0.00;
-        var grand_total_amount 		= 0.00;
-
-        //Global Veriable declaration
-        calculate_total_bill = function calculate_total_bill(){
-            $("#orderTable > tfoot").html('');
-            var html_tfoot = '';
-            grand_total_amount = ((parseFloat(total_product_amount)+parseFloat(delivery_charge_amount)+parseFloat(tax_amount)))-(parseFloat(coupon_amount));
-            html_tfoot += '<tr><td colspan="5" align="right"><b>Total Product Amount</b></td><td align="right"><input type="hidden" id="total_product_amount" name="total_product_amount" value="'+total_product_amount+'"><b>'+total_product_amount+'</b></td></tr>';
-            html_tfoot += '<tr><td colspan="5" align="right"><b>Delivery Charge</b></td><td align="right"><input type="hidden" id="delivery_charge_amount" name="delivery_charge_amount" value="'+delivery_charge_amount+'"><b>'+delivery_charge_amount+'</b></td></tr>';
-            html_tfoot += '<tr><td colspan="5" align="right"><b>Discount Amount</b></td><td align="right"><input type="text" class="form-control col-lg-12 text-right " id="discounted_amount" name="discounted_amount" value="'+coupon_amount+'"></td></tr>';
-            //html_tfoot += '<tr><td colspan="5" align="right"><b>Tax Amount</b></td><td align="right"><input type="hidden" id="tax_amount" name="tax_amount" value="'+tax_amount+'"><b>'+tax_amount+'</b></td></tr>';
-            html_tfoot += '<tr><td colspan="5" align="right"><b>Grand Total Amount</b></td><td align="right"><input type="hidden" id="grand_total_amount" name="grand_total_amount" value="'+grand_total_amount+'"><b>'+grand_total_amount+'</b></td></tr>';
-            $("#orderTable > tfoot").html(html_tfoot);
-
-
-            $("#discounted_amount").focusout(function(){
-                coupon_amount =  parseFloat($(this).val());
-                calculate_total_bill();
-            });
-        }
-
-        $('#apply_button').click(function(){
-            var c_type = $('#coupon_type').val();
-            var c_amount = $('#coupon_amount').val();
-            if(c_type ==""){
-                success_or_error_msg('#form_submit_error','danger','Please Select Coupon',"#coupon_name");
-            }else if(c_type == 1){
-                //alert(c_amount);
-                coupon_amount = c_amount;
-            }else if(c_type == 2){
-                coupon_amount = (parseFloat(total_product_amount)*(parseFloat(c_amount)/100));
-            }
-            calculate_total_bill();
-        });
-
-
-        <!-- delivery option on change -->
-        $("#delivery_option").change(function(){
-            $('#outlet_option').val(0);
-            var option_html = '';
-            if($(this).val() == 2){
-                //$('#delivery_outlet').hide();
-                $('#delivery_address').show();
-                $.ajax({
-                    url: project_url+"controller/orderController.php",
-                    dataType: "json",
-                    type: "post",
-                    async:false,
-                    data:{
-                        q: "view_delivery_list",
-                    },
-                    success: function(data){
-                        if(!jQuery.isEmptyObject(data.records)){
-                            $('#delivery_option_list_div').show();
-                            $.each(data.records, function(i,data){
-                                //alert(data.id)
-                                option_html += '<option value="'+data.id+'">'+data.type+' >> '+data.rate+'</option>';
-                            });
-                        }
-                        $('#delivery_option_list').after().html(option_html);
-
-                        var delivery_charge = $('#delivery_option_list :selected').text();
-                        var delivery_charge_arr = delivery_charge.split(' >> ');
-                        delivery_charge_amount = delivery_charge_arr[1];
-                        calculate_total_bill();
-                        //$("#orderTable > tfoot").after().append('<tr><td colspan="5" style="text-align:right"><b>Dalivery Charge</b></td><td align="right" ><input type="hidden" class="delivery_charge" value="'+delivery_charge_arr[1]+'"><b>'+delivery_charge_arr[1]+'</b></td></tr>');
-                    }
-                });
-
-            }
-            else if($(this).val() == 1 || $(this).val() == 3){
-                //$("#orderTable > tfoot > tr").next().html('');
-                //$('#delivery_outlet').show();
-                $('#delivery_address').hide();
-                $('#delivery_option_list').after().html('');
-                $('#delivery_option_list_div').hide();
-
-                delivery_charge_amount = 0.00;
-
-                calculate_total_bill();
-            }
-            else{
-                //$('#delivery_outlet').hide();
-                $('#delivery_address').hide();
-            }
-        });
-
-        $("#delivery_option_list").change(function(){
-            var delivery_charge = $('#delivery_option_list :selected').text();
-            var delivery_charge_arr = delivery_charge.split(' >> ');
-            delivery_charge_amount = delivery_charge_arr[1];
-            calculate_total_bill();
-        });
-
-
-        // add group row
-        $('#addRow').click(function(){
-            $('#orderTable > tbody').append("<tr><td><input type='text' name='product_name[]' class='form-control col-lg-12 product_name'/><input type='hidden' name='item_id[]' class='item_id'/><td><input type='text' name='size_name[]' required class='size_name form-control col-lg-12'/><input type='hidden' name='size_id[]' class='size_id'/></td><td><input type='text' name='unit_name[]' required class='form-control col-lg-12 unit_name'/><input type='hidden' class='unit_id' name='unit_id[]'/></td><td><input type='text' name='rate[]'  value='0.00' required class='form-control col-lg-12 text-right rate'/></td><td><input type='text' name='quantity[]' class='form-control col-lg-12 quantity' value='1' /></td><td><input type='text' name='total[]' value = '0.00' required class='form-control col-lg-12 text-right total' readonly='readonly'/></td><td><span class='input-group-btn'><button type='button' class='btn btn-danger btn-xs remove_row'><span class='glyphicon glyphicon-minus'></span></button></span></td></tr>");
-            //$('#orderTable > tfoot > tr ').next().html('');
-
-            $('.remove_row').click(function(){
-                $(this).parent().parent().parent().remove();
-
-                var total_order_product_amount = 0;
-                $("#orderTable>tbody>tr").each(function(){
-                    var total = $(this).find('.total').val();
-                    total_order_product_amount += parseFloat(total);
-                })
-
-                total_product_amount = total_order_product_amount;
-
-                calculate_total_bill();
-            });
-
-            $(".unit_name").autocomplete({
-                search: function() {
-                },
-                source: function(request, response) {
-                    $.ajax({
-                        url: project_url+'controller/autosuggests.php',
-                        dataType: "json",
-                        type: "post",
-                        async:false,
-                        data: {
-                            q: "unit_infos",
-                            term: request.term
-                        },
-                        success: function(data) {
-                            response(data);
-                        }
-                    });
-                },
-                minLength: 2,
-                select: function(event, ui) {
-                    var unit_id = ui.item.id;
-                    $(this).next().val(unit_id);
-                    item_id = $(this).parent().siblings().find('.item_id').val();
-                    size_id    = $(this).parent().siblings().find('.size_id').val();
-                    var rate_obj =$(this);
-                    //get_product_rate(product_id,size_id,unit_id);
-                    if(item_id != "" && size_id != "" && unit_id != ""){
-                        $.ajax({
-                            url: project_url+"controller/orderController.php",
-                            type:'POST',
-                            async:false,
-                            data: "q=get_product_rate&item_id="+item_id+"&size_id="+size_id+"&unit_id="+unit_id,
-                            success: function(rate){
-                                if($.trim(rate)!=0){
-                                    rate_obj.parent().siblings().find('.rate').val(rate);
-                                    var quantity = rate_obj.parent().siblings().find('.quantity').val();
-                                    rate_obj.parent().siblings().find('.total').val(parseInt(rate)*quantity);
-
-                                    var total_order_product_amount=0;
-                                    $("#orderTable>tbody>tr").each(function(){
-                                        var total = $(this).find('.total').val();
-                                        total_order_product_amount += parseFloat(total);
-                                    })
-                                    total_product_amount = total_order_product_amount;
-                                    calculate_total_bill();
-                                }
-                                else
-                                    alert('ERROR!! No rate found for this size and unit. Please set the price first.')
-                            }
-                        });
-                    }
-                }
-            });
-
-            $(".product_name").autocomplete({
-                search: function() {
-                    //category_id  = $(this).parent().prev().find('.category_id').val();
-                },
-                source: function(request, response) {
-                    $.ajax({
-                        url: project_url+'controller/orderController.php',
-                        dataType: "json",
-                        type: "post",
-                        async:false,
-                        data: {
-                            q: "product_info",
-                            term: request.term,
-                            //category_id: category_id
-                        },
-                        success: function(data) {
-                            response(data);
-                        }
-                    });
-                },
-                minLength: 2,
-                select: function(event, ui) {
-                    var id = ui.item.id;
-                    $(this).next().val(id);
-                    $(this).parent().siblings().siblings().find('.quantity').val(1);
-                    $(this).parent().siblings().siblings().find('.size_name').val("");
-                    $(this).parent().siblings().siblings().find('.size_id').val("");
-                    $(this).parent().siblings().siblings().find('.unit_name').val("");
-                    $(this).parent().siblings().siblings().find('.unit_id').val("");
-                    $(this).parent().siblings().siblings().find('.rate').val('0.00');
-                    $(this).parent().siblings().siblings().find('.total').val('0.00');
-                }
-            });
-
-            $(".size_name").autocomplete({
-                search: function() {
-                },
-                source: function(request, response) {
-                    $.ajax({
-                        url: project_url+'controller/autosuggests.php',
-                        dataType: "json",
-                        type: "post",
-                        async:false,
-                        data: {
-                            q: "size_infos",
-                            term: request.term
-                        },
-                        success: function(data) {
-                            response(data);
-                        }
-                    });
-                },
-                minLength: 3,
-                select: function(event, ui) {
-                    var size_id = ui.item.id;
-                    $(this).next().val(size_id);
-                    item_id = $(this).parent().siblings().find('.item_id').val();
-                    unit_id    = $(this).parent().siblings().find('.unit_id').val();
-
-                    var rate_obj =$(this);
-                    if(item_id != "" && size_id != "" && unit_id != ""){
-                        $.ajax({
-                            url: project_url+"controller/orderController.php",
-                            type:'POST',
-                            async:false,
-                            data: "q=get_product_rate&item_id="+item_id+"&size_id="+size_id+"&unit_id="+unit_id,
-                            success: function(rate){
-                                if($.trim(rate)!=0){
-                                    rate_obj.parent().siblings().find('.rate').val(rate);
-                                    var quantity = rate_obj.parent().siblings().find('.quantity').val();
-                                    rate_obj.parent().siblings().find('.total').val(parseInt(rate)*quantity);
-
-                                    var total_order_product_amount=0;
-                                    $("#orderTable>tbody>tr").each(function(){
-                                        var total = $(this).find('.total').val();
-                                        total_order_product_amount += parseFloat(total);
-                                    })
-                                    total_product_amount = total_order_product_amount;
-                                    calculate_total_bill();
-                                }
-                                else
-                                    alert('ERROR!! No rate found for this size and unit. Please set the price first.')
-                            }
-                        });
-                    }
-                }
-            });
-
-            var total_order_product_amount = 0;
-            $("#orderTable>tbody>tr").each(function(){
-                var total = $(this).find('.total').val();
-                total_order_product_amount += parseFloat(total);
-            })
-
-            total_product_amount = total_order_product_amount;
-
-            calculate_total_bill();
-
-            $('.quantity').focusout(function(e) {
-                var quantity = $(this).val();
-                //alert(quantity)
-                var rate = $(this).parent().siblings().find('.rate').val();
-                $(this).parent().next().find('.total').val(parseInt(rate)*quantity);
-
-                var total_order_product_amount = 0;
-                $("#orderTable>tbody>tr").each(function(){
-                    var total = $(this).find('.total').val();
-                    total_order_product_amount += parseFloat(total);
-                })
-                total_product_amount = total_order_product_amount;
-
-                calculate_total_bill();
-
-            });
-
-            $('.rate').focusout(function(e) {
-                var rate = $(this).val();
-                var quantity = $(this).parent().siblings().find('.quantity').val();
-                $(this).parent().next().next().find('.total').val(parseInt(rate)*quantity);
-
-                var total_order_product_amount = 0;
-                $("#orderTable>tbody>tr").each(function(){
-                    var total = $(this).find('.total').val();
-                    total_order_product_amount += parseFloat(total);
-                })
-                total_product_amount = total_order_product_amount;
-
-                calculate_total_bill();
-
-            });
-        });
-
-        $("#addRow" ).trigger("click" );
-
-        $('.quantity').focusout(function(e) {
-            var quantity = $(this).val();
-            //alert(quantity)
-            var rate = $(this).parent().siblings().find('.rate').val();
-            $(this).parent().next().find('.total').val(parseInt(rate)*quantity);
-
-            var total_order_product_amount = 0;
-            $("#orderTable>tbody>tr").each(function(){
-                var total = $(this).find('.total').val();
-                total_order_product_amount += parseFloat(total);
-            })
-            total_product_amount = total_order_product_amount;
-
-            calculate_total_bill();
-        });
-
-
         update_order_status = function update_order_status(status_id){
-            var order_id = $('#order_id').val();
+            var order_id = $('#order_id_edit').val();
+            //alert(order_id)
+            //alert(status_id)
             var url = project_url+"controller/orderController.php";
             $.ajax({
                 url: url,
@@ -812,31 +233,32 @@ else{
                     status_id:status_id
                 },
                 success: function(data){
+                    //console.log(data)
+
                     if(data==1){
                         if(status_id==2){
-                            $('#order_status_option').html("Ready");
+                            $('#order_status_option').html("Received");
                             $('#order_status_id').val(2);
-                            $('#order_ready').hide();
                         }
                         else if(status_id==3){
-                            $('#order_status_option').html("Picked");
+                            $('#order_status_option').html("Preparing");
                             $('#order_status_id').val(3);
-                            $('#order_ready').hide();
-                            $('#order_picked').hide();
-                            $('#show_invoice').show();
-                            $('#save_order').attr('disabled','disabled');
+                        }
+                        else if(status_id==4){
+                            $('#order_status_option').html("Ready");
+                            $('#order_status_id').val(4);
+                        }
+                        else if(status_id==5){
+                            $('#order_status_option').html("Preparing");
+                            $('#order_status_id').val(5);
                         }
                     }
                 }
             });
-        }
+            edit_order(order_id);
+            load_order("")
 
-        if($('#payment_status').val()== 2){
-            var total_paid_amount = $('.total_order_bill').val();
-            $('#total_paid_amount').val(parseFloat(total_paid_amount));
-            //alert(2)
         }
-
 
         var current_page_no=1;
         load_order = function load_order(search_txt){
@@ -870,6 +292,7 @@ else{
                 },
                 success: function(data) {
                    // alert(data)
+                    //console.log(data)
                     var todate = "<?php echo date("Y-m-d"); ?>";
                     var user_name =  "<?php echo $user_name; ?>";
                     var html = "";
@@ -927,12 +350,33 @@ else{
                         var records_array = data.records;
                         $('#order_Table tbody tr').remove();
                         $("#search_order_button").toggleClass('active');
+                        $.each(records_array, function (i, datas) {
+                            //alert(i)
+                                if(records_array[i]['order_status']==1){
+                                    records_array[i]['order_status']='Ordered'
+                                }
+                                else if(records_array[i]['order_status']==2){
+                                    records_array[i]['order_status']='Received'
+                                }
+                                else if(records_array[i]['order_status']==3){
+                                    records_array[i]['order_status']='Preparing'
+                                }
+                                else if(records_array[i]['order_status']==4){
+                                    records_array[i]['order_status']='Ready'
+                                }
+                                else if(records_array[i]['order_status']==5){
+                                    records_array[i]['order_status']='Delivered'
+                                }
+
+                        })
                         if(!jQuery.isEmptyObject(records_array)){
+
+                            //cnsole.log(total_order_amt)
                             //create and set grid table row
-                            var colums_array=["order_id*identifier*hidden","invoice_no","customer_name","p_name","order_date","delivery_date","payment_status_text","order_status_text","total_order_amt"];
+                            var colums_array=["order_id*identifier*hidden","invoice_no","customer_name","p_name","order_date","delivery_date","payment_method","order_status","total_order_amt"];
                             //first element is for view , edit condition, delete condition
                             //"all" will show /"no" will show nothing
-                            var condition_array=["all","","update_status", "1","delete_status","1"];
+                            var condition_array=["","","update_status", "1","",""];
                             //create_set_grid_table_row(records_array,colums_array,int_fields_array, condition_arraymodule_name,table/grid id, is_checkbox to select tr );
                             //cauton: not posssible to use multiple grid in same page
                             create_set_grid_table_row(records_array,colums_array,condition_array,"order","order_Table", 0);
@@ -989,119 +433,7 @@ else{
         });
 
         //insert order
-        $('#save_order').click(function(event){
-            event.preventDefault();
-            var formData = new FormData($('#order_form')[0]);
-            formData.append("q","insert_or_update");
 
-            //validation
-            if($.trim($('#customer_id').val()) == ""){
-                success_or_error_msg('#form_submit_error','danger','Please Select Customer Name',"#customer_name");
-            }
-            else if($.trim($('.item_id').val()) == ""){
-                success_or_error_msg('#form_submit_error','danger','Please Select Item Name',".product_name");
-            }
-            else if($.trim($('.size_id').val()) == ""){
-                success_or_error_msg('#form_submit_error','danger','Please Select Product Size',".size_name");
-            }
-            else if($.trim($('.unit_id').val()) == ""){
-                success_or_error_msg('#form_submit_error','danger','Please Select Product Unit',".unit_name");
-            }
-            else{
-                //alert('save1')
-
-                $.ajax({
-                    url: project_url+"controller/orderController.php",
-                    type:'POST',
-                    data:formData,
-                    async:false,
-                    cache:false,
-                    contentType:false,
-                    processData:false,
-                    success: function(data){
-                        alert(data)
-
-                        $('#save_order').removeAttr('disabled','disabled');
-
-                        if($.isNumeric(data)==true && data>0){
-                            success_or_error_msg('#form_submit_error',"success","Save Successfully");
-                            load_order("");
-                            clear_form();
-                        }
-                        //alert('save3')
-
-                    }
-                });
-
-            }
-        })
-
-        view_order = function view_order(order_id){
-            //order noticed update
-            $.ajax({
-                url: project_url+"controller/orderController.php",
-                type:'POST',
-                async:false,
-                dataType: "json",
-                data:{
-                    q: "set_order_notice_details",
-                    order_id:order_id
-                },
-                success: function(data){
-                    //alert('Order Noticed Successfully');
-                }
-            });
-
-            $('#ord_detail_vw>table>tbody').html('');
-            $.ajax({
-                url: project_url+"controller/orderController.php",
-                type:'POST',
-                async:false,
-                dataType: "json",
-                data:{
-                    q: "get_order_details",
-                    order_id:order_id
-                },
-                success: function(data){
-                    if(!jQuery.isEmptyObject(data.records)){
-                        $.each(data.records, function(i,data){
-                            $('#ord_title_vw').html(data.invoice_no);
-                            $('#ord_date').html("Ordered time: "+data.order_date);
-                            $('#dlv_ps').html("Payment Status: "+data.paid_status);
-                            $('#dlv_pm').html("Payment Method: "+data.payment_method);
-                            $('#dlv_date').html("Delivery time: "+data.delivery_date);
-                            $('#customer_detail_vw').html("<b>Name:</b> "+data.customer_name+"<br/><b>Mobile:</b> "+data.customer_contact_no+"<br/><b>Address:</b> "+data.customer_address);
-                            $('#note_vw').html(data.remarks);
-
-                            var order_tr = "";
-                            var order_total = 0;
-                            order_infos	 = data.order_info;
-                            var order_arr = order_infos.split(',');
-                            $.each(order_arr, function(i,orderInfo){
-                                var order_info_arr = orderInfo.split('#');
-                                var total = ((parseFloat(order_info_arr[6])*parseFloat(order_info_arr[7])));
-                                order_tr += '<tr><td>'+order_info_arr[2]+'</td><td align="center">'+order_info_arr[4]+'</td><td align="center">'+order_info_arr[8]+'</td><td align="center">'+order_info_arr[7]+'</td><td align="center">'+order_info_arr[6]+'</td><td align="right">'+total.toFixed(2)+'</td></tr>';
-                                order_total += total;
-                            });
-                            var total_order_bill = ((parseFloat(order_total)+parseFloat(data.delivery_charge))-parseFloat(data.discount_amount));
-                            var total_paid = data.total_paid_amount;
-
-                            order_tr += '<tr><td colspan="5" align="right" ><b>Total Product Bill</b></td><td align="right"><b>'+order_total.toFixed(2)+'</b></td></tr>';
-                            order_tr += '<tr><td colspan="5" align="right" ><b>Discount Amount</b></td><td align="right"><b>'+data.discount_amount+'</b></td></tr>';
-                            order_tr += '<tr><td colspan="5" align="right" ><b>Delivery Charge</b></td><td align="right"><b>'+data.delivery_charge+'</b></td></tr>';
-                            order_tr += '<tr><td colspan="5" align="right" ><b>Total Order Bill</b></td><td align="right"><b>'+total_order_bill.toFixed(2)+'</b></td></tr>';
-                            order_tr += '<tr><td colspan="5" align="right" ><b>Total Paid</b></td><td align="right"><b>'+total_paid+'</b></td></tr>';
-                            order_tr += '<tr><td colspan="5" align="right" ><b>Balance</b></td><td align="right"><b>'+(total_order_bill-total_paid).toFixed(2)+'</b></td></tr>';
-
-
-                            $('#ord_detail_vw>table>tbody').append(order_tr);
-
-                        });
-                    }
-                }
-            });
-            $('#order_modal').modal();
-        }
 
         $(document).on('click','#order_print', function(){
             var divContents = $("#order-div").html();
@@ -1118,7 +450,77 @@ else{
         //edit order
         edit_order = function edit_order(order_id){
             //order noticed update
-            //alert(order_id)
+            $('#ord_detail_vw>table>tbody').html('');
+            $.ajax({
+                url: project_url+"controller/orderController.php",
+                type:'POST',
+                async:false,
+                dataType: "json",
+                data:{
+                    q: "get_order_details_by_invoice",
+                    order_id:order_id
+                },
+                success: function(data){
+                    //console.log(data)
+                    //alert(data.item_id)
+                    //console.log(data)
+                    if(!jQuery.isEmptyObject(data.records)){
+                        $.each(data.records, function(i,data){
+                            $('#order_id_edit').val(data.order_id);
+                            $('#ord_title_vw').html(data.invoice_no);
+                            $('#ord_date').html("Ordered time: "+data.order_date);
+                            $('#dlv_date').html("Delivery time: "+data.delivery_date);
+                            $('#dlv_ps').html("Payment Status: "+data.paid_status);
+                            $('#dlv_pm').html("Payment Method: "+data.payment_method);
+                            $('#customer_detail_vw').html(" "+data.customer_name+"<br/><b>Mobile:</b> "+data.customer_contact_no+"<br/><b>Address:</b> "+data.customer_address);
+                            $('#note_vw').html(data.remarks);
+
+                            var order_tr = "";
+                            var order_total = 0;
+                            order_infos	 = data.order_info;
+                            var order_arr = order_infos.split(',');
+                            $.each(order_arr, function(i,orderInfo){
+                                var order_info_arr = orderInfo.split('#');
+                                var total = ((parseFloat(order_info_arr[4])*parseFloat(order_info_arr[5])));
+                                order_tr += '<tr><td class="text-capitalize">'+order_info_arr[2]+' <br>'+order_info_arr[6]+'</td><td align="center">'+order_info_arr[5]+'</td><td align="right">'+order_info_arr[4]+'</td><td align="right">'+total+'</td></tr>';
+                                order_total += total;
+                            });
+                            var total_order_bill = ((parseFloat(order_total)+parseFloat(data.delivery_charge))-parseFloat(data.discount_amount));
+                            var total_paid = data.total_paid_amount;
+                            order_tr += '<tr><td colspan="3" align="right" ><b>Total Amount</b></td><td align="right"><b>'+total_paid+'</b></td></tr>';
+                            $('#ord_detail_vw>table>tbody').append(order_tr);
+                            if(data.order_status==2){
+                                    $('#order_status_option').html("Received");
+                                    $('#order_status_id').val(2);
+                                }
+                            else if(data.order_status==3){
+                                    $('#order_status_option').html("Preparing");
+                                    $('#order_status_id').val(3);
+                                }
+                            else if(data.order_status==4){
+                                    $('#order_status_option').html("Ready");
+                                    $('#order_status_id').val(4);
+                                }
+                            else if(data.order_status==5){
+                                    $('#order_status_option').html("Preparing");
+                                    $('#order_status_id').val(5);
+                                }
+                            else{
+                                    $('#order_status_option').html("Ordered");
+                                    $('#order_status_id').val(1);
+                                }
+
+                            //for small device
+
+                        });
+                    }
+                }
+            });
+            $('#order_modal').modal();
+
+
+            /*
+            alert(order_id)
             $.ajax({
                 url: project_url+"controller/orderController.php",
                 type:'POST',
@@ -1138,6 +540,7 @@ else{
             $('#delivery_address').hide();
             //$('#delivery_outlet').hide();
             $('#order_id').val(order_id);
+
 
 
             $('#orderTable > tbody').html("");
@@ -1235,7 +638,7 @@ else{
                             $.each(order_arr, function(i,orderInfo){
                                 var order_info_arr = orderInfo.split('#');
                                 var total = ((parseFloat(order_info_arr[6])*parseFloat(order_info_arr[7])));
-                                $('#orderTable > tbody').append("<tr><td><input type='text' name='product_name[]' class='form-control col-lg-12 product_name' value='"+order_info_arr[2]+"'/><input type='hidden' name='item_id[]' class='item_id' value='"+order_info_arr[3]+"'/></td><td><input type='text' name='size_name[]' value='"+order_info_arr[4]+"' required class='size_name form-control col-lg-12'/><input type='hidden' name='size_id[]' value='"+order_info_arr[5]+"' class='size_id'/></td><td><input type='text' name='unit_name[]' value='"+order_info_arr[8]+"' required class='form-control col-lg-12 unit_name'/><input type='hidden' class='unit_id' name='unit_id[]' value='"+order_info_arr[9]+"'/></td><td><input type='text' name='rate[]' readonly value='"+order_info_arr[6]+"' required class='form-control col-lg-12 text-right rate'/></td><td><input type='text' name='quantity[]' class='form-control col-lg-12 quantity' value='"+order_info_arr[7]+"' /></td><td><input type='text' name='total[]' value='"+total+"' required class='form-control col-lg-12 text-right total' readonly='readonly'/></td><td><span class='input-group-btn'><button type='button' class='btn btn-danger btn-xs remove_row'><span class='glyphicon glyphicon-minus'></span></button></span></td></tr>");
+                                $('#orderTable > tbody').append("<tr><td><input type='text' readonly name='product_name[]' class='form-control col-lg-12 product_name' value='"+order_info_arr[2]+"'/><input type='hidden' name='item_id[]' class='item_id' value='"+order_info_arr[3]+"'/></td><td><input type='text' name='rate[]' readonly value='"+order_info_arr[4]+"' required class='form-control col-lg-12 text-right rate'/></td><td><input type='text' name='quantity[]' readonly class='form-control col-lg-12 quantity' value='"+order_info_arr[5]+"' /></td><td><input type='text' name='total[]' value='"+order_info_arr[5]*order_info_arr[4]+"' required class='form-control col-lg-12 text-right total' readonly='readonly'/></td><td><span class='input-group-btn'><button type='button' class='btn btn-danger btn-xs remove_row'><span class='glyphicon glyphicon-minus'></span></button></span></td></tr>");
                                 //order_total += parseFloat(total);
                             });
 
@@ -1245,7 +648,6 @@ else{
                                 total_order_product_amount += parseFloat(total);
                             })
                             total_product_amount = total_order_product_amount;
-                            calculate_total_bill();
                             $('.remove_row').click(function(){
                                 $(this).parent().parent().parent().remove();
 
@@ -1257,121 +659,10 @@ else{
 
                                 total_product_amount = total_order_product_amount;
 
-                                calculate_total_bill();
 
                             });
 
-                            $(".category_name").autocomplete({
-                                search: function() {
-                                },
-                                source: function(request, response) {
-                                    $.ajax({
-                                        url: project_url+'controller/orderController.php',
-                                        dataType: "json",
-                                        type: "post",
-                                        async:false,
-                                        data: {
-                                            q: "category_info",
-                                            term: request.term
-                                        },
-                                        success: function(data) {
-                                            response(data);
-                                        }
-                                    });
-                                },
-                                minLength: 3,
-                                select: function(event, ui) {
-                                    var id = ui.item.id;
-                                    $(this).next().val(id);
-                                }
-                            });
 
-                            $(".product_name").autocomplete({
-                                search: function() {
-                                    category_id  = $(this).parent().prev().find('.category_id').val();
-                                },
-                                source: function(request, response) {
-                                    $.ajax({
-                                        url: project_url+'controller/orderController.php',
-                                        dataType: "json",
-                                        type: "post",
-                                        async:false,
-                                        data: {
-                                            q: "product_info",
-                                            term: request.term,
-                                            category_id: category_id
-                                        },
-                                        success: function(data) {
-                                            response(data);
-                                        }
-                                    });
-                                },
-                                minLength: 3,
-                                select: function(event, ui) {
-                                    var id = ui.item.id;
-                                    $(this).next().val(id);
-                                }
-                            });
-
-                            $(".size_name").autocomplete({
-                                search: function() {
-                                    item_id  = $(this).parent().prev().find('.item_id').val();
-                                    //alert(product_id)
-                                },
-                                source: function(request, response) {
-                                    $.ajax({
-                                        url: project_url+'controller/orderController.php',
-                                        dataType: "json",
-                                        type: "post",
-                                        async:false,
-                                        data: {
-                                            q: "size_rate_info",
-                                            term: request.term,
-                                            item_id: item_id
-                                        },
-                                        success: function(data) {
-                                            response(data);
-                                        }
-                                    });
-                                },
-                                minLength: 3,
-                                select: function(event, ui) {
-                                    var size_rate_id = ui.item.id;
-                                    var rate  = ui.item.rate;
-                                    $(this).next().val(size_rate_id);
-                                    $(this).parent().siblings().find('.rate').val(rate);
-
-                                    var quantity = $(this).parent().siblings().siblings().find('.quantity').val();
-                                    $(this).parent().next().next().next().find('.total').val(parseInt(rate)*quantity);
-
-                                    var total_order_product_amount=0;
-                                    $("#orderTable>tbody>tr").each(function(){
-                                        var total = $(this).find('.total').val();
-                                        total_order_product_amount += parseFloat(total);
-                                    })
-
-                                    total_product_amount = total_order_product_amount;
-
-                                    calculate_total_bill();
-                                }
-                            });
-
-                            $('.quantity').focusout(function(e) {
-                                var quantity = $(this).val();
-                                //alert(quantity)
-                                var rate = $(this).parent().siblings().find('.rate').val();
-                                $(this).parent().next().find('.total').val(parseInt(rate)*quantity);
-
-                                var total_order_product_amount = 0;
-                                $("#orderTable>tbody>tr").each(function(){
-                                    var total = $(this).find('.total').val();
-                                    total_order_product_amount += parseFloat(total);
-                                })
-                                total_product_amount = total_order_product_amount;
-
-                                calculate_total_bill();
-
-                            });
                         });
                     }
 
@@ -1382,6 +673,8 @@ else{
                         $( "#toggle_form" ).trigger( "click" );
                 }
             });
+
+            */
         }
 
         $('#show_invoice').click(function(){
@@ -1409,37 +702,6 @@ else{
                 });
             }
         }
-
-        clear_form = function clear_form(){
-            total_product_amount 	= 0.00;
-            delivery_charge_amount = 0.00;
-            tax_amount 			= 0.00;
-            coupon_amount 			= 0.00;
-            total_paid_amount 		= 0.00;
-            grand_total_amount 	= 0.00;
-
-            $('#order_id').val('');
-            $('#customer_id').val('');
-            $("#order_form").trigger('reset');
-
-            //load_outlets();
-
-            $('#orderTable > tbody').html("");
-            $( "#addRow" ).trigger( "click" );
-
-            $('#order_form').iCheck({
-                checkboxClass: 'icheckbox_flat-green',
-                radioClass: 'iradio_flat-green'
-            });
-
-            $("#order_form .tableflat").iCheck('uncheck');
-            $('#save_order').html('Save');
-        }
-
-        $('#clear_button').click(function(){
-            clear_form();
-        });
-
 
 
     });

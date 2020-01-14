@@ -147,6 +147,7 @@
                     var count =0
                     $.each(data.records, function(i,datas){
                          //alert(datas.quantity)
+                       // alert(datas.cart_key)
 
                         sub_total += parseFloat(datas.discounted_rate)*(datas.quantity);
                         html+=' <tr>\n' +
@@ -154,7 +155,7 @@
                             '                            <td>\n' +
                             '                                <div class="product-cart" style="'+ item_image_display +'">\n' +
                             '                                    <img src="/admin/images/item/'+datas.item_image+'" alt="" style="height: 80px; width: 80px; border-radius: 10px">\n' +
-                            '                                    <span>'+datas.item_name+'</span>\n' +
+                            '                                    <span class="text-capitalize">'+datas.item_name+'</span>\n' +
                             '                                </div>\n' +
                             '                            </td>\n' +
                             '                            <th>PRICE</th>\n' +
