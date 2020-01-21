@@ -63,7 +63,7 @@ $customer_id = $_SESSION['customer_id'];
             </div>
 
     </section>
-    <div class="modal fade booktable" id="order_modal" tabindex="-2" role="dialog" aria-labelledby="booktable">
+    <div class="modal booktable" id="group_modal" tabindex="-2" role="dialog" aria-labelledby="booktable">
     <div class="modal-dialog" role="document" style="max-width: 600px;width:95% !important">
         <div class="modal-content">
             <div class="modal-body">
@@ -90,7 +90,7 @@ $customer_id = $_SESSION['customer_id'];
                     </div>
                 </div>
 
-                <div class="col-md-12 center" style="text-align: center"> <button type="button" class="btn btn-warning" id="order_print">Initiate a Group Order</button></div>
+                <div class="col-md-12 center" style="text-align: center"> <button type="button" class="btn btn-warning" id="order_now" >Initiate a Group Order</button></div>
             </div>
         </div>
     </div>
@@ -103,10 +103,18 @@ $customer_id = $_SESSION['customer_id'];
 
 <script>
     var screenSize = $(window).width();
+    var group_id=''
+
+    $('#order_now').click( function (){
+        $('#group_modal').modal('toggle');
+        show_my_accounts('group_order', group_id)
+    })
+
     var customer_id = <?php echo $customer_id;?>
     //alert('ok')
     view_group = function view_group(id){
-        var html=''
+        var html='';
+        group_id=id;
 
         $.ajax({
             url: "./includes/controller/groupController.php",
@@ -135,7 +143,7 @@ $customer_id = $_SESSION['customer_id'];
 
         });
 
-        $('#order_modal').modal();
+        $('#group_modal').modal();
 
     }
 

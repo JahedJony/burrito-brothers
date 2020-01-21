@@ -22,10 +22,173 @@ if(isset($_GET['order_id']) && $_GET['order_id']!="") $order_id =  $_GET['order_
 
 
 <section class="home-icon shop-cart row  alert-warning" style="padding-top: 0px; margin-top: 0px">
-    <div>
+    <form method="POST"  id="group_order" onsubmit=" return false;" name="group_order"  enctype="multipart/form-data">
+        <div class="container  col-md-12 col-sm-12 col-xs-12">
+        <div class="col-md-6 col-sm-12 col-xs-12"  style="max-width:100%" >
 
-    </div>
+            <h5 style="text-align: center"> Group Member Information </h5>
+            <hr>
+                <table class="table table-bordered" style="padding: 0px" id="member_table">
+                    <thead>
+                    <tr>
+                        <th width="40%" align="center">Name</th>
+                        <th align="center">Email</th>
+                        <th width="10%" ><button class="btn-primary" onclick="addMember()" >+</button></th>
+                    </tr>
+                    </thead>
+                    <tbody id="members_info">
+                   <!-- <tr>
+                        <td><input type="text" name="memberName[]" value="kajol" style="margin: 0px; padding: 3px; border-radius: 5px; height: 40px"></td>
+                        <td><input type="email" name="memberEmail[]" value="kajol@sdf.cds" style="margin: 0px; padding: 3px; border-radius: 5px; height: 40px"></td>
+                        <td style="margin-top: 10px"><button class="btn-danger" onclick="delete_member()" >X</button></td>
+                    </tr>
+                    <tr>
+                        <td><input type="text" name="memberName[]" value="kajol" style="margin: 0px; padding: 3px; border-radius: 5px; height: 40px"></td>
+                        <td><input type="email" name="memberEmail[]" value="kajol@sdf.cds" style="margin: 0px; padding: 3px; border-radius: 5px; height: 40px"></td>
+                        <td style="margin-top: 10px"><button class="btn-danger" onclick="delete_member()">X</button></td>
+                    </tr>
+                    <tr>
+                        <td><input type="text" name="memberName[]" value="kajol" style="margin: 0px; padding: 3px; border-radius: 5px; height: 40px"></td>
+                        <td><input type="email" name="memberEmail[]" value="kajol@sdf.cds" style="margin: 0px; padding: 3px; border-radius: 5px; height: 40px"></td>
+                        <td style="margin-top: 10px"><button class="btn-danger" onclick="delete_member()">X</button></td>
+                    </tr>
+                    <tr>
+                        <td><input type="text" name="memberName[]" value="kajol" style="margin: 0px; padding: 3px; border-radius: 5px; height: 40px"></td>
+                        <td><input type="email" name="memberEmail[]" value="kajol@sdf.cds" style="margin: 0px; padding: 3px; border-radius: 5px; height: 40px"></td>
+                        <td style="margin-top: 10px"><button class="btn-danger" onclick="delete_member()">X</button></td>
+                    </tr>-->
+                    </tbody>
+                </table>
+
+
+        </div>
+        <div class="col-md-6 col-sm-12 col-xs-12"  style="max-width:100%">
+            <div class="col-md-12 col-sm-12 col-xs-12">
+                <label style=" font-size: 16px"> Confirm TakeOut Location </label>
+                <div class="payment-mode">
+                    <input type="checkbox" name="take_out_location" id="take_out_location">
+                    <label for="take_out_location" id="take_out_location_">205 PENNSYLVANIA AVENUE S.E. , WASHINGTON D.C. , UNITED STATES</label>
+                </div>
+            </div>
+            <div class="col-md-12 col-sm-12 col-xs-12">
+                <label style=" font-size: 18px"> Please select Take-Out date and time </label>
+                <input type="text" name="pickup_date_time" id="pickup_date_time" placeholder="Date and Time" class="input-fields date-picker" required value="2020-01-07 12:00:00">
+            </div>
+
+            <div class="col-md-12 col-sm-12 col-xs-12">
+                <label style=" font-size: 18px"> Please select date and time for notification </label>
+                <input type="text" name="notification_date_time" id="notification_date_time" placeholder="Date and Time" class="input-fields date-picker" required value="2020-01-07 12:00:00">
+            </div>
+
+        </div>
+        </div>
+        <div>
+            <div class="col-md-12 center" style="text-align: center; height: 40px"> <button type="button" class="btn btn-warning" id="save_group_order"  style="height: 40px">Initiate a Group Order</button></div>
+        </div>
+    </form>
+
 </section>
+
+<script>
+
+
+
+    addMember = function addMember(){
+        var html = $('#members_info').html()
+        html+='<tr class="user_information">\n' +
+            '    <td><input type="text" name="memberName[]"  style="margin: 0px; padding: 3px; border-radius: 5px; height: 40px"></td>\n' +
+            '    <td><input type="email" name="memberEmail[]" style="margin: 0px; padding: 3px; border-radius: 5px; height: 40px"></td>\n' +
+            '    <td style="margin-top: 10px"><button class="btn-danger deletes" >X</button></td>\n' +
+            '  </tr>'
+        $('#members_info').html(html)
+
+        $('.deletes').on('click', function () {
+            $(this).parent().parent().remove()
+        })
+    }
+
+    $('#save_group_order').click(function(event){
+        //alert('okkk')
+        event.preventDefault();
+        var formData = new FormData($('#group_order')[0]);
+        formData.append("q","iniate_group_order");
+        formData.append("customer_id",<?php echo $customer_id; ?>);
+
+        //validation
+        console.log(formData.get('memberEmail'))
+        if($.trim($('#take_out_location').val()) == ""){
+            success_or_error_msg('#form_submit_error','danger',not_input_insert_title_ln,"#take_out_location");
+        }
+        else if($.trim($('#pickup_date_time').val()) <2){
+            success_or_error_msg('#form_submit_error','danger',not_input_insert_title_ln,"#pickup_date_time");
+        }
+        else if($.trim($('#notification_date_time').val()) <2){
+            success_or_error_msg('#form_submit_error','danger',not_input_insert_title_ln,"#notification_date_time");
+        }
+        else{
+            alert('ksjfdlk;')
+            $.ajax({
+                url: "./includes/controller/groupController.php",
+                type:'POST',
+                data:formData,
+                async:false,
+                cache:false,
+                contentType:false,processData:false,
+                success: function(data){
+                    alert('ok')
+                }
+            });
+            alert('done')
+
+        }
+    })
+
+
+    loadmembers = function loadmembers(){
+        var html=''
+
+        if(group_id){
+            $.ajax({
+                url: "./includes/controller/groupController.php",
+                data:{
+                    q: "group_details",
+                    group_id: group_id
+                },
+                type:'POST',
+                async:false,
+                dataType: "json",
+                success: function(data){
+                    //console.log(data)
+
+                    if(!jQuery.isEmptyObject(data.records)){
+                        $.each(data.records, function(i,data){
+                            html+='<tr class="user_information">\n' +
+                                '    <td><input type="text" name="memberName" value="'+data['name']+'" style="margin: 0px; padding: 3px; border-radius: 5px; height: 40px"></td>\n' +
+                                '    <td><input type="email" name="memberEmail" value="'+data['email']+'" style="margin: 0px; padding: 3px; border-radius: 5px; height: 40px"></td>\n' +
+                                '    <td style="margin-top: 10px"><button class="btn-danger deletes"   >X</button></td>\n' +
+                                '  </tr>'
+                            //alert(i)
+                        })
+                    }
+
+                    $('#members_info').html(html);
+
+                    $('.deletes').on('click', function () {
+                        $(this).parent().parent().remove()
+                    })
+                }
+
+            });
+        }
+        else {
+            addMember()
+            addMember()
+        }
+
+    }
+
+    loadmembers()
+</script>
 
 
 

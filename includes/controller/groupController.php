@@ -7,6 +7,13 @@ $dbClass = new dbClass;
 extract($_REQUEST);
 
 switch ($q) {
+    case "order_initialize":
+        foreach ($user as $users){
+            var_dump($users);
+        }
+        echo $user;
+        break;
+
     case "groups":
         $sql = "SELECT * FROM groups_info WHERE user_id=$customer_id order by id desc";
         //echo $sql;die;
