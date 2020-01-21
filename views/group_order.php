@@ -1,14 +1,36 @@
-<section class="breadcrumb-part" data-stellar-offset-parent="true" data-stellar-background-ratio="0.5" style="background-image: url('../images/catering1.jpg');max-height: 220px">
-    <div class="container">
-        <div class="breadcrumb-inner">
-            <h2>GROUP ORDER</h2>
-            <a href="index.php?page=home">Home</a>
-            <span>Group Order</span>
-        </div>
+<?php
+session_start();
+include("../includes/dbConnect.php");
+include("../includes/dbClass.php");
+$dbClass = new dbClass;
+
+if(isset($_SESSION['customer_id']) && $_SESSION['customer_id']!=""){
+    $is_logged_in_customer = 1; // here will be the customer id that will come from session when the customer will login
+    $customer_info = $dbClass->getSingleRow("select * from customer_infos where customer_id=".$_SESSION['customer_id']);
+    $customer_id = $_SESSION['customer_id'];
+}
+else $is_logged_in_customer = "";
+
+
+//var_dump($customer_info)
+
+$order_id = '';
+if(isset($_GET['order_id']) && $_GET['order_id']!="") $order_id =  $_GET['order_id'];
+
+//var_dump($customer_info);
+?>
+
+
+<section class="home-icon shop-cart row  alert-warning" style="padding-top: 0px; margin-top: 0px">
+    <div>
+
     </div>
 </section>
-<section class="term-condition home-icon">
-    <div class="icon-default">
-        <img src="./images/scroll-arrow.png" alt="">
-    </div>
-</section>
+
+
+
+
+
+
+
+

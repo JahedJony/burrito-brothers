@@ -41,7 +41,7 @@ function showCart(){
                     //alert(i)
                     sub_total = parseFloat(datas.discounted_rate)*(datas.quantity);
                     //alert(sub_total)
-                    html += '<div class="cart-item"><div class="cart-item-left" '+width+'><img src="/admin/images/item/'+datas.item_image+'" alt="" style="'+ item_image_display +';border-radius: 10px"></div><div class="cart-item-right"  ><h6>'+datas.item_name+'</h6><span> '+ currency_symbol+''+datas.discounted_rate+' * '+datas.quantity+' = '+ currency_symbol+''+sub_total+'</span></div><span class="delete-icon" onclick=deleteItem("'+i+'")></span></div>';
+                    html += '<div class="cart-item"><div class="cart-item-left" '+width+'><img src="'+project_url+'/admin/images/item/'+datas.item_image+'" alt="" style="'+ item_image_display +';border-radius: 10px"></div><div class="cart-item-right"  ><h6>'+datas.item_name+'</h6><span> '+ currency_symbol+''+datas.discounted_rate+' * '+datas.quantity+' = '+ currency_symbol+''+sub_total+'</span></div><span class="delete-icon" onclick=deleteItem("'+i+'")></span></div>';
                     count++;
                     total += sub_total ;
                 });

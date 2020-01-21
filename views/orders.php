@@ -29,7 +29,7 @@ else{
 	<hr>
 	<section class="home-icon shop-cart bg-skeen" style="padding-top: 20px">
 		<div class="container" style="max-width:100%" id="oredrs_div">		
-			<table class="table table-bordered table-hover" id="table_big" style="display: none">
+			<table class="table table-bordered table-hover" id="table_big" style="display: none; background-color: white">
 				  <thead>
 					<tr style="background-color: #e4b95b; alignment: center">
 					  <th>Order No</th>
@@ -49,14 +49,14 @@ else{
 						$order_no = '"'.$order['order_no'].'"';						 
 						echo 
 						"<tr>
-							  <td style='background-color: #e4b95b'>".$order['order_no']."</td>
+							  <td style='font-weight: bold' onclick='view_order(".$order_no.")'><button style='background: none; border: none'>".$order['order_no']."</button></td>
 							  <td>".$order['order_date']."</td>
 							  <td>".$order['delivery_date']."</td>
 							  <td>".$order['delevery_type']."</td>
 							  <td>".$order['total_order_amt']."</td>
 							  <td>".$order['total_paid_amount']."</td>
 							  <td>".$order['order_status']."</td>
-							  <td style='background-color: #e4b95b'><i class='fa fa-search-plus pointer' onclick='view_order(".$order_no.")'></i></td>
+							  <td><button class='btn btn-block'><i class='fa fa-search-plus pointer' onclick='view_order(".$order_no.")'></i></button></td>
 						  </tr>
 						";
 					  }
@@ -80,7 +80,7 @@ else{
                         $order_no = '"'.$order['order_no'].'"';
                         echo
                             "<tr>
-							  <td style='background-color: #e4b95b; font-size: 11px'>".$order['order_no']."</td>
+							  <td style='font-s font-size: 11px'>".$order['order_no']."</td>
 							  <td style='font-size: 11px'>".$order['total_order_amt']."</td>
 							  <td style='font-size: 11px'>".$order['order_status']."</td>
 							  <td style='background-color: #e4b95b'><i class='fa fa-search-plus pointer' onclick='view_order(".$order_no.")'></i></td>

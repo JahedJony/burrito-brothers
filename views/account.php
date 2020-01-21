@@ -19,10 +19,10 @@ if(isset($_GET['order_id']) && $_GET['order_id']!="") $order_id =  $_GET['order_
 ?>
 <!-- Start Main -->
 <!-- Start Breadcrumb Part -->
-        <section class="breadcrumb-part" id="welcome_heading_big" data-stellar-offset-parent="true" data-stellar-background-ratio="0.5" style="background-image: url('images/banner8.jpg');">
-            <div class="container" id="welcome_container_big">
+        <section class="breadcrumb-part" id="welcome_heading_big" data-stellar-offset-parent="true" data-stellar-background-ratio="0.5" style="background-image: url('images/banner8.jpg'); height: 220px">
+            <div class="container" id="welcome_container_big" style="padding-top: 0px">
                 <div class="breadcrumb-inner" >
-                    <h2><span style='color:#8c5d2d'>Welcome</span><br> <?php echo $customer_info['full_name']; ?></h2>
+                    <h3><span style='color:#8c5d2d'>Welcome</span> <?php echo $customer_info['full_name']; ?></h3>
                     <a href="index.php">Home</a>
                     <span>My Acount</span>
                 </div>
@@ -58,8 +58,13 @@ if(isset($_GET['order_id']) && $_GET['order_id']!="") $order_id =  $_GET['order_
                             <li class='sub-menu  profile active'><a href='javascript:void(0)' onclick="show_my_accounts('profile' ,''); load_customer_profile();	">Profile</a></li>
                             <li class="sub-menu orders"><a  href='javascript:void(0)'  onclick="show_my_accounts('orders', '')">Orders</a></li>
                             <li class="sub-menu tracking"><a href='javascript:void(0)'  onclick="show_my_accounts('tracking', '')">Order Tracking</a></li>
+                            <li class="sub-menu group_order"><a  href='javascript:void(0)'  onclick="show_my_accounts('group_order', '')">Group Order</a></li>
+                            <li class="sub-menu groups"><a  href='javascript:void(0)'  onclick="show_my_accounts('groups', '')">Groups</a></li>
                             <li class="sub-menu logout"><a href='views/logout.php'>Logout</a></li>
                         </ul>
+                    </div>
+                    <div>
+
                     </div>
                 </div>
 

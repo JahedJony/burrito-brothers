@@ -23,7 +23,7 @@ if(isset($_GET['order_id']) && $_GET['order_id']!="") $order_id =  $_GET['order_
 
 <section class="home-icon shop-cart bg-skeen" style="background-color: rgba(244,242,237,1)">
     <div class="icon-default icon-skeen">
-        <img src="../images/scroll-arrow.png" alt="">
+        <img src="./images/scroll-arrow.png" alt="">
     </div>
     <div class="container">
           <div class="checkout-wrap wow fadeInDown" data-wow-duration="1000ms" data-wow-delay="300ms">

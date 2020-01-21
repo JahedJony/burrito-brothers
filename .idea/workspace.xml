@@ -2,18 +2,17 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="289ea524-a539-47c6-a345-6f05b3774d37" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/admin/images/item/noFood.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/views/item.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/includes/controller/groupController.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/views/groups.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/admin/controller/orderController.php" beforeDir="false" afterPath="$PROJECT_DIR$/admin/controller/orderController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/admin/view/order/orders.php" beforeDir="false" afterPath="$PROJECT_DIR$/admin/view/order/orders.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/css/theme.css" beforeDir="false" afterPath="$PROJECT_DIR$/css/theme.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/includes/controller/ecommerceController.php" beforeDir="false" afterPath="$PROJECT_DIR$/includes/controller/ecommerceController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/includes/controller/itemsController.php" beforeDir="false" afterPath="$PROJECT_DIR$/includes/controller/itemsController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/js/cart.js" beforeDir="false" afterPath="$PROJECT_DIR$/js/cart.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/js/url.js" beforeDir="false" afterPath="$PROJECT_DIR$/js/url.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/views/account.php" beforeDir="false" afterPath="$PROJECT_DIR$/views/account.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/views/cart.php" beforeDir="false" afterPath="$PROJECT_DIR$/views/cart.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/views/itemview.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/views/menu.php" beforeDir="false" afterPath="$PROJECT_DIR$/views/menu.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/views/checkout.php" beforeDir="false" afterPath="$PROJECT_DIR$/views/checkout.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/views/group_order.php" beforeDir="false" afterPath="$PROJECT_DIR$/views/group_order.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/views/item.php" beforeDir="false" afterPath="$PROJECT_DIR$/views/item.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/views/orders.php" beforeDir="false" afterPath="$PROJECT_DIR$/views/orders.php" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -104,7 +103,8 @@
       <workItem from="1578805223707" duration="171000" />
       <workItem from="1578805640395" duration="100000" />
       <workItem from="1578806417504" duration="598000" />
-      <workItem from="1578890872372" duration="22254000" />
+      <workItem from="1578890872372" duration="31746000" />
+      <workItem from="1579244903772" duration="35610000" />
     </task>
     <servers />
   </component>

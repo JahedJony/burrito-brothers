@@ -90,7 +90,7 @@ switch ($q){
         //$_SESSION['cart']='';
         $data['records'] = $cart;
         //echo 1;die;
-    var_dump($data);
+    //var_dump($data);
         echo json_encode($data);
     break;
 
@@ -341,17 +341,23 @@ switch ($q){
             //echo 545; die;
 
             foreach($cart as $key=>$item){
+                //var_dump($item);die;
                 //var_dump($item['ingredient']['ingredient_name']);die;
-                if($item['ingredient']['id_list']){
+                if(array_key_exists("id_list",$item)){
+
+                    //var_dump($item['ingredient']['id_list']);
+
                     $ing_list= $item['ingredient']['id_list'];
                     $ingredient_name= $item['ingredient']['ingredient_name'];
                 }
                 else{
+                    //var_dump('not found');
                     $ing_list= '';
                     $ingredient_name='';
                 }
                 $cart_key_arr = explode('_',$key);
                 $item_size_rate_id = $cart_key_arr[1];
+                //var_dump($item['discounted_rate'] .'-'.$item['item_id']);
                 $columns_value = array(
                     'order_id'=>$return_master,
                     'item_id'=>$item['item_id'],
@@ -362,7 +368,10 @@ switch ($q){
                     'item_rate'=>$item['discounted_rate']
                 );
                 $return_details = $dbClass->insert("order_details", $columns_value);
+                //var_dump($return_details);
+
             }
+            //var_dump($_SESSION['cart'] );
             if($return_details){
 
                     $customer_loyalty_point=  $dbClass->getSingleRow("SELECT loyalty_points from customer_infos where customer_id=".$_SESSION['customer_id']);

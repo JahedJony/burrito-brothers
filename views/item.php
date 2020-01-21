@@ -164,7 +164,8 @@ if(isset($_GET['order_id']) && $_GET['order_id']!="") $order_id =  $_GET['order_
     var selected_item_list={};
     var quantity=1;
     var item_id = location.search.split('?')[1].split('&')[1].split('=')[1];
-//alert(url_info)
+    var item_choice_limit = {}
+//alert(item_id)
 
     chose_summary= function  chose_summary() {
         //console.log(selected_ingredient)
@@ -182,7 +183,7 @@ if(isset($_GET['order_id']) && $_GET['order_id']!="") $order_id =  $_GET['order_
                 $.each(data, function (j, ingredient) {
                     if(j!='option_name'){
                         html+='<div class="col-md-12 col-sm-12 col-xs-12">\n' +
-                            '    <div class="col-md-9 col-sm-9 col-xs-9">'+ingredient['name']+'</div>\n' +
+                            '    <div class="col-md-9 col-sm-9 col-xs-9 text-capitalize">'+ingredient['name']+'</div>\n' +
                             '    <div class="col-md-3 col-sm-3 col-xs-3">'+currency_symbol+''+ingredient['price']+'</div>\n' +
                             '  </div>\n';
                         total_price+=+ingredient['price']
@@ -194,7 +195,8 @@ if(isset($_GET['order_id']) && $_GET['order_id']!="") $order_id =  $_GET['order_
             }
 
         })
-        console.log(selected_ingredient)
+        total_price=total_price.toFixed(2)
+        //console.log(selected_ingredient)
         selected_ingredient['id_list']=ingredient_ids
         selected_ingredient['ingredient_name']= ingredient_name
         html+=' <div class="col-md-12 col-sm-12 col-xs-12 checkout-total" style="align-content: baseline; margin-top: 0px; padding: 0px"></div>\n' +
@@ -330,14 +332,34 @@ if(isset($_GET['order_id']) && $_GET['order_id']!="") $order_id =  $_GET['order_
             if(datas['price']>0){
                 price+= '('+currency_symbol+''+datas['price']+')'
             }
-            html +='<div class="options-ingredient col-md-3 col-sm-4 col-xs-6" style="text-align: center; margin-top: 10px; height: 140px; overflow: hidden; border-width: 1px;">\n' +
+            html+='    <div class="options-ingredient col-md-3 col-sm-4 col-xs-6" style="text-align: center; margin-top: 10px; height: 140px; overflow: hidden; border-width: 1px;">\n' +
+                '       <input type="hidden" class="ingredient_id"    value="'+datas['id']+'" />\n' +
+                '       <input type="hidden" class="ingredient_rate"  value="'+datas['price']+'" />\n' +
+                '       <input type="hidden" class="ingredient_name"  value="'+datas['name']+'" />\n' +
+                '                    <div class="shop-main-list" style=" border-radius: 15px">\n' +
+                '                        <div class="shop-product" style="border-radius: 15px 15px 0px 0px; margin-bottom: 0px; padding-bottom: 0px">\n' +
+                '                            <img src="http://burritobrothers.test/admin/images/category/noFood.png" alt="" style="border-radius: 17px 17px 17px 17px; height: 90px; width: 110px">\n' +
+                '                            <div class="cart-overlay-wrap" style="background-color: #372727; opacity: .5" >\n' +
+                '                                <div class="cart-overlay" >\n' +
+                '                                    <i class="fa fa-check" style="font-size:48px;color: white; opacity: 1"></i>\n\n' +
+                '                                </div>\n' +
+            '                            </div>\n' +
+                '                        </div>\n' +
+                '                       <br><span  style="text-transform: capitalize; padding-top: 0px; margin-top: 0px">'+datas['name']+' '+price+'</span>\n' +
+                '                    </div>\n' +
+                '                </div>\n'
+
+            /* html+='<div class="options-ingredient col-md-3 col-sm-4 col-xs-6" style="text-align: center; margin-top: 10px; height: 140px; overflow: hidden; border-width: 1px;">\n' +
                 '       <input type="hidden" class="ingredient_id"    value="'+datas['id']+'" />\n' +
                 '       <input type="hidden" class="ingredient_rate"  value="'+datas['price']+'" />\n' +
                 '       <input type="hidden" class="ingredient_name"  value="'+datas['name']+'" />\n' +
                 '       <img src="http://burritobrothers.test/admin/images/category/noFood.png" alt="" style="border-radius: 5px; height: 80px; width: 80px">\n' +
                 '       <br><span  style="text-transform: capitalize;">'+datas['name']+' '+price+'</span>\n' +
-                '   </div>'
+                '   </div
+                */
         });
+       // alert(html)
+        //console.log(html)
         return html;
     }
 
@@ -350,7 +372,7 @@ if(isset($_GET['order_id']) && $_GET['order_id']!="") $order_id =  $_GET['order_
             async:false,
             data: {
                 q: "menu_options_view",
-                item_id: item_id
+                item_id:item_id
             },
             success: function(data){
                 //alert('ok')
@@ -364,6 +386,12 @@ if(isset($_GET['order_id']) && $_GET['order_id']!="") $order_id =  $_GET['order_
                     if(datas['is_required']==1){
                         hints+='  (Required)'
                     }
+                    item_choice_limit[datas['option_id']]={}
+                    item_choice_limit[datas['option_id']]['maximum']=datas['maximum_choice'];
+                    item_choice_limit[datas['option_id']]['minimum']=datas['minimum_choice'];
+
+                    console.log(item_choice_limit)
+
                     html3='<div class="col-md-12 col-sm-12 col-xs-12 option-div" name="option_div" style="background-color: rgba(244,242,237,1); padding-top: 25px; padding-bottom: 20px; margin-top: 5px; margin-bottom: 10px">\n' +
                         '       <!-- option id will come from DB  -->\n' +
                         '       <div class="col-md-12 col-sm-12 col-xs-12 ">\n' +
@@ -397,9 +425,20 @@ if(isset($_GET['order_id']) && $_GET['order_id']!="") $order_id =  $_GET['order_
                             '       <input type="hidden" class="item_rate"  value="'+items['price']+'" />\n' +
                             '       <input type="hidden" class="item_name"  value="'+items['name']+'" />\n' +
                             '       <input type="hidden" class="category_name"  value="'+i+'" />\n' +
-                            '       <img src="http://burritobrothers.test/admin/images/category/noFood.png" alt="" style="border-radius: 5px; height: 80px; width: 80px">\n' +
-                            '       <br><span  style="text-transform: capitalize;">'+items['name']+' '+currency_symbol+' '+items['price']+'</span>\n' +
-                            '   </div>'
+                            '                    <div class="shop-main-list" style=" border-radius: 15px">\n' +
+                            '                        <div class="shop-product" style="border-radius: 15px 15px 0px 0px; margin-bottom: 0px; padding-bottom: 0px">\n' +
+                            '                            <img src="http://burritobrothers.test/admin/images/category/noFood.png" alt="" style="border-radius: 17px 17px 17px 17px; height: 90px; width: 110px">\n' +
+                            '                            <div class="cart-overlay-wrap" style="background-color: #372727; opacity: .5" >\n' +
+                            '                                <div class="cart-overlay" >\n' +
+                            '                                    <i class="fa fa-check" style="font-size:48px;color: white; opacity: 1"></i>\n\n' +
+                            '                                </div>\n' +
+                            '                            </div>\n' +
+                            '                        </div>\n' +
+                            '                       <br><span  style="text-transform: capitalize; padding-top: 0px; margin-top: 0px">'+items['name']+' '+currency_symbol+' '+items['price']+'</span>\n' +
+                            '                    </div>\n' +
+                            '                </div>\n'
+
+
                     })
                     html_side+='</div></div>'
                 })
@@ -411,18 +450,20 @@ if(isset($_GET['order_id']) && $_GET['order_id']!="") $order_id =  $_GET['order_
     }
     load_item_option()
 
-    /* $('.options-ingredient').on('click', function(){
-         console.log($(this).html())
-         var option_id   = $(this).parent().attr('id');
-         var option_name = $('#'+option_id+">h2").html();
-         var ing_id   = $(this).find('ingredient_id').val();
-         var ing_rate   = $(this).find('ingredient_rate').val();
-         var ing_name   = $(this).find('h2').html();
-        alert('ok')
 
-        //add_to_meal(option_id,option_name,ing_id,ing_rate,ing_name);
-    })*/
     $('.options-ingredient').on('click', function(){
+//alert($(this).find('.cart-overlay-wrap').hasClass('selected_ingredient'))
+        if($(this).find('.cart-overlay-wrap').hasClass('selected_ingredient')){
+            //alert('ok')
+            $(this).find('.cart-overlay-wrap').removeClass('selected_ingredient')
+            //$('this').removeClass("selected_ingredient")
+        }
+        else{
+            //alert('orek')
+            $(this).find('.cart-overlay-wrap').addClass('selected_ingredient')
+
+            //$('this').addClass("selected_ingredient")
+        }
         //alert($(this).find('h4:eq(0)').html();)
         var option_id = $(this).siblings('input:eq(0)').val();
         var option_name = $(this).siblings('input:eq(1)').val()
@@ -436,6 +477,19 @@ if(isset($_GET['order_id']) && $_GET['order_id']!="") $order_id =  $_GET['order_
     })
 
     $('.additional_items').on('click', function(){
+
+
+        if($(this).find('.cart-overlay-wrap').hasClass('selected_ingredient')){
+            //alert('ok')
+            $(this).find('.cart-overlay-wrap').removeClass('selected_ingredient')
+            //$('this').removeClass("selected_ingredient")
+        }
+        else{
+            //alert('orek')
+            $(this).find('.cart-overlay-wrap').addClass('selected_ingredient')
+
+            //$('this').addClass("selected_ingredient")
+        }
 
         var item_id = $(this).children('input:eq(0)').val();
         var item_name = $(this).children('input:eq(2)').val()
@@ -452,44 +506,7 @@ if(isset($_GET['order_id']) && $_GET['order_id']!="") $order_id =  $_GET['order_
     })
     addToCart = function addToCart(){
 
-       /*
-       var  cart={};
-        cart['item_id']=$('#item_id').val();
-        cart['item_name']=$('#item_name').html();
-        cart['item_image']='noFood.png';
-        cart['orignal_rate']=total_price;
-        cart['discounted_rate']=total_price;
-        cart['size']=1;
-        cart['quantity']=1;
-        cart['ingredient']=selected_ingredient;
-
-        var cart_key=cart['item_name']+'>'+cart['discounted_rate'];
-
-        if(window.localStorage.getItem('cart')){
-            var old_cart=JSON.parse(window.localStorage.getItem('cart'));
-            window.localStorage.removeItem('cart');
-
-            if(cart_key in old_cart){
-                old_cart[cart_key]=new_cart;
-            }else {
-                old_cart[cart_key]=cart;
-                window.localStorage.setItem('cart', JSON.stringify(old_cart));
-            }
-
-            //console.log(old_cart)
-        }
-        else {
-            var new_cart={};
-            new_cart[cart_key]=cart;
-            window.localStorage.setItem('cart', JSON.stringify(new_cart));
-        }
-
-
-        console.log(JSON.parse(window.localStorage.getItem('cart')))
-        */
-        //
-        //alert('cart')
-        console.log(selected_item_list)
+        //console.log(selected_item_list)
 
         $.ajax({
             url: "./includes/controller/ecommerceController.php",
@@ -511,7 +528,7 @@ if(isset($_GET['order_id']) && $_GET['order_id']!="") $order_id =  $_GET['order_
             success: function(data) {
                 alert(1)
                 alert(data)
-                console.log(data)
+               // console.log(data)
                 if(!jQuery.isEmptyObject(data.records)){
                     var html = '';
                     var total = 0;
