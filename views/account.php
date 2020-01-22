@@ -99,8 +99,9 @@ if(isset($_GET['order_id']) && $_GET['order_id']!="") $order_id =  $_GET['order_
             $('#account_contents').load('views/'+page_name+'.php?order_id='+order_id);
         }
         else if(page_name == 'group_order'){
+            if(!order_id>0) order_id=0
 
-            $('#account_contents').load('views/'+page_name+'.php',{group_id:order_id});
+            $('#account_contents').load('views/'+page_name+'.php',{'group_id':order_id});
         }
         else{
             $('#account_contents').load('views/'+page_name+'.php');

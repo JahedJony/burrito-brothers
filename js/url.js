@@ -21,6 +21,39 @@ $(function () {
     }
     else{
         //alert('window..href')
+        //alert('sdf')
+        if(url_info.split('=')[0]=='groupmaster'){
+            //alert('ok')
+            var tem = url_info.split('=')[1].split('&')
+            //alert(tem[0])
+            //var data=[]
+            var formdata = new FormData();
+            formdata.append('group_order_details_id', tem[0]);
+            formdata.append('order_key' , tem[1])
+            formdata.append('q','group_member_order')
+            //alert('safdds')
+            $.ajax({
+                url: "./includes/controller/groupController.php",
+                type:'POST',
+                data:formdata,
+                async:false,
+                cache:false,
+                contentType:false,processData:false,
+                success: function(data){
+                    //alert(data)
+
+                    if(data==1){
+                        window.location.replace(project_url+"index.php?page=categories")
+                    }
+                    else {
+                        alert("This Link No More Valid, You are Redirected to Home Page")
+                        window.location.replace(project_url)
+
+
+                    }
+                }
+            });
+        }
 
         var main_view=url_info.split('&')
         if(!main_view[1]){

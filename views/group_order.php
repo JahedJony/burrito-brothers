@@ -26,8 +26,10 @@ if(isset($_GET['order_id']) && $_GET['order_id']!="") $order_id =  $_GET['order_
         <div class="container  col-md-12 col-sm-12 col-xs-12">
         <div class="col-md-6 col-sm-12 col-xs-12"  style="max-width:100%" >
 
-            <h5 style="text-align: center"> Group Member Information </h5>
+            <h5 style="text-align: center"> Group Information </h5>
             <hr>
+            <input type="text" name="group_name" id="group_name" placeholder="Enter A Name for your Group">
+            <input type="hidden" name="id_group" id="id_group" value="0">
                 <table class="table table-bordered" style="padding: 0px" id="member_table">
                     <thead>
                     <tr>
@@ -66,7 +68,7 @@ if(isset($_GET['order_id']) && $_GET['order_id']!="") $order_id =  $_GET['order_
             <div class="col-md-12 col-sm-12 col-xs-12">
                 <label style=" font-size: 16px"> Confirm TakeOut Location </label>
                 <div class="payment-mode">
-                    <input type="checkbox" name="take_out_location" id="take_out_location">
+                    <input type="checkbox" checked name="take_out_location" id="take_out_location">
                     <label for="take_out_location" id="take_out_location_">205 PENNSYLVANIA AVENUE S.E. , WASHINGTON D.C. , UNITED STATES</label>
                 </div>
             </div>
@@ -85,6 +87,9 @@ if(isset($_GET['order_id']) && $_GET['order_id']!="") $order_id =  $_GET['order_
         <div>
             <div class="col-md-12 center" style="text-align: center; height: 40px"> <button type="button" class="btn btn-warning" id="save_group_order"  style="height: 40px">Initiate a Group Order</button></div>
         </div>
+        <div class="col-md-12 col-sm-12 col-xs-12">
+            <div id="form_submit_error" class="text-center" style="display:none"></div>
+        </div>
     </form>
 
 </section>
@@ -96,8 +101,8 @@ if(isset($_GET['order_id']) && $_GET['order_id']!="") $order_id =  $_GET['order_
     addMember = function addMember(){
         var html = $('#members_info').html()
         html+='<tr class="user_information">\n' +
-            '    <td><input type="text" name="memberName[]"  style="margin: 0px; padding: 3px; border-radius: 5px; height: 40px"></td>\n' +
-            '    <td><input type="email" name="memberEmail[]" style="margin: 0px; padding: 3px; border-radius: 5px; height: 40px"></td>\n' +
+            '    <td><input type="text" required name="memberName[]"  style="margin: 0px; padding: 3px; border-radius: 5px; height: 40px"></td>\n' +
+            '    <td><input type="email" required name="memberEmail[]" style="margin: 0px; padding: 3px; border-radius: 5px; height: 40px"></td>\n' +
             '    <td style="margin-top: 10px"><button class="btn-danger deletes" >X</button></td>\n' +
             '  </tr>'
         $('#members_info').html(html)
@@ -111,22 +116,25 @@ if(isset($_GET['order_id']) && $_GET['order_id']!="") $order_id =  $_GET['order_
         //alert('okkk')
         event.preventDefault();
         var formData = new FormData($('#group_order')[0]);
-        formData.append("q","iniate_group_order");
+        formData.append("q","initiate_group_order");
         formData.append("customer_id",<?php echo $customer_id; ?>);
 
         //validation
-        console.log(formData.get('memberEmail'))
-        if($.trim($('#take_out_location').val()) == ""){
-            success_or_error_msg('#form_submit_error','danger',not_input_insert_title_ln,"#take_out_location");
+        //console.log($.trim($('#take_out_location').val()))
+        if(!$('input[name=take_out_location]:checked', '#group_order').val()){
+            success_or_error_msg('#form_submit_error','danger','Please Confirm Take-Out Location',"#take_out_location");
         }
-        else if($.trim($('#pickup_date_time').val()) <2){
-            success_or_error_msg('#form_submit_error','danger',not_input_insert_title_ln,"#pickup_date_time");
+        else if(!$.trim($('#group_name').val())){
+            success_or_error_msg('#form_submit_error','danger','Please ENTER  a name for this group',"#pickup_date_time");
         }
-        else if($.trim($('#notification_date_time').val()) <2){
-            success_or_error_msg('#form_submit_error','danger',not_input_insert_title_ln,"#notification_date_time");
+        else if(!$.trim($('#pickup_date_time').val())){
+            success_or_error_msg('#form_submit_error','danger','Please Select Take-Out Date and Time',"#pickup_date_time");
+        }
+        else if(!$.trim($('#notification_date_time').val())){
+            success_or_error_msg('#form_submit_error','danger','Please Enter the Final Remainder Time to Confirm Order',"#notification_date_time");
         }
         else{
-            alert('ksjfdlk;')
+            //alert('ksjfdlk;')
             $.ajax({
                 url: "./includes/controller/groupController.php",
                 type:'POST',
@@ -135,10 +143,10 @@ if(isset($_GET['order_id']) && $_GET['order_id']!="") $order_id =  $_GET['order_
                 cache:false,
                 contentType:false,processData:false,
                 success: function(data){
-                    alert('ok')
+                    alert(data)
                 }
             });
-            alert('done')
+            //alert('done')
 
         }
     })
@@ -147,7 +155,9 @@ if(isset($_GET['order_id']) && $_GET['order_id']!="") $order_id =  $_GET['order_
     loadmembers = function loadmembers(){
         var html=''
 
-        if(group_id){
+        if(typeof group_id != 'undefined'){
+            $('#id_group').val(group_id)
+
             $.ajax({
                 url: "./includes/controller/groupController.php",
                 data:{
@@ -158,16 +168,17 @@ if(isset($_GET['order_id']) && $_GET['order_id']!="") $order_id =  $_GET['order_
                 async:false,
                 dataType: "json",
                 success: function(data){
-                    //console.log(data)
+                    //console.log(data['name'])
+                    $('#group_name').val(data['name'])
 
                     if(!jQuery.isEmptyObject(data.records)){
                         $.each(data.records, function(i,data){
                             html+='<tr class="user_information">\n' +
-                                '    <td><input type="text" name="memberName" value="'+data['name']+'" style="margin: 0px; padding: 3px; border-radius: 5px; height: 40px"></td>\n' +
-                                '    <td><input type="email" name="memberEmail" value="'+data['email']+'" style="margin: 0px; padding: 3px; border-radius: 5px; height: 40px"></td>\n' +
+                                '    <td><input type="text" required  name="memberName[]" value="'+data['name']+'" style="margin: 0px; padding: 3px; border-radius: 5px; height: 40px"></td>\n' +
+                                '    <td><input type="email" required name="memberEmail[]" value="'+data['email']+'" style="margin: 0px; padding: 3px; border-radius: 5px; height: 40px"></td>\n' +
                                 '    <td style="margin-top: 10px"><button class="btn-danger deletes"   >X</button></td>\n' +
                                 '  </tr>'
-                            //alert(i)
+                           // alert(i)
                         })
                     }
 

@@ -10,8 +10,18 @@
     <!-- End Breadcrumb Part -->
  <section class="home-icon blog-main-section shop-page">
         <div class="icon-default" >
-            <img src="../images/scroll-arrow.png" alt="">
+            <img src="./images/scroll-arrow.png" alt="">
         </div>
+
+     <?php
+     session_start();
+     if(isset($_SESSION['group_master'])){?>
+     <div class="container" id="group_order" style="display: block">
+         <h5 class="text-capitalize" style="text-align: center; color: #777620; margin-bottom: 20px; background-color: yellow">
+             You are selecting Items for a Group Order, initiated by <b id="group_master_name"><?php echo $_SESSION['group_master']; ?></b> and TakeOut time is <b id="takeout_time"><?php echo $_SESSION['delivery_date']; ?></b>.
+         </h5>
+     </div>
+     <?php } ?>
         <div class="container" id="catagories">
         </div>
     </section>

@@ -1,4 +1,6 @@
-
+<?php
+session_start();
+?>
 <section class="breadcrumb-part" data-stellar-offset-parent="true" data-stellar-background-ratio="0.5" style="background-image: url('./images/breadbg1.jpg');max-height: 220px">
     <div class="container">
         <div class="breadcrumb-inner">
@@ -13,7 +15,7 @@
             <div class="icon-default icon-skeen">
                 <img src="../images/scroll-arrow.png" alt="">
             </div>
-            <div class="container">
+            <div class="container" style="margin: auto">
                 <div class="checkout-wrap wow fadeInDown" data-wow-duration="1000ms" data-wow-delay="300ms">
                     <ul class="checkout-bar">
                         <li class="active"><a href="index.php?page=cart">Shopping Cart</a></li>
@@ -97,15 +99,25 @@
                         </tbody>
                     </table>
                     <div class="product-cart-detail">
+                        <?php
+                        if(isset($_SESSION['group_master'])){?>
+                            <a href="#" class="btn-dark-coffee btn-medium" style="text-align: center" onclick="submitItem()">SUBMIT YOUR ITEMS</a>
+                        <?php }
+                        else{ ?>
                         <div class="cupon-part">
                             <input type="text" name="txt" id="coupon_code" placeholder="Cupon Code">
                         </div>
                         <a href="#" class="btn-medium btn-dark-coffee" id="apply_cupon">Apply Coupon</a>
+                        <?php }?>
+
                         <input name="update_cart" id="update_cart"  value="UPDATE CART" class="btn-medium btn-skin pull-right" type="submit">
                     </div>
                 </div>
                 </form>
-                    <div class="cart-total wow fadeInDown" data-wow-duration="1000ms" data-wow-delay="300ms">
+
+
+                    <div class="cart-total wow fadeInDown" data-wow-duration="1000ms" data-wow-delay="300ms" style="text-align: center">
+
                     <div class="cart-total-title">
                         <h5>CART TOTALS</h5>
                     </div>
@@ -114,7 +126,9 @@
                     </div>
 
                     <div class="proceed-check">
-                        <a href="index.php?page=checkout" class="btn-primary-gold btn-medium">PROCEED TO CHECKOUT</a>
+
+                            <a href="index.php?page=checkout" class="btn-primary-gold btn-medium">PROCEED TO CHECKOUT</a>
+
                     </div>
                 </div>
             </div>
@@ -126,7 +140,26 @@
 <script>
     $("#price_summary").load("views/order_price_summary.php");
 
+    submitItem= function submitItem() {
+        alert('ok')
+        $.ajax({
+            url: "./includes/controller/ecommerceController.php",
+            dataType: "json",
+            type: "post",
+            async:false,
+            data: {
+                q: "checkout"
+            },
+            success: function(data) {
+                alert(data)
+                if(data=='111'){
+                    $("#content").load("views/checkout_confirm.php");
 
+                }
+            }
+
+        })
+    }
 
     function cart_View(){
         //alert('ok')

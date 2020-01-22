@@ -274,25 +274,54 @@ switch ($q){
         $str = substr("00000{$inv_no}", -$str_length);
         //echo 333;die;
 
-        $invoice_no = "CnC$c_y_m$str";
+        $invoice_no = "BB$c_y_m$str";
         //-----------------------------------------------------
 
-        $secial_notes	 = htmlspecialchars($secial_notes,ENT_QUOTES);
 
-        $columns_value = array(
-            'customer_id'=>$_SESSION['customer_id'],
-            'delivery_date'=>$pickup_date_time,
-            'delivery_type'=>1,
-            'remarks'=>$secial_notes,
-            'order_status'=>1,
-            'invoice_no'=>$invoice_no,
-            'payment_method' =>$payment_method,
-            'total_order_amt'=>$total_order_amt,
-            'tax_amount'=>$tax_amount,
-            'total_paid_amount'=>$total_paid_amount,
-            'loyalty_point'=>$loyalty_point
 
-        );
+
+        if(isset($_SESSION['group_master'])){
+            $price = 0;
+            foreach($cart as $key=>$item){
+                $price+=$item['discounted_rate'];
+            }
+            $columns_value = array(
+                'customer_id'=>0,
+                'delivery_date'=>$_SESSION['delivery_date'],
+                'delivery_type'=>1,
+                'remarks'=>'',
+                'order_status'=>0,
+                'invoice_no'=>$invoice_no,
+                'payment_method' =>0,
+                'payment_status' =>1,
+                'total_order_amt'=>$price,
+                'tax_amount'=>0,
+                'total_paid_amount'=>0,
+                'group_order_details_id'=>$_SESSION['group_order_details_id'],
+                'loyalty_point'=>0
+
+            );
+        }
+        else{
+            $secial_notes	 = htmlspecialchars($secial_notes,ENT_QUOTES);
+
+            $columns_value = array(
+                'customer_id'=>$_SESSION['customer_id'],
+                'delivery_date'=>$pickup_date_time,
+                'delivery_type'=>1,
+                'remarks'=>$secial_notes,
+                'order_status'=>1,
+                'invoice_no'=>$invoice_no,
+                'payment_method' =>$payment_method,
+                'total_order_amt'=>$total_order_amt,
+                'tax_amount'=>$tax_amount,
+                'total_paid_amount'=>$total_paid_amount,
+                'payment_status' =>1,
+                'loyalty_point'=>$loyalty_point,
+                'group_order_details_id'=>0
+            );
+        }
+
         //echo 333;die;
 
 //echo $columns_value['total_paid_amount']; die;
@@ -316,25 +345,31 @@ switch ($q){
             $columns_value['payment_status'] 		= 1;
         }*/
         //echo 333;die;
+        if(!isset($_SESSION['group_master']) ) {
+            if ($total_paid_amount) {
 
-       if($total_paid_amount){
+                $columns_value['payment_status'] = 2;
+                $columns_value['payment_reference_no'] = 1;
 
-               $columns_value['payment_status'] 		= 2;
-               $columns_value['payment_reference_no']   = 1;
-
-       }else{
-           $columns_value['payment_status'] 		= 1;
-       }
-
+            } else {
+                $columns_value['payment_status'] = 1;
+            }
+        }
         $return_master = $dbClass->insert("order_master", $columns_value);
        //var_dump($return_master);
-        $column_array = array(
-            'order_id'=>$return_master,
-            'details'=>'Order placed',
-            'target_user'=>'admin',
-            'user_id'=>$_SESSION['customer_id']
-        );
-        $dbClass->insert("notification", $column_array);
+        if(isset($_SESSION['group_master']) ){
+            //SET Notification for group order
+
+        }else{
+            $column_array = array(
+                'order_id'=>$return_master,
+                'details'=>'Order placed',
+                'target_user'=>'admin',
+                'user_id'=>$_SESSION['customer_id']
+            );
+            $dbClass->insert("notification", $column_array);
+        }
+
 
         //echo $return_master; die;
         if($return_master){
@@ -343,7 +378,8 @@ switch ($q){
             foreach($cart as $key=>$item){
                 //var_dump($item);die;
                 //var_dump($item['ingredient']['ingredient_name']);die;
-                if(array_key_exists("id_list",$item)){
+                //var_dump($item['ingredient']['ingredient_name']);die;
+                if(array_key_exists("id_list",$item['ingredient'])){
 
                     //var_dump($item['ingredient']['id_list']);
 
@@ -373,7 +409,7 @@ switch ($q){
             }
             //var_dump($_SESSION['cart'] );
             if($return_details){
-
+                if(!isset($_SESSION['group_master'])){
                     $customer_loyalty_point=  $dbClass->getSingleRow("SELECT loyalty_points from customer_infos where customer_id=".$_SESSION['customer_id']);
                     //echo $customer_loyalty_point; die;
                     $new_loyalty_point=$customer_loyalty_point['loyalty_points']-$loyalty_deduct+$loyalty_point;
@@ -385,19 +421,48 @@ switch ($q){
                     );
                     $customer_loyalty_update=  $dbClass->update("customer_infos",$value_ar,$condition_ar);
 
+                }
+                else{
+                    $value_ar=array(
+                        'order_master_id'=>$return_master
+
+                    );
+                    $condition_ar = array(
+                        'id'=>$_SESSION['group_order_details_id']
+                    );
+                    $dbClass->update("group_order_details",$value_ar,$condition_ar);
+
+                }
+
+
                 //echo 11; die;
 
                 $cart = array();
-                unset($_SESSION['total_discounted_amount']);
-                unset($_SESSION['cupon_code']);
-                unset($_SESSION['min_order_amount']);
+
                 $_SESSION['cart'] = $cart;
                 $_SESSION['latest_order_id'] = $return_master;
                 $_SESSION['payment'] 		 = $paid;
+
+                if(isset($_SESSION['group_master'])){
+                    unset($_SESSION['group_master']);
+                    unset($_SESSION['delivery_date']);
+                    unset($_SESSION['group_order_details_id']);
+                    echo '111'; die;
+
+                }
+                else{
+                    unset($_SESSION['total_discounted_amount']);
+                    unset($_SESSION['cupon_code']);
+                    unset($_SESSION['min_order_amount']);
+                }
+
+
 //
 //
 //echo $_SESSION['latest_order_id']; die;
-                echo $invoice_no;
+                echo $invoice_no; die;
+
+                // sending email will be here
 
 
                 // send mail to customer account
@@ -522,6 +587,10 @@ switch ($q){
         }
         else echo "0";
     break;
+
+    case "placeGroupOrder":
+
+        break;
 
 
     case "get_order_details_by_invoice":

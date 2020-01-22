@@ -203,10 +203,10 @@ $customer_id = $_SESSION['customer_id'];
         //validation
         console.log(formData.values())
         if($.trim($('#group_name').val()) == ""){
-            success_or_error_msg('#form_submit_error','danger',not_input_insert_title_ln,"#group_name");
+            success_or_error_msg('#form_submit_error','danger','Please insert group name',"#group_name");
         }
         else if($.trim($('#members').val()) <2){
-            success_or_error_msg('#form_submit_error','danger',not_input_insert_title_ln,"#group_member");
+            success_or_error_msg('#form_submit_error','danger','Please insert group members',"#group_member");
         }
         else{
 

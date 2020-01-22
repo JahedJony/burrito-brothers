@@ -33,8 +33,16 @@ if(isset($_GET['order_id']) && $_GET['order_id']!="") $order_id =  $_GET['order_
 </section>
 <section class="home-icon shop-cart bg-skeen" style="background-color: rgba(244,242,237,1)">
     <div class="icon-default icon-skeen">
-        <img src="../images/scroll-arrow.png" alt="">
+        <img src="./images/scroll-arrow.png" alt="">
     </div>
+    <?php
+    if(isset($_SESSION['group_master'])){?>
+        <div class="container" id="group_order" style="display: block">
+            <h5 class="text-capitalize" style="text-align: center; color: #777620; margin-bottom: 20px; background-color: yellow">
+                You are selecting Items for a Group Order, initiated by <b id="group_master_name"><?php echo $_SESSION['group_master']; ?></b> and TakeOut time is <b id="takeout_time"><?php echo $_SESSION['delivery_date']; ?></b>.
+            </h5>
+        </div>
+    <?php } ?>
     <div class="container">
 
           <div class="row">
