@@ -199,7 +199,7 @@ switch ($q) {
         $sql = "SELECT god.group_order_id, god.order_master_id, ci.full_name, gs.delivery_date from group_order_details god
             LEFT JOIN group_order gs ON gs.order_id=god.group_order_id
             LEFT JOIN customer_infos ci ON ci.customer_id=gs.customer_id
-            WHERE god.id = $group_order_details_id AND god.order_key = '$order_key'";
+            WHERE god.id = $group_order_details_id AND god.order_key = '$order_key' AND god.status=0";
         //echo $sql;
         $group_order_info_members = $dbClass->getSingleRow($sql);
         //var_dump($group_order_info_members);

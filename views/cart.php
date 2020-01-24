@@ -1,5 +1,9 @@
 <?php
 session_start();
+if(!isset($_SESSION['cart']) || !count($_SESSION['cart'])>0) {
+
+    echo'<script> window.location="index.php?page=categories"; </script> ';
+}
 ?>
 <section class="breadcrumb-part" data-stellar-offset-parent="true" data-stellar-background-ratio="0.5" style="background-image: url('./images/breadbg1.jpg');max-height: 220px">
     <div class="container">

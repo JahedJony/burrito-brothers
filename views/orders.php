@@ -224,11 +224,12 @@ else{
                         var order_tr = "";
                         var order_total = 0;
                         order_infos	 = data.order_info;
-                        var order_arr = order_infos.split(',');
+                        var order_arr = order_infos.split('..,');
                         $.each(order_arr, function(i,orderInfo){
+                            //alert(orderInfo)
                             var order_info_arr = orderInfo.split('#');
                             var total = ((parseFloat(order_info_arr[4])*parseFloat(order_info_arr[5])));
-                            order_tr += '<tr><td class="text-capitalize">'+order_info_arr[2]+' <br>'+order_info_arr[6]+'</td><td align="center">'+order_info_arr[5]+'</td><td align="right">'+order_info_arr[4]+'</td><td align="right">'+total+'</td></tr>';
+                            order_tr += '<tr><td class="text-capitalize">'+order_info_arr[2]+' <br>'+order_info_arr[6].split('..')[0]+'</td><td align="center">'+order_info_arr[5]+'</td><td align="right">'+order_info_arr[4]+'</td><td align="right">'+total+'</td></tr>';
                             order_total += total;
                         });
                         var total_order_bill = ((parseFloat(order_total)+parseFloat(data.delivery_charge))-parseFloat(data.discount_amount));

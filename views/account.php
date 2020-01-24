@@ -60,6 +60,7 @@ if(isset($_GET['order_id']) && $_GET['order_id']!="") $order_id =  $_GET['order_
                             <li class="sub-menu tracking"><a href='javascript:void(0)'  onclick="show_my_accounts('tracking', '')">Order Tracking</a></li>
                             <li class="sub-menu group_order"><a  href='javascript:void(0)'  onclick="show_my_accounts('group_order', '')">Group Order</a></li>
                             <li class="sub-menu groups"><a  href='javascript:void(0)'  onclick="show_my_accounts('groups', '')">Groups</a></li>
+                            <li class="sub-menu groups"><a  href='javascript:void(0)'  onclick="show_my_accounts('groupOrderDetails', '')">Groups Order Details</a></li>
                             <li class="sub-menu logout"><a href='views/logout.php'>Logout</a></li>
                         </ul>
                     </div>

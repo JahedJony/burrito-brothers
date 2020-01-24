@@ -291,7 +291,7 @@ else{
                     page_no:current_page_no
                 },
                 success: function(data) {
-                   // alert(data)
+                   //alert(data)
                     //console.log(data)
                     var todate = "<?php echo date("Y-m-d"); ?>";
                     var user_name =  "<?php echo $user_name; ?>";
@@ -478,11 +478,14 @@ else{
                             var order_tr = "";
                             var order_total = 0;
                             order_infos	 = data.order_info;
-                            var order_arr = order_infos.split(',');
+                            var order_arr = order_infos.split('..,');
+                            //console.log(order_arr)
                             $.each(order_arr, function(i,orderInfo){
+                                //console.log(orderInfo)
+                                //alert(i)
                                 var order_info_arr = orderInfo.split('#');
                                 var total = ((parseFloat(order_info_arr[4])*parseFloat(order_info_arr[5])));
-                                order_tr += '<tr><td class="text-capitalize">'+order_info_arr[2]+' <br>'+order_info_arr[6]+'</td><td align="center">'+order_info_arr[5]+'</td><td align="right">'+order_info_arr[4]+'</td><td align="right">'+total+'</td></tr>';
+                                order_tr += '<tr><td class="text-capitalize">'+order_info_arr[2].split('..')[0]+' <br>'+order_info_arr[6].split('..')[0]+'</td><td align="center">'+order_info_arr[5]+'</td><td align="right">'+order_info_arr[4]+'</td><td align="right">'+total+'</td></tr>';
                                 order_total += total;
                             });
                             var total_order_bill = ((parseFloat(order_total)+parseFloat(data.delivery_charge))-parseFloat(data.discount_amount));

@@ -18,6 +18,9 @@ $order_id = '';
 if(isset($_GET['order_id']) && $_GET['order_id']!="") $order_id =  $_GET['order_id'];
 
 //var_dump($customer_info);
+if(!isset($_SESSION['cart']) || !count($_SESSION['cart'])>0) {
+    echo'<script> window.location="index.php?page=categories"; </script> ';
+}
 ?>
 
 
@@ -683,6 +686,7 @@ $('#checkout_submit').click(function(event){
                 }
                 else{
                     //alert('done')
+                    showCart()
                     $("#content").load("views/checkout_confirm.php");
 
                     //window.location = "completed.php?complete=success&order_id="+$.trim(data);

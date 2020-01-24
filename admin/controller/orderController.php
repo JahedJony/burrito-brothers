@@ -197,7 +197,7 @@ switch ($q){
 					FROM(
 						   SELECT m.order_id, m.customer_id, c.full_name as customer_name, m.invoice_no,
 						d.item_id,d.item_rate, d.item_rate_id,  d.ingredient_list, m.order_date, m.delivery_date, p.name as p_name,
-						m.delivery_type, m.outlet_id, order_noticed,
+						m.delivery_type, order_noticed,
 						m.address, m.remarks, m.order_status, m.payment_status, m.payment_method, m.payment_reference_no
 						FROM order_master m
 						LEFT JOIN order_details d ON d.order_id = m.order_id
@@ -217,15 +217,15 @@ switch ($q){
         $total_pages = $total_records/$limit;
         $data['total_pages'] = ceil($total_pages);
         if($category_grid_permission==1){
-            $sql = 	"SELECT order_id, customer_id, customer_name,total_order_amt, item_id, item_rate, ingredient_list,item_rate_id, p_name, order_date,order_noticed,order_status,
-					delivery_date, delivery_type, address, remarks,	 payment_reference_no, invoice_no, 
+            $sql = 	"SELECT order_id, customer_id, customer_name, item_id, item_rate, ingredient_list,item_rate_id, p_name, order_date,order_noticed,order_status,
+					delivery_date, delivery_type, address, total_order_amt, remarks,	 payment_reference_no, invoice_no, 
 					$update_permission as update_status, $delete_permission as delete_status,
 					case payment_status when payment_status=1 then 'Not Paid' else 'Paid' end paid_status, 
 					case payment_method when payment_method=1 then 'bKash' when payment_method=2 then 'Rocket'  else 'Cash On Delivery'  end payment_method
 					FROM(
-						  SELECT m.order_id, m.customer_id, m.total_order_amt, c.full_name as customer_name, m.invoice_no,
-						d.item_id,d.item_rate, d.item_rate_id,  d.ingredient_list, m.order_date, m.delivery_date, p.name as p_name,
-						m.delivery_type, m.outlet_id, order_noticed,
+						 SELECT m.order_id, m.customer_id, c.full_name as customer_name, m.invoice_no,
+						d.item_id,d.item_rate, d.item_rate_id, m.total_order_amt, d.ingredient_list, m.order_date, m.delivery_date, p.name as p_name,
+						m.delivery_type, order_noticed,
 						m.address, m.remarks, m.order_status, m.payment_status, m.payment_method, m.payment_reference_no
 						FROM order_master m
 						LEFT JOIN order_details d ON d.order_id = m.order_id
@@ -234,7 +234,7 @@ switch ($q){
 						WHERE d.status=1
 						GROUP BY d.order_id
 						ORDER BY m.order_id DESC
-
+					
 					)A
 					WHERE CONCAT(invoice_no, order_id, customer_name, p_name, item_rate) LIKE '%$search_txt%' $condition
 					ORDER BY order_id desc
@@ -489,9 +489,9 @@ switch ($q){
         //echo $order_id; die;
         $sql = "SELECT m.order_id, m.customer_id, 
                 c.full_name customer_name, d.item_id, c.contact_no customer_contact_no, c.address customer_address,  m.order_id,
-                GROUP_CONCAT(ca.name,' >> ',ca.id,'#',ca.id,'#',p.name,' (',ca.name,' )','#',p.item_id,'#',d.item_rate,'#',d.quantity,'#',d.ingredient_name) order_info,
+                GROUP_CONCAT(ca.name,' >> ',ca.id,'#',ca.id,'#',p.name,' (',ca.name,' )','#',p.item_id,'#',d.item_rate,'#',d.quantity,'#',d.ingredient_name,'..') order_info,
                 m.order_date, m.delivery_date, m.delivery_type, m.discount_amount, m.total_paid_amount,
-                m.outlet_id, m.address, m.delivery_charge_id, m.tax_amount,
+                m.address, m.delivery_charge_id, m.tax_amount,
                 m.remarks, m.order_status, m.payment_status, m.payment_method, 
                 m.payment_reference_no, m.invoice_no, m.total_order_amt,
                 case payment_status when payment_status=1 then 'Not Paid' else 'Paid' end paid_status, 

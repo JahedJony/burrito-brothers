@@ -134,7 +134,7 @@ if(isset($_GET['search'])) $search_text = "";
                                 <a href="#" data-toggle="modal" data-target="#booktable"><img src="images/icon-table.png" alt="">Open</a>
                             </div>
                             <div class="shop-cart header-collect">
-                                <a href="index.php?page=cart"><img src="images/icon-basket.png" alt=""><span id="total_item_in_cart"></span> items</a>
+                                <a href="<?php if(isset($_SESSION['cart'])){echo 'index.php?page=cart';} else {echo '#';}?>" ><img src="images/icon-basket.png" alt=""><span id="total_item_in_cart"></span> items</a>
                                 <div class="cart-wrap">
                                     <div class="cart-blog" id="cart_div" style="max-width: 250px" >
                                     </div>

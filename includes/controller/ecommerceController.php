@@ -424,7 +424,8 @@ switch ($q){
                 }
                 else{
                     $value_ar=array(
-                        'order_master_id'=>$return_master
+                        'order_master_id'=>$return_master,
+                        'status'=>1
 
                     );
                     $condition_ar = array(
@@ -474,7 +475,7 @@ switch ($q){
                                 c.address customer_address, 
                                 GROUP_CONCAT(ca.name,' >> ',ca.id,'#',ca.id,'#',p.name,' (',ca.name,' )','#',p.item_id,'#',s.name,'#',d.item_rate_id,'#',d.item_rate,'#',d.quantity) order_info,
                                 m.order_date, m.delivery_date, m.delivery_type,m.delivery_charge, m.discount_amount, m.total_paid_amount,
-                                m.outlet_id, m.address, m.delivery_charge_id, m.tax_amount,
+                                m.address, m.delivery_charge_id, m.tax_amount,
                                 m.remarks, m.order_status, m.payment_status, m.payment_method, 
                                 m.payment_reference_no, m.invoice_no, m.total_order_amt,
                                 case payment_status when payment_status=1 then 'Not Paid' else 'Paid' end paid_status, 
@@ -597,9 +598,9 @@ switch ($q){
         //echo 1; die;
         $sql = "SELECT m.order_id, m.customer_id, 
                 c.full_name customer_name, d.item_id, c.contact_no customer_contact_no, c.address customer_address,  m.order_id,
-                GROUP_CONCAT(ca.name,' >> ',ca.id,'#',ca.id,'#',p.name,' (',ca.name,' )','#',p.item_id,'#',d.item_rate,'#',d.quantity,'#',d.ingredient_name) order_info,
+                GROUP_CONCAT(ca.name,' >> ',ca.id,'#',ca.id,'#',p.name,' (',ca.name,' )','#',p.item_id,'#',d.item_rate,'#',d.quantity,'#',d.ingredient_name,'..') order_info,
                 m.order_date, m.delivery_date, m.delivery_type, m.discount_amount, m.total_paid_amount,
-                m.outlet_id, m.address, m.delivery_charge_id, m.tax_amount,
+                m.address, m.delivery_charge_id, m.tax_amount,
                 m.remarks, m.order_status, m.payment_status, m.payment_method, 
                 m.payment_reference_no, m.invoice_no, m.total_order_amt,
                 case payment_status when payment_status=1 then 'Not Paid' else 'Paid' end paid_status, 
@@ -623,6 +624,51 @@ switch ($q){
 
     break;
 
+    case "get_group_order_details":
+        //echo 1; die;
+        $sql = " SELECT coalesce(oms.order_id, 'NAN') as order_id, god.id, coalesce(oms.order_info, '') as order_info, coalesce(oms.order_date, '') as order_date, coalesce(oms.total_order_amt, '0') as total_order_amt, coalesce(oms.order_status, '0') as order_status, gm.name, gm.email
+               FROM group_order go
+               LEFT JOIN group_order_details god ON god.group_order_id= go.order_id
+               LEFT JOIN group_members gm ON gm.id=god.group_member_id
+               LEFT JOIN(
+               SELECT om.order_id, om.group_order_details_id,
+                GROUP_CONCAT(ca.name,' >> ',ca.id,'#',ca.id,'#',p.name,' (',ca.name,' )','#',p.item_id,'#',d.item_rate,'#',d.quantity,'#',d.ingredient_name,'..') order_info,
+                om.order_date, om.total_order_amt, om.order_status 
+                FROM order_master om
+                LEFT JOIN order_details d ON d.order_id = om.order_id
+                LEFT JOIN items p ON p.item_id = d.item_id
+                LEFT JOIN category ca ON ca.id = p.category_id
+                GROUP BY d.order_id
+                )oms ON oms.group_order_details_id= god.id
+                WHERE go.order_id =$order_id";
+        //echo $sql;die;
+        $stmt = $conn->prepare($sql);
+        $stmt->execute();
+        $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+
+        foreach ($result as $row) {
+            $data['records'][] = $row;
+        }
+
+
+        $sql = " SELECT ci.full_name, ci.address as c_address, ci.contact_no as mobile, gi.name, go.order_id as group_order_id, go.order_date, go.delivery_date, go.total_order_amt, go.notification_time,
+                                        case go.order_status when 2 then 'Invitation Sent' when 3 then 'Menu Selected' when 4 then 'Order Panding' when 5 then 'Order Approved' when 6 then 'Order Ready' else 'Order Initiate' end order_status, 
+										case go. payment_status when 1 then 'Not Paid' else 'Paid' end payment_status, 
+										case go.payment_method when 1 then 'Cash On Delivary' when 2 then 'Loyalty Payment' when 3 then 'Card' when 4 then 'Gift Card' else 'Not Defined' end payment_method
+                                        from group_order go
+                                        LEFT JOIN groups_info gi ON gi.id = go.group_id
+                                        LEFT JOIN(
+                                        SELECT full_name, address, contact_no,customer_id from customer_infos 
+                                        )ci ON ci.customer_id=go.customer_id              
+                                         WHERE go.order_id=$order_id";
+        //echo $sql;die;
+        $stmt = $conn->prepare($sql);
+        $stmt->execute();
+        $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        $data['order_details']=$result[0];
+        echo json_encode($data);
+    break;
 
     case "get_customer_details":
         //echo '1'; die;
