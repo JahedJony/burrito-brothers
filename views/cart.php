@@ -130,9 +130,14 @@ if(!isset($_SESSION['cart']) || !count($_SESSION['cart'])>0) {
                     </div>
 
                     <div class="proceed-check">
+                        <?php
+                        if(isset($_SESSION['group_master'])){?>
+                            <a href="#" class="btn-dark-coffee btn-medium" style="text-align: center" onclick="submitItem()">SUBMIT YOUR ITEMS</a>
+                        <?php }
+                        else{ ?>
 
                             <a href="index.php?page=checkout" class="btn-primary-gold btn-medium">PROCEED TO CHECKOUT</a>
-
+                        <?php } ?>
                     </div>
                 </div>
             </div>
@@ -155,9 +160,15 @@ if(!isset($_SESSION['cart']) || !count($_SESSION['cart'])>0) {
                 q: "checkout"
             },
             success: function(data) {
-                alert(data)
+                //alert(data)
                 if(data=='111'){
+                    //alert('111')
                     $("#content").load("views/checkout_confirm.php");
+
+                }
+                else if(data=='222'){
+                    //alert('222')
+                    window.location.href= project_url+"index.php?page=account";
 
                 }
             }

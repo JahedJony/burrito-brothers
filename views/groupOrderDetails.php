@@ -29,7 +29,7 @@ if(empty($orders_info)){
 else{
 
     ?>
-    <h6 class="center">Your Order List </h6>
+    <h6 class="center" xmlns="http://www.w3.org/1999/html" xmlns="http://www.w3.org/1999/html">Your Order List </h6>
     <hr>
     <section class="home-icon shop-cart bg-skeen" style="padding-top: 20px">
         <div class="container" style="max-width:100%" id="oredrs_div">
@@ -130,12 +130,13 @@ else{
 }
 ?>
 
+
 <!-- Start Order details -->
 <div class="modal fade booktable" id="order_modal" tabindex="-2" role="dialog" aria-labelledby="booktable">
     <div class="modal-dialog" role="document" style="width:80% !important">
         <div class="modal-content">
-            <div class="modal-body">
-                <div id="order-div">
+            <div class="modal-body" style="margin-bottom: 50px">
+                <div id="order-div" >
                     <div class="title text-center">
                         <h3 class="text-coffee left"> <a href="index.php"><img src="<?php echo ($logo); ?>" alt="" style="height: 100px; width: 100px"></a></h3>
                         <h4 class="text-coffee left">Order No # <span id="ord_title_vw"></span></h4>
@@ -178,13 +179,29 @@ else{
                                 <p>Note: <span id="note_vw"></span></p>
                                 <p>Print Time : <?php echo date("Y-m-d h:m:s"); ?></p>
                                 <br />
-                                <p style="font-weight:bold; text-align:center">Thank you. Hope we will see you soon </p>
+
+                                <p style="font-weight:bold; text-align:center" id="thankingNoted">Thank you. Hope we will see you soon </p>
                             </div>
                         </div>
+
+
                     </div>
                 </div>
+                <p class="text-danger text-left">*YOU CAN SELECT ITEMS FOR THE MEMBERS OR KEEP IT EMPTY</p>
 
-                <div class="col-md-12 center"> <button type="button" class="btn btn-warning" id="order_print"><i class="fa fa-lg fa-print"></i></button></div>
+                <div class="text-center">
+                    <div class="cupon-part">
+                        <input type="text" name="txt" id="coupon_code" placeholder="Cupon Code" style="border-radius: 5px">
+                    </div>
+                    <a href="#" class="btn-medium btn-dark-coffee" id="apply_cupon"  style="border-radius: 5px">Apply Coupon</a>
+
+                </div>
+
+                <div class="col-md-12 text-center" style="margin-bottom: 5px"> <span><input class="radio-inline text-center" type="checkbox" id="checkoutConirmation"></span><span style="padding-top: 5px"> Please confirm your submission</span></div>
+                <div class="col-md-12 text-center" style="margin-bottom: 10px" ><button type="button" class="btn btn-primary"  data-dismiss="modal" aria-label="Close" onclick="checkout()">Proceed to Checkout</button></div>
+
+
+                <div class="col-md-12" style="text-align: center"> <button type="button" class="btn btn-warning" id="order_print"><i class="fa fa-lg fa-print"></i></button></div>
             </div>
         </div>
     </div>
@@ -195,7 +212,19 @@ else{
     //alert('ok')
     var sWidth = window.screen.width;
     var print_module=''
-    //alert("sWidth is: " + sWidth);
+    var group_id= ''
+     //alert("sWidth is: " + sWidth);
+
+    function checkout(){
+        //alert('sfd')
+        //$("#order_modal").modal('hide');
+        window.location.href = "index.php?page=groupCheckout&id="+group_id
+        //$('#account_contents').load('views/groupCheckout.php');
+
+
+    }
+
+
     if(sWidth<801){
         $('#table_big').css('display', 'none')
         $('#table_small').css('display', 'block')
@@ -205,11 +234,33 @@ else{
         $('#table_small').css('display', 'none')
     }
 
+    selectItems =function selectItems(grouporder_id, key) {
+        //alert('id:'+grouporder_id)
+        //sessionStorage.setItem('returnPage','groupOrderDetails');
+
+        $.ajax({
+            url: "./includes/controller/groupController.php",
+            type: 'POST',
+            async: false,
+            dataType: "json",
+            data: {
+                q: "set_session_group_order",
+                order_id: grouporder_id
+            },
+            success: function (data) {
+               // alert(data)
+                window.location.href = project_url+'index.php?groupmaster='+key;
+
+            }
+        })
+
+    }
+
     var view_order = function view_order(order_id){
-//        alert(order_id)
+        group_id = order_id;
         $('#ord_detail_vw>table>tbody').html('');
         $.ajax({
-            url:"./includes/controller/ecommerceController.php",
+            url:"./includes/controller/groupController.php",
             type:'POST',
             async:false,
             dataType: "json",
@@ -245,11 +296,12 @@ else{
                             order_infos	 = data['order_info'];
                             //console.log(data['order_info'])
                             var order_arr = order_infos.split('..,');
-
-                            //console.log(order_arr)
+//alert(data['group_order_details_id']+'&'+data['order_key'])
+                            //console.log(order_arr[1])
                             order_tr+='<tr><td colspan="4" align="left"  ><b>'+data['name']+' </b> ('+data['email']+')</td>'
-                            if(!order_arr[1]){
-                                order_tr += '<tr><td class="text-capitalize">Not Selected</td><td align="center"></td><td align="right"></td><td align="right">00</td></tr>';
+                            if(!order_arr[0]){
+                                var tem = data['group_order_details_id']+'&'+data['order_key']
+                                order_tr += '<tr><td class="text-capitalize">Not Selected<br><a href="#" onclick="selectItems('+order_id+','+"'"+data['group_order_details_id']+'&'+data['order_key']+"'"+')">Click here to Select item for <b>'+data['name']+'<b></a></td><td align="center"></td><td align="right"></td><td align="right">00</td></tr>';
                             }
                             else{
                                 $.each(order_arr, function(i,orderInfo){
@@ -268,7 +320,7 @@ else{
                             //for small device
 
                         });
-                        var order_tr='<tr align="right"><td colspan="3" ><b>Total Amount</b></td><td align="right">'+sub_total+'</td></tr>'
+                        var order_tr='<tr align="right"><td colspan="3" ><b>Total Amount</b></td><td align="right">'+sub_total.toFixed(2)+'</td></tr>'
 
                         $('#ord_detail_vw>table>tbody').append(order_tr);
                     }
@@ -277,6 +329,41 @@ else{
         });
         $('#order_modal').modal();
     }
+    $('#apply_cupon').click(function(){
+        var cupon_code = $('#coupon_code').val();
+        //alert(cupon_code)
+        if(cupon_code !=""){
+            $.ajax({
+                url: "./includes/controller/groupController.php",
+                type:'POST',
+                async:false,
+                data: {
+                    q:'apply_cupon',
+                    cupon_code:cupon_code,
+                    group_order_id: group_id
+                },
+                success: function(data){
+                    alert('Cupon has been added')
+
+                }
+            });
+        }
+    })
+
 
 </script>
+
+<?php
+
+if(isset($_SESSION['groupOrderId'])){
+    ?>
+    <script>
+        //alert(<?php echo $_SESSION['groupOrderId']; ?>)
+        view_order(<?php echo $_SESSION['groupOrderId']; ?>)
+    </script>
+    <?php
+    unset($_SESSION['groupOrderId']);
+    unset($_SESSION['groupOrderDetails']);
+}
+?>
 

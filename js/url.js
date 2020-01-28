@@ -21,7 +21,7 @@ $(function () {
     }
     else{
         //alert('window..href')
-        //alert('sdf')
+        //alert(url_info)
         if(url_info.split('=')[0]=='groupmaster'){
             //alert('ok')
             var tem = url_info.split('=')[1].split('&')
@@ -53,6 +53,10 @@ $(function () {
                     }
                 }
             });
+        }
+        else if (url_info.split('=')[1].split('&')[0]== 'groupCheckout'){
+            //alert('sdfs')
+            $("#content").load("views/groupCheckout.php");
         }
 
         var main_view=url_info.split('&')

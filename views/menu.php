@@ -92,7 +92,7 @@
             '                <img  src="'+ project_url+'admin/'+data['photo']+'" onclick="cart('+data['item_id']+','+data['rate_id']+')" alt="" style="border-radius: 50px; min-height: 100px">\n' +
             '              </span>\n' +
             '              <a href="index.php?page=item&id='+ data['item_id']+'">' +
-            '                   <h5 class="text-capitalize">'+ data['name']+' <span>'+ currency_symbol+''+data['rate']+'</span></h5>' +
+            '                   <h5 class="text-capitalize">'+ data['name']+' <span>'+ currency_symbol+''+data['price']+'</span></h5>' +
             '               </a>\n' +
             '              <p>'+ data['details']+'</p>\n' +
             '          </div>\n' +
@@ -158,7 +158,7 @@
             async: false,
             data: {
                 q: "menu_view",
-                menu: menus,
+                menu: menu,
             },
             success: function (data) {
                 var menu_html=''
