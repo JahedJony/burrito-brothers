@@ -16,7 +16,7 @@ else if($dbClass->getUserGroupPermission(77) != 1 ){
 else{
     $user_name = $_SESSION['user_name'];
     $date = date("y-m-d");
-
+	//echo $logo;die;
     ?>
 
     <div class="x_panel">

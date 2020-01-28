@@ -23,12 +23,12 @@ $store_address=$dbClass->getDescription('store_address');
 $item_image_display=$dbClass->getDescription('item_image_display');
 
 
-$logo         =$website_url."admin/".$dbClass->getDescription('company_logo');
+$logo         = $website_url."admin/".$dbClass->getDescription('company_logo');
 //$feature      = $dbClass->getDescription(47);
 //$special_menu = $dbClass->getDescription(48);
 //$subtitle     = $dbClass->getDescription(49);
 //$why_we_best  = $dbClass->getDescription(50);
-
+//echo $logo;die;
 
 $facebook  = $dbClass->getDescription('fb_url');
 $twitter  = $dbClass->getDescription('tweeter_url');
