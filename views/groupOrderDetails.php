@@ -167,7 +167,7 @@ else{
                             <p class="text-danger text-left before_order_initiate">*YOU CAN SELECT FOOD FOR THE MEMBERS</p>
 
                             <div id="ord_detail_vw">
-                                <table class="table table-bordered" >
+                                <table class="table table-bordered" id="ord_detail_vw_big" >
                                     <thead>
                                     <tr>
                                         <th align="center">Items</th>
@@ -179,12 +179,24 @@ else{
                                     <tbody>
                                     </tbody>
                                 </table>
+                                <table class="table table-bordered" id="ord_detail_vw_small" style="display: none" >
+                                    <thead>
+                                    <tr>
+                                        <th align="center">Items</th>
+                                        <th width="12%"  style="text-align:right">Price</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    </tbody>
+                                </table>
+
                                 <p>Note: <span id="note_vw"></span></p>
                                 <p>Print Time : <?php echo date("Y-m-d h:m:s"); ?></p>
                                 <br />
 
                                 <p style="font-weight:bold; text-align:center" id="thankingNoted">Thank you. Hope we will see you soon </p>
                             </div>
+
                         </div>
 
 
@@ -217,7 +229,24 @@ else{
     var print_module=''
     var group_id= ''
     var tem_checkput= 0;
-     //alert("sWidth is: " + sWidth);
+    var sWidth = window.screen.width;
+
+    //alert("sWidth is: " + sWidth);
+
+
+
+    if(sWidth<801){
+        alert('ok')
+        console.log($('#ord_detail_vw_big').html())
+        $('#ord_detail_vw_big').css('display', 'none')
+        $('#ord_detail_vw_small').css('display', 'block')
+    }
+    else {
+        alert('not')
+        $('#ord_detail_vw_big').css('display', 'block')
+        $('#ord_detail_vw_small').css('display', 'none')
+    }
+
 
     function checkout(){
         $('#cupon_add').css('display','block');
@@ -297,17 +326,19 @@ else{
                             //console.log(data)
                             //alert(data['id'])
 
-                            var order_tr = '';
+                            var order_tr = '';//for big screen
                             var order_total = 0;
+                            var order_tr_small = ''; //for small screen
+
                             order_infos	 = data['order_info'];
-                            //console.log(data['order_info'])
                             var order_arr = order_infos.split('..,');
-//alert(data['group_order_details_id']+'&'+data['order_key'])
-                            //console.log(order_arr[1])
                             order_tr+='<tr><td colspan="4" align="left"  ><b>'+data['name']+' </b> ('+data['email']+')</td>'
+                            order_tr_small+='<tr><td colspan="2" align="left"  ><b>'+data['name']+' </b> ('+data['email']+')</td>'
                             if(!order_arr[0]){
                                 var tem = data['group_order_details_id']+'&'+data['order_key']
                                 order_tr += '<tr><td class="text-capitalize">Not Selected<br><a href="#" onclick="selectItems('+order_id+','+"'"+data['group_order_details_id']+'&'+data['order_key']+"'"+')">Click here to Select item for <b>'+data['name']+'<b></a></td><td align="center"></td><td align="right"></td><td align="right">'+currency_symbol+''+'00'+'</td></tr>';
+                                order_tr_small+='<tr><td class="text-capitalize">Not Selected<br><a href="#" onclick="selectItems('+order_id+','+"'"+data['group_order_details_id']+'&'+data['order_key']+"'"+')">Click here to Select item for <b>'+data['name']+'<b></a></td><td align="right">'+currency_symbol+''+'00'+'</td></tr>';
+
                             }
                             else{
                                 $.each(order_arr, function(i,orderInfo){
@@ -315,14 +346,19 @@ else{
                                     var order_info_arr = orderInfo.split('#');
                                     var total = ((parseFloat(order_info_arr[4])*parseFloat(order_info_arr[5])));
                                     order_tr += '<tr><td class="text-capitalize">'+order_info_arr[2]+' <br>'+order_info_arr[6]+'</td><td align="center">'+order_info_arr[5]+'</td><td align="right">'+currency_symbol+''+order_info_arr[4]+'</td><td align="right">'+currency_symbol+''+total+'</td></tr>';
+                                    order_tr_small+='<tr><td class="text-capitalize">'+order_info_arr[2]+':'+order_info_arr[5]+'X'+currency_symbol+''+order_info_arr[4]+'<br>'+order_info_arr[6]+'</td><td align="right">'+currency_symbol+''+total+'</td></tr>';
+
                                     order_total += total;
                                 });
                                 sub_total += order_total;
                                 order_tr += '<tr><td colspan="3" align="right" ><b>Grand Total Amount</b></td><td align="right"><b>'+currency_symbol+''+order_total.toFixed(2)+'</b></td></tr>';
+                                order_tr_small += '<tr><td align="right" ><b>Grand Total Amount</b></td><td align="right"><b>'+currency_symbol+''+order_total.toFixed(2)+'</b></td></tr>';
 
                             }
 
-                            $('#ord_detail_vw>table>tbody').append(order_tr);
+                            $('#ord_detail_vw_big>tbody').append(order_tr);
+                            $('#ord_detail_vw_small>tbody').append(order_tr);
+
 
                             //for small device
 
@@ -350,6 +386,7 @@ else{
                         order_tr += '<trstyle="display: block><td colspan="3" align="right" ><b>Discount</b></td><td align="right"><b id="discount_amt">'+currency_symbol+''+discount.toFixed(2)+'</b></td></tr>';
                         order_tr += '<trstyle="display: block><td colspan="3" align="right" ><b>Tax</b></td><td align="right"><b id="tax_amt">'+currency_symbol+''+tax.toFixed(2)+'</b></td></tr>';
                         order_tr += '<tr><td colspan="3" align="right" ><b>Grand Total Amount</b></td><td align="right"><b id="total_amt">'+currency_symbol+''+(sub_total-discount+tax).toFixed(2)+'</b></td></tr>';
+
 
                         $('#ord_detail_vw>table>tbody').append(order_tr);
                     }
