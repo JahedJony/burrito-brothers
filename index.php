@@ -20,6 +20,7 @@ $address      = $dbClass->getDescription('store_address');
 $website_url  = $dbClass->getDescription('website_url');
 $website_title=$dbClass->getDescription('website_title');
 $store_address=$dbClass->getDescription('store_address');
+$currency   = $dbClass->getDescription('currency_symbol');
 $item_image_display=$dbClass->getDescription('item_image_display');
 
 

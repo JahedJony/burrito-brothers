@@ -277,7 +277,7 @@ order_summary = function order_summary(){
                 $('#discount_').html(currency_symbol+''+data['order_details']['discount_amount']);
                 $('#tax_').html(currency_symbol+''+data['order_details']['tax_amount']);
                 $('#tips_').html(currency_symbol+''+0);
-                $('#total_amount_').html(currency_symbol+''+total);
+                $('#total_amount_').html(currency_symbol+''+total.toFixed(2));
 
             }
 

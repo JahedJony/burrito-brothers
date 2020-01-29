@@ -8,66 +8,77 @@ extract($_REQUEST);
 
 switch ($q) {
     case "initiate_group_order":
-        $count=1;
+
+        //echo $id_group; die;
+        $count=0;
         $group_order_details_id='';
         $order_key='';
         foreach ($memberName as $users){
             $count++;
         }
         $customer_info = $dbClass->getSingleRow("SELECT full_name, email from customer_infos WHERE customer_id=" . $_SESSION['customer_id']);
-        //var_dump($memberName);
-        $memberName[$count-1]=$customer_info['full_name'];
-        //var_dump($memberName);
-
-        $memberEmail[$count-1]=$customer_info['email'];
-        //var_dump($memberName[0]); die;
-        if($id_group!='0') {
-            $group_info = $dbClass->getSingleRow("SELECT name, members from groups_info WHERE id=" . $id_group);
-            $columns_value = array(
-                'customer_id' => $_SESSION['customer_id'],
-                'group_id' => $id_group,
-                'delivery_date' => $pickup_date_time,
-                'notification_time' => $notification_date_time,
-                'order_status' => 1,
-            );
-            $group_order_id = $dbClass->insert("group_order", $columns_value);
-            $i=0;
-
-            while ($i < ($count - 1)) {
-                // var_dump("SELECT id FROM group_members WHERE group_id=$id_group AND name = $memberName[$i] AND email= ".$memberEmail[$i]);
-                $sql = "SELECT id FROM group_members WHERE group_id=$id_group AND name = '$memberName[$i]' AND email=  '$memberEmail[$i]' ";
-                $members_id = $dbClass->getSingleRow($sql);
-                //var_dump( $group_order_id);
-                if ($members_id == '') {
-                    $member_array = array(
-                        'name' => $memberName[$i],
-                        'email' => $memberEmail[$i],
-                        'group_id' => $id_group
-                    );
-                    $group_member_id = $dbClass->insert("group_members", $member_array);
-                    //var_dump($group_member_id);
-                } else {
-                    $group_member_id = (int)$members_id['id'];
-                }
-                $original_string = array_merge(range(0,9), range('a','z'), range('A', 'Z'));
-                $original_string = implode("", $original_string);
-                $order_key= substr(str_shuffle($original_string), 0, 20);
-
-                $order_member_array = array(
-                    'group_member_id' => $group_member_id,
-                    'status' => 0,
-                    'group_order_id' => $group_order_id,
-                    'order_key'=>$order_key
-
-                );
-                $group_order_details_id = $dbClass->insert("group_order_details", $order_member_array);
-                $i++;
-            }
-            echo "http://burritobrothers.test/index.php?groupmaster=".$group_order_details_id."&".$order_key;
 
 
+        if($id_group!='0' && $id_group!=''){
+            //var_dump($id_group); die;
+            $group_info = $dbClass->getSingleRow("SELECT name, members from groups_info WHERE id= $id_group AND name='$group_name'");
 
         }
+        else
+        {
+            $group_info=boolval(false);
+        }
+
+        //var_dump($id_group); die;
+
+
+
+        if($group_info){
+            //var_dump($group_info); die;
+
+            $columns_value = array(
+                    'customer_id' => $_SESSION['customer_id'],
+                    'group_id' => $id_group,
+                    'delivery_date' => $pickup_date_time,
+                    'notification_time' => $notification_date_time,
+                    'order_status' => 1,
+                );
+                $group_order_id = $dbClass->insert("group_order", $columns_value);
+                $i=0;
+
+                while ($i < ($count)) {
+                    // var_dump("SELECT id FROM group_members WHERE group_id=$id_group AND name = $memberName[$i] AND email= ".$memberEmail[$i]);
+                    $sql = "SELECT id FROM group_members WHERE group_id=$id_group AND name = '$memberName[$i]' AND email=  '$memberEmail[$i]' ";
+                    $members_id = $dbClass->getSingleRow($sql);
+                    //var_dump( $members_id);
+                    if ($members_id == '') {
+                        $member_array = array(
+                            'name' => $memberName[$i],
+                            'email' => $memberEmail[$i],
+                            'group_id' => $id_group
+                        );
+                        $group_member_id = $dbClass->insert("group_members", $member_array);
+                        //var_dump($group_member_id);
+                    } else {
+                        $group_member_id = (int)$members_id['id'];
+                    }
+                    $original_string = array_merge(range(0,9), range('a','z'), range('A', 'Z'));
+                    $original_string = implode("", $original_string);
+                    $order_key= substr(str_shuffle($original_string), 0, 20);
+
+                    $order_member_array = array(
+                        'group_member_id' => $group_member_id,
+                        'status' => 0,
+                        'group_order_id' => $group_order_id,
+                        'order_key'=>$order_key
+
+                    );
+                    $group_order_details_id = $dbClass->insert("group_order_details", $order_member_array);
+                    $i++;
+                }
+                echo "index.php?groupmaster=".$group_order_details_id."&".$order_key;
+
+            }
         else{
             $columns_value = array(
                 'user_id' => $_SESSION['customer_id'],
@@ -111,7 +122,7 @@ switch ($q) {
 
                 $i++;
             }
-            echo "http://burritobrothers.test/index.php?groupmaster=".$group_order_details_id."&".$order_key;
+            echo "index.php?groupmaster=".$group_order_details_id."&".$order_key;
 
         }
         //echo json_encode("http://burritobrothers.test/index.php?group=$group_order_details_id&$order_key");
@@ -135,6 +146,19 @@ switch ($q) {
             echo json_encode($data);
         }
     break;
+
+    case "group_details_by_name":
+        $sql = "SELECT gi.id
+            FROM groups_info gi
+            WHERE gi.name='$group_name' AND gi.user_id=".$_SESSION['customer_id'];
+        $result = $group_name=  $dbClass->getSingleRow($sql);
+
+        if(isset($result['id']))
+            echo json_encode($result);
+        else
+            echo 1;
+
+        break;
 
     case "group_details":
         //echo $group_id;
@@ -249,14 +273,22 @@ switch ($q) {
         foreach ($result as $row) {
             $data['records'][] = $row;
         }
+        $date = date("Y-m-d");
 
 
-        $sql = " SELECT ci.full_name, ci.address as c_address, ci.contact_no as mobile, gi.name, go.order_id as group_order_id, go.order_date, go.delivery_date, go.total_order_amt, go.notification_time,
+        $sql = "SELECT ci.full_name, ci.address as c_address, ci.contact_no as mobile, gi.name, go.order_id as group_order_id, go.order_date, go.delivery_date, go.total_order_amt, go.notification_time,  cp.c_type, cp.amount as cupon_amount, cp.min_order_amount, go.order_status as status, go.invoice_no,
                                         case go.order_status when 2 then 'Invitation Sent' when 3 then 'Menu Selected' when 4 then 'Order Panding' when 5 then 'Order Approved' when 6 then 'Order Ready' else 'Order Initiate' end order_status, 
 										case go. payment_status when 1 then 'Not Paid' else 'Paid' end payment_status, 
 										case go.payment_method when 1 then 'Cash On Delivary' when 2 then 'Loyalty Payment' when 3 then 'Card' when 4 then 'Gift Card' else 'Not Defined' end payment_method
                                         from group_order go
                                         LEFT JOIN groups_info gi ON gi.id = go.group_id
+                                        LEFT JOIN(
+                                        SELECT id,c_type,amount,min_order_amount 
+										FROM cupons 
+										WHERE status=1 and (customer_id = 18 or customer_id is null) 
+										AND (DATE_FORMAT(start_date, '%Y-%m-%d') <= '$date' 
+										AND DATE_FORMAT(end_date, '%Y-%m-%d') >= '$date')
+										)cp ON cp.id = go.cupon_id 
                                         LEFT JOIN(
                                         SELECT full_name, address, contact_no,customer_id from customer_infos 
                                         )ci ON ci.customer_id=go.customer_id              
@@ -265,7 +297,10 @@ switch ($q) {
         $stmt = $conn->prepare($sql);
         $stmt->execute();
         $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        $tax = $dbClass->getSingleRow("Select tax_type, tax_amount, tax_enable from general_settings where id=1");
+
         $data['order_details']=$result[0];
+        $data['tax']=$tax;
         echo json_encode($data);
         break;
 
@@ -276,8 +311,9 @@ switch ($q) {
         $date = date("Y-m-d");
 
         $cupon_info = $dbClass->getSingleRow("select id,c_type,amount,min_order_amount from cupons where status=1 and ((cupon_no='$cupon_code' and customer_id = ".$_SESSION['customer_id'].") or cupon_no='$cupon_code' and customer_id is null) and (DATE_FORMAT(start_date, '%Y-%m-%d') <= '$date' AND DATE_FORMAT(end_date, '%Y-%m-%d') >= '$date')");
-        //var_dump($cupon_info['id']); die;
 
+        //var_dump("select id,c_type,amount,min_order_amount from cupons where status=1 and ((cupon_no='$cupon_code' and customer_id = ".$_SESSION['customer_id'].") or cupon_no='$cupon_code' and customer_id is null) and (DATE_FORMAT(start_date, '%Y-%m-%d') <= '$date' AND DATE_FORMAT(end_date, '%Y-%m-%d') >= '$date')");
+//die;
 
 
 
@@ -387,7 +423,6 @@ switch ($q) {
         echo json_encode($data);
 
         break;
-
 
     case "checkout":
 

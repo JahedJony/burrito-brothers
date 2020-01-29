@@ -7,8 +7,7 @@
 </div>
 <div class="col-md-8 col-sm-7 col-xs-12 wow fadeInDown main_content" data-wow-duration="1000ms" data-wow-delay="300ms">
 	<div class="team-single-right">
-		<h3 id='customer_name'></h3>
-		<h6 >Customer Id # <span id='customer_id_' ></span> </h6>
+		<h3 id='customer_name_' class="text-capitalize"></h3>
 		<h6 >Customer Status : <span id='customer_status_' ></span> </h6>
 		<p>Contact No: <a href="#" id="contact_no_"></a>
 		<br> E-mail: <a href="#" id="email_"></a></p>
@@ -39,7 +38,6 @@ $(document).ready(function () {
 			    //alert(data.loyalty_points)
 				if(!jQuery.isEmptyObject(data.records)){
 					$.each(data.records, function(i,data){ 				
-						$('#customer_id_').html(data.customer_id);
 						$('#customer_name_').html(data.full_name);
 						$('#contact_no_').html(data.contact_no);
 						$('#email_').html(data.email);
