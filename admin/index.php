@@ -267,6 +267,23 @@ $(document).ready(function () {
 		$(this).parent().is(".open") && e.stopPropagation();
 	});
 	
+	$('#load_more_not_button').click(function() {
+		 $(this).toggleClass('active');
+		 show_notifications();
+    });
+	
+	
+	set_time_out_fn = function set_time_out_fn(){
+		setTimeout(function(){ 
+			show_notifications_no();
+			set_time_out_fn();
+		}, 30000); 		
+	}
+	
+	set_time_out_fn();
+	show_notifications_no();	
+	show_notifications();
+	
 	
 });
 

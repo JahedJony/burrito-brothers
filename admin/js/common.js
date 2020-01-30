@@ -269,6 +269,89 @@ function reset_autoSuggest_ids(columns){
 
 //************** Notification******************* /
 
+function show_notifications(){
+	$.ajax({
+		url: project_url+"controller/notificationController.php",
+		dataType: "json",
+		type: "post",
+		async:false,
+		data:{
+			q: "load_notifications",
+			limit:2,
+			page_no:notification_current_page_no
+		},
+		success: function(data) {
+			$('#unread_notifications').html(data.total_unread);
+			if(!jQuery.isEmptyObject(data.records)){
+				var notification_li = "";
+				$.each(data.records, function(i,notification){ 
+					if(notification.status == 0){
+						notification_li +='<li><a id="noti_a_'+notification.id+'" style="color:#b66335 !important" onclick="show_notification_details('+notification.id+','+notification.product_rate_id+')" ><span class="image"></span><span class="message">'+notification.date_time+'</span><span class="message">'+notification.details+'</span></a></li>';
+					}
+					else{
+						notification_li +='<li><a  onclick="show_notification_details('+notification.id+','+notification.product_rate_id+')" ><span class="message">'+notification.date_time+'</span><span class="message">'+notification.details+'</span></a></li>';	
+					}
+				})
+				$('#notification_ul>li:last').before(notification_li);
+				notification_current_page_no++;
+				$('#load_more_not_button').removeClass("active");
+			}
+			else{
+				 notification_li = '<li> <div class="text-center alert alert-danger"> No More Notifications   </div></li>	';
+				 $('#notification_ul>li:last').before(notification_li);
+				 $('#load_more_not_button').removeClass("active");	
+				 $('#load_more_not_button').attr("disabled","disabled");				 
+			}
+		}
+	});	
+}
+
+
+function show_notifications_no(){
+	//alert("show notification no");
+	$.ajax({
+		url: project_url+"controller/notificationController.php",
+		dataType: "json",
+		type: "post",
+		async:false,
+		data:{
+			q: "load_notifications_no"
+		},
+		success: function(data) {
+			$('#unread_notifications').html(data.total_unread);
+		}
+	});	
+}
+
+
+function show_notification_details(notification_id, product_rate_id){
+	$.ajax({
+		url: project_url+"controller/notificationController.php",
+		type: "post",
+		async:false,
+		data:{
+			q: "update_notification_status",
+			notification_id:notification_id
+		},
+		success: function(data){
+			show_notifications_no()
+			$('#noti_a_'+notification_id).css("color","#5A738E !important")
+			//window.location.replace("index.php?module=reports&view=stockAlertReport")
+			alert('Work Later')
+		}
+	});
+}
+
+
+
+
+
+
+
+
+/*
+
+
 
 function show_notifications(){
 	$.ajax({
@@ -347,7 +430,7 @@ function show_notification_details(notification_id, module_name, module_master_i
 }
 
 
-
+*/
 
 function tofixed(num) {
 	return parseFloat(num).toFixed(2);

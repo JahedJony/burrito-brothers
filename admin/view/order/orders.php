@@ -148,6 +148,7 @@ else{
                                     <div class="col-md-6" style="margin: 0px; padding: 0px">
                                         <h4>Order Details:</h4>
                                         <div class="">
+                                            <span><button id="order_status_option" type="button" style="min-width:60px" class="btn btn-sm btn-success btn-lg disabled"></button></span><br/>
                                             <span id="ord_date"></span><br/>
                                             <span id="dlv_date"></span> <br/>
                                             <span id="dlv_ps"></span> <br/>
@@ -157,7 +158,16 @@ else{
                                     <div class="col-md-6" style="text-align:right">
 
                                         <div class="col-md-10 col-sm-10 col-xs-6">
-
+											<input type="hidden" id="order_status_id" name="order_status_id" value="1" />
+                                            <input type="hidden" id="order_id_edit">
+											
+											<button id="order_received" onclick="update_order_status(2)" type="button" style="min-width:60px" class="order_status_btn btn btn-success btn-lg">Received</button>
+											<button id="order_preparing" onclick="update_order_status(3)" type="button" style="min-width:60px" class="order_status_btn btn btn-success btn-lg">Preparing</button>
+											<button id="order_ready" onclick="update_order_status(4)" type="button" style="min-width:60px" class="order_status_btn btn btn-success btn-lg">Ready</button>
+											<button id="order_delivered" onclick="update_order_status(5)" type="button" style="min-width:60px" class="order_status_btn btn btn-success btn-lg">Delivered</button>
+											<button id="order_rejected" onclick="update_order_status(6)" type="button" style="min-width:60px" class="btn btn-danger btn-lg">Reject</button>
+											
+											<!--
                                             <input type="hidden" id="order_status_id" name="order_status_id" value="1" />
                                             <input type="hidden" id="order_id_edit">
                                             <button class="btn btn-primary btn-lg dropdown-toggle" style="width:190px" type="button" id="dropdown_status" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">Change Status
@@ -170,7 +180,8 @@ else{
                                                 <li id="order_delivered"><a href="javascript:void(0)" onclick="update_order_status(5)">Delivered</a></li>
                                             </ul>
                                             <button id="order_status_option" type="button" style="min-width:60px" class="btn btn-success btn-lg disabled">Ordered</button>
-                                        </div>
+											-->
+										</div>
 
                                     </div>
 
@@ -205,7 +216,6 @@ else{
     </div>
 
     <?php
-
 }
 ?>
 <script src="js/customTable.js"></script>
@@ -214,53 +224,84 @@ else{
 
     $('#show_invoice').hide();
 
-        //$('#delivery_date').val('');
+    //$('#delivery_date').val('');
 
     $(document).ready(function () {
-
+		
+		//status update action from edit modal
         update_order_status = function update_order_status(status_id){
             var order_id = $('#order_id_edit').val();
-            //alert(order_id)
-            //alert(status_id)
-            var url = project_url+"controller/orderController.php";
-            $.ajax({
-                url: url,
-                type:'POST',
-                async:false,
-                data:{
-                    q: "update_order_status",
-                    order_id:order_id,
-                    status_id:status_id
-                },
-                success: function(data){
-                    //console.log(data)
+			
+			var url = project_url+"controller/orderController.php";
+			$.ajax({
+				url: url,
+				type:'POST',
+				async:false,
+				data:{
+					q: "update_order_status",
+					order_id:order_id,
+					status_id:status_id
+				},
+				success: function(data){
+					//console.log(data)
 
-                    if(data==1){
-                        if(status_id==2){
-                            $('#order_status_option').html("Received");
-                            $('#order_status_id').val(2);
-                        }
-                        else if(status_id==3){
-                            $('#order_status_option').html("Preparing");
-                            $('#order_status_id').val(3);
-                        }
-                        else if(status_id==4){
-                            $('#order_status_option').html("Ready");
-                            $('#order_status_id').val(4);
-                        }
-                        else if(status_id==5){
-                            $('#order_status_option').html("Preparing");
-                            $('#order_status_id').val(5);
-                        }
-                    }
-                }
-            });
-            edit_order(order_id);
+					if(data==1){
+						if(status_id==2){
+							$('#order_status_option').html("Received");
+							$('#order_status_id').val(2);
+							
+							//next order status button show
+							$('#order_received').hide();
+							$('#order_preparing').show();
+							$('#order_ready').hide();
+							$('#order_delivered').hide();
+							$('#order_rejected').show();
+						}
+						else if(status_id==3){
+							$('#order_status_option').html("Preparing");
+							$('#order_status_id').val(3);
+							
+							//next order status button show
+							$('#order_received').hide();
+							$('#order_preparing').hide();
+							$('#order_ready').show();
+							$('#order_delivered').hide();
+							$('#order_rejected').show();
+						}
+						else if(status_id==4){
+							$('#order_status_option').html("Ready");
+							$('#order_status_id').val(4);
+							
+							//next order status button show
+							$('#order_received').hide();
+							$('#order_preparing').hide();
+							$('#order_ready').hide();
+							$('#order_delivered').show();
+							$('#order_rejected').show();
+						}
+						else if(status_id==5){
+							$('#order_status_option').html("Delivered");
+							$('#order_status_id').val(5);
+							
+							//next order status button show
+							$('#order_received').hide();
+							$('#order_preparing').hide();
+							$('#order_ready').hide();
+							$('#order_delivered').hide();
+							$('#order_rejected').hide();
+						}
+						else if(status_id==6){
+							$("#order_modal").click();
+						}
+					}
+				}
+			});
+			
             load_order("")
-
         }
 
         var current_page_no=1;
+		
         load_order = function load_order(search_txt){
             //alert('order')
             $("#search_order_button").toggleClass('active');
@@ -350,28 +391,8 @@ else{
                         var records_array = data.records;
                         $('#order_Table tbody tr').remove();
                         $("#search_order_button").toggleClass('active');
-                        $.each(records_array, function (i, datas) {
-                            //alert(i)
-                                if(records_array[i]['order_status']==1){
-                                    records_array[i]['order_status']='Ordered'
-                                }
-                                else if(records_array[i]['order_status']==2){
-                                    records_array[i]['order_status']='Received'
-                                }
-                                else if(records_array[i]['order_status']==3){
-                                    records_array[i]['order_status']='Preparing'
-                                }
-                                else if(records_array[i]['order_status']==4){
-                                    records_array[i]['order_status']='Ready'
-                                }
-                                else if(records_array[i]['order_status']==5){
-                                    records_array[i]['order_status']='Delivered'
-                                }
-
-                        })
+						
                         if(!jQuery.isEmptyObject(records_array)){
-
-                            //cnsole.log(total_order_amt)
                             //create and set grid table row
                             var colums_array=["order_id*identifier*hidden","invoice_no","customer_name","p_name","order_date","delivery_date","payment_method","order_status","total_order_amt"];
                             //first element is for view , edit condition, delete condition
@@ -432,8 +453,6 @@ else{
             load_order("Print");
         });
 
-        //insert order
-
 
         $(document).on('click','#order_print', function(){
             var divContents = $("#order-div").html();
@@ -447,9 +466,9 @@ else{
             printWindow.print();
         });
 
-        //edit order
+
+        //order status update
         edit_order = function edit_order(order_id){
-            //order noticed update
             $('#ord_detail_vw>table>tbody').html('');
             $.ajax({
                 url: project_url+"controller/orderController.php",
@@ -458,18 +477,15 @@ else{
                 dataType: "json",
                 data:{
                     q: "get_order_details_by_invoice",
-                    order_id:order_id
+                    order_id: order_id
                 },
                 success: function(data){
-                    //console.log(data)
-                    //alert(data.item_id)
-                    //console.log(data)
                     if(!jQuery.isEmptyObject(data.records)){
                         $.each(data.records, function(i,data){
                             $('#order_id_edit').val(data.order_id);
                             $('#ord_title_vw').html(data.invoice_no);
-                            $('#ord_date').html("Ordered time: "+data.order_date);
-                            $('#dlv_date').html("Delivery time: "+data.delivery_date);
+                            $('#ord_date').html("Ordered Time: "+data.order_date);
+                            $('#dlv_date').html("Delivery Time: "+data.delivery_date);
                             $('#dlv_ps').html("Payment Status: "+data.paid_status);
                             $('#dlv_pm').html("Payment Method: "+data.payment_method);
                             $('#customer_detail_vw').html(" "+data.customer_name+"<br/><b>Mobile:</b> "+data.customer_contact_no+"<br/><b>Address:</b> "+data.customer_address);
@@ -488,196 +504,76 @@ else{
                                 order_tr += '<tr><td class="text-capitalize">'+order_info_arr[2].split('..')[0]+' <br>'+order_info_arr[6].split('..')[0]+'</td><td align="center">'+order_info_arr[5]+'</td><td align="right">'+order_info_arr[4]+'</td><td align="right">'+total+'</td></tr>';
                                 order_total += total;
                             });
+							
                             var total_order_bill = ((parseFloat(order_total)+parseFloat(data.delivery_charge))-parseFloat(data.discount_amount));
                             var total_paid = data.total_paid_amount;
-                            order_tr += '<tr><td colspan="3" align="right" ><b>Total Amount</b></td><td align="right"><b>'+total_paid+'</b></td></tr>';
-                            $('#ord_detail_vw>table>tbody').append(order_tr);
-                            if(data.order_status==2){
-                                    $('#order_status_option').html("Received");
-                                    $('#order_status_id').val(2);
-                                }
-                            else if(data.order_status==3){
-                                    $('#order_status_option').html("Preparing");
-                                    $('#order_status_id').val(3);
-                                }
+                            
+							order_tr += '<tr><td colspan="3" align="right" ><b>Total Amount</b></td><td align="right"><b>'+total_paid+'</b></td></tr>';
+                            
+							$('#ord_detail_vw>table>tbody').append(order_tr);
+                            
+							if(data.order_status==2){
+								$('#order_status_option').html("Received");
+								$('#order_status_id').val(2);
+								
+								//next order status button show
+								$('#order_received').hide();
+								$('#order_preparing').show();
+								$('#order_ready').hide();
+								$('#order_delivered').hide();
+								$('#order_rejected').show();
+							}
+							else if(data.order_status==3){
+								$('#order_status_option').html("Preparing");
+								$('#order_status_id').val(3);
+								
+								//next order status button show
+								$('#order_received').hide();
+								$('#order_preparing').hide();
+								$('#order_ready').show();
+								$('#order_delivered').hide();
+								$('#order_rejected').show();
+							}
                             else if(data.order_status==4){
-                                    $('#order_status_option').html("Ready");
-                                    $('#order_status_id').val(4);
-                                }
+								$('#order_status_option').html("Ready");
+								$('#order_status_id').val(4);
+								
+								//next order status button show
+								$('#order_received').hide();
+								$('#order_preparing').hide();
+								$('#order_ready').hide();
+								$('#order_delivered').show();
+								$('#order_rejected').show();
+							}
                             else if(data.order_status==5){
-                                    $('#order_status_option').html("Preparing");
-                                    $('#order_status_id').val(5);
-                                }
+								$('#order_status_option').html("Delivered");
+								$('#order_status_id').val(5);
+								
+								//next order status button show
+								$('#order_received').hide();
+								$('#order_preparing').hide();
+								$('#order_ready').hide();
+								$('#order_delivered').hide();
+								$('#order_rejected').hide();
+							}
                             else{
-                                    $('#order_status_option').html("Ordered");
-                                    $('#order_status_id').val(1);
-                                }
-
+								$('#order_status_option').html("Ordered");
+								$('#order_status_id').val(1);
+								
+								//next order status button show
+								$('#order_received').show();
+								$('#order_preparing').hide();
+								$('#order_ready').hide();
+								$('#order_delivered').hide();
+								$('#order_rejected').show();
+							}
                             //for small device
-
                         });
                     }
                 }
             });
+			
             $('#order_modal').modal();
-
-
-            /*
-            alert(order_id)
-            $.ajax({
-                url: project_url+"controller/orderController.php",
-                type:'POST',
-                async:false,
-                dataType: "json",
-                data:{
-                    q: "set_order_notice_details",
-                    order_id:order_id
-                },
-                success: function(data){
-                    //alert(data)
-                    //alert('Noticed Successfully');
-                }
-            });
-            //alert('edit2')
-
-            $('#delivery_address').hide();
-            //$('#delivery_outlet').hide();
-            $('#order_id').val(order_id);
-
-
-
-            $('#orderTable > tbody').html("");
-            //alert('edit3')
-
-
-            $.ajax({
-                url: project_url+"controller/orderController.php",
-                dataType: "json",
-                type: "post",
-                async:false,
-                data: {
-                    q: "get_order_details",
-                    order_id: order_id
-                },
-                success: function(data){
-                    alert(data)
-                    if(!jQuery.isEmptyObject(data.records)){
-                        $.each(data.records, function(i,data){
-
-                            total_product_amount 	= data.total_order_amt;
-                            delivery_charge_amount 	= data.delivery_charge;
-                            tax_amount 				= data.tax_amount;
-                            coupon_amount 			= data.discount_amount;
-                            coupon_name 			= data.cupon_id;
-                            cu_amount 				= data.cu_amount;
-                            total_paid_amount 		= data.total_paid_amount;
-                            grand_total_amount 		= data.total_paid_amount;
-
-                            if(coupon_name != ""){
-                                if(data.cu_type ==1)		$('#coupon_name').val(coupon_name+">>"+cu_amount);
-                                else if(data.cu_type ==2)	$('#coupon_name').val(coupon_name+">>"+cu_amount+"%");
-                                $('#coupon_type').val(data.cu_type);
-                                $('#coupon_amount').val(cu_amount);
-                            }
-
-                            if(data.order_status==1){
-                                $('#order_status_option').html("Ordered");
-                                $('#order_status_id').val(1);
-                                $('#order_ready').show();
-                                $('#order_picked').show();
-                            }
-                            if(data.order_status==2){
-                                $('#order_status_option').html("Ready");
-                                $('#order_status_id').val(2);
-                                $('#order_ready').hide();
-                            }
-                            else if(data.order_status==3){
-                                $('#order_status_option').html("Picked");
-                                $('#order_status_id').val(3);
-                                $('#order_ready').hide();
-                                $('#order_picked').hide();
-                                $('#save').attr('disabled','disabled');
-                                $('#show_invoice').show();
-                            }
-
-                            $('#customer_name').val(data.customer_name);
-                            $('#customer_id').val(data.customer_id);
-                            $('#customer_id').val(data.customer_id);
-                            $('#delivery_date').val(data.delivery_date);
-                            $('#delivery_option').val(data.delivery_type);
-                            $('#outlet_option').val(data.outlet_id);
-                            var option_html = '';
-                            //alert('edit4')
-
-                            if(data.delivery_type == 1){
-                                $('#delivery_outlet').show();
-                                $('#delivery_address').hide();
-                                $('#delivery_option_list').after().html('');
-                                $('#delivery_option_list_div').hide();
-
-                            }
-                            else{
-                                $('#delivery_outlet').hide();
-                                $('#delivery_address').hide();
-                            }
-
-                            $('#remarks').val(data.remarks);
-                            if(data.payment_method_id == 0 || data.payment_method_id == null){
-                                $('#payment_option').val(0);
-                            }
-                            else{
-                                $('#payment_option').val(data.payment_method_id);
-                            }
-
-
-                            $('#payment_referance_no').val(data.payment_reference_no);
-                            $('#payment_status').val(data.payment_status);
-                            $('#total_paid_amount').val(data.total_paid_amount);
-
-                            alert(data.order_info)
-                            order_infos	 = data.order_info;
-                            var order_arr = order_infos.split(',');
-
-                            $.each(order_arr, function(i,orderInfo){
-                                var order_info_arr = orderInfo.split('#');
-                                var total = ((parseFloat(order_info_arr[6])*parseFloat(order_info_arr[7])));
-                                $('#orderTable > tbody').append("<tr><td><input type='text' readonly name='product_name[]' class='form-control col-lg-12 product_name' value='"+order_info_arr[2]+"'/><input type='hidden' name='item_id[]' class='item_id' value='"+order_info_arr[3]+"'/></td><td><input type='text' name='rate[]' readonly value='"+order_info_arr[4]+"' required class='form-control col-lg-12 text-right rate'/></td><td><input type='text' name='quantity[]' readonly class='form-control col-lg-12 quantity' value='"+order_info_arr[5]+"' /></td><td><input type='text' name='total[]' value='"+order_info_arr[5]*order_info_arr[4]+"' required class='form-control col-lg-12 text-right total' readonly='readonly'/></td><td><span class='input-group-btn'><button type='button' class='btn btn-danger btn-xs remove_row'><span class='glyphicon glyphicon-minus'></span></button></span></td></tr>");
-                                //order_total += parseFloat(total);
-                            });
-
-                            var total_order_product_amount = 0;
-                            $("#orderTable>tbody>tr").each(function(){
-                                var total = $(this).find('.total').val();
-                                total_order_product_amount += parseFloat(total);
-                            })
-                            total_product_amount = total_order_product_amount;
-                            $('.remove_row').click(function(){
-                                $(this).parent().parent().parent().remove();
-
-                                var total_order_product_amount = 0;
-                                $("#orderTable>tbody>tr").each(function(){
-                                    var total = $(this).find('.total').val();
-                                    total_order_product_amount += parseFloat(total);
-                                })
-
-                                total_product_amount = total_order_product_amount;
-
-
-                            });
-
-
-                        });
-                    }
-
-                    $('#save_order').html('Update');
-
-                    // to open submit post section
-                    if($.trim($('#toggle_form i').attr("class"))=="fa fa-chevron-down")
-                        $( "#toggle_form" ).trigger( "click" );
-                }
-            });
-
-            */
         }
 
         $('#show_invoice').click(function(){

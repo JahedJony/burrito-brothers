@@ -158,7 +158,7 @@ switch ($q){
             if($return_details) echo "2";
             else                echo "0";
         }
-        break;
+    break;
 
     case "grid_data":
         $start = ($page_no*$limit)-$limit;
@@ -185,17 +185,11 @@ switch ($q){
             if($ad_is_order != 0)  			$condition  .=" and order_status = $ad_is_order";
             //$condition .=	"where s.name LIKE '%$std_name%' AND sch.name LIKE '%$sch_name%' AND s.class LIKE '%$std_class%'  AND s.address LIKE '%$std_address%'  AND s.upazilla LIKE '%$std_upazilla%' AND s.zilla LIKE '%$std_zilla%'  AND s.division LIKE '%$std_division%'";
         }
-        // textfield search for grid
-        /*else{
-            $condition .=	" CONCAT(order_id, customer_name, p_name, item_rate) LIKE '%$search_txt%' ";
-        }*/
-
-        //echo '1'; die;
-
+   
 
         $countsql = "SELECT count(order_id)
 					FROM(
-						   SELECT m.order_id, m.customer_id, c.full_name as customer_name, m.invoice_no,
+						SELECT m.order_id, m.customer_id, c.full_name as customer_name, m.invoice_no,
 						d.item_id,d.item_rate, d.item_rate_id,  d.ingredient_list, m.order_date, m.delivery_date, p.name as p_name,
 						m.delivery_type, order_noticed,
 						m.address, m.remarks, m.order_status, m.payment_status, m.payment_method, m.payment_reference_no
@@ -203,7 +197,7 @@ switch ($q){
 						LEFT JOIN order_details d ON d.order_id = m.order_id
 						LEFT JOIN customer_infos c ON c.customer_id = m.customer_id
 						LEFT JOIN items p ON p.item_id = d.item_id
-						WHERE d.status=1
+						WHERE m.order_status !=6
 						GROUP BY d.order_id
 						ORDER BY m.order_id DESC
 					)A
@@ -217,29 +211,35 @@ switch ($q){
         $total_pages = $total_records/$limit;
         $data['total_pages'] = ceil($total_pages);
         if($category_grid_permission==1){
-            $sql = 	"SELECT order_id, customer_id, customer_name, item_id, item_rate, ingredient_list,item_rate_id, p_name, order_date,order_noticed,order_status,
-					delivery_date, delivery_type, address, total_order_amt, remarks,	 payment_reference_no, invoice_no, 
+            $sql = 	"SELECT order_id, customer_id, customer_name, item_id, item_rate, ingredient_list,item_rate_id, p_name, order_date,
+					order_noticed, order_status, delivery_date, delivery_type, address, total_order_amt, remarks, payment_reference_no, invoice_no, 
 					$update_permission as update_status, $delete_permission as delete_status,
 					case payment_status when payment_status=1 then 'Not Paid' else 'Paid' end paid_status, 
 					case payment_method when payment_method=1 then 'bKash' when payment_method=2 then 'Rocket'  else 'Cash On Delivery'  end payment_method
 					FROM(
-						 SELECT m.order_id, m.customer_id, c.full_name as customer_name, m.invoice_no,
+						SELECT m.order_id, m.customer_id, c.full_name as customer_name, m.invoice_no,
 						d.item_id,d.item_rate, d.item_rate_id, m.total_order_amt, d.ingredient_list, m.order_date, m.delivery_date, p.name as p_name,
 						m.delivery_type, order_noticed,
-						m.address, m.remarks, m.order_status, m.payment_status, m.payment_method, m.payment_reference_no
+						m.address, m.remarks, m.payment_status, m.payment_method, m.payment_reference_no,
+						case 
+							WHEN m.order_status = 1 THEN 'Ordered'
+							WHEN m.order_status = 2 THEN 'Received'
+							WHEN m.order_status = 3 THEN 'Preparing'
+							WHEN m.order_status = 4 THEN 'Ready'
+							WHEN m.order_status = 5 THEN 'Delivered'
+						END as order_status
 						FROM order_master m
 						LEFT JOIN order_details d ON d.order_id = m.order_id
 						LEFT JOIN customer_infos c ON c.customer_id = m.customer_id
 						LEFT JOIN items p ON p.item_id = d.item_id
-						WHERE d.status=1
+						WHERE m.order_status !=6
 						GROUP BY d.order_id
-						ORDER BY m.order_id DESC
-					
+						ORDER BY m.order_id DESC					
 					)A
 					WHERE CONCAT(invoice_no, order_id, customer_name, p_name, item_rate) LIKE '%$search_txt%' $condition
 					ORDER BY order_id desc
 					LIMIT $start, $end";
-            //echo $sql;die;
+            //echo $sql;
             $stmt = $conn->prepare($sql);
             $stmt->execute();
             $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -248,7 +248,7 @@ switch ($q){
             }
             echo json_encode($data);
         }
-        break;
+    break;
 
     case "get_order_details":
         $update_permission = $dbClass->getUserGroupPermission(76);
@@ -269,7 +269,7 @@ switch ($q){
 					LEFT JOIN items p ON p.item_id = d.item_id
 					LEFT JOIN category ca ON ca.id = p.category_id
 					LEFT JOIN cupons cu ON cu.cupon_no = m.cupon_id 
-					WHERE d.status=1 and m.order_id= $order_id  
+					WHERE m.order_id= $order_id  
 					GROUP BY d.order_id
 					ORDER BY m.order_id  ";
             //echo $sql;die;
@@ -281,7 +281,8 @@ switch ($q){
             }
             echo json_encode($data);
         }
-        break;
+		
+    break;
 
 
     case "set_order_notice_details":
@@ -303,7 +304,7 @@ switch ($q){
             echo $return;
         }
 
-        break;
+    break;
 
     case "delete_order":
         $delete_permission = $dbClass->getUserGroupPermission(75);
@@ -318,7 +319,7 @@ switch ($q){
         }
         if($return) echo "1";
         else 		echo "0";
-        break;
+    break;
 
     case "view_outlets":
         $data = array();
@@ -327,7 +328,7 @@ switch ($q){
             $data['records'][] = $row;
         }
         echo json_encode($data);
-        break;
+    break;
 
     case "view_delivery_list":
         $dept_details = $dbClass->getResultList("select id, type, format(rate,2) rate from delivery_charge where status=1");
@@ -335,7 +336,7 @@ switch ($q){
             $data['records'][] = $row;
         }
         echo json_encode($data);
-        break;
+    break;
 
 
     case "customer_info":
@@ -354,7 +355,7 @@ switch ($q){
             $json[] = array('id' => "0",'label' => "No item Found !!!");
         }
         echo json_encode($json);
-        break;
+    break;
 
     case "coupon_info":
         $sql_query = "SELECT id, c_type, amount, CONCAT(cupon_no,' >> ',t_amount) c_info FROM 
@@ -379,7 +380,7 @@ switch ($q){
             $json[] = array('id' => "0",'label' => "No Coupon Found !!!");
         }
         echo json_encode($json);
-        break;
+    break;
 
     case "item_info":
         $con = "WHERE CONCAT(p.name, p.item_id) LIKE '%$term%'";
@@ -405,7 +406,7 @@ switch ($q){
             $json[] = array('id' => "0",'label' => "No item Found !!!");
         }
         echo json_encode($json);
-        break;
+    break;
 
     case "ad_item_info":
         $sql_query = "SELECT p.item_id, p.name FROM items p WHERE CONCAT(name) LIKE '%$term%' ORDER BY p.item_id";
@@ -422,7 +423,7 @@ switch ($q){
             $json[] = array('id' => "0",'label' => "No item Found !!!");
         }
         echo json_encode($json);
-        break;
+    break;
 
     case "get_item_rate":
         //var_dump($_REQUEST);die;
@@ -442,7 +443,7 @@ switch ($q){
         } else {
             echo  0;
         }
-        break;
+    break;
 
     case "category_info":
         $sql_query = "SELECT id, CONCAT(head_name,' >> ',code) category_name 
@@ -467,12 +468,9 @@ switch ($q){
             $json[] = array('id' => "0",'label' => "No item Found !!!");
         }
         echo json_encode($json);
-        break;
+    break;
 
     case "update_order_status":
-        var_dump($order_id);
-        var_dump($status_id);
-
 
         $condition_array = array(
             'order_id'=>$order_id
@@ -482,7 +480,7 @@ switch ($q){
         );
         $return = $dbClass->update("order_master", $columns_value, $condition_array);
         echo $return;
-        break;
+    break;
 
 
     case "get_order_details_by_invoice":
