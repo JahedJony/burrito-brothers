@@ -10,14 +10,8 @@ if(isset($_SESSION['customer_id']) && $_SESSION['customer_id']!=""){
     $customer_id = $_SESSION['customer_id'];
 }
 else $is_logged_in_customer = "";
-
-
-//var_dump($customer_info)
-
 $order_id = '';
 if(isset($_GET['order_id']) && $_GET['order_id']!="") $order_id =  $_GET['order_id'];
-
-//var_dump($customer_info);
 ?>
 
 <section class="breadcrumb-part" data-stellar-offset-parent="true" data-stellar-background-ratio="0.5"
@@ -44,122 +38,22 @@ if(isset($_GET['order_id']) && $_GET['order_id']!="") $order_id =  $_GET['order_
         </div>
     <?php } ?>
     <div class="container">
-
           <div class="row">
                <div class="col-md-12 col-sm-12 col-xs-12 wow fadeInDown  tab-content" id="item_body" data-wow-duration="1000ms" data-wow-delay="300ms" >
                    <div class="col-md-8 col-sm-8 col-xs-12" id="option_body" style="background-color: white; border-radius: 12px 12px 0px 0px; padding-top: 25px; padding-bottom: 20px; margin-bottom: 10px">
-                               <!--             <h4 class="col-md-10 col-sm-10 col-xs-10">Item Name</h4><p class="col-md-2 col-sm-2 col-xs-2">ssgdsfgdfsgfd</p>
-                                             <input type="hidden" name="item_id[]" value="1" />
-                                             <input type="hidden" name="item_rate[]" value="15" />
-                                             <label>Item description Item description Item description Item descriptionItem description </label>
-                                                                    //start option block
-
-                                                                    <div class="col-md-12 col-sm-12 col-xs-12 " style="background-color: rgba(244,242,237,1); padding-top: 25px; padding-bottom: 20px; margin-top: 5px; margin-bottom: 10px">
-                                                                        //-- option id will come from DB
-                                                                        <div class="col-md-12 col-sm-12 col-xs-12 ">
-                                                                            <span style="font-size: 20px"><b>Choose cheese</b> </span><span>( Minimum 1)</span>
-                                                                        </div>
-                                                                        <input type="hidden" name="options[]" value="1" />
-                                                                        <input type="hidden" name="options_name[]" value="Choose Side" />
-                                                                        <input type="hidden" id="option_required_1" value="" />
-                                                                        <input type="hidden" id="option_maximum_1" value="" />
-                                                                        <input type="hidden" id="option_minimum_1" value="" />
-                                                                        <input type="hidden" id="select_no_1" value="" />
-                                                                        // start ingredient block
-                                                                        <div class="options-container col-md-12 col-sm-12 col-xs-12 " style="margin-top: 10px">
-                                                                            <div class="options-ingredient col-md-3 col-sm-4 col-xs-6" style="text-align: center; margin-top: 10px">
-                                                                                <input type="hidden"  class="ingredient_id"  value="1" />
-                                                                                <input type="hidden"  class="ingredient_rate"  value="3" />
-                                                                                <img src="http://burritobrothers.test/admin/images/category/noFood.png" alt="" style="border-radius: 5px; height: 80px; width: 80px">
-                                                                                <br><span>Option Name1</span>
-                                                                            </div>
-                                                                            <div class="options-ingredient col-md-3 col-sm-4 col-xs-6" style="text-align: center; margin-top: 10px">
-                                                                                <input type="hidden"  class="ingredient_id"  value="1" />
-                                                                                <input type="hidden"  class="ingredient_rate"  value="3" />
-                                                                                <img src="http://burritobrothers.test/admin/images/category/noFood.png" alt="" style="border-radius: 5px; height: 80px; width: 80px">
-                                                                                <br><span>Option Name1</span>
-                                                                            </div>
-                                                                            <div class="options-ingredient col-md-3 col-sm-4 col-xs-6" style="text-align: center; margin-top: 10px">
-                                                                                <input type="hidden"  class="ingredient_id"  value="1" />
-                                                                                <input type="hidden"  class="ingredient_rate"  value="3" />
-                                                                                <img src="http://burritobrothers.test/admin/images/category/noFood.png" alt="" style="border-radius: 5px; height: 80px; width: 80px">
-                                                                                <br><span>Option Name1</span>
-                                                                            </div>
-                                                                            <div class="options-ingredient col-md-3 col-sm-4 col-xs-6" style="text-align: center; margin-top: 10px">
-                                                                                <input type="hidden" class="ingredient_id"    value="2" />
-                                                                                <input type="hidden" class="ingredient_rate"  value="3" />
-                                                                                <img src="http://burritobrothers.test/admin/images/category/noFood.png" alt="" style="border-radius: 5px; height: 80px; width: 80px">
-                                                                                <br><span>Option Name1</span>
-                                                                            </div>
-                                                                            <div class="options-ingredient col-md-3 col-sm-4 col-xs-6" style="text-align: center; margin-top: 10px">
-                                                                                <input type="hidden"  class="ingredient_id"  value="1" />
-                                                                                <input type="hidden"  class="ingredient_rate"  value="3" />
-                                                                                <img src="http://burritobrothers.test/admin/images/category/noFood.png" alt="" style="border-radius: 5px; height: 80px; width: 80px">
-                                                                                <br><span>Option Name1</span>
-                                                                            </div>
-                                                                            <div class="options-ingredient col-md-3 col-sm-4 col-xs-6" style="text-align: center; margin-top: 10px">
-                                                                                <input type="hidden" class="ingredient_id"    value="2" />
-                                                                                <input type="hidden" class="ingredient_rate"  value="3" />
-                                                                                <img src="http://burritobrothers.test/admin/images/category/noFood.png" alt="" style="border-radius: 5px; height: 80px; width: 80px">
-                                                                                <br><span>Option Name1</span>
-                                                                            </div>
-                                                                        </div>
-                                                                        //   End ingredient
-                                                                    </div>
-
-                       //  End option  -->
-
                    </div>
-
                    <div class="col-md-4 col-sm-4 col-xs-12 wow fadeInDown" data-wow-duration="1000ms" data-wow-delay="300ms" style="position: sticky; alignment: right; float: right">
                         <div class="shop-checkout-right">
                             <label id="title_right" style="text-transform: capitalize; font-size: 20px"></label>
-                            <div id="ingredient_summary">
-                                <!--
-                                <div class="col-md-12 col-sm-12 col-xs-12 checkout-total" style="align-content: baseline; margin-top: 0px; padding: 0px">
-                                    <b>Total</b>
-                                </div>
-
-                                <div class="col-md-12 col-sm-12 col-xs-12">
-                                    <div class="col-md-9 col-sm-9 col-xs-9">Cheddar Cheese</div>
-                                    <div class="col-md-3 col-sm-3 col-xs-3">$5</div>
-                                </div>
-                                <div class="col-md-12 col-sm-12 col-xs-12">
-                                    <div class="col-md-9 col-sm-9 col-xs-9">14" Big Daddy With Cheese</div>
-                                    <div class="col-md-3 col-sm-3 col-xs-3">$5.50</div>
-                                </div>
-
-                                <div class="col-md-12 col-sm-12 col-xs-12 checkout-total" style="align-content: baseline; margin-top: 0px; padding: 0px">
-                                    <b>Total</b>
-                                </div>
-
-                                <div class="col-md-12 col-sm-12 col-xs-12">
-                                    <div class="col-md-9 col-sm-9 col-xs-9">Fresh Jalopenos</div>
-                                    <div class="col-md-3 col-sm-3 col-xs-3">$0.75</div>
-                                </div>
-                                <div class="col-md-12 col-sm-12 col-xs-12">
-                                    <div class="col-md-9 col-sm-9 col-xs-9">Tomato Tortilla</div>
-                                    <div class="col-md-3 col-sm-3 col-xs-3">$12.50</div>
-                                </div>
-
-
-
-                                -->
-
-                                </div>
-
+                            <div id="ingredient_summary"></div>
                             <div class="col-md-12 col-sm-12 col-xs-12 checkout-total" style="align-content: baseline"></div>
                             <div class="col-md-12 col-sm-12 col-xs-12 " >
                                 <div class="col-md-9 col-sm-9 col-xs-9"><b>Sub Total</b></div>
                                 <div class="col-md-3 col-sm-3 col-xs-3" id="total_price"><b>$00.00</b></div>
                             </div>
                             <button class="button-default button-default-submit" style="width: 100%; background-color: #e4b95b; color: white; margin-top: 15px" onclick="addToCart()"><b>Add to Cart</b></button>
-
-
                         </div>
-
                    </div>
-
                </div>
           </div>
     </div>
@@ -512,6 +406,7 @@ if(isset($_GET['order_id']) && $_GET['order_id']!="") $order_id =  $_GET['order_
 
 
     })
+
     addToCart = function addToCart(){
 
         //console.log(selected_item_list)
