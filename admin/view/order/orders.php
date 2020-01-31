@@ -16,7 +16,7 @@ else if($dbClass->getUserGroupPermission(77) != 1 ){
 else{
     $user_name = $_SESSION['user_name'];
     $date = date("y-m-d");
-	//echo $logo;die;
+	$logo = $dbClass->getDescription('website_url')."admin/".$dbClass->getDescription('company_logo');
     ?>
 
     <div class="x_panel">
@@ -139,7 +139,7 @@ else{
                 <div class="modal-body">
                     <div id="order-div" style="margin-bottom: 30px">
                         <div class="title text-center">
-                            <h3 class="text-coffee left"> <a href="index.php"><img src="<?php echo ($logo); ?>" alt="" style="height: 100px; width: 100px"></a></h3>
+                            <h3 class="text-coffee left"> <a href="#"><img src="<?php echo ($logo); ?>" alt="" style="height: 100px; width: 100px"></a></h3>
                             <h4 class="text-coffee left">Order No # <span id="ord_title_vw"></span></h4>
                         </div>
                         <div class="done_registration ">
@@ -160,6 +160,7 @@ else{
                                         <div class="col-md-10 col-sm-10 col-xs-6">
 											<input type="hidden" id="order_status_id" name="order_status_id" value="1" />
                                             <input type="hidden" id="order_id_edit">
+                                            <input type="hidden" id="ordered_customer_id">
 											
 											<button id="order_received" onclick="update_order_status(2)" type="button" style="min-width:60px" class="order_status_btn btn btn-success btn-lg">Received</button>
 											<button id="order_preparing" onclick="update_order_status(3)" type="button" style="min-width:60px" class="order_status_btn btn btn-success btn-lg">Preparing</button>
@@ -230,8 +231,8 @@ else{
 		
 		//status update action from edit modal
         update_order_status = function update_order_status(status_id){
-            var order_id = $('#order_id_edit').val();
-			
+            var order_id = $('#order_id_edit').val();			
+            var customer_id = $('#ordered_customer_id').val();				
 			var url = project_url+"controller/orderController.php";
 			$.ajax({
 				url: url,
@@ -240,11 +241,10 @@ else{
 				data:{
 					q: "update_order_status",
 					order_id:order_id,
-					status_id:status_id
+					status_id:status_id,
+					customer_id:customer_id
 				},
 				success: function(data){
-					//console.log(data)
-
 					if(data==1){
 						if(status_id==2){
 							$('#order_status_option').html("Received");
@@ -483,6 +483,7 @@ else{
                     if(!jQuery.isEmptyObject(data.records)){
                         $.each(data.records, function(i,data){
                             $('#order_id_edit').val(data.order_id);
+                            $('#ordered_customer_id').val(data.customer_id);
                             $('#ord_title_vw').html(data.invoice_no);
                             $('#ord_date').html("Ordered Time: "+data.order_date);
                             $('#dlv_date').html("Delivery Time: "+data.delivery_date);

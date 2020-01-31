@@ -110,10 +110,19 @@ if(isset($_GET['search'])) $search_text = "";
                                     <li><a href="<?php echo $twitter; ?>"><i class="fa fa-twitter" aria-hidden="true"></i></a></li>
                                     <li><a href="<?php echo $instagram; ?>"><i class="fa fa-instagram" aria-hidden="true"></i></a></li>
                                     <li><a href="<?php echo $yelp; ?>"><i class="fa fa-yelp" style="color:white"></i></a></li>
-                                    <li class="language-menu">
+									
+									<li class="language-menu">
                                         <?php
                                         if($is_logged_in_customer != "")
-                                            echo '<a href="index.php?page=account" class="current-lang" id="my_acc"><i class="fa fa-user" aria-hidden="true" ></i> My Account</a>';
+											//echo '<a href="index.php?page=account" class="current-lang" id="my_acc"><i class="fa fa-user" aria-hidden="true" ></i> My Account</a>';
+											echo '<a href="javascript:;" class="user-profile dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+												<img src="#" alt="">
+												<span class=" fa fa-angle-down"></span>
+											</a>
+											<ul class="dropdown-menu dropdown-usermenu animated fadeInDown pull-right">
+												<li><a href="index.php?module=personal&view=profile">  Profile</a></li>
+												<li><a href="logout.php"><i class="fa fa-sign-out pull-right"></i> Log Out</a></li>
+											</ul>';
                                         else
                                             echo '<a href="#" onclick="active_modal(1)" data-toggle="modal" data-target="#loginModal" class="current-lang" id="log_reg"><i class="fa fa-user" aria-hidden="true"></i> Login / Register</a>';
                                         ?>

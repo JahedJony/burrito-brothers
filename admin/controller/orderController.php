@@ -471,22 +471,50 @@ switch ($q){
     break;
 
     case "update_order_status":
-
+	
         $condition_array = array(
             'order_id'=>$order_id
         );
         $columns_value = array(
             'order_status'=>$status_id
         );
-        $return = $dbClass->update("order_master", $columns_value, $condition_array);
-        echo $return;
+        
+		$return = $dbClass->update("order_master", $columns_value, $condition_array);
+        
+		if($return){
+			
+			$invoice_no = $dbClass->getSingleRow("SELECT invoice_no from order_master WHERE order_id = $order_id");
+			extract($invoice_no);
+			if($status_id == 6){
+				$details = " Your Order (".$invoice_no.") Rejected/Canceled ";
+			}
+			else if($status_id == 2){
+				$details = " Your Order (".$invoice_no.") Received by Admin ";
+			}
+			else if($status_id == 3){
+				$details = " Your Order (".$invoice_no.") is Processing ";
+			}
+			else if($status_id == 4){
+				$details = " Your Order (".$invoice_no.") is Ready ";
+			}
+			else if($status_id == 5){
+				$details = " Your Order (".$invoice_no.") is Delivered ";
+			}
+			
+			//insert_notification function 
+			//param: order_id (int), details (text), notification_user_type (int) : 0=customer, 1: admin, notified_to (int)
+			$return_notifiction = $dbClass->insert_notification($order_id, $details, 0, $customer_id);	
+			
+			if($return_notifiction) echo 1;
+			else                    echo 0;
+		}
+		
     break;
 
 
     case "get_order_details_by_invoice":
         //echo $order_id; die;
-        $sql = "SELECT m.order_id, m.customer_id, 
-                c.full_name customer_name, d.item_id, c.contact_no customer_contact_no, c.address customer_address,  m.order_id,
+        $sql = "SELECT m.order_id, m.customer_id, c.full_name customer_name, d.item_id, c.contact_no customer_contact_no, c.address customer_address, m.order_id,
                 GROUP_CONCAT(ca.name,' >> ',ca.id,'#',ca.id,'#',p.name,' (',ca.name,' )','#',p.item_id,'#',d.item_rate,'#',d.quantity,'#',d.ingredient_name,'..') order_info,
                 m.order_date, m.delivery_date, m.delivery_type, m.discount_amount, m.total_paid_amount,
                 m.address, m.delivery_charge_id, m.tax_amount,

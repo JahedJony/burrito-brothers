@@ -28,7 +28,7 @@ class dbClass {
 	// insert function for all table
 	// created ny moynul
 	// parameter table name, inserted table column_name and value array
-	function insert($table_name ,$columns_values){		
+	function insert($table_name,$columns_values){		
 		try {				
 			$this->dbCon->beginTransaction();	
 			//$this->print_arrays($columns_values);
@@ -121,6 +121,14 @@ class dbClass {
 			$this->dbCon->rollback();
 			echo "Insert:Error: " . $e->getMessage();
 		}		
+	}
+	
+	function getDescription($page_id){
+	    $result = $this->getSingleRow("select $page_id from general_settings where id='1'");
+		//$result = $this->getSingleRow("select description from web_menu where id = '$page_id'");
+		//$result_info  =$result[$page_id];
+		return $result[$page_id];
+		//return $result[$page_id];
 	}
 	
 	function getSingleRow($sql){
@@ -252,7 +260,44 @@ class dbClass {
         echo "</pre>";
     }
 
-
+	
+	//notification function
+	function insert_notification($order_id, $details, $notification_user_type, $notified_to){		
+		
+		$columns_values = array(
+			'order_id'=>$order_id,
+			'details'=>$details,
+			'notification_user_type'=>$notification_user_type,
+			'notified_to'=>$notified_to
+		);	
+		//var_dump($columns_value);die;
+		try {				
+			$this->dbCon->beginTransaction();	
+			//$this->print_arrays($columns_values);
+			$bind = ':'.implode(',:', array_keys($columns_values));
+			
+			$columns =  implode(',', array_keys($columns_values));
+				
+			$master_sql = "Insert into notification ($columns)  VALUES ($bind)";	
+			//echo $master_sql;die;	
+			$stmt = $this->dbCon->prepare($master_sql);
+    		$return = $stmt->execute(array_combine(explode(',',$bind), array_values($columns_values)));
+			if($return == 1){
+				$just_inserted_id = $this->dbCon->lastInsertId();
+				if($just_inserted_id) $original_return = $just_inserted_id;
+				else 				  $original_return = 1;
+			}
+			else 
+				$original_return = 0;
+			
+			$this->dbCon->commit();
+			return $original_return; 
+			
+		} catch(PDOException $e) {
+			$this->dbCon->rollback();
+			echo "Insert:Error: " . $e->getMessage();
+		}		
+	}
 	
 	
 }

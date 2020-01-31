@@ -13,7 +13,7 @@ extract($_REQUEST);
 switch ($q){
 	
 	case "insert_notification":		
-		$stock_alert_product = $dbClass->getResultlist("SELECT r.id, r.stock_quantity, CONCAT(p.name,' >>',s.name) p_name 
+		/* $stock_alert_product = $dbClass->getResultlist("SELECT r.id, r.stock_quantity, CONCAT(p.name,' >>',s.name) p_name 
 														FROM product_rate r 
 														LEFT JOIN products p ON p.product_id = r.product_id
 														LEFT JOIN size s ON s.id = r.size_id
@@ -35,7 +35,7 @@ switch ($q){
 				);			
 				$return = $dbClass->insert("notification", $columns_value);		
 			}
-		}
+		} */
 		
 	break;
 	

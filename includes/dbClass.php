@@ -28,6 +28,7 @@ class dbClass {
 		return $result[$page_id];
 		//return $result[$page_id];
 	}
+	
 	function getTitle($page_id){
 		$result = $this->getSingleRow("select title from web_menu where id = '$page_id'");
 		$result_info  = strip_tags($result['title']);
