@@ -1,7 +1,7 @@
 
 <!-- Start Menu Part -->
 
-<section class="breadcrumb-part" data-stellar-offset-parent="true" data-stellar-background-ratio="0.5" style="background-image: url('../images/breadbg1.jpg');max-height: 220px">
+<section class="breadcrumb-part" data-stellar-offset-parent="true" data-stellar-background-ratio="0.5" style="background-image: url('./images/breadbg1.jpg');max-height: 220px">
     <div class="container">
         <div class="breadcrumb-inner">
             <h2>CATEGORY ITEMS</h2>

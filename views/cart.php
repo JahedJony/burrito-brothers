@@ -40,66 +40,6 @@ if(!isset($_SESSION['cart']) || !count($_SESSION['cart'])>0) {
                         </thead>
                         <tbody id="cart_table">
 
-                        <!-- <tr>
-                             <th>PRODUCT</th>
-                             <td>
-                                 <div class="product-cart">
-                                     <img src="../images/img71.png" alt="">
-                                 </div>
-                                 <div class="product-cart-title">
-                                     <span>Blanched Garlic</span>
-                                 </div>
-                             </td>
-                             <th>PRICE</th>
-                             <td>
-                                 <strong>$59</strong>
-                                 <del>$5400.00</del>
-                             </td>
-                             <th>QUANTITY</th>
-                             <td>
-                                 <div class="price-textbox">
-                                     <span class="minus-text"><i class="icon-minus"></i></span>
-                                     <input name="txt" placeholder="1" type="text">
-                                     <span class="plus-text"><i class="icon-plus"></i></span>
-                                 </div>
-                             </td>
-                             <th>TOTAL</th>
-                             <td>
-                                 $59
-                             </td>
-                             <td class="shop-cart-close"><i class="icon-cancel-5"></i></td>
-                         </tr>
-                         <tr>
-                             <th>PRODUCT</th>
-                             <td>
-                                 <div class="product-cart">
-                                     <img src="../images/img72.png" alt="">
-                                 </div>
-                                 <div class="product-cart-title">
-                                     <span>Blanched Garlic</span>
-                                 </div>
-                             </td>
-                             <th>PRICE</th>
-                             <td>
-                                 <strong>$59</strong>
-                                 <del>$5400.00</del>
-                             </td>
-                             <th>QUANTITY</th>
-                             <td>
-                                 <div class="price-textbox">
-                                     <span class="minus-text"><i class="icon-minus"></i></span>
-                                     <input name="txt" placeholder="1" type="text">
-                                     <span class="plus-text"><i class="icon-plus"></i></span>
-                                 </div>
-                             </td>
-                             <th>TOTAL</th>
-                             <td>
-                                 $59
-                             </td>
-                             <td class="shop-cart-close"><i class="icon-cancel-5"></i></td>
-                         </tr>
-
-                         -->
                         </tbody>
                     </table>
                     <div class="product-cart-detail">
@@ -201,8 +141,8 @@ if(!isset($_SESSION['cart']) || !count($_SESSION['cart'])>0) {
                         html+=' <tr>\n' +
                             '                            <th>PRODUCT</th>\n' +
                             '                            <td>\n' +
-                            '                                <div class="product-cart" style="'+ item_image_display +'">\n' +
-                            '                                    <img src="/admin/images/item/'+datas.item_image+'" alt="" style="height: 80px; width: 80px; border-radius: 10px">\n' +
+                            '                                <div class="product-cart" style="">\n' +
+                            '                                    <img src="/admin/images/item/'+datas.item_image+'" alt="" style="height: 80px; width: 80px; border-radius: 10px;'+ item_image_display +'">\n' +
                             '                                    <span class="text-capitalize">'+datas.item_name+'</span>\n' +
                             '                                </div>\n' +
                             '                            </td>\n' +

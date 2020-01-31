@@ -12,43 +12,49 @@ switch ($q){
         if(!isset($_SESSION['cart']) || empty($_SESSION['cart']))$cart = array();
         else $cart = $_SESSION['cart'];
 
-        //var_dump($selected_item_list);die;
+        //var_dump($selected_item_list);
         $tem_cart = array();
-        foreach($selected_item_list as $item){
-            foreach ($item as $single_item){
-                if(!is_numeric($single_item['item_id'])) continue;
-                $tem_cart[$single_item['item_id'].'_'.$single_item['price']]['item_name']=$single_item['name'];
-                $tem_cart[$single_item['item_id'].'_'.$single_item['price']]['cart_key']=$single_item['item_id'].'_'.$single_item['price'];
-                $tem_cart[$single_item['item_id'].'_'.$single_item['price']]['discounted_rate']=$single_item['price'];
-                $tem_cart[$single_item['item_id'].'_'.$single_item['price']]['item_id']=$single_item['item_id'];
-                $tem_cart[$single_item['item_id'].'_'.$single_item['price']]['quantity']=$single_item['quantity'];
-                $tem_cart[$single_item['item_id'].'_'.$single_item['price']]['item_image']=$single_item['image'];
-                $tem_cart[$single_item['item_id'].'_'.$single_item['price']]['item_total']=$single_item['price']*$tem_cart[$cart_key_tem]['quantity'];
+        if(isset($selected_item_list)){
+            foreach($selected_item_list as $item){
+                foreach ($item as $single_item){
+                    if($single_item=='side orders' || $single_item=='beverages	') continue;
+                    if(!is_numeric((int)$single_item['item_id'])) continue;
+                    $tem_cart[$single_item['item_id'].'_'.$single_item['price']]['item_name']=$single_item['name'];
+                    $tem_cart[$single_item['item_id'].'_'.$single_item['price']]['cart_key']=$single_item['item_id'].'_'.$single_item['price'];
+                    $tem_cart[$single_item['item_id'].'_'.$single_item['price']]['discounted_rate']=$single_item['price'];
+                    $tem_cart[$single_item['item_id'].'_'.$single_item['price']]['item_id']=$single_item['item_id'];
+                    $tem_cart[$single_item['item_id'].'_'.$single_item['price']]['quantity']=$single_item['quantity'];
+                    $tem_cart[$single_item['item_id'].'_'.$single_item['price']]['item_image']=$single_item['image'];
+                    $tem_cart[$single_item['item_id'].'_'.$single_item['price']]['item_total']=$single_item['quantity'];
+                }
             }
-        }
-        foreach ($tem_cart as $item){
-            if (array_key_exists($item[cart_key],$cart)){
+            foreach ($tem_cart as $item){
+                //var_dump($item);
+                if (array_key_exists($item['cart_key'],$cart)){
+                    $cart_key = $item['cart_key'];
 
-                $updatable_item = $cart[$item[cart_key]];
+                    $updatable_item = $cart[$cart_key];
 
-                if($quantity==0){
-                    unset($cart[$item[cart_key]]);
+                    if($quantity==0){
+                        unset($cart[$item[$cart_key]]);
+                    }
+                    else{
+                        $discounted_rate                      = $updatable_item['discounted_rate'];
+                        $total_quantity                       = ($quantity+$updatable_item['quantity']);
+                        $cart[$cart_key]['quantity']          = $total_quantity;
+                        $total_amount                         = $total_quantity*$updatable_item['discounted_rate'];
+                        $cart[$cart_key]['item_total']        = $total_amount;
+                        $_SESSION['cart']                     = $cart;
+                    }
                 }
                 else{
-                    $discounted_rate                      = $updatable_item['discounted_rate'];
-                    $total_quantity                       = ($quantity+$updatable_item['quantity']);
-                    $cart[$item[cart_key]]['quantity']    = $total_quantity;
-                    $total_amount                         = $total_quantity*$updatable_item['discounted_rate'];
-                    $cart[$item[cart_key]]['item_total']  = $total_amount;
-                    $_SESSION['cart']                     = $cart;
+                    $cart[$item['cart_key']]=$item;
+                    $_SESSION['cart'] = $cart;
                 }
+                //var_dump($item[cart_key]);
             }
-            else{
-                $cart[$item[cart_key]]=$item;
-                $_SESSION['cart'] = $cart;
-            }
-            var_dump($item[cart_key]);
         }
+
         //var_dump($tem_cart);die;
 
         $cart_key = $item_id.'_'.$discounted_rate;
@@ -83,6 +89,7 @@ switch ($q){
             $selected_item['size'] = 1;
             $selected_item['quantity'] = $quantity;
             $selected_item['ingredient'] = $ingredient;
+            $selected_item['special_instruction'] = $special_instruction;
             $selected_item['item_total'] = ($selected_item['discounted_rate']*$quantity);
             $cart[$cart_key]=$selected_item;
             $_SESSION['cart'] = $cart;
@@ -379,18 +386,26 @@ switch ($q){
                 //var_dump($item);die;
                 //var_dump($item['ingredient']['ingredient_name']);die;
                 //var_dump($item['ingredient']['ingredient_name']);die;
-                if(array_key_exists("id_list",$item['ingredient'])){
+                if(isset($item['ingredient']['id_list'])){
 
                     //var_dump($item['ingredient']['id_list']);
 
                     $ing_list= $item['ingredient']['id_list'];
                     $ingredient_name= $item['ingredient']['ingredient_name'];
+
                 }
                 else{
                     //var_dump('not found');
                     $ing_list= '';
                     $ingredient_name='';
                 }
+
+                if(isset($item['special_instruction'])){
+                    $special_instruction=$item['special_instruction'];
+                }else{
+                    $special_instruction='';
+                }
+
                 $cart_key_arr = explode('_',$key);
                 $item_size_rate_id = $cart_key_arr[1];
                 //var_dump($item['discounted_rate'] .'-'.$item['item_id']);
@@ -401,6 +416,7 @@ switch ($q){
                     'ingredient_list'=>$ing_list,
                     'ingredient_name'=>$ingredient_name,
                     'item_rate_id'=>0,
+                    'special_instruction'=>$special_instruction,
                     'item_rate'=>$item['discounted_rate']
                 );
                 $return_details = $dbClass->insert("order_details", $columns_value);

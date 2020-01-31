@@ -15,7 +15,7 @@ if(isset($_GET['order_id']) && $_GET['order_id']!="") $order_id =  $_GET['order_
 ?>
 
 <section class="breadcrumb-part" data-stellar-offset-parent="true" data-stellar-background-ratio="0.5"
-         style="background-image: url('../images/breadbg1.jpg');max-height: 220px" xmlns="http://www.w3.org/1999/html"
+         style="background-image: url('./images/breadbg1.jpg');max-height: 220px" xmlns="http://www.w3.org/1999/html"
          xmlns="http://www.w3.org/1999/html">
     <div class="container">
         <div class="breadcrumb-inner">
@@ -43,7 +43,11 @@ if(isset($_GET['order_id']) && $_GET['order_id']!="") $order_id =  $_GET['order_
                    <div class="col-md-8 col-sm-8 col-xs-12" id="option_body" style="background-color: white; border-radius: 12px 12px 0px 0px; padding-top: 25px; padding-bottom: 20px; margin-bottom: 10px">
                    </div>
                    <div class="col-md-4 col-sm-4 col-xs-12 wow fadeInDown" data-wow-duration="1000ms" data-wow-delay="300ms" style="position: sticky; alignment: right; float: right">
-                        <div class="shop-checkout-right">
+                       <div class="shop-checkout-right" style="margin-bottom: 10px">
+                           <label>Special Instruction</label>
+                           <textarea class="form-control" rows="5" style="padding-bottom: 0px; margin-bottom: 0px" id="special_instruction"></textarea>
+                       </div>
+                       <div class="shop-checkout-right" >
                             <label id="title_right" style="text-transform: capitalize; font-size: 20px"></label>
                             <div id="ingredient_summary"></div>
                             <div class="col-md-12 col-sm-12 col-xs-12 checkout-total" style="align-content: baseline"></div>
@@ -51,12 +55,45 @@ if(isset($_GET['order_id']) && $_GET['order_id']!="") $order_id =  $_GET['order_
                                 <div class="col-md-9 col-sm-9 col-xs-9"><b>Sub Total</b></div>
                                 <div class="col-md-3 col-sm-3 col-xs-3" id="total_price"><b>$00.00</b></div>
                             </div>
-                            <button class="button-default button-default-submit" style="width: 100%; background-color: #e4b95b; color: white; margin-top: 15px" onclick="addToCart()"><b>Add to Cart</b></button>
-                        </div>
+
+                           <button class="button-default button-default-submit" style="width: 100%; background-color: #e4b95b; color: white; margin-top: 15px" onclick="addToCart()"><b>Add to Cart</b></button>
+                           <div id="select_ingredinet" class="text-center" style="display:none"></div>
+                           <div id="select_side" class="text-center" style="display:none"></div>
+
+                       </div>
                    </div>
                </div>
           </div>
     </div>
+</section>
+
+<section>
+
+    <div class="modal fade " id="cart_confirmation" tabindex="-2" role="dialog" aria-labelledby="booktable">
+        <div class="modal-dialog modal-sm" role="document" style="max-width: 90% ">
+            <div class="modal-content">
+                <div class="modal-body" style="padding-left: 0px; padding-right: 0px">
+                    <div id="order-div">
+                        <div class="title text-center">
+                            <h4 class="text-coffee left">Your Items Has Been Added To Cart<span id="ord_title_vw"></span></h4>
+                        </div>
+                        <div class="buttons_wrapper">
+                            <div class="col-md-6 col-sm-6 col-xs-6 " style="">
+                                <button type="button" class="btn btn-primary"><a href="index.php?page=categories" style="color: white">Select More Items</a></button>
+                            </div>
+                            <div class="col-md-6 col-sm-6 col-xs-6">
+                                <button type="button" class="btn btn-primary"><a href="index.php?page=cart" style="color: white">Proceed to Cart</a></button>
+
+                            </div>
+
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
 </section>
 
 <script>
@@ -66,11 +103,21 @@ if(isset($_GET['order_id']) && $_GET['order_id']!="") $order_id =  $_GET['order_
     var selected_item_list={};
     var quantity=1;
     var item_id = location.search.split('?')[1].split('&')[1].split('=')[1];
-    var item_choice_limit = {}
-//alert(item_id)
+    var item_choice_limit = {} //limit for ingredient selection in a option group like
+    var choosed_ingredient_number = {}
+    var cart_side_check=0
+    var select_ingredinet_check = 1;
+
+
+
+    //alert(item_id)
+
+    //alert('sf')
 
     chose_summary= function  chose_summary() {
         //console.log(selected_ingredient)
+        cart_side_check=0;
+        select_ingredinet_check = 1;
         var html=''
         total_price=base_price;
         var ingredient_ids=''
@@ -148,20 +195,33 @@ if(isset($_GET['order_id']) && $_GET['order_id']!="") $order_id =  $_GET['order_
         //alert(option_id+'-'+option_name+'-'+ing_id+'-'+ing_rate+'-'+ing_name)
         //var a={}
         if(selected_ingredient[option_id]){
+
             if(selected_ingredient[option_id][ing_id]){
+                choosed_ingredient_number[option_id] = choosed_ingredient_number[option_id]-1;
                 delete selected_ingredient[option_id][ing_id];
             }
             else{
-                selected_ingredient[option_id][ing_id]={'name':ing_name, 'price':ing_rate}
+                if(item_choice_limit[option_id]['maximum']>choosed_ingredient_number[option_id] || item_choice_limit[option_id]['maximum']==0){
+                    choosed_ingredient_number[option_id] = choosed_ingredient_number[option_id]+1;
+                    selected_ingredient[option_id][ing_id]={'name':ing_name, 'price':ing_rate}
+                }
+                else{
+                    // PUT message 'Your reached maxixmum choice limit for this option'
+
+                    //alert('you reach maximum choice limit')
+                    return 0;
+
+                }
             }
-            //alert('ok')
         }
         else {
+            choosed_ingredient_number[option_id] = 1;
             selected_ingredient[option_id]={'option_name':option_name}
             selected_ingredient[option_id][ing_id]={'name':ing_name, 'price':ing_rate}
         }
 
         chose_summary()
+        return 1;
 
     }
 
@@ -171,7 +231,11 @@ if(isset($_GET['order_id']) && $_GET['order_id']!="") $order_id =  $_GET['order_
         if(selected_item_list[category_name]){
 
             if(selected_item_list[category_name][item_id]){
+
                 delete selected_item_list[category_name][item_id];
+                if(Object.keys(selected_item_list[category_name]).length>0){
+                    delete selected_item_list[category_name];
+                }
             }
             else{
                 selected_item_list[category_name][item_id]={'image':'noFood.png','item_id':item_id,'name':item_name, 'price':item_price , 'quantity':quantity}
@@ -185,11 +249,11 @@ if(isset($_GET['order_id']) && $_GET['order_id']!="") $order_id =  $_GET['order_
 
         }
         //alert('item')
-        //console.log(selected_item_list)
+        console.log(selected_item_list)
         chose_summary()
     }
 
-
+    // Reduce the number of main menu
     minusProd = function minusProd(id){
         //alert(id)
         id= 'item_'+id;
@@ -200,6 +264,7 @@ if(isset($_GET['order_id']) && $_GET['order_id']!="") $order_id =  $_GET['order_
         chose_summary()
     }
 
+    // add the number of main menu
     addProd = function addProd(id){
         id= 'item_'+id;
         quantity = parseInt($('#'+id).val()) +1;
@@ -207,6 +272,7 @@ if(isset($_GET['order_id']) && $_GET['order_id']!="") $order_id =  $_GET['order_
         chose_summary()
     }
 
+    //Set the header for the main menu like name, id, quantity  minimum price etc
     set_item_header = function set_item_header(data) {
         //alert(data['item_id'])
         base_price=parseFloat(data['price']);
@@ -226,47 +292,53 @@ if(isset($_GET['order_id']) && $_GET['order_id']!="") $order_id =  $_GET['order_
 
         return html;
     }
+
+    // Set all ingredient list for the main menu on basis of a category like 'choose a cheese'
     set_ingredient = function set_ingredient(data){
         var html = '';
+
         $.each(data, function(i,datas){
-            //alert(datas['id'])
             var price=' '
             if(datas['price']>0){
-                price+= '('+currency_symbol+''+datas['price']+')'
+                price+= '+'+currency_symbol+''+datas['price']
             }
-            html+='    <div class="options-ingredient col-md-3 col-sm-4 col-xs-6" style="text-align: center; margin-top: 10px; height: 140px; overflow: hidden; border-width: 1px;">\n' +
-                '       <input type="hidden" class="ingredient_id"    value="'+datas['id']+'" />\n' +
-                '       <input type="hidden" class="ingredient_rate"  value="'+datas['price']+'" />\n' +
-                '       <input type="hidden" class="ingredient_name"  value="'+datas['name']+'" />\n' +
-                '                    <div class="shop-main-list" style=" border-radius: 15px">\n' +
-                '                        <div class="shop-product" style="border-radius: 15px 15px 0px 0px; margin-bottom: 0px; padding-bottom: 0px">\n' +
-                '                            <img src="http://burritobrothers.test/admin/images/category/noFood.png" alt="" style="border-radius: 17px 17px 17px 17px; height: 90px; width: 110px">\n' +
-                '                            <div class="cart-overlay-wrap" style="background-color: #372727; opacity: .5" >\n' +
-                '                                <div class="cart-overlay" >\n' +
-                '                                    <i class="fa fa-check" style="font-size:48px;color: white; opacity: 1"></i>\n\n' +
-                '                                </div>\n' +
-            '                            </div>\n' +
-                '                        </div>\n' +
-                '                       <br><span  style="text-transform: capitalize; padding-top: 0px; margin-top: 0px">'+datas['name']+' '+price+'</span>\n' +
-                '                    </div>\n' +
-                '                </div>\n'
+            if(ingredient_image_display=="display: none"){
+                var img = ' <div class="shop-main-list" style=" border-radius: 15px">\n' +
+                    '                        <div class="shop-product" style="border-radius: 15px 15px 0px 0px; color:  ">\n' +
+                    '                            <div class="text-capitalize bold" style="background-color: #D2B48C ;border-radius: 17px 17px 17px 17px; height: 90px; max-width: 120px; display: flex; justify-content: center; align-items: center; color: white">'+datas['name']+''+price+'</div>\n' +
+                    '                            <div class="cart-overlay-wrap" style="background-color: #372727; opacity: .5; max-width: 120px" >\n' +
+                    '                                <div class="cart-overlay" >\n' +
+                    '                                    <i class="fa fa-check" style="font-size:48px;color: white; opacity: 1"></i>\n\n' +
+                    '                                </div>\n' +
+                    '                            </div>\n' +
+                    '                        </div>\n' +
+                    '                    </div>'
+            }else {
+                var img ='           <div class="shop-main-list" style=" border-radius: 15px">\n' +
+                    '                        <div class="shop-product" style="border-radius: 15px 15px 0px 0px; margin-bottom: 0px; padding-bottom: 0px">\n' +
+                    '                            <img src="'+project_url+'admin/images/category/noFood.png" alt="" style="border-radius: 17px 17px 17px 17px; height: 90px; width: 110px">\n' +
+                    '                            <div class="cart-overlay-wrap" style="background-color: #372727; opacity: .5" >\n' +
+                    '                                <div class="cart-overlay" >\n' +
+                    '                                    <i class="fa fa-check" style="font-size:48px;color: white; opacity: 1"></i>\n\n' +
+                    '                                </div>\n' +
+                    '                            </div>\n' +
+                    '                        </div>\n' +
+                    '                       <br><span  style="text-transform: capitalize; padding-top: 0px; margin-top: 0px">'+datas['name']+' '+price+'</span>\n' +
+                    '                    </div>\n'
+            }
 
-            /* html+='<div class="options-ingredient col-md-3 col-sm-4 col-xs-6" style="text-align: center; margin-top: 10px; height: 140px; overflow: hidden; border-width: 1px;">\n' +
+            html+='    <div class="options-ingredient col-md-3 col-sm-4 col-xs-6" style="text-align: center; margin-top: 10px; height: 120px; overflow: hidden; border-width: 1px;">\n' +
                 '       <input type="hidden" class="ingredient_id"    value="'+datas['id']+'" />\n' +
                 '       <input type="hidden" class="ingredient_rate"  value="'+datas['price']+'" />\n' +
-                '       <input type="hidden" class="ingredient_name"  value="'+datas['name']+'" />\n' +
-                '       <img src="http://burritobrothers.test/admin/images/category/noFood.png" alt="" style="border-radius: 5px; height: 80px; width: 80px">\n' +
-                '       <br><span  style="text-transform: capitalize;">'+datas['name']+' '+price+'</span>\n' +
-                '   </div
-                */
+                '       <input type="hidden" class="ingredient_name"  value="'+datas['name']+'" />\n' + img +
+                '                </div>'
+
         });
-       // alert(html)
-        //console.log(html)
         return html;
     }
 
+    // set the ingredient category header for the main menu
     load_item_option = function load_item_option(){
-    //alert('ok')
         $.ajax({
             url:"./includes/controller/itemsController.php",
             dataType: "json",
@@ -277,22 +349,32 @@ if(isset($_GET['order_id']) && $_GET['order_id']!="") $order_id =  $_GET['order_
                 item_id:item_id
             },
             success: function(data){
-                //alert('ok')
-                //console.log(data)
-                //alert(data['item']['item_id'])
+
                 var html = '';
                 html+=set_item_header(data['item'])
                 $.each(data['option'], function(i,datas){
                     //console.log(datas)
                     var hints=''
-                    if(datas['is_required']==1){
-                        hints+='  (Required)'
+                    if(parseInt(datas['is_required'])==1 || parseInt(datas['minimum_choice'])>=1){
+                        if(parseInt(datas['maximum_choice'])>0){
+                            hints+='  (Required: Max-'+parseInt(datas['maximum_choice'])+')'
+                        }else {
+                            hints+='  (Required)'
+                        }
+                    }else {
+                        if(parseInt(datas['maximum_choice'])>0){
+                            hints+='  (Max-'+parseInt(datas['maximum_choice'])+')'
+                        }else {
+                            hints+='  (Max- Unlimited)'
+                        }
                     }
+
+                    choosed_ingredient_number[datas['option_id']]=0
                     item_choice_limit[datas['option_id']]={}
                     item_choice_limit[datas['option_id']]['maximum']=datas['maximum_choice'];
                     item_choice_limit[datas['option_id']]['minimum']=datas['minimum_choice'];
-
-                    console.log(item_choice_limit)
+                    item_choice_limit[datas['option_id']]['required']=datas['is_required'];
+                    item_choice_limit[datas['option_id']]['name']=datas['option_name'];
 
                     html3='<div class="col-md-12 col-sm-12 col-xs-12 option-div" name="option_div" style="background-color: rgba(244,242,237,1); padding-top: 25px; padding-bottom: 20px; margin-top: 5px; margin-bottom: 10px">\n' +
                         '       <!-- option id will come from DB  -->\n' +
@@ -308,28 +390,59 @@ if(isset($_GET['order_id']) && $_GET['order_id']!="") $order_id =  $_GET['order_
                         '       <input type="hidden" id="select_no_1" value="'+datas['option_id']+'" />'
                     html3 +=set_ingredient(datas['ingredient'][0])
                     html3 +='</div>\n' +
-                        '  <!--   End ingredient  -->\n' +
                         '     </div>'
                     html+=html3;
                 });
                 $('#option_body').html(html);
 
                 var html_side=''
+
+                //this portion will load the side items like brevarage
                 $.each(data['side_item'], function (i,datas) {
                     //console.log(datas[i])
                     html_side+='<div class="col-md-8 col-sm-8 col-xs-12" id="additional_items" style="background-color: white; padding-top: 25px; padding-bottom: 20px; margin-bottom: 15px">\n' +
                         '           <div  class="col-md-12 col-sm-12 col-xs-12"><h4 style="text-transform: uppercase;" id="item_name">'+i+'</h4></div>\n'+
                         '           <div class="col-md-12 col-sm-12 col-xs-12 option-div"  style="background-color: rgba(244,242,237,1); padding-top: 25px; padding-bottom: 20px; margin-top: 5px; margin-bottom: 10px">'
 
-                        $.each(datas, function (j, items) {
+
+
+
+
+                    $.each(datas, function (j, items) {
+                        if(ingredient_image_display=="display: none"){
+                            var img = ' <div class="shop-main-list" style=" border-radius: 15px">\n' +
+                                '                        <div class="shop-product" style="border-radius: 15px 15px 0px 0px; color:  ">\n' +
+                                '                            <div class="text-capitalize bold" style="background-color: #D2B48C ;border-radius: 17px 17px 17px 17px; height: 90px; width: 110px; display: flex; justify-content: center; align-items: center; color: white">'+items['name']+' '+currency_symbol+' '+items['price']+'</div>\n' +
+                                '                            <div class="cart-overlay-wrap" style="background-color: #372727; opacity: .5; width: 110px" >\n' +
+                                '                                <div class="cart-overlay" >\n' +
+                                '                                    <i class="fa fa-check" style="font-size:48px;color: white; opacity: 1"></i>\n\n' +
+                                '                                </div>\n' +
+                                '                            </div>\n' +
+                                '                        </div>\n' +
+                                '                    </div>'
+                        }else {
+                            var img ='           <div class="shop-main-list" style=" border-radius: 15px">\n' +
+                                '                        <div class="shop-product" style="border-radius: 15px 15px 0px 0px; margin-bottom: 0px; padding-bottom: 0px">\n' +
+                                '                            <img src="'+project_url+'admin/images/category/noFood.png" alt="" style="border-radius: 17px 17px 17px 17px; height: 90px; width: 110px">\n' +
+                                '                            <div class="cart-overlay-wrap" style="background-color: #372727; opacity: .5" >\n' +
+                                '                                <div class="cart-overlay" >\n' +
+                                '                                    <i class="fa fa-check" style="font-size:48px;color: white; opacity: 1"></i>\n\n' +
+                                '                                </div>\n' +
+                                '                            </div>\n' +
+                                '                        </div>\n' +
+                                '                       <br><span  style="text-transform: capitalize; padding-top: 0px; margin-top: 0px">'+items['name']+' '+currency_symbol+' '+items['price']+'</span>\n' +
+                                '                    </div>\n'
+                        }
+
+
                         html_side+= '<div class="additional_items col-md-3 col-sm-4 col-xs-6" style="text-align: center; margin-top: 10px; height: 140px; overflow: hidden; border-width: 1px;">\n' +
                             '       <input type="hidden" class="item_id"    value="'+items['item_id']+'" />\n' +
                             '       <input type="hidden" class="item_rate"  value="'+items['price']+'" />\n' +
                             '       <input type="hidden" class="item_name"  value="'+items['name']+'" />\n' +
-                            '       <input type="hidden" class="category_name"  value="'+i+'" />\n' +
-                            '                    <div class="shop-main-list" style=" border-radius: 15px">\n' +
+                            '       <input type="hidden" class="category_name"  value="'+i+'" />\n' + img+
+/*                            '                    <div class="shop-main-list" style=" border-radius: 15px">\n' +
                             '                        <div class="shop-product" style="border-radius: 15px 15px 0px 0px; margin-bottom: 0px; padding-bottom: 0px">\n' +
-                            '                            <img src="http://burritobrothers.test/admin/images/category/noFood.png" alt="" style="border-radius: 17px 17px 17px 17px; height: 90px; width: 110px">\n' +
+                            '                            <img src="'+project_url+'admin/images/category/noFood.png" alt="" style="border-radius: 17px 17px 17px 17px; height: 90px; width: 110px">\n' +
                             '                            <div class="cart-overlay-wrap" style="background-color: #372727; opacity: .5" >\n' +
                             '                                <div class="cart-overlay" >\n' +
                             '                                    <i class="fa fa-check" style="font-size:48px;color: white; opacity: 1"></i>\n\n' +
@@ -337,7 +450,7 @@ if(isset($_GET['order_id']) && $_GET['order_id']!="") $order_id =  $_GET['order_
                             '                            </div>\n' +
                             '                        </div>\n' +
                             '                       <br><span  style="text-transform: capitalize; padding-top: 0px; margin-top: 0px">'+items['name']+' '+currency_symbol+' '+items['price']+'</span>\n' +
-                            '                    </div>\n' +
+                            '                    </div>\n' + */
                             '                </div>\n'
 
 
@@ -352,19 +465,14 @@ if(isset($_GET['order_id']) && $_GET['order_id']!="") $order_id =  $_GET['order_
     }
     load_item_option()
 
-
+    // Ingredient add or remove
     $('.options-ingredient').on('click', function(){
-//alert($(this).find('.cart-overlay-wrap').hasClass('selected_ingredient'))
+
         if($(this).find('.cart-overlay-wrap').hasClass('selected_ingredient')){
-            //alert('ok')
             $(this).find('.cart-overlay-wrap').removeClass('selected_ingredient')
-            //$('this').removeClass("selected_ingredient")
         }
         else{
-            //alert('orek')
             $(this).find('.cart-overlay-wrap').addClass('selected_ingredient')
-
-            //$('this').addClass("selected_ingredient")
         }
         //alert($(this).find('h4:eq(0)').html();)
         var option_id = $(this).siblings('input:eq(0)').val();
@@ -373,7 +481,13 @@ if(isset($_GET['order_id']) && $_GET['order_id']!="") $order_id =  $_GET['order_
         var ing_id   = $(this).find('input:eq(0)').val();
         var ing_rate   = $(this).find('input:eq(1)').val();
         var ing_name   = $(this).find('input:eq(2)').val();
-        add_to_meal(option_id,option_name,ing_id,ing_rate,ing_name);
+        if(add_to_meal(option_id,option_name,ing_id,ing_rate,ing_name)==0){
+            $(this).find('.cart-overlay-wrap').removeClass('selected_ingredient')
+            //alert($(this).siblings('[name="ingredinet_limit_notification[]"]').html())
+            //var location_alert=$(this).parent().siblings('[name="ingredinet_limit_notification[]"]');
+            //success_or_error_msg(location_alert,'danger',"Please Select","#side_order");
+
+        }
 
 
     })
@@ -382,15 +496,10 @@ if(isset($_GET['order_id']) && $_GET['order_id']!="") $order_id =  $_GET['order_
 
 
         if($(this).find('.cart-overlay-wrap').hasClass('selected_ingredient')){
-            //alert('ok')
             $(this).find('.cart-overlay-wrap').removeClass('selected_ingredient')
-            //$('this').removeClass("selected_ingredient")
         }
         else{
-            //alert('orek')
             $(this).find('.cart-overlay-wrap').addClass('selected_ingredient')
-
-            //$('this').addClass("selected_ingredient")
         }
 
         var item_id = $(this).children('input:eq(0)').val();
@@ -409,58 +518,60 @@ if(isset($_GET['order_id']) && $_GET['order_id']!="") $order_id =  $_GET['order_
 
     addToCart = function addToCart(){
 
-        //console.log(selected_item_list)
-
-        $.ajax({
-            url: "./includes/controller/ecommerceController.php",
-            dataType: "json",
-            type: "post",
-            async:false,
-            data: {
-                q: "addToCart",
-                item_id: $('#item_id').val(),
-                item_name: $('#item_name').html(),
-                item_image: 'noFood.png',
-                orignal_rate: total_price,
-                discounted_rate: total_price,
-                size: 1,
-                quantity : quantity,
-                ingredient: selected_ingredient,
-                selected_item_list: selected_item_list
-            },
-            success: function(data) {
-                alert(1)
-                alert(data)
-               // console.log(data)
-                if(!jQuery.isEmptyObject(data.records)){
-                    var html = '';
-                    var total = 0;
-                    var sub_total = 0;
-                    var count =0
-                    /*$.each(data.records, function(i,datas){
-                        sub_total += parseFloat(datas.discounted_rate)*(datas.quantity);
-                        html += '<div class="cart-item"><div class="cart-item-left"><img src="admin/images/item/'+datas.product_image+'" alt=""></div><div class="cart-item-right"><h6>'+datas.product_name+'</h6><span> '+datas.discounted_rate+' * '+datas.quantity+' = '+sub_total+'</span></div><span class="delete-icon" onclick="deleteProduct('+"'"+datas.cart_key+"'"+')"></span></div>';
-                        count++;
-                        total += sub_total ;
-                    });
-                    total = total.toFixed(2);
-                    html += '<div class="subtotal"><div class="col-md-6 col-sm-6 col-xs-6"><h6>Subtotal :</h6></div><div class="col-md-6 col-sm-6 col-xs-6"><span>Tk '+total+'</span></div></div>';
-                    html  += '<div class="cart-btn"><a href="cart.php" class="btn-main checkout">VIEW ALL</a><a href="checkout.php" class="btn-main checkout">CHECK OUT</a></div>';
-                    $('#total_product_in_cart').html(count);*/
-                    success_or_error_msg('#added_to_cart_message','info',"Added to cart" ,"#added_to_cart_message");
-
-                }
-                else{
-                    $('#total_product_in_cart').html(0);
-                    html = "<h6>You have no items in your cart</h6>";
-                }
-                $('#cart_div').html(html);
-
+        //check if any Mendatory field is not selected
+        $.each(choosed_ingredient_number, function (j, ingredient) {
+            //console.log(ingredient)
+            //alert(item_choice_limit[j]['minimum'] +'-'+item_choice_limit[j]['required']+'='+ingredient)
+            if(parseInt(item_choice_limit[j]['minimum'])>parseInt(ingredient) || parseInt(item_choice_limit[j]['required'])>parseInt(ingredient)){
+                success_or_error_msg('#select_ingredinet','danger',"Please Select "+item_choice_limit[j]['name']+" ","#side_order");
+                select_ingredinet_check = 0;
+                //cart_side_check=0
+                //alert('sdf')
+                return false;
             }
         });
+        //alert(cart_side_check +'='+select_ingredinet_check)
+
+
+        if((Object.keys(selected_item_list).length!=0 || cart_side_check!=0)  && select_ingredinet_check==1){
+            //alert('cart_side_check')
+            $.ajax({
+                url: "./includes/controller/ecommerceController.php",
+                dataType: "json",
+                type: "post",
+                async:false,
+                data: {
+                    q: "addToCart",
+                    item_id: $('#item_id').val(),
+                    item_name: $('#item_name').html(),
+                    item_image: 'noFood.png',
+                    orignal_rate: total_price,
+                    discounted_rate: total_price,
+                    size: 1,
+                    quantity : quantity,
+                    ingredient: selected_ingredient,
+                    selected_item_list: selected_item_list,
+                    special_instruction: $('#special_instruction').val()
+                },
+                success: function(data) {
+                    $('#cart_confirmation').modal()
+                }
+            });
+        }
+        else if(Object.keys(selected_item_list).length==0 && select_ingredinet_check!=0){
+            success_or_error_msg('#select_side','warning',"You did not select any BEVERAGE ","#side_order");
+            cart_side_check=1
+       }
+
+
         showCart()
 
     }
+
+    $('#cart_confirmation').on('hidden.bs.modal', function () {
+        // do something…
+        //location.reload()
+    })
 
 
 </script>
