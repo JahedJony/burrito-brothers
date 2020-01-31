@@ -199,11 +199,11 @@ $store_address=$dbClass->getDescription('store_address');
             <div class="service-track">
                 <div class="row">
                     <div class="col-md-6 col-sm-6 col-xs-12">
-                        <div class="service-track-inner btn-shadow">
+                        <div class="service-track-inner btn-shadow" >
                             <div class="service-track-info">
                                 <h3>Catering <span>Service</span></h3>
                             </div>
-                            <div class="service-track-overlay banner-bg" data-background="images/hover-img1.png">
+                            <div class="service-track-overlay banner-bg" data-background="images/hover-img1.png" onclick="catering()">
                                 <img src="./images/img36.png" alt="">
                                 <h3>Catering <span>Service</span></h3>
                                 <p>Aptent taciti sociosqu ad litora euismod atras vulputate iltricies etri elit class.</p>
@@ -211,7 +211,7 @@ $store_address=$dbClass->getDescription('store_address');
                         </div>
                     </div>
                     <div class="col-md-6 col-sm-6 col-xs-12">
-                        <div class="service-track-inner btn-shadow">
+                        <div class="service-track-inner btn-shadow" id="groupOrder()">
                             <div class="service-track-info">
                                 <h3>Group <span>Order</span></h3>
                             </div>
@@ -419,3 +419,15 @@ $store_address=$dbClass->getDescription('store_address');
 
 <script src="js/app.js"></script>
 <script src="js/script.js"></script>
+
+<script>
+
+    function catering() {
+        //alert('sdf')
+        window.location.href= project_url+'index.php?page=catering'
+    }
+
+    function groupOrder(){
+
+    }
+</script>

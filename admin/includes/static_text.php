@@ -10,8 +10,8 @@ $file_max_length = 5297152;
 
 
 // global variable
-$company_name   = "Mbrothers Brickfield";
-$website_title 	= "Brickfield";
+$company_name   = "Burrito Brothers";
+$website_title 	= "Burrito Brothers";
 // login.php 
 $login 		    = "Log In";
 $forget_pass    = "Lost your password?";

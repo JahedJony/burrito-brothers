@@ -12,6 +12,7 @@ $customer_info = $dbClass->getSingleRow("select * from customer_infos where cust
 $customer_id = $_SESSION['customer_id'];
 //var_dump($customer_info)
 
+
 $order_id = '';
 if(isset($_GET['order_id']) && $_GET['order_id']!="") $order_id =  $_GET['order_id'];
 
@@ -59,7 +60,6 @@ if(isset($_GET['order_id']) && $_GET['order_id']!="") $order_id =  $_GET['order_
                             <li class="sub-menu orders"><a  href='javascript:void(0)'  onclick="show_my_accounts('orders', '')">Orders</a></li>
                             <li class="sub-menu tracking"><a href='javascript:void(0)'  onclick="show_my_accounts('tracking', '')">Order Tracking</a></li>
                             <li class="sub-menu group_order"><a  href='javascript:void(0)'  onclick="show_my_accounts('group_order', '')">Group Order</a></li>
-                            <li class="sub-menu groups"><a  href='javascript:void(0)'  onclick="show_my_accounts('groups', '')">Groups</a></li>
                             <li class="sub-menu groups"><a  href='javascript:void(0)'  onclick="show_my_accounts('groupOrderDetails', '')">Groups Order Details</a></li>
                             <li class="sub-menu logout"><a href='views/logout.php'>Logout</a></li>
                         </ul>
@@ -74,6 +74,7 @@ if(isset($_GET['order_id']) && $_GET['order_id']!="") $order_id =  $_GET['order_
 <!-- End Main -->
 
 <script>
+
     var customer_id = "<?php echo $customer_id; ?>";
     var order_id = "<?php echo $order_id; ?>";
 
@@ -202,3 +203,19 @@ if(isset($_GET['order_id']) && $_GET['order_id']!="") $order_id =  $_GET['order_
 
 
 </script>
+
+
+<?php
+
+if(isset($_SESSION['groupOrderId'])){
+    ?>
+    <script>
+        //alert('ok');
+        show_my_accounts('groupOrderDetails', '')
+    </script>
+    <?php
+
+
+
+}
+?>
