@@ -14,7 +14,7 @@ if(!isset($_SESSION['customer_id']) && $_SESSION['customer_id']!=""){ ob_start()
 else $is_logged_in_customer = 1;
 $customer_id = $_SESSION['customer_id'];
 $orders_info = $dbClass->getResultList("SELECT count(god.id) as members, gi.name, go.order_id, go.order_date, go.delivery_date, go.total_order_amt, go.notification_time,
-                                        case go.order_status when order_status=2 then 'Invitation Sent' when order_status=3 then 'Menu Selected' when order_status=4 then 'Order Panding' when order_status=5 then 'Order Approved' when order_status=6 then 'Order Ready' else 'Order Initiate' end order_status 
+                                        case go.order_status when 2 then 'Invitation Sent' when 3 then 'Menu Selected' when 4 then 'Order Panding' when 5 then 'Order Approved' when 6 then 'Order Ready' else 'Order Initiate' end order_status
                                         from group_order go 
                                         LEFT JOIN (
                                         SELECT name, id FROM groups_info
@@ -351,8 +351,8 @@ else{
                                     order_total += total;
                                 });
                                 sub_total += order_total;
-                                order_tr += '<tr><td colspan="3" align="right" ><b>Grand Total Amount</b></td><td align="right"><b>'+currency_symbol+''+order_total.toFixed(2)+'</b></td></tr>';
-                                order_tr_small += '<tr><td align="right" ><b>Grand Total Amount</b></td><td align="right"><b>'+currency_symbol+''+order_total.toFixed(2)+'</b></td></tr>';
+                                order_tr += '<tr><td colspan="3" align="right" ><b>Total Amount</b></td><td align="right"><b>'+currency_symbol+''+order_total.toFixed(2)+'</b></td></tr>';
+                                order_tr_small += '<tr><td align="right" ><b>Total Amount</b></td><td align="right"><b>'+currency_symbol+''+order_total.toFixed(2)+'</b></td></tr>';
 
                             }
 

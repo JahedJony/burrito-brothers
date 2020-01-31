@@ -2,19 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="289ea524-a539-47c6-a345-6f05b3774d37" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/admin/images/category/nofoodimage.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/images/nofoodimage.png" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/admin/controller/generalSettingController.php" beforeDir="false" afterPath="$PROJECT_DIR$/admin/controller/generalSettingController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/admin/includes/static_text.php" beforeDir="false" afterPath="$PROJECT_DIR$/admin/includes/static_text.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/admin/view/settings/general.php" beforeDir="false" afterPath="$PROJECT_DIR$/admin/view/settings/general.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/includes/controller/ecommerceController.php" beforeDir="false" afterPath="$PROJECT_DIR$/includes/controller/ecommerceController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/index.php" beforeDir="false" afterPath="$PROJECT_DIR$/index.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/js/cart.js" beforeDir="false" afterPath="$PROJECT_DIR$/js/cart.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/views/cart.php" beforeDir="false" afterPath="$PROJECT_DIR$/views/cart.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/views/catering.php" beforeDir="false" afterPath="$PROJECT_DIR$/views/catering.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/views/item.php" beforeDir="false" afterPath="$PROJECT_DIR$/views/item.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/views/menu.php" beforeDir="false" afterPath="$PROJECT_DIR$/views/menu.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/views/groupOrderDetails.php" beforeDir="false" afterPath="$PROJECT_DIR$/views/groupOrderDetails.php" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -106,7 +95,7 @@
       <workItem from="1578806417504" duration="598000" />
       <workItem from="1578890872372" duration="31746000" />
       <workItem from="1579244903772" duration="102861000" />
-      <workItem from="1580102510582" duration="90851000" />
+      <workItem from="1580102510582" duration="91531000" />
     </task>
     <servers />
   </component>
