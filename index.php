@@ -20,7 +20,9 @@ $address      = $dbClass->getDescription('store_address');
 $website_url  = $dbClass->getDescription('website_url');
 $website_title=$dbClass->getDescription('website_title');
 $store_address=$dbClass->getDescription('store_address');
+$currency   = $dbClass->getDescription('currency_symbol');
 $item_image_display=$dbClass->getDescription('item_image_display');
+$ingredient_image_display=$dbClass->getDescription('ingredient_image_display');
 
 
 $logo         = $website_url."admin/".$dbClass->getDescription('company_logo');
@@ -486,15 +488,28 @@ if(isset($_GET['search'])) $search_text = "";
     if($item_image_display==1){
         ?>
         item_image_display="display: block"
+
         <?php
     }
     else{
         ?>
         item_image_display="display: none"
         <?php
+    }
+    if($ingredient_image_display==1){
+    ?>
+    ingredient_image_display="display: block"
+    <?php
+    }
+    else{
+    ?>
+    ingredient_image_display="display: none"
+    <?php
 
     }
     ?>
+    showCart()
+
 
     var sWidth = window.screen.width;
     //alert("sWidth is: " + sWidth);
@@ -790,7 +805,6 @@ if(isset($_GET['search'])) $search_text = "";
 
 
 
-    showCart()
 
 
     function success_or_error_msg(div_to_show, class_name, message, field_id){

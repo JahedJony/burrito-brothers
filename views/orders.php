@@ -5,6 +5,8 @@ include("../includes/dbClass.php");
 $dbClass = new dbClass;
 $is_logged_in_customer = "";
 $website_url  = $dbClass->getDescription('website_url');
+$currency   = $dbClass->getDescription('currency_symbol');
+
 $logo         =$website_url."admin/".$dbClass->getDescription('company_logo');
 
 
@@ -53,8 +55,8 @@ else{
 							  <td>".$order['order_date']."</td>
 							  <td>".$order['delivery_date']."</td>
 							  <td>".$order['delevery_type']."</td>
-							  <td>".$order['total_order_amt']."</td>
-							  <td>".$order['total_paid_amount']."</td>
+							  <td>".$currency."".$order['total_order_amt']."</td>
+							  <td>".$currency."".$order['total_paid_amount']."</td>
 							  <td>".$order['order_status']."</td>
 							  <td><button class='btn btn-block'><i class='fa fa-search-plus pointer' onclick='view_order(".$order_no.")'></i></button></td>
 						  </tr>
@@ -81,7 +83,7 @@ else{
                         echo
                             "<tr>
 							  <td style='font-s font-size: 11px'>".$order['order_no']."</td>
-							  <td style='font-size: 11px'>".$order['total_order_amt']."</td>
+							  <td style='font-size: 11px'>".$currency."".$order['total_order_amt']."</td>
 							  <td style='font-size: 11px'>".$order['order_status']."</td>
 							  <td style='background-color: #e4b95b'><i class='fa fa-search-plus pointer' onclick='view_order(".$order_no.")'></i></td>
 						  </tr>
@@ -109,7 +111,7 @@ else{
                         echo
                             "<tr>
 							  <td style='background-color: #e4b95b; font-size: 12px'>".$order['order_no']."</td>
-							  <td style='font-size: 12px'>".$order['total_order_amt']."</td>
+							  <td style='font-size: 12px'>".$currency."".$order['total_order_amt']."</td>
 							  <td style='font-size: 12px'>".$order['order_status']."</td>
 							  <td style='background-color: #e4b95b'><i class='fa fa-search-plus pointer' onclick='view_order(".$order_no.")'></i></td>
 						  </tr>
@@ -229,12 +231,12 @@ else{
                             //alert(orderInfo)
                             var order_info_arr = orderInfo.split('#');
                             var total = ((parseFloat(order_info_arr[4])*parseFloat(order_info_arr[5])));
-                            order_tr += '<tr><td class="text-capitalize">'+order_info_arr[2]+' <br>'+order_info_arr[6].split('..')[0]+'</td><td align="center">'+order_info_arr[5]+'</td><td align="right">'+order_info_arr[4]+'</td><td align="right">'+total+'</td></tr>';
+                            order_tr += '<tr><td class="text-capitalize">'+order_info_arr[2]+' <br>'+order_info_arr[6].split('..')[0]+'</td><td align="center">'+order_info_arr[5]+'</td><td align="right">'+currency_symbol+''+order_info_arr[4]+'</td><td align="right">'+currency_symbol+''+total+'</td></tr>';
                             order_total += total;
                         });
                         var total_order_bill = ((parseFloat(order_total)+parseFloat(data.delivery_charge))-parseFloat(data.discount_amount));
                         var total_paid = data.total_paid_amount;
-                        order_tr += '<tr><td colspan="3" align="right" ><b>Total Amount</b></td><td align="right"><b>'+total_paid+'</b></td></tr>';
+                        order_tr += '<tr><td colspan="3" align="right" ><b>Total Amount</b></td><td align="right"><b>'+currency_symbol+''+total_paid+'</b></td></tr>';
                         $('#ord_detail_vw>table>tbody').append(order_tr);
 
 

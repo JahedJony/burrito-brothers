@@ -22,8 +22,9 @@ if($q=="login_customer"){
 		if($stmt -> rowCount()>0){
 			//compare the password
 			if($row['password'] == md5($pass)){				
-				$_SESSION['customer_id']=$row['customer_id']; 
-				$_SESSION['customer_email']=$row['email']; 
+				$_SESSION['customer_id']=$row['customer_id'];
+                //$_SESSION['customer_name']=$row['full_name'];
+                $_SESSION['customer_email']=$row['email'];
 				echo 1;
 			}
 			else
@@ -112,7 +113,7 @@ if($q=="registration"){
 
 
     if($return) {
-        $query="select customer_id, password, email from customer_infos WHERE (customer_id= '".$return."')";
+        $query="select customer_id, full_name, password, email from customer_infos WHERE (customer_id= '".$return."')";
         $stmt = $conn->prepare($query);
         $stmt->execute();
         $data = array();
@@ -123,6 +124,7 @@ if($q=="registration"){
         //if username exists
         if($stmt -> rowCount()>0){
             $_SESSION['customer_id']=$row['customer_id'];
+            $_SESSION['customer_name']=$row['full_name'];
             $_SESSION['customer_email']=$row['email'];
         }
         echo "1";

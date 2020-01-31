@@ -21,7 +21,7 @@ if(!isset($_SESSION['customer_id']) && $_SESSION['customer_id']!="" && $_SESSION
 
             <div class="order-complete-box">
                 <img src="images/complete-sign.png" alt="">
-                <p>Thank you for ordering our food. You will receive a confirmation email shortly. your order referenced id #<b></b>
+                <p >Thank you for ordering our food. You will receive a confirmation email shortly. your order referenced id #<b></b>
                     <br> Now check a Food Tracker progress with your order.</p>
                 <a href="account.php" class="btn-medium btn-primary-gold btn-large">Go To Food Tracker</a>
                 <br /><br />
@@ -30,3 +30,5 @@ if(!isset($_SESSION['customer_id']) && $_SESSION['customer_id']!="" && $_SESSION
 
     </div>
 </section>
+
+

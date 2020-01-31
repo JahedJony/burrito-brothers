@@ -131,6 +131,13 @@ else{
                             <div class="col-md-8 col-sm-8 col-xs-12" style="margin-bottom: 10px">
                                 <input type="text" id="instagram_url" name="instagram_url" required class="form-control col-lg-12"/>
                             </div>
+                            <label class="control-label col-md-4 col-sm-4 col-xs-12">Ingredient Image Display<span class="required">*</span></label>
+                            <div class="col-md-8 col-sm-8 col-xs-12" style="margin-bottom: 10px">
+                                <select class="form-control" name="ingredient_image_display" id="ingredient_image_display">
+                                    <option value='1'>Show Image</option>
+                                    <option value='0'>Hide Image</option>
+                                </select>
+                            </div>
 
 
                         </div>

@@ -40,66 +40,6 @@ if(!isset($_SESSION['cart']) || !count($_SESSION['cart'])>0) {
                         </thead>
                         <tbody id="cart_table">
 
-                        <!-- <tr>
-                             <th>PRODUCT</th>
-                             <td>
-                                 <div class="product-cart">
-                                     <img src="../images/img71.png" alt="">
-                                 </div>
-                                 <div class="product-cart-title">
-                                     <span>Blanched Garlic</span>
-                                 </div>
-                             </td>
-                             <th>PRICE</th>
-                             <td>
-                                 <strong>$59</strong>
-                                 <del>$5400.00</del>
-                             </td>
-                             <th>QUANTITY</th>
-                             <td>
-                                 <div class="price-textbox">
-                                     <span class="minus-text"><i class="icon-minus"></i></span>
-                                     <input name="txt" placeholder="1" type="text">
-                                     <span class="plus-text"><i class="icon-plus"></i></span>
-                                 </div>
-                             </td>
-                             <th>TOTAL</th>
-                             <td>
-                                 $59
-                             </td>
-                             <td class="shop-cart-close"><i class="icon-cancel-5"></i></td>
-                         </tr>
-                         <tr>
-                             <th>PRODUCT</th>
-                             <td>
-                                 <div class="product-cart">
-                                     <img src="../images/img72.png" alt="">
-                                 </div>
-                                 <div class="product-cart-title">
-                                     <span>Blanched Garlic</span>
-                                 </div>
-                             </td>
-                             <th>PRICE</th>
-                             <td>
-                                 <strong>$59</strong>
-                                 <del>$5400.00</del>
-                             </td>
-                             <th>QUANTITY</th>
-                             <td>
-                                 <div class="price-textbox">
-                                     <span class="minus-text"><i class="icon-minus"></i></span>
-                                     <input name="txt" placeholder="1" type="text">
-                                     <span class="plus-text"><i class="icon-plus"></i></span>
-                                 </div>
-                             </td>
-                             <th>TOTAL</th>
-                             <td>
-                                 $59
-                             </td>
-                             <td class="shop-cart-close"><i class="icon-cancel-5"></i></td>
-                         </tr>
-
-                         -->
                         </tbody>
                     </table>
                     <div class="product-cart-detail">
@@ -130,9 +70,14 @@ if(!isset($_SESSION['cart']) || !count($_SESSION['cart'])>0) {
                     </div>
 
                     <div class="proceed-check">
+                        <?php
+                        if(isset($_SESSION['group_master'])){?>
+                            <a href="#" class="btn-dark-coffee btn-medium" style="text-align: center" onclick="submitItem()">SUBMIT YOUR ITEMS</a>
+                        <?php }
+                        else{ ?>
 
                             <a href="index.php?page=checkout" class="btn-primary-gold btn-medium">PROCEED TO CHECKOUT</a>
-
+                        <?php } ?>
                     </div>
                 </div>
             </div>
@@ -155,9 +100,15 @@ if(!isset($_SESSION['cart']) || !count($_SESSION['cart'])>0) {
                 q: "checkout"
             },
             success: function(data) {
-                alert(data)
+                //alert(data)
                 if(data=='111'){
+                    //alert('111')
                     $("#content").load("views/checkout_confirm.php");
+
+                }
+                else if(data=='222'){
+                    //alert('222')
+                    window.location.href= project_url+"index.php?page=account";
 
                 }
             }
@@ -190,8 +141,8 @@ if(!isset($_SESSION['cart']) || !count($_SESSION['cart'])>0) {
                         html+=' <tr>\n' +
                             '                            <th>PRODUCT</th>\n' +
                             '                            <td>\n' +
-                            '                                <div class="product-cart" style="'+ item_image_display +'">\n' +
-                            '                                    <img src="/admin/images/item/'+datas.item_image+'" alt="" style="height: 80px; width: 80px; border-radius: 10px">\n' +
+                            '                                <div class="product-cart" style="">\n' +
+                            '                                    <img src="/admin/images/item/'+datas.item_image+'" alt="" style="height: 80px; width: 80px; border-radius: 10px;'+ item_image_display +'">\n' +
                             '                                    <span class="text-capitalize">'+datas.item_name+'</span>\n' +
                             '                                </div>\n' +
                             '                            </td>\n' +
