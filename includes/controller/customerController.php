@@ -195,6 +195,22 @@ if($q=="insert_custom_cake"){
 	if($return) echo "1";
 	else 	echo "0";
 }
+
+if($q=="duplicate_id_check"){
+    //echo 1;
+    if($type=='username'){
+        $sql = "select username from customer_infos WHERE  username='$userInfo'";
+    }
+    else{
+        $sql = "select username from customer_infos WHERE  email='$userInfo'";
+    }
+    $check_userInfo = $dbClass->getSingleRow($sql);
+    if($check_userInfo){
+        echo 0;
+    }
+    else
+        echo 1;
+}
  //     cc_attached_file 
 
 ?>

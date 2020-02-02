@@ -304,32 +304,47 @@ switch ($q) {
         echo json_encode($data);
         break;
 
-    case "apply_cupon":
+    case "apply_coupon":
         //echo $group_order_id; die;
 
-        $cupon_amount = 0;
+        //echo $coupon_code; die;
+
+        $coupon_amount = 0;
         $date = date("Y-m-d");
 
-        $cupon_info = $dbClass->getSingleRow("select id,c_type,amount,min_order_amount from cupons where status=1 and ((cupon_no='$cupon_code' and customer_id = ".$_SESSION['customer_id'].") or cupon_no='$cupon_code' and customer_id is null) and (DATE_FORMAT(start_date, '%Y-%m-%d') <= '$date' AND DATE_FORMAT(end_date, '%Y-%m-%d') >= '$date')");
+        $coupon_info = $dbClass->getSingleRow("select id,c_type,amount,min_order_amount from cupons where status=1 and ((cupon_no='$coupon_code' and customer_id = ".$_SESSION['customer_id'].") or cupon_no='$coupon_code' and customer_id is null) and (DATE_FORMAT(start_date, '%Y-%m-%d') <= '$date' AND DATE_FORMAT(end_date, '%Y-%m-%d') >= '$date')");
 
         //var_dump("select id,c_type,amount,min_order_amount from cupons where status=1 and ((cupon_no='$cupon_code' and customer_id = ".$_SESSION['customer_id'].") or cupon_no='$cupon_code' and customer_id is null) and (DATE_FORMAT(start_date, '%Y-%m-%d') <= '$date' AND DATE_FORMAT(end_date, '%Y-%m-%d') >= '$date')");
 //die;
 
+       // echo($coupon_info);die;
+        $order_info = $dbClass->getSingleRow("select total_order_amt from group_order where order_id=$group_order_id");
 
 
-        if($cupon_info['id']){
+        if($coupon_info['id'] && $order_info['total_order_amt']>=$coupon_info['min_order_amount']){
             $condition_array = array(
                 'order_id'=>$group_order_id
             );
             $columns_value = array(
-                'cupon_id'=>$cupon_info['id']
+                'cupon_id'=>$coupon_info['id']
             );
             $return = $dbClass->update("group_order", $columns_value, $condition_array);
             echo 1;
 
         }
-        else echo 0;
+        else echo 2;
 
+        break;
+
+    case "add_tips":
+        $condition_array = array(
+            'order_id'=>$group_order_id
+        );
+        $columns_value = array(
+            'tips'=>$tips
+        );
+        $return = $dbClass->update("group_order", $columns_value, $condition_array);
+        echo 1;
         break;
 
     case "viewCartSummery":
@@ -355,11 +370,13 @@ switch ($q) {
         $stmt->execute();
         $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
         $total_order_amount=0;
+        //var_dump($result);
 
         foreach ($result as $row) {
             $total_order_amount+=$row['total_order_amt'];
             $data['records'][] = $row;
         }
+        //echo($total_order_amount);die;
         $date = date("Y-m-d");
         $cupon_sql ="SELECT cu.amount, cu.min_order_amount, cu.c_type FROM group_order go                  
                     LEFT JOIN(
@@ -372,7 +389,7 @@ switch ($q) {
 
 
         $cupon_info = $dbClass->getSingleRow($cupon_sql);
-        //var_dump($cupon_info);
+        //var_dump($cupon_sql);
         $discount = 0;
         if($cupon_info){
             if($total_order_amount>=$cupon_info['min_order_amount']){
@@ -382,6 +399,8 @@ switch ($q) {
                 else{
                     $discount = ($total_order_amount*$cupon_info['amount'])/100;
                 }
+                //var_dump( $cupon_info);die;
+
             }
         }
         $tax_amt = 0;
@@ -405,7 +424,7 @@ switch ($q) {
 
         //var_dump($total_order_amount);
 
-        $sql = "  SELECT ci.full_name, gi.name, go.order_id as group_order_id, go.discount_amount, go.tax_amount, go.total_order_amt, go.total_order_amt, go.cupon_id,
+        $sql = "  SELECT ci.full_name, gi.name, go.order_id as group_order_id, go.discount_amount, go.tax_amount, go.total_order_amt, go.total_order_amt, go.cupon_id, go.tips,
                                         case go.order_status when 2 then 'Invitation Sent' when 3 then 'Menu Selected' when 4 then 'Order Panding' when 5 then 'Order Approved' when 6 then 'Order Ready' else 'Order Initiate' end order_status, 
 										case go. payment_status when 1 then 'Not Paid' else 'Paid' end payment_status, 
 										case go.payment_method when 1 then 'Cash On Delivary' when 2 then 'Loyalty Payment' when 3 then 'Card' when 4 then 'Gift Card' else 'Not Defined' end payment_method

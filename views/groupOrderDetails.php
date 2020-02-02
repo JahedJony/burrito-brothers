@@ -203,17 +203,8 @@ else{
                     </div>
                 </div>
 
-                <div class="text-center before_order_initiate" id="cupon_add" style="display: none">
-                    <div class="cupon-part">
-                        <input type="text" name="txt" id="coupon_code" placeholder="Cupon Code" style="border-radius: 5px">
-                    </div>
-                    <a href="#" class="btn-medium btn-dark-coffee" id="apply_cupon"  style="border-radius: 5px">Apply Coupon</a>
-                    <p class="text-danger text-left">*The empty choice will remain empty while you place the order</p>
-
-                </div>
-
-                <div class="col-md-12 text-center before_order_initiate" style="margin-bottom: 5px"> <span><input class="radio-inline text-center" type="checkbox" id="checkoutConirmation"></span><span style="padding-top: 5px"> Please confirm your submission</span></div>
                 <div class="col-md-12 text-center before_order_initiate" style="margin-bottom: 10px" ><button type="button" class="btn btn-primary" onclick="checkout()">Proceed to Checkout</button></div>
+                <div id="checkout_error" class="text-center" style="display:none" ></div>
 
 
                 <div class="col-md-12" style="text-align: center"> <button type="button" class="btn btn-warning" id="order_print"><i class="fa fa-lg fa-print"></i></button></div>
@@ -228,7 +219,6 @@ else{
     var sWidth = window.screen.width;
     var print_module=''
     var group_id= ''
-    var tem_checkput= 0;
     var sWidth = window.screen.width;
 
     //alert("sWidth is: " + sWidth);
@@ -236,24 +226,29 @@ else{
 
 
     if(sWidth<801){
-        alert('ok')
+        //alert('ok')
         console.log($('#ord_detail_vw_big').html())
         $('#ord_detail_vw_big').css('display', 'none')
         $('#ord_detail_vw_small').css('display', 'block')
     }
     else {
-        alert('not')
+        //alert('not')
         $('#ord_detail_vw_big').css('display', 'block')
         $('#ord_detail_vw_small').css('display', 'none')
     }
 
 
     function checkout(){
-        $('#cupon_add').css('display','block');
-        if(tem_checkput>0){
+        //alert($('#total_amt').html())
+        if($('#total_amt').html()!=currency_symbol+"0.00"){
+            //alert('sss')
             window.location.href = "index.php?page=groupCheckout&id="+group_id
         }
-        tem_checkput ++;
+        else {
+            //alert('sdf')
+            success_or_error_msg('#checkout_error','danger',"Please Select items to checkout. ","#coupon");
+
+        }
     }
 
 
@@ -396,27 +391,6 @@ else{
         $('#order_modal').modal();
     }
 
-    $('#apply_cupon').click(function(){
-        var cupon_code = $('#coupon_code').val();
-        //alert(cupon_code)
-        if(cupon_code !=""){
-            $.ajax({
-                url: "./includes/controller/groupController.php",
-                type:'POST',
-                async:false,
-                data: {
-                    q:'apply_cupon',
-                    cupon_code:cupon_code,
-                    group_order_id: group_id
-                },
-                success: function(data){
-                    alert('Cupone Added')
-                    view_order(group_id)
-
-                }
-            });
-        }
-    })
 
 
 </script>

@@ -303,6 +303,7 @@ switch ($q){
                 'payment_status' =>1,
                 'total_order_amt'=>$price,
                 'tax_amount'=>0,
+                'tips'=>0,
                 'total_paid_amount'=>0,
                 'group_order_details_id'=>$_SESSION['group_order_details_id'],
                 'loyalty_point'=>0
@@ -311,6 +312,9 @@ switch ($q){
         }
         else{
             $secial_notes	 = htmlspecialchars($secial_notes,ENT_QUOTES);
+            if(!$tips){
+                $tips=0;
+            }
 
             $columns_value = array(
                 'customer_id'=>$_SESSION['customer_id'],
@@ -323,6 +327,7 @@ switch ($q){
                 'total_order_amt'=>$total_order_amt,
                 'tax_amount'=>$tax_amount,
                 'total_paid_amount'=>$total_paid_amount,
+                'tips'=>(float)$tips,
                 'payment_status' =>1,
                 'loyalty_point'=>$loyalty_point,
                 'group_order_details_id'=>0

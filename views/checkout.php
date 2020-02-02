@@ -113,10 +113,14 @@ if(!isset($_SESSION['cart']) || !count($_SESSION['cart'])>0) {
                                             </div>
                                             <div class="col-md-12 col-sm-12 col-xs-12">
                                                 <input type="text" name="cust_username" id="cust_username_" placeholder="User Name" class="input-fields" required>
+                                                <div id="username_error" class="text-center" style="display:none"></div>
                                             </div>
+
                                             <div class="col-md-12 col-sm-12 col-xs-12">
                                                 <input type="email" name="cust_email" id="cust_email_" placeholder="Email address" class="input-fields" required>
+                                                <div id="email_error" class="text-center" style="display:none"></div>
                                             </div>
+
                                             <div class="col-md-12 col-sm-12 col-xs-12">
                                                 <input type="password" name="cust_password" id="cust_password_" placeholder="Password" class="input-fields" required>
                                             </div>
@@ -197,24 +201,40 @@ if(!isset($_SESSION['cart']) || !count($_SESSION['cart'])>0) {
 
                             <div id="take_out" style="display: none">
                                 <div class="col-md-12 col-sm-12 col-xs-12">
+                                    <h5>Coupon and Tips</h5>
+                                </div>
+                                <div class="col-md-12 col-sm-12 col-xs-12">
+                                    <label style=" font-size: 18px"> Do you have any cupon code </label>
+                                    <input type="text" name="coupon" id="coupon" placeholder="Enter The Coupon Code" class="input-fields" style="border-radius: 10px">
+                                    <div id="coupon_error" class="text-center" style="display:none"></div>
+
+                                </div>
+
+                                <div class="col-md-12 col-sm-12 col-xs-12">
+                                    <label style=" font-size: 18px"> Want to give some Tips </label>
+                                    <input type="text" name="tips" id="tips" placeholder="Tips amount" class="input-fields" style="border-radius: 10px">
+                                </div>
+
+                                <div class="col-md-12 col-sm-12 col-xs-12">
                                     <h5>Takeout Details</h5>
                                 </div>
                                 <div class="col-md-12 col-sm-12 col-xs-12">
                                     <br />
                                     <label style=" font-size: 20px"> Confirm TakeOut Location </label>
-                                    <div class="payment-mode">
-                                          <input type="checkbox" name="take_out_location" id="take_out_location"><label id="take_out_location_" style="padding-left: 10px; padding-top: 10px; font-size: 18px"></label>
+                                    <div class="payment-mode" style="margin: auto">
+                                        <span><input type="checkbox" name="take_out_location" id="take_out_location" ><label id="take_out_location_" style="padding-left: 10px; padding-top: 10px; font-size: 18px"></label></span>
                                     </div>
                                 </div>
+
                                 <div class="col-md-12 col-sm-12 col-xs-12">
                                     <br />
                                     <label style=" font-size: 20px"> Please select date and time </label>
-                                    <input type="text" name="pickup_date_time" id="pickup_date_time" placeholder="Date and Time" class="input-fields date-picker" required value="2020-01-07 12:00:00">
+                                    <input type="text" name="pickup_date_time" id="pickup_date_time" placeholder="Date and Time" class="input-fields date-picker" required value="2020-01-07 12:00:00" style="border-radius: 10px">
                                 </div>
 
                                 <div class="col-md-12 col-sm-12 col-xs-12">
                                     <label style=" font-size: 20px"> Order Notes </label>
-                                    <textarea placeholder="Order Notes" name="secial_notes" id="secial_notes"></textarea>
+                                    <textarea placeholder="Order Notes" name="secial_notes" id="secial_notes" style="border-radius: 10px"></textarea>
                                 </div>
 
                                 <div class="checkout-button">
@@ -223,6 +243,7 @@ if(!isset($_SESSION['cart']) || !count($_SESSION['cart'])>0) {
 
                             </div>
                             <div id="payments" style="display: none">
+
                                 <h4>Payment Methods</h4>
                                 <input type="hidden"  id="grand_total">
                                 <div class="payment_body" id="payment_body"></div>
@@ -239,7 +260,6 @@ if(!isset($_SESSION['cart']) || !count($_SESSION['cart'])>0) {
                                 <div class="checkout-button">
                                     <div id="logn_reg_error" class="text-center" style="display:none"></div>
                                     <input type="submit" name="submit" id="checkout_submit" class="button-default btn-large btn-primary-gold" value="PLACE ORDER">
-
                                 </div>
                             </div>
                             </form>
@@ -272,6 +292,10 @@ if(!isset($_SESSION['cart']) || !count($_SESSION['cart'])>0) {
                                     <div class="checkout-total">
                                         <h6>ORDER TOTAL <small class="price-big" id="total_amount_"></small></h6>
                                     </div>
+                                    <div class="" style=" background-color: #add8e6 ;" >
+                                        <label id="loyalty_point_earn" style="text-align: center; margin: auto; padding: 8px; margin-left: 10px"></label>
+                                    </div>
+
                                 </div>
                             </div>
                         </div>
@@ -285,6 +309,111 @@ if(!isset($_SESSION['cart']) || !count($_SESSION['cart'])>0) {
 var loyalty_points=0;
 var loyalty_point_value=0;
 var loyalty_reserve_value=0;
+
+$('#cust_username_').on('change', function () {
+    //alert($('#cust_username_').val())
+    var username= $('#cust_username_').val();
+    //alert(username)
+
+    $.ajax({
+        url: "./includes/controller/customerController.php",
+        dataType: "json",
+        type: "post",
+        async: false,
+        data: {
+            q: "duplicate_id_check",
+            userInfo: username,
+            type: "username",
+        },
+        success: function(data){
+            if(data==0){
+                $('#cust_username_').focus();
+                $('#cust_username_').css("background-color","FFCCCB");
+                success_or_error_msg('#username_error','danger',"Username is not available","#emp_name");
+            }
+            else {
+                $('#cust_username_').css("background-color","");
+            }
+        }
+    });
+
+
+})
+
+$('#cust_email_').on('change', function () {
+    var userMail= $('#cust_email_').val();
+    $.ajax({
+        url: "./includes/controller/customerController.php",
+            dataType: "json",
+            type: "post",
+            async: false,
+            data: {
+                q: "duplicate_id_check",
+                userInfo: userMail,
+                type: "usermail",
+            },
+        success: function(data){
+            //alert(data)
+            if(data==0){
+                $('#cust_email_').focus();
+                $('#cust_email_').css("background-color","#FFCCCB");
+                success_or_error_msg('#email_error','danger',"Email is already registered","#emp_name");
+            }
+            else {
+                $('#cust_email_').css("background-color","");
+            }
+        }
+    });
+
+
+
+
+})
+
+$('#tips').on('change',function () {
+    $('#tips_').html(currency_symbol+''+$('#tips').val())
+
+    total_amt = parseFloat($('#total_order_amt').val())+parseFloat($('#tips').val())
+    //alert(total_amt)
+    $('#total_amount_').html(currency_symbol+''+total_amt.toFixed(2))
+
+    $('#total_paid_amount').val(total_amt.toFixed(2))
+
+
+    //set loyalty point expense for this order
+    $('#loyalty_spend').html("("+Math.ceil(total_amt/loyalty_point_value)+" point will spend)")
+    $('#loyalty_point_earn').html(Math.floor(total_amt/loyalty_reserve_value)+' points will earn')
+
+})
+
+$('#coupon').on('change',function () {
+    //alert('sdf')
+    var coupon_code = $('#coupon').val();
+    if(coupon_code !=""){
+        $.ajax({
+            url: "./includes/controller/ecommerceController.php",
+            type:'POST',
+            async:false,
+            data: "q=apply_cupon&cupon_code="+coupon_code,
+            success: function(data){
+
+                if(data==1){
+                    success_or_error_msg('#coupon_error','success',"Coupon Code added. ","#coupon");
+
+
+                }else if(data==2){
+                    success_or_error_msg('#coupon_error','danger',"Coupon Code is not valid. ","#coupon");
+
+                }
+                //alert(data)
+
+                order_summary()
+                //location.reload();
+            }
+        });
+    }
+})
+
 
 load_customer_profile = function load_customer_profile(id){
         $.ajax({
@@ -402,7 +531,7 @@ general_settings = function general_settings(){
                     }
                     if(data.loyelty_payment==1 ){
                         html+='<div class="payment-mode">\n' +
-                            '      <input type="radio" name="payment_method" id="loyalty_redio" value="2"  onclick="payment_check()"><label style="padding-left: 10px; padding-top: 10px; font-size: 18px">Use Loyalty Point</label>\n' +
+                            '      <input type="radio" name="payment_method" id="loyalty_redio" value="2"  onclick="payment_check()"><label style="padding-left: 10px; padding-top: 10px; font-size: 18px">Use Loyalty Point <span id="loyalty_spend"></span></label>\n' +
                             '  </div>'
                     }
                     if(data.card_payment==1){
@@ -431,6 +560,7 @@ general_settings = function general_settings(){
     });
 
 }
+general_settings()
 
 
 order_summary = function order_summary(){
@@ -454,7 +584,7 @@ order_summary = function order_summary(){
 
                     sub_total += parseFloat(datas.discounted_rate)*(datas.quantity);
 
-                    html+='<p><span>'+datas.item_name+'</span> x'+datas.quantity+' <small>'+ currency_symbol+''+datas.discounted_rate * datas.quantity+'</small></p>\n'
+                    html+='<p><span class="text-capitalize">'+datas.item_name+'</span> x'+datas.quantity+' <small>'+ currency_symbol+''+datas.discounted_rate * datas.quantity+'</small></p>\n'
                 });
                 $('#cart_summary').html(html);
             }
@@ -468,14 +598,21 @@ order_summary = function order_summary(){
                 },
                 success: function(data) {
                     if(data){
+                        //alert(loyalty_reserve_value)
                         //$('#items_price').html(data['total_price'])
-                        $('#cart_total_').html(currency_symbol+''+data['total_price']);
-                        $('#discount_').html(currency_symbol+''+data['discount'])
-                        $('#tax_').html(currency_symbol+''+data['tax_amount'])
-                        $('#total_amount_').html(currency_symbol+''+data['discounted_price'])
+                        $('#cart_total_').html(currency_symbol+''+data['total_price'].toFixed(2));
+                        $('#discount_').html(currency_symbol+''+data['discount'].toFixed(2))
+                        $('#tax_').html(currency_symbol+''+data['tax_amount'].toFixed(2))
+                        $('#total_amount_').html(currency_symbol+''+data['discounted_price'].toFixed(2))
+                        $('#loyalty_point_earn').html(Math.floor(data['discounted_price']/loyalty_reserve_value)+' points will earn')
                         $('#total_order_amt').val(data['total_price'])
                         $('#tax_amount').val(data['tax_amount'])
                         $('#total_paid_amount').val(data['discounted_price'])
+
+
+                        //set loyalty point expense for this order
+                        $('#loyalty_spend').html("("+Math.ceil(data['discounted_price']/loyalty_point_value)+" point will spend)")
+
 
                     }   
                 }
@@ -489,8 +626,6 @@ order_summary = function order_summary(){
 
 order_summary()
 //load_customer_profile()
-general_settings()
-
 
 $('#login').click(function(event){
         event.preventDefault();
@@ -602,10 +737,10 @@ $('#register_submit_').click(function(event){
             success: function(data){
                 alert(data)
                 if($.isNumeric(data)==true && data==2){
-                    success_or_error_msg('#registration_submit_error',"danger","Username is already exist, please try with another one","#cust_username" );
+                    success_or_error_msg('#registration_submit_error_',"danger","Username is already exist, please try with another one","#cust_username" );
                 }
                 else if($.isNumeric(data)==true && data==3){
-                    success_or_error_msg('#registration_submit_error',"danger","Email is already exist, please try with another one","#cust_email" );
+                    success_or_error_msg('#registration_submit_error_',"danger","Email is already exist, please try with another one","#cust_email" );
                 }
                 else if($.isNumeric(data)==true && data==1){
                     $('.done_registration').addClass("hide");
@@ -613,7 +748,7 @@ $('#register_submit_').click(function(event){
                     window.location.href = project_url+ "checkout.php";
                 }
                 else{
-                    success_or_error_msg('#registration_submit_error',"danger","Registration is not completed. please check your information again.","#cust_email" );
+                    success_or_error_msg('#registration_submit_error_',"danger","Registration is not completed. please check your information again.","#cust_email" );
                 }
             }
         });

@@ -90,7 +90,7 @@ if(!isset($_SESSION['cart']) || !count($_SESSION['cart'])>0) {
     $("#price_summary").load("views/order_price_summary.php");
 
     submitItem= function submitItem() {
-        alert('ok')
+        //alert('ok')
         $.ajax({
             url: "./includes/controller/ecommerceController.php",
             dataType: "json",

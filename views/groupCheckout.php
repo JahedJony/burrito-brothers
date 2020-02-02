@@ -32,7 +32,7 @@ else {
           </div>
           <div class="row">
                <div class="col-md-12 col-sm-12 col-xs-12 wow fadeInDown  tab-content" data-wow-duration="1000ms" data-wow-delay="300ms" >
-                     <ul class="nav nav-tabs" role="tablist" style="margin-right: 43%; margin-top: 20px; font-size: 20px; border-radius: 15px 15px 0px 0px">
+                   <ul class="nav nav-tabs" role="tablist" style="margin-right: 43%; margin-top: 20px; font-size: 20px; border-radius: 15px 15px 0px 0px">
                             <li role="presentation" onclick="take_out()" id="take_out_menu" style="background-color: #EAEAEA">
                                 <a href="#reviews" aria-controls="pickUp" role="tab" data-toggle="tab">Take Out</a>
                             </li>
@@ -40,11 +40,30 @@ else {
                                 <a href="#reviews" aria-controls="payments" role="tab" data-toggle="tab">Payments</a>
                             </li>
                         </ul>
-                        <div class="col-md-7 col-sm-7 col-xs-12" style="background-color: white; border-radius: 0px 12px 12px 12px; padding-top: 25px; padding-bottom: 20px">
-                        <div role="tabpanel" class="tab-pane" id="description">
+                   <div class="col-md-7 col-sm-7 col-xs-12" style="background-color: white; border-radius: 0px 12px 12px 12px; padding-top: 25px; padding-bottom: 20px">
+                            <div role="tabpanel" class="tab-pane" id="description">
                             <form method="post" name="checkout-form" id="checkout-form">
 
                             <div id="take_out" style="display: none">
+
+                                <div class="col-md-12 col-sm-12 col-xs-12">
+                                    <h5>Coupon and Tips</h5>
+                                </div>
+                                <div class="col-md-12 col-sm-12 col-xs-12">
+                                    <label style=" font-size: 18px"> Do you have any cupon code </label>
+                                    <input type="text" name="coupon" id="coupon" placeholder="Enter The Coupon Code" class="input-fields" style="border-radius: 10px">
+                                    <div id="coupon_error" class="text-center" style="display:none"></div>
+
+                                </div>
+
+                                <div class="col-md-12 col-sm-12 col-xs-12">
+                                    <label style=" font-size: 18px"> Want to give some Tips </label>
+                                    <input type="text" name="tips" id="tips" placeholder="Tips amount" class="input-fields" style="border-radius: 10px">
+                                    <div id="tips_error" class="text-center" style="display:none"></div>
+
+                                </div>
+
+
                                 <div class="col-md-12 col-sm-12 col-xs-12">
                                     <h5>Takeout Details</h5>
                                 </div>
@@ -94,8 +113,8 @@ else {
                             </form>
 
                         </div>
-                       </div>
-                        <div class="col-md-5 col-sm-5 col-xs-12 wow fadeInDown" data-wow-duration="1000ms" data-wow-delay="300ms">
+                        </div>
+                   <div class="col-md-5 col-sm-5 col-xs-12 wow fadeInDown" data-wow-duration="1000ms" data-wow-delay="300ms">
                             <div class="shop-checkout-right">
                                 <div class="shop-checkout-box">
                                     <h5>YOUR ORDER</h5>
@@ -124,8 +143,7 @@ else {
                                 </div>
                             </div>
                         </div>
-
-                    </div>
+               </div>
           </div>
     </div>
 </section>
@@ -138,6 +156,71 @@ var loyalty_points=0;
 var loyalty_point_value=0;
 var loyalty_reserve_value=0;
 var total = 0;
+
+$('#tips').on('change',function () {
+alert('sdf')
+    var tips = $('#tips').val();
+
+        $.ajax({
+            url: "./includes/controller/groupController.php",
+            type:'POST',
+            async:false,
+            data: {
+                q:'add_tips',
+                tips:tips,
+                group_order_id: group_order_id
+            },
+            success: function(data){
+                if(data==1){
+                    success_or_error_msg('#tips_error','success',"Thanks for the tips. ","#coupon");
+
+
+                }else if(data==2){
+                    success_or_error_msg('#tips_error','danger',"Tips is not added. ","#coupon");
+
+                }
+                //alert(data)
+
+                order_summary()
+                //location.reload();
+            }
+        });
+
+
+    //$('#tips_').html(currency_symbol+''+$('#tips').val())
+
+})
+
+$('#coupon').on('change',function () {
+    var coupon_code = $('#coupon').val();
+    if(coupon_code !=""){
+        $.ajax({
+            url: "./includes/controller/groupController.php",
+            type:'POST',
+            async:false,
+            data: {
+                q:'apply_coupon',
+                coupon_code:coupon_code,
+                group_order_id: group_order_id
+            },
+            success: function(data){
+                if(data==1){
+                    success_or_error_msg('#coupon_error','success',"Coupon Code added. ","#coupon");
+
+
+                }else if(data==2){
+                    success_or_error_msg('#coupon_error','danger',"Coupon Code is not valid. ","#coupon");
+
+                }
+                //alert(data)
+
+                order_summary()
+                //location.reload();
+            }
+        });
+    }
+})
+
 
 load_customer_profile = function load_customer_profile(id){
         $.ajax({
@@ -272,12 +355,18 @@ order_summary = function order_summary(){
                     html+='<p class="text-capitalize"><span>'+datas.name+'</span><small>'+ currency_symbol+''+datas.total_order_amt+'</small></p>\n'
                 });
                 $('#cart_summary').html(html);
-                total= parseFloat(data['order_details']['total_order_amt'])+ parseFloat(data['order_details']['tax_amount'])-parseFloat(data['order_details']['discount_amount'])
+                total= parseFloat(data['order_details']['total_order_amt'])+ parseFloat(data['order_details']['tax_amount'])-parseFloat(data['order_details']['discount_amount']+data['order_details']['tips'])
                 $('#cart_total_').html(currency_symbol+''+data['order_details']['total_order_amt']);
                 $('#discount_').html(currency_symbol+''+data['order_details']['discount_amount']);
                 $('#tax_').html(currency_symbol+''+data['order_details']['tax_amount']);
-                $('#tips_').html(currency_symbol+''+0);
+                $('#tips_').html(currency_symbol+''+data['order_details']['tips']);
                 $('#total_amount_').html(currency_symbol+''+total.toFixed(2));
+
+
+                $('#total_order_amt').val(data['order_details']['total_order_amt'])
+                $('#tax_amount').val(data['order_details']['tax_amount'])
+                $('#total_paid_amount').val(data['order_details']['total_order_amt'])
+
 
             }
 
@@ -357,7 +446,7 @@ $('#checkout_submit').click(function(event){
             cache:false,
             contentType:false,processData:false,
             success: function(data){
-                alert(data)
+                //alert(data)
                 if(data==0){
                     success_or_error_msg('#logn_reg_error',"danger","Order Faild. please check your information properly","#checkout_submit" );
                 }
