@@ -112,9 +112,8 @@ else{
                     <thead >
                     <th class="column-title" width="">Invoice No</th>
                     <th class="column-title" width="">Customer</th>
-                    <th class="column-title" width="18%">Product</th>
-                    <th class="column-title" width="8%">Order Date</th>
-                    <th class="column-title" width="8%">Delivery Date</th>
+                    <th class="column-title" width="15%">Order Date</th>
+                    <th class="column-title" width="15%">Delivery Date</th>
                     <th class="column-title" width="8%">Payment Status</th>
                     <th class="column-title" width="8%">Order Status</th>
                     <th class="column-title" width="10%">Order Amount</th>
@@ -199,6 +198,84 @@ else{
 
                     </div>
 
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade booktable" id="group_order_modal" tabindex="-2" role="dialog" aria-labelledby="booktable">
+        <div class="modal-dialog" role="document" style="width:80% !important">
+            <div class="modal-content">
+                <div class="modal-body" style="margin-bottom: 50px">
+                    <div id="order-div" >
+                        <div class="title text-center">
+                            <h3 class="text-coffee left"> <a href="index.php"><img src="<?php echo ($logo); ?>" alt="" style="height: 100px; width: 100px"></a></h3>
+                            <h4 class="text-coffee left">Order For  <span class="text-capitalize" id="ord_title_vw"></span></h4>
+                        </div>
+                        <div class="done_registration ">
+                            <div class="doc_content">
+                                <div class="col-md-12" style="margin-left: 0px; padding: 0px; margin-bottom: 20px">
+                                    <div class="col-md-6" style="margin: 0px; padding: 0px">
+                                        <h4>Order Details:</h4>
+                                        <div class="byline">
+                                            <span class="after_order_initiate" id="inv_no" style="display: none"></span>
+                                            <span id="order_status"></span><br/>
+                                            <span id="ord_date"></span><br/>
+                                            <span id="ntf_date"></span> <br/>
+                                            <span id="dlv_date"></span> <br/>
+
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6" style="text-align:right">
+                                        <h4>Customer Details:</h4>
+                                        <address id="customer_detail_vw">
+                                        </address>
+                                    </div>
+
+                                </div>
+                                <p class="text-danger text-left before_order_initiate">*YOU CAN SELECT FOOD FOR THE MEMBERS</p>
+
+                                <div id="ord_detail_vw">
+                                    <table class="table table-bordered" id="ord_detail_vw_big" >
+                                        <thead>
+                                        <tr>
+                                            <th align="center">Items</th>
+                                            <th width="10%" align="center">Quantity</th>
+                                            <th width="12%" style="text-align:right">Rate</th>
+                                            <th width="12%"  style="text-align:right">Price</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        </tbody>
+                                    </table>
+                                    <table class="table table-bordered" id="ord_detail_vw_small" style="display: none" >
+                                        <thead>
+                                        <tr>
+                                            <th align="center">Items</th>
+                                            <th width="12%"  style="text-align:right">Price</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        </tbody>
+                                    </table>
+
+                                    <p>Note: <span id="note_vw"></span></p>
+                                    <p>Print Time : <?php echo date("Y-m-d h:m:s"); ?></p>
+                                    <br />
+
+                                    <p style="font-weight:bold; text-align:center" id="thankingNoted">Thank you. Hope we will see you soon </p>
+                                </div>
+
+                            </div>
+
+
+                        </div>
+                    </div>
+
+                    <div class="col-md-12 text-center before_order_initiate" style="margin-bottom: 10px" ><button type="button" class="btn btn-primary" onclick="checkout()">Proceed to Checkout</button></div>
+                    <div id="checkout_error" class="text-center" style="display:none" ></div>
+
+
+                    <div class="col-md-12" style="text-align: center"> <button type="button" class="btn btn-warning" id="order_print"><i class="fa fa-lg fa-print"></i></button></div>
                 </div>
             </div>
         </div>
@@ -373,7 +450,7 @@ else{
 
                             //cnsole.log(total_order_amt)
                             //create and set grid table row
-                            var colums_array=["order_id*identifier*hidden","invoice_no","customer_name","p_name","order_date","delivery_date","payment_method","order_status","total_order_amt"];
+                            var colums_array=["order_id*identifier*hidden","invoice_no","customer_name","order_date","delivery_date","payment_method","order_status","total_order_amt"];
                             //first element is for view , edit condition, delete condition
                             //"all" will show /"no" will show nothing
                             var condition_array=["","","update_status", "1","",""];
@@ -450,6 +527,8 @@ else{
         //edit order
         edit_order = function edit_order(order_id){
             //order noticed update
+
+            //alert(order_id)
             $('#ord_detail_vw>table>tbody').html('');
             $.ajax({
                 url: project_url+"controller/orderController.php",
@@ -461,65 +540,142 @@ else{
                     order_id:order_id
                 },
                 success: function(data){
-                    //console.log(data)
+                    console.log(data)
                     //alert(data.item_id)
                     //console.log(data)
-                    if(!jQuery.isEmptyObject(data.records)){
-                        $.each(data.records, function(i,data){
-                            $('#order_id_edit').val(data.order_id);
-                            $('#ord_title_vw').html(data.invoice_no);
-                            $('#ord_date').html("Ordered time: "+data.order_date);
-                            $('#dlv_date').html("Delivery time: "+data.delivery_date);
-                            $('#dlv_ps').html("Payment Status: "+data.paid_status);
-                            $('#dlv_pm').html("Payment Method: "+data.payment_method);
-                            $('#customer_detail_vw').html(" "+data.customer_name+"<br/><b>Mobile:</b> "+data.customer_contact_no+"<br/><b>Address:</b> "+data.customer_address);
-                            $('#note_vw').html(data.remarks);
+                    if(data['type']=='individual'){
+                        if(!jQuery.isEmptyObject(data.records)){
+                            $.each(data.records, function(i,data){
+                                $('#order_id_edit').val(data.order_id);
+                                $('#ord_title_vw').html(data.invoice_no);
+                                $('#ord_date').html("Ordered time: "+data.order_date);
+                                $('#dlv_date').html("Delivery time: "+data.delivery_date);
+                                $('#dlv_ps').html("Payment Status: "+data.paid_status);
+                                $('#dlv_pm').html("Payment Method: "+data.payment_method);
+                                $('#customer_detail_vw').html(" "+data.customer_name+"<br/><b>Mobile:</b> "+data.customer_contact_no+"<br/><b>Address:</b> "+data.customer_address);
+                                $('#note_vw').html(data.remarks);
 
-                            var order_tr = "";
-                            var order_total = 0;
-                            order_infos	 = data.order_info;
-                            var order_arr = order_infos.split('..,');
-                            //console.log(order_arr)
-                            $.each(order_arr, function(i,orderInfo){
-                                //console.log(orderInfo)
-                                //alert(i)
-                                var order_info_arr = orderInfo.split('#');
-                                var total = ((parseFloat(order_info_arr[4])*parseFloat(order_info_arr[5])));
-                                order_tr += '<tr><td class="text-capitalize">'+order_info_arr[2].split('..')[0]+' <br>'+order_info_arr[6].split('..')[0]+'</td><td align="center">'+order_info_arr[5]+'</td><td align="right">'+order_info_arr[4]+'</td><td align="right">'+total+'</td></tr>';
-                                order_total += total;
-                            });
-                            var total_order_bill = ((parseFloat(order_total)+parseFloat(data.delivery_charge))-parseFloat(data.discount_amount));
-                            var total_paid = data.total_paid_amount;
-                            order_tr += '<tr><td colspan="3" align="right" ><b>Total Amount</b></td><td align="right"><b>'+total_paid+'</b></td></tr>';
-                            $('#ord_detail_vw>table>tbody').append(order_tr);
-                            if(data.order_status==2){
+                                var order_tr = "";
+                                var order_total = 0;
+                                order_infos	 = data.order_info;
+                                var order_arr = order_infos.split('..,');
+                                //console.log(order_arr)
+                                $.each(order_arr, function(i,orderInfo){
+                                    //console.log(orderInfo)
+                                    //alert(i)
+                                    var order_info_arr = orderInfo.split('#');
+                                    var total = ((parseFloat(order_info_arr[4])*parseFloat(order_info_arr[5])));
+                                    order_tr += '<tr><td class="text-capitalize">'+order_info_arr[2].split('..')[0]+' <br>'+order_info_arr[6].split('..')[0]+'</td><td align="center">'+order_info_arr[5]+'</td><td align="right">'+order_info_arr[4]+'</td><td align="right">'+total+'</td></tr>';
+                                    order_total += total;
+                                });
+                                var total_order_bill = ((parseFloat(order_total)+parseFloat(data.delivery_charge))-parseFloat(data.discount_amount));
+                                var total_paid = data.total_paid_amount;
+                                order_tr += '<tr><td colspan="3" align="right" ><b>Total Amount</b></td><td align="right"><b>'+total_paid+'</b></td></tr>';
+                                $('#ord_detail_vw>table>tbody').append(order_tr);
+                                if(data.order_status==2){
                                     $('#order_status_option').html("Received");
                                     $('#order_status_id').val(2);
                                 }
-                            else if(data.order_status==3){
+                                else if(data.order_status==3){
                                     $('#order_status_option').html("Preparing");
                                     $('#order_status_id').val(3);
                                 }
-                            else if(data.order_status==4){
+                                else if(data.order_status==4){
                                     $('#order_status_option').html("Ready");
                                     $('#order_status_id').val(4);
                                 }
-                            else if(data.order_status==5){
+                                else if(data.order_status==5){
                                     $('#order_status_option').html("Preparing");
                                     $('#order_status_id').val(5);
                                 }
-                            else{
+                                else{
                                     $('#order_status_option').html("Ordered");
                                     $('#order_status_id').val(1);
                                 }
 
-                            //for small device
+                                //for small device
 
-                        });
+                            });
+                        }
+                        $('#order_modal').modal();
+
+                    }
+                    else {
+                        if(!jQuery.isEmptyObject(data.order_details)) {
+
+                            $('#ord_title_vw').html(data.order_details.name);
+                            $('#inv_no').html("Invoice Number: "+data.order_details.invoice_no);
+                            $('#ord_date').html("Ordered time: "+data.order_details.order_date);
+                            $('#dlv_date').html("Delivery time: "+data.order_details.delivery_date);
+                            $('#ntf_date').html("Notification time: "+data.order_details.notification_time);
+                            $('#order_status').html("Order Status: "+data.order_details.order_status);
+                            $('#customer_detail_vw').html(" "+data.order_details.full_name+"<br/><b>Mobile:</b> "+data.order_details.mobile+"<br/><b>Address:</b> "+data.order_details.c_address);
+                            //$('#note_vw').html(data.remarks);
+                        }
+                        let order_status = parseInt(data['order_details']['status'])
+                        if(order_status>3){
+                            $('.before_order_initiate').css('display','none')
+                            $('.after_order_initiate').css('display','block')
+
+                        }
+
+                        if(!jQuery.isEmptyObject(data.records)){
+                            var sub_total=0;
+                            $.each(data.records, function(i,data){
+                                //console.log(data)
+                                //alert(data['id'])
+
+                                var order_tr = '';//for big screen
+                                var order_total = 0;
+                                var order_tr_small = ''; //for small screen
+
+                                order_infos	 = data['order_info'];
+                                var order_arr = order_infos.split('..,');
+                                if(!order_arr[0] && order_status<4){
+                                    order_tr+='<tr><td colspan="4" align="left"  ><b>'+data['name']+' </b> ('+data['email']+')</td>'
+                                    order_tr_small+='<tr><td colspan="2" align="left"  ><b>'+data['name']+' </b> ('+data['email']+')</td>'
+                                    var tem = data['group_order_details_id']+'&'+data['order_key']
+                                    order_tr += '<tr><td class="text-capitalize">Not Selected<br><a href="#" onclick="selectItems('+order_id+','+"'"+data['group_order_details_id']+'&'+data['order_key']+"'"+')">Click here to Select item for <b>'+data['name']+'<b></a></td><td align="center"></td><td align="right"></td><td align="right">'+'00'+'</td></tr>';
+                                    order_tr_small+='<tr><td class="text-capitalize">Not Selected<br><a href="#" onclick="selectItems('+order_id+','+"'"+data['group_order_details_id']+'&'+data['order_key']+"'"+')">Click here to Select item for <b>'+data['name']+'<b></a></td><td align="right">'+'00'+'</td></tr>';
+
+                                }
+                                else if(order_arr[0]){
+                                    order_tr+='<tr><td colspan="4" align="left"  ><b>'+data['name']+' </b> ('+data['email']+')</td>'
+                                    order_tr_small+='<tr><td colspan="2" align="left"  ><b>'+data['name']+' </b> ('+data['email']+')</td>'
+                                    $.each(order_arr, function(i,orderInfo){
+                                        //alert(orderInfo)
+                                        var order_info_arr = orderInfo.split('#');
+                                        var total = ((parseFloat(order_info_arr[4])*parseFloat(order_info_arr[5])));
+                                        order_tr += '<tr><td class="text-capitalize">'+order_info_arr[2]+' <br>'+order_info_arr[6]+'</td><td align="center">'+order_info_arr[5]+'</td><td align="right">'+order_info_arr[4]+'</td><td align="right">'+total+'</td></tr>';
+                                        order_tr_small+='<tr><td class="text-capitalize">'+order_info_arr[2]+':'+order_info_arr[5]+'X'+order_info_arr[4]+'<br>'+order_info_arr[6]+'</td><td align="right">'+total+'</td></tr>';
+
+                                        order_total += total;
+                                    });
+                                    sub_total += order_total;
+                                }
+
+                                $('#ord_detail_vw_big>tbody').append(order_tr);
+                                $('#ord_detail_vw_small>tbody').append(order_tr);
+
+
+                                //for small device
+
+                            });
+
+                            var discount = 0;
+
+
+                            var order_tr='<tr align="right"><td colspan="3" ><b>Total Order Amount</b></td><td align="right"><b>'+sub_total.toFixed(2)+'</b></td></tr>'
+
+
+                            $('#ord_detail_vw>table>tbody').append(order_tr);
+                        }
+
+                        $('#group_order_modal').modal();
+
                     }
                 }
             });
-            $('#order_modal').modal();
 
 
             /*

@@ -73,16 +73,18 @@ if(isset($_GET['order_id']) && $_GET['order_id']!="") $order_id =  $_GET['order_
         <div class="modal-dialog modal-sm" role="document" style="max-width: 90% ">
             <div class="modal-content">
                 <div class="modal-body" style="padding-left: 0px; padding-right: 0px">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+
                     <div id="order-div">
                         <div class="title text-center">
                             <h4 class="text-coffee left">Your Items Has Been Added To Cart<span id="ord_title_vw"></span></h4>
                         </div>
-                        <div class="buttons_wrapper">
+                        <div class="buttons_wrapper" style="padding-bottom: 15px">
                             <div class="col-md-6 col-sm-6 col-xs-6 " style="">
-                                <button type="button" class="btn btn-primary"><a href="index.php?page=categories" style="color: white">Select More Items</a></button>
+                                <button type="button" class="btn-main btn-small btn-primary" style="border-radius: 8px"><a href="index.php?page=categories" style="color: white">Select More Items</a></button>
                             </div>
                             <div class="col-md-6 col-sm-6 col-xs-6">
-                                <button type="button" class="btn btn-primary"><a href="index.php?page=cart" style="color: white">Proceed to Cart</a></button>
+                                <button type="button" class="btn-main btn-small btn-primary" style="border-radius: 8px" ><a href="index.php?page=cart" style="color: white">Proceed to Cart</a></button>
 
                             </div>
 
@@ -109,13 +111,7 @@ if(isset($_GET['order_id']) && $_GET['order_id']!="") $order_id =  $_GET['order_
     var select_ingredinet_check = 1;
 
 
-
-    //alert(item_id)
-
-    //alert('sf')
-
     chose_summary= function  chose_summary() {
-        //console.log(selected_ingredient)
         cart_side_check=0;
         select_ingredinet_check = 1;
         var html=''
@@ -139,13 +135,10 @@ if(isset($_GET['order_id']) && $_GET['order_id']!="") $order_id =  $_GET['order_
                         ingredient_ids+=','+j
                         ingredient_name+=ingredient['name']+', '
                     }
-
                 })
             }
-
         })
         total_price=total_price.toFixed(2)
-        //console.log(selected_ingredient)
         selected_ingredient['id_list']=ingredient_ids
         selected_ingredient['ingredient_name']= ingredient_name
         html+=' <div class="col-md-12 col-sm-12 col-xs-12 checkout-total" style="align-content: baseline; margin-top: 0px; padding: 0px"></div>\n' +
@@ -165,8 +158,6 @@ if(isset($_GET['order_id']) && $_GET['order_id']!="") $order_id =  $_GET['order_
             '  </div>'
         var sub_total=total_price*quantity;
 
-
-
         $.each(selected_item_list, function (i, data) {
             //alert(i)
             html+='<div class="col-md-12 col-sm-12 col-xs-12 checkout-total text-capitalize" style="align-content: baseline; margin-top: 10px; padding: 0px">\n' +
@@ -185,17 +176,13 @@ if(isset($_GET['order_id']) && $_GET['order_id']!="") $order_id =  $_GET['order_
 
         })
 
-
         $('#ingredient_summary').html(html)
         $('#total_price').html(currency_symbol+''+sub_total.toFixed(2))
 
     }
 
     var add_to_meal=function add_to_meal(option_id,option_name,ing_id,ing_rate,ing_name){
-        //alert(option_id+'-'+option_name+'-'+ing_id+'-'+ing_rate+'-'+ing_name)
-        //var a={}
         if(selected_ingredient[option_id]){
-
             if(selected_ingredient[option_id][ing_id]){
                 choosed_ingredient_number[option_id] = choosed_ingredient_number[option_id]-1;
                 delete selected_ingredient[option_id][ing_id];
@@ -206,11 +193,7 @@ if(isset($_GET['order_id']) && $_GET['order_id']!="") $order_id =  $_GET['order_
                     selected_ingredient[option_id][ing_id]={'name':ing_name, 'price':ing_rate}
                 }
                 else{
-                    // PUT message 'Your reached maxixmum choice limit for this option'
-
-                    //alert('you reach maximum choice limit')
                     return 0;
-
                 }
             }
         }
@@ -226,12 +209,9 @@ if(isset($_GET['order_id']) && $_GET['order_id']!="") $order_id =  $_GET['order_
     }
 
     var add_items=function add_items(item_id, item_name, category_name, quantity, item_price){
-        //alert(item_id+'>'+item_name+'>'+category_name+'>'+quantity+'>'+item_price)
 
         if(selected_item_list[category_name]){
-
             if(selected_item_list[category_name][item_id]){
-
                 delete selected_item_list[category_name][item_id];
                 if(Object.keys(selected_item_list[category_name]).length>0){
                     delete selected_item_list[category_name];
@@ -240,25 +220,18 @@ if(isset($_GET['order_id']) && $_GET['order_id']!="") $order_id =  $_GET['order_
             else{
                 selected_item_list[category_name][item_id]={'image':'noFood.png','item_id':item_id,'name':item_name, 'price':item_price , 'quantity':quantity}
             }
-            //alert(category_name);
-
         }
         else {
             selected_item_list[category_name]={'category_name':category_name}
             selected_item_list[category_name][item_id]={'image':'noFood.png', 'item_id':item_id,'name':item_name, 'price':item_price, 'quantity':quantity}
-
         }
-        //alert('item')
         console.log(selected_item_list)
         chose_summary()
     }
 
     // Reduce the number of main menu
     minusProd = function minusProd(id){
-        //alert(id)
         id= 'item_'+id;
-        //alert(id)
-        //alert($('#'+id).val())
         quantity = parseInt($('#'+id).val())-1;
         $('#'+id).val(quantity)
         chose_summary()
@@ -274,7 +247,6 @@ if(isset($_GET['order_id']) && $_GET['order_id']!="") $order_id =  $_GET['order_
 
     //Set the header for the main menu like name, id, quantity  minimum price etc
     set_item_header = function set_item_header(data) {
-        //alert(data['item_id'])
         base_price=parseFloat(data['price']);
         $('#total_price').html(currency_symbol+''+base_price)
 
@@ -305,7 +277,7 @@ if(isset($_GET['order_id']) && $_GET['order_id']!="") $order_id =  $_GET['order_
             if(ingredient_image_display=="display: none"){
                 var img = ' <div class="shop-main-list" style=" border-radius: 15px">\n' +
                     '                        <div class="shop-product" style="border-radius: 15px 15px 0px 0px; color:  ">\n' +
-                    '                            <div class="text-capitalize bold" style="background-color: #D2B48C ;border-radius: 17px 17px 17px 17px; height: 90px; max-width: 120px; display: flex; justify-content: center; align-items: center; color: white">'+datas['name']+''+price+'</div>\n' +
+                    '                            <div class="text-capitalize bold" style="background-color: #D2B48C ;border-radius: 17px 17px 17px 17px; height: 90px; max-width: 120px; display: flex; justify-content: center; align-items: center; color: white">'+datas['name']+'</br>'+price+'</div>\n' +
                     '                            <div class="cart-overlay-wrap" style="background-color: #372727; opacity: .5; max-width: 120px" >\n' +
                     '                                <div class="cart-overlay" >\n' +
                     '                                    <i class="fa fa-check" style="font-size:48px;color: white; opacity: 1"></i>\n\n' +
@@ -440,26 +412,12 @@ if(isset($_GET['order_id']) && $_GET['order_id']!="") $order_id =  $_GET['order_
                             '       <input type="hidden" class="item_rate"  value="'+items['price']+'" />\n' +
                             '       <input type="hidden" class="item_name"  value="'+items['name']+'" />\n' +
                             '       <input type="hidden" class="category_name"  value="'+i+'" />\n' + img+
-/*                            '                    <div class="shop-main-list" style=" border-radius: 15px">\n' +
-                            '                        <div class="shop-product" style="border-radius: 15px 15px 0px 0px; margin-bottom: 0px; padding-bottom: 0px">\n' +
-                            '                            <img src="'+project_url+'admin/images/category/noFood.png" alt="" style="border-radius: 17px 17px 17px 17px; height: 90px; width: 110px">\n' +
-                            '                            <div class="cart-overlay-wrap" style="background-color: #372727; opacity: .5" >\n' +
-                            '                                <div class="cart-overlay" >\n' +
-                            '                                    <i class="fa fa-check" style="font-size:48px;color: white; opacity: 1"></i>\n\n' +
-                            '                                </div>\n' +
-                            '                            </div>\n' +
-                            '                        </div>\n' +
-                            '                       <br><span  style="text-transform: capitalize; padding-top: 0px; margin-top: 0px">'+items['name']+' '+currency_symbol+' '+items['price']+'</span>\n' +
-                            '                    </div>\n' + */
                             '                </div>\n'
-
-
                     })
                     html_side+='</div></div>'
                 })
 
                 $('#item_body').html($('#item_body').html()+html_side)
-
             }
         });
     }
@@ -474,7 +432,6 @@ if(isset($_GET['order_id']) && $_GET['order_id']!="") $order_id =  $_GET['order_
         else{
             $(this).find('.cart-overlay-wrap').addClass('selected_ingredient')
         }
-        //alert($(this).find('h4:eq(0)').html();)
         var option_id = $(this).siblings('input:eq(0)').val();
         var option_name = $(this).siblings('input:eq(1)').val()
         var option_selected = $(this).siblings('input:eq(2)').val()
@@ -483,17 +440,11 @@ if(isset($_GET['order_id']) && $_GET['order_id']!="") $order_id =  $_GET['order_
         var ing_name   = $(this).find('input:eq(2)').val();
         if(add_to_meal(option_id,option_name,ing_id,ing_rate,ing_name)==0){
             $(this).find('.cart-overlay-wrap').removeClass('selected_ingredient')
-            //alert($(this).siblings('[name="ingredinet_limit_notification[]"]').html())
-            //var location_alert=$(this).parent().siblings('[name="ingredinet_limit_notification[]"]');
-            //success_or_error_msg(location_alert,'danger',"Please Select","#side_order");
-
         }
-
-
     })
 
+    //additional items like breverage add or remove
     $('.additional_items').on('click', function(){
-
 
         if($(this).find('.cart-overlay-wrap').hasClass('selected_ingredient')){
             $(this).find('.cart-overlay-wrap').removeClass('selected_ingredient')
@@ -520,18 +471,12 @@ if(isset($_GET['order_id']) && $_GET['order_id']!="") $order_id =  $_GET['order_
 
         //check if any Mendatory field is not selected
         $.each(choosed_ingredient_number, function (j, ingredient) {
-            //console.log(ingredient)
-            //alert(item_choice_limit[j]['minimum'] +'-'+item_choice_limit[j]['required']+'='+ingredient)
             if(parseInt(item_choice_limit[j]['minimum'])>parseInt(ingredient) || parseInt(item_choice_limit[j]['required'])>parseInt(ingredient)){
                 success_or_error_msg('#select_ingredinet','danger',"Please Select "+item_choice_limit[j]['name']+" ","#side_order");
                 select_ingredinet_check = 0;
-                //cart_side_check=0
-                //alert('sdf')
                 return false;
             }
         });
-        //alert(cart_side_check +'='+select_ingredinet_check)
-
 
         if((Object.keys(selected_item_list).length!=0 || cart_side_check!=0)  && select_ingredinet_check==1){
             //alert('cart_side_check')
@@ -562,16 +507,14 @@ if(isset($_GET['order_id']) && $_GET['order_id']!="") $order_id =  $_GET['order_
             success_or_error_msg('#select_side','warning',"You did not select any BEVERAGE ","#side_order");
             cart_side_check=1
        }
-
-
         showCart()
-
     }
 
+    //reset the page after added to cart
     $('#cart_confirmation').on('hidden.bs.modal', function () {
-        // do something…
-        //location.reload()
+        window.location.reload(true);
     })
+
 
 
 </script>

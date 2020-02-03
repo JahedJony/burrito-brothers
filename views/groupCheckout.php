@@ -299,7 +299,7 @@ general_settings = function general_settings(){
                     }
                     if(data.loyelty_payment==1 ){
                         html+='<div class="payment-mode">\n' +
-                            '      <input type="radio" name="payment_method" id="loyalty_redio" value="2"  onclick="payment_check()"><label style="padding-left: 10px; padding-top: 10px; font-size: 18px">Use Loyalty Point</label>\n' +
+                            '      <input type="radio" name="payment_method" id="loyalty_redio" value="2"  onclick="payment_check()"><label style="padding-left: 10px; padding-top: 10px; font-size: 18px">Use Loyalty Point <span id="loyalty_spend"></span></label>\n' +
                             '  </div>'
                     }
                     if(data.card_payment==1){
@@ -343,6 +343,7 @@ order_summary = function order_summary(){
         },
         success: function(data) {
             //alert(data)
+            //return false;
             console.log(data)
             //alert(data);
             if(!jQuery.isEmptyObject(data.records)){
@@ -355,7 +356,8 @@ order_summary = function order_summary(){
                     html+='<p class="text-capitalize"><span>'+datas.name+'</span><small>'+ currency_symbol+''+datas.total_order_amt+'</small></p>\n'
                 });
                 $('#cart_summary').html(html);
-                total= parseFloat(data['order_details']['total_order_amt'])+ parseFloat(data['order_details']['tax_amount'])-parseFloat(data['order_details']['discount_amount']+data['order_details']['tips'])
+                //alert(typeof data['order_details']['tips']))
+                total= parseFloat(data['order_details']['total_order_amt'])+ parseFloat(data['order_details']['tax_amount'])+parseInt(data['order_details']['tips'])-parseFloat(data['order_details']['discount_amount'])
                 $('#cart_total_').html(currency_symbol+''+data['order_details']['total_order_amt']);
                 $('#discount_').html(currency_symbol+''+data['order_details']['discount_amount']);
                 $('#tax_').html(currency_symbol+''+data['order_details']['tax_amount']);
@@ -366,6 +368,9 @@ order_summary = function order_summary(){
                 $('#total_order_amt').val(data['order_details']['total_order_amt'])
                 $('#tax_amount').val(data['order_details']['tax_amount'])
                 $('#total_paid_amount').val(data['order_details']['total_order_amt'])
+
+                $('#loyalty_spend').html("("+Math.ceil(data['discounted_price']/loyalty_point_value)+" point will spend)")
+
 
 
             }

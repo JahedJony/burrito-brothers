@@ -218,7 +218,14 @@ switch ($q) {
 
         break;
 
+    case "check_cart":
+        $_SESSION['cart']=[];
+
+        echo 1;
+        break;
+
     case "group_member_order":
+
 
         $sql = "SELECT god.group_order_id, god.order_master_id, ci.full_name, gs.delivery_date from group_order_details god
             LEFT JOIN group_order gs ON gs.order_id=god.group_order_id
@@ -276,10 +283,10 @@ switch ($q) {
         $date = date("Y-m-d");
 
 
-        $sql = "SELECT ci.full_name, ci.address as c_address, ci.contact_no as mobile, gi.name, go.order_id as group_order_id, go.order_date, go.delivery_date, go.total_order_amt, go.notification_time,  cp.c_type, cp.amount as cupon_amount, cp.min_order_amount, go.order_status as status, go.invoice_no,
+        $sql = "SELECT ci.full_name, ci.address as c_address, ci.contact_no as mobile, gi.name, go.order_id as group_order_id, go.order_date, go.delivery_date, go.total_order_amt, go.notification_time,  cp.c_type, cp.amount as cupon_amount, cp.min_order_amount, go.order_status as status, go.invoice_no,go.tips,go.total_paid_amount,
                                         case go.order_status when 2 then 'Invitation Sent' when 3 then 'Menu Selected' when 4 then 'Order Panding' when 5 then 'Order Approved' when 6 then 'Order Ready' else 'Order Initiate' end order_status, 
 										case go. payment_status when 1 then 'Not Paid' else 'Paid' end payment_status, 
-										case go.payment_method when 1 then 'Cash On Delivary' when 2 then 'Loyalty Payment' when 3 then 'Card' when 4 then 'Gift Card' else 'Not Defined' end payment_method
+										case go.payment_method when 1 then 'Cash On Delivery' when 2 then 'Loyalty Payment' when 3 then 'Card' when 4 then 'Gift Card' else 'Not Defined' end payment_method
                                         from group_order go
                                         LEFT JOIN groups_info gi ON gi.id = go.group_id
                                         LEFT JOIN(
@@ -477,8 +484,34 @@ switch ($q) {
 
     $return_master = $dbClass->update("group_order", $columns_value, $condition_array);
 
-
+        $order_details = $dbClass->getSingleRow("SELECT * FROM group_order where invoice_no='$invoice_no' ");
         $c_loyalty_points = $dbClass->getSingleRow('SELECT loyalty_points from customer_infos where customer_id='.$_SESSION["customer_id"]);
+
+        $columns_value = array(
+            'customer_id'=>$order_details['customer_id'],
+            'delivery_date'=>$order_details['delivery_date'],
+            'delivery_type'=>1,
+            'remarks'=>$order_details['remarks'],
+            'order_status'=>1,
+            'invoice_no'=>$order_details['invoice_no'],
+            'payment_method' =>$order_details['payment_method'],
+            'total_order_amt'=>$order_details['total_order_amt'],
+            'tax_amount'=>$order_details['tax_amount'],
+            'total_paid_amount'=>$order_details['total_paid_amount'],
+            'tips'=>$order_details['tips'],
+            'payment_status' =>$order_details['payment_status'],
+            'loyalty_point'=>$order_details['loyalty_point'],
+            'group_order_details_id'=>0,
+            'group_order_id'=>$order_details['order_id'],
+            'discount_amount'=>$order_details['discount_amount']
+        );
+
+        //var_dump($columns_value);
+        //var_dump($order_details);
+
+        $dbClass->insert("order_master", $columns_value);
+
+
         //var_dump($c_loyalty_points['loyalty_points']);
 
         if($return_master){
@@ -492,6 +525,7 @@ switch ($q) {
             $return_master = $dbClass->update("customer_infos", $columns_value, $condition_array);
 
 
+            $_SESSION['Last_invoice_no']=$invoice_no;
 
             echo $invoice_no; die;
 
@@ -615,7 +649,8 @@ switch ($q) {
                 }
 
                 //-------------------------------
-                echo $invoice_no;
+
+            echo $invoice_no;
 
         }
         else echo "0";

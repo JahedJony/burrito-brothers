@@ -309,7 +309,8 @@ else{
                     $('#customer_detail_vw').html(" "+data.order_details.full_name+"<br/><b>Mobile:</b> "+data.order_details.mobile+"<br/><b>Address:</b> "+data.order_details.c_address);
                     //$('#note_vw').html(data.remarks);
                 }
-                if(parseInt(data['order_details']['status'])>3){
+                let order_status = parseInt(data['order_details']['status'])
+                if(order_status>3){
                     $('.before_order_initiate').css('display','none')
                     $('.after_order_initiate').css('display','block')
 
@@ -327,15 +328,17 @@ else{
 
                             order_infos	 = data['order_info'];
                             var order_arr = order_infos.split('..,');
-                            order_tr+='<tr><td colspan="4" align="left"  ><b>'+data['name']+' </b> ('+data['email']+')</td>'
-                            order_tr_small+='<tr><td colspan="2" align="left"  ><b>'+data['name']+' </b> ('+data['email']+')</td>'
-                            if(!order_arr[0]){
+                            if(!order_arr[0] && order_status<4){
+                                order_tr+='<tr><td colspan="4" align="left"  ><b>'+data['name']+' </b> ('+data['email']+')</td>'
+                                order_tr_small+='<tr><td colspan="2" align="left"  ><b>'+data['name']+' </b> ('+data['email']+')</td>'
                                 var tem = data['group_order_details_id']+'&'+data['order_key']
                                 order_tr += '<tr><td class="text-capitalize">Not Selected<br><a href="#" onclick="selectItems('+order_id+','+"'"+data['group_order_details_id']+'&'+data['order_key']+"'"+')">Click here to Select item for <b>'+data['name']+'<b></a></td><td align="center"></td><td align="right"></td><td align="right">'+currency_symbol+''+'00'+'</td></tr>';
                                 order_tr_small+='<tr><td class="text-capitalize">Not Selected<br><a href="#" onclick="selectItems('+order_id+','+"'"+data['group_order_details_id']+'&'+data['order_key']+"'"+')">Click here to Select item for <b>'+data['name']+'<b></a></td><td align="right">'+currency_symbol+''+'00'+'</td></tr>';
 
                             }
-                            else{
+                            else if(order_arr[0]){
+                                order_tr+='<tr><td colspan="4" align="left"  ><b>'+data['name']+' </b> ('+data['email']+')</td>'
+                                order_tr_small+='<tr><td colspan="2" align="left"  ><b>'+data['name']+' </b> ('+data['email']+')</td>'
                                 $.each(order_arr, function(i,orderInfo){
                                     //alert(orderInfo)
                                     var order_info_arr = orderInfo.split('#');
@@ -377,10 +380,11 @@ else{
                         }
 
 
-                            var order_tr='<tr align="right"><td colspan="3" ><b>Total Amount</b></td><td align="right"><b>'+currency_symbol+''+sub_total.toFixed(2)+'</b></td></tr>'
+                            var order_tr='<tr align="right"><td colspan="3" ><b>Total Order Amount</b></td><td align="right"><b>'+currency_symbol+''+sub_total.toFixed(2)+'</b></td></tr>'
                         order_tr += '<trstyle="display: block><td colspan="3" align="right" ><b>Discount</b></td><td align="right"><b id="discount_amt">'+currency_symbol+''+discount.toFixed(2)+'</b></td></tr>';
                         order_tr += '<trstyle="display: block><td colspan="3" align="right" ><b>Tax</b></td><td align="right"><b id="tax_amt">'+currency_symbol+''+tax.toFixed(2)+'</b></td></tr>';
-                        order_tr += '<tr><td colspan="3" align="right" ><b>Grand Total Amount</b></td><td align="right"><b id="total_amt">'+currency_symbol+''+(sub_total-discount+tax).toFixed(2)+'</b></td></tr>';
+                        order_tr += '<trstyle="display: block><td colspan="3" align="right" ><b>Tips</b></td><td align="right"><b id="tax_amt">'+currency_symbol+''+data['order_details']['tips']+'</b></td></tr>';
+                        order_tr += '<tr><td colspan="3" align="right" ><b>Grand Total Amount</b></td><td align="right"><b id="total_amt">'+currency_symbol+''+(sub_total-discount+tax+parseInt(data['order_details']['tips'])).toFixed(2)+'</b></td></tr>';
 
 
                         $('#ord_detail_vw>table>tbody').append(order_tr);

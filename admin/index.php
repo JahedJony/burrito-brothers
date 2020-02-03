@@ -10,6 +10,8 @@ else{
 	$dbClass = new dbClass;		
 	$user_id = $_SESSION['user_id'];
 	$user_type = $_SESSION['user_type'];
+    //$currency   = $dbClass->getDescription('currency_symbol');
+
 ?>
 <!DOCTYPE html>
 <html lang="en">

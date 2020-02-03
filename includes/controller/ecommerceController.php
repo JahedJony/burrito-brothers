@@ -290,8 +290,9 @@ switch ($q){
         if(isset($_SESSION['group_master'])){
             $price = 0;
             foreach($cart as $key=>$item){
-                $price+=$item['discounted_rate'];
+                $price+=(float)$item['discounted_rate']*(int)$item['quantity'];
             }
+            //echo json_encode($cart); die;
             $columns_value = array(
                 'customer_id'=>0,
                 'delivery_date'=>$_SESSION['delivery_date'],
@@ -483,13 +484,10 @@ switch ($q){
                     unset($_SESSION['total_discounted_amount']);
                     unset($_SESSION['cupon_code']);
                     unset($_SESSION['min_order_amount']);
+                    $_SESSION['Last_invoice_no']=$invoice_no;
                 }
 
-
-//
-//
-//echo $_SESSION['latest_order_id']; die;
-                echo $invoice_no; die;
+                echo $_SESSION['Last_invoice_no']; die;
 
                 // sending email will be here
 

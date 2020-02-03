@@ -43,17 +43,6 @@ if(!isset($_SESSION['cart']) || !count($_SESSION['cart'])>0) {
                         </tbody>
                     </table>
                     <div class="product-cart-detail">
-                        <?php
-                        if(isset($_SESSION['group_master'])){?>
-                            <a href="#" class="btn-dark-coffee btn-medium" style="text-align: center" onclick="submitItem()">SUBMIT YOUR ITEMS</a>
-                        <?php }
-                        else{ ?>
-                        <div class="cupon-part">
-                            <input type="text" name="txt" id="coupon_code" placeholder="Cupon Code">
-                        </div>
-                        <a href="#" class="btn-medium btn-dark-coffee" id="apply_cupon">Apply Coupon</a>
-                        <?php }?>
-
                         <input name="update_cart" id="update_cart"  value="UPDATE CART" class="btn-medium btn-skin pull-right" type="submit">
                     </div>
                 </div>
@@ -90,7 +79,6 @@ if(!isset($_SESSION['cart']) || !count($_SESSION['cart'])>0) {
     $("#price_summary").load("views/order_price_summary.php");
 
     submitItem= function submitItem() {
-        //alert('ok')
         $.ajax({
             url: "./includes/controller/ecommerceController.php",
             dataType: "json",
@@ -100,16 +88,11 @@ if(!isset($_SESSION['cart']) || !count($_SESSION['cart'])>0) {
                 q: "checkout"
             },
             success: function(data) {
-                //alert(data)
                 if(data=='111'){
-                    //alert('111')
                     $("#content").load("views/checkout_confirm.php");
-
                 }
                 else if(data=='222'){
-                    //alert('222')
                     window.location.href= project_url+"index.php?page=account";
-
                 }
             }
 
@@ -117,7 +100,6 @@ if(!isset($_SESSION['cart']) || !count($_SESSION['cart'])>0) {
     }
 
     function cart_View(){
-        //alert('ok')
         $.ajax({
             url: "./includes/controller/ecommerceController.php",
             dataType: "json",
@@ -127,15 +109,12 @@ if(!isset($_SESSION['cart']) || !count($_SESSION['cart'])>0) {
                 q: "viewCartSummery"
             },
             success: function(data) {
-                //alert(data);
                 if(!jQuery.isEmptyObject(data.records)){
                     var html = '';
                     var total = 0;
                     var sub_total = 0;
                     var count =0
                     $.each(data.records, function(i,datas){
-                         //alert(datas.quantity)
-                       // alert(datas.cart_key)
 
                         sub_total += parseFloat(datas.discounted_rate)*(datas.quantity);
                         html+=' <tr>\n' +
@@ -166,8 +145,6 @@ if(!isset($_SESSION['cart']) || !count($_SESSION['cart'])>0) {
                             '                            <td class="shop-cart-close"><i class="icon-cancel-5" onclick=deleteCartItem("'+i+'")></i></td>\n' +
                             '                        </tr>'
 
-                        /*html += '<div class="cart-item"><div class="cart-item-left"><img src="/admin/images/item/'+datas.item_image+'" alt=""></div><div class="cart-item-right"><h6>'+datas.item_name+'</h6><span> '+datas.discounted_rate+' * '+datas.quantity+' = '+sub_total+'</span></div><span class="delete-icon" onclick="deleteItem('+"'"+datas.cart_key+"'"+')"></span></div>';
-                        */
                         count++;
                         total += sub_total ;
                     });
@@ -189,29 +166,11 @@ if(!isset($_SESSION['cart']) || !count($_SESSION['cart'])>0) {
         showCart()
     }
     cart_View()
-    $('#apply_cupon').click(function(){
-        var cupon_code = $('#coupon_code').val();
-        if(cupon_code !=""){
-            $.ajax({
-                url: "./includes/controller/ecommerceController.php",
-                type:'POST',
-                async:false,
-                data: "q=apply_cupon&cupon_code="+cupon_code,
-                success: function(data){
-                    //alert(data)
-                    /*if($.trim(data) == 1)*/
-                    price_view()
-                    //location.reload();
-                }
-            });
-        }
-    })
 
 
 
     // send mail if forget password
     $('#update_cart').click(function(event){
-        //alert('ok')
         event.preventDefault();
         var formData = new FormData($('#cart_detail')[0]);
         formData.append("q","update_cart");
@@ -223,10 +182,8 @@ if(!isset($_SESSION['cart']) || !count($_SESSION['cart'])>0) {
             cache:false,
             contentType:false,processData:false,
             success: function(data){
-                //alert(data)
                 cart_View()
                 price_view()
-                //if(data==1)  location.reload();
             }
         });
         showCart()
@@ -241,9 +198,7 @@ if(!isset($_SESSION['cart']) || !count($_SESSION['cart'])>0) {
     }
 
     function addProd(cart_key){
-        //alert(cart_key)
         var qty = parseFloat($('#quantity_'+cart_key).val());
-        //alert(qty)
         $('#quantity_'+cart_key).val(qty+1);
     }
 

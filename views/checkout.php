@@ -760,7 +760,7 @@ payment_check = function payment_check(){
     //alert(loyalty_point_value)
     //alert($('input[name=payment_method]:checked', '#checkout-form').val())
 }
-$('#checkout_submit').click(function(event){
+$('#checkout_submit').click(function(event) {
 
     event.preventDefault();
     //$('#grand_total').val($('#total_amount_').html());
@@ -822,6 +822,7 @@ $('#checkout_submit').click(function(event){
                 else{
                     //alert('done')
                     showCart()
+                    alert(data)
                     $("#content").load("views/checkout_confirm.php");
 
                     //window.location = "completed.php?complete=success&order_id="+$.trim(data);

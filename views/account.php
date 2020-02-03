@@ -74,7 +74,6 @@ if(isset($_GET['order_id']) && $_GET['order_id']!="") $order_id =  $_GET['order_
 <!-- End Main -->
 
 <script>
-
     var customer_id = "<?php echo $customer_id; ?>";
     var order_id = "<?php echo $order_id; ?>";
 

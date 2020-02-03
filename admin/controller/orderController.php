@@ -217,26 +217,23 @@ switch ($q){
         $total_pages = $total_records/$limit;
         $data['total_pages'] = ceil($total_pages);
         if($category_grid_permission==1){
-            $sql = 	"SELECT order_id, customer_id, customer_name, item_id, item_rate, ingredient_list,item_rate_id, p_name, order_date,order_noticed,order_status,
-					delivery_date, delivery_type, address, total_order_amt, remarks,	 payment_reference_no, invoice_no, 
+            $sql = 	"SELECT order_id, customer_id, customer_name, order_date,order_noticed,order_status,
+					delivery_date, delivery_type, total_order_amt, remarks, payment_reference_no, invoice_no, 
 					$update_permission as update_status, $delete_permission as delete_status,
-					case payment_status when payment_status=1 then 'Not Paid' else 'Paid' end paid_status, 
-					case payment_method when payment_method=1 then 'bKash' when payment_method=2 then 'Rocket'  else 'Cash On Delivery'  end payment_method
+					case payment_status when 1 then 'Not Paid' else 'Paid' end paid_status, payment_method
 					FROM(
 						 SELECT m.order_id, m.customer_id, c.full_name as customer_name, m.invoice_no,
-						d.item_id,d.item_rate, d.item_rate_id, m.total_order_amt, d.ingredient_list, m.order_date, m.delivery_date, p.name as p_name,
+						m.order_date, m.delivery_date,m.total_order_amt,
 						m.delivery_type, order_noticed,
-						m.address, m.remarks, m.order_status, m.payment_status, m.payment_method, m.payment_reference_no
+						m.address, m.remarks, m.order_status, m.payment_status, m.payment_reference_no,
+						case m.payment_method when 1 then 'Cash' when 2 then 'Loyalty Point' when 3 then 'Card' else 'Gift Card'  end payment_method
 						FROM order_master m
-						LEFT JOIN order_details d ON d.order_id = m.order_id
 						LEFT JOIN customer_infos c ON c.customer_id = m.customer_id
-						LEFT JOIN items p ON p.item_id = d.item_id
-						WHERE d.status=1
-						GROUP BY d.order_id
+						GROUP BY m.order_id
 						ORDER BY m.order_id DESC
 					
 					)A
-					WHERE CONCAT(invoice_no, order_id, customer_name, p_name, item_rate) LIKE '%$search_txt%' $condition
+					WHERE CONCAT(invoice_no, order_id, customer_name) LIKE '%$search_txt%' $condition
 					ORDER BY order_id desc
 					LIMIT $start, $end";
             //echo $sql;die;
@@ -487,7 +484,12 @@ switch ($q){
 
     case "get_order_details_by_invoice":
         //echo $order_id; die;
-        $sql = "SELECT m.order_id, m.customer_id, 
+        $group_order_id = $dbClass->getSingleRow("SELECT group_order_id FROM order_master WHERE order_id=$order_id");
+
+        //var_dump($group_order_id);die;
+
+        if($group_order_id['group_order_id']==0){
+            $sql = "SELECT m.order_id, m.customer_id, 
                 c.full_name customer_name, d.item_id, c.contact_no customer_contact_no, c.address customer_address,  m.order_id,
                 GROUP_CONCAT(ca.name,' >> ',ca.id,'#',ca.id,'#',p.name,' (',ca.name,' )','#',p.item_id,'#',d.item_rate,'#',d.quantity,'#',d.ingredient_name,'..') order_info,
                 m.order_date, m.delivery_date, m.delivery_type, m.discount_amount, m.total_paid_amount,
@@ -504,15 +506,119 @@ switch ($q){
                 WHERE m.order_id= '$order_id'
                 GROUP BY d.order_id
                 ORDER BY m.order_id";
+            //echo $sql;die;
+            $stmt = $conn->prepare($sql);
+            $stmt->execute();
+            $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            foreach ($result as $row) {
+                $data['records'][] = $row;
+            }
+            $data['type']='individual';
+
+            echo json_encode($data);
+        }
+        else{
+            $sql = " SELECT coalesce(oms.order_id, 'NAN') as order_id, god.id, coalesce(oms.order_info, '') as order_info, coalesce(oms.order_date, '') as order_date, coalesce(oms.total_order_amt, '0') as total_order_amt, coalesce(oms.order_status, '0') as order_status, gm.name, gm.email, god.id as group_order_details_id, god.order_key
+               FROM group_order go
+               LEFT JOIN group_order_details god ON god.group_order_id= go.order_id
+               LEFT JOIN group_members gm ON gm.id=god.group_member_id
+               LEFT JOIN(
+               SELECT om.order_id, om.group_order_details_id,
+                GROUP_CONCAT(ca.name,' >> ',ca.id,'#',ca.id,'#',p.name,' (',ca.name,' )','#',p.item_id,'#',d.item_rate,'#',d.quantity,'#',d.ingredient_name,'..') order_info,
+                om.order_date, om.total_order_amt, om.order_status 
+                FROM order_master om
+                LEFT JOIN order_details d ON d.order_id = om.order_id
+                LEFT JOIN items p ON p.item_id = d.item_id
+                LEFT JOIN category ca ON ca.id = p.category_id
+                GROUP BY d.order_id
+                )oms ON oms.group_order_details_id= god.id
+                WHERE go.order_id =".$group_order_id['group_order_id'];
+            //echo $sql;die;
+            $stmt = $conn->prepare($sql);
+            $stmt->execute();
+            $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+
+            foreach ($result as $row) {
+                $data['records'][] = $row;
+            }
+
+            $sql = "SELECT ci.full_name, ci.address as c_address, ci.contact_no as mobile, gi.name, go.order_id as group_order_id, go.order_date, go.delivery_date, go.total_order_amt, go.order_status as status, go.invoice_no,go.total_paid_amount
+                                        from group_order go
+                                        LEFT JOIN groups_info gi ON gi.id = go.group_id
+                                        LEFT JOIN(
+                                        SELECT full_name, address, contact_no,customer_id from customer_infos 
+                                        )ci ON ci.customer_id=go.customer_id              
+                                         WHERE go.order_id=".$group_order_id['group_order_id'];
+            //echo $sql;die;
+            $stmt = $conn->prepare($sql);
+            $stmt->execute();
+            $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            $tax = $dbClass->getSingleRow("Select tax_type, tax_amount, tax_enable from general_settings where id=1");
+
+            $data['order_details']=$result[0];
+            $data['type']='group';
+            echo json_encode($data);
+        }
+        break;
+
+
+    case "get_group_order_details":
+        //echo $order_id; die;
+
+        $sql = " SELECT coalesce(oms.order_id, 'NAN') as order_id, god.id, coalesce(oms.order_info, '') as order_info, coalesce(oms.order_date, '') as order_date, coalesce(oms.total_order_amt, '0') as total_order_amt, coalesce(oms.order_status, '0') as order_status, gm.name, gm.email, god.id as group_order_details_id, god.order_key
+               FROM group_order go
+               LEFT JOIN group_order_details god ON god.group_order_id= go.order_id
+               LEFT JOIN group_members gm ON gm.id=god.group_member_id
+               LEFT JOIN(
+               SELECT om.order_id, om.group_order_details_id,
+                GROUP_CONCAT(ca.name,' >> ',ca.id,'#',ca.id,'#',p.name,' (',ca.name,' )','#',p.item_id,'#',d.item_rate,'#',d.quantity,'#',d.ingredient_name,'..') order_info,
+                om.order_date, om.total_order_amt, om.order_status 
+                FROM order_master om
+                LEFT JOIN order_details d ON d.order_id = om.order_id
+                LEFT JOIN items p ON p.item_id = d.item_id
+                LEFT JOIN category ca ON ca.id = p.category_id
+                GROUP BY d.order_id
+                )oms ON oms.group_order_details_id= god.id
+                WHERE go.order_id =$order_id";
         //echo $sql;die;
         $stmt = $conn->prepare($sql);
         $stmt->execute();
         $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+
         foreach ($result as $row) {
             $data['records'][] = $row;
         }
-        echo json_encode($data);
+        $date = date("Y-m-d");
 
+
+        $sql = "SELECT ci.full_name, ci.address as c_address, ci.contact_no as mobile, gi.name, go.order_id as group_order_id, go.order_date, go.delivery_date, go.total_order_amt, go.notification_time,  cp.c_type, cp.amount as cupon_amount, cp.min_order_amount, go.order_status as status, go.invoice_no,go.tips,go.total_paid_amount,
+                                        case go.order_status when 2 then 'Invitation Sent' when 3 then 'Menu Selected' when 4 then 'Order Panding' when 5 then 'Order Approved' when 6 then 'Order Ready' else 'Order Initiate' end order_status, 
+										case go. payment_status when 1 then 'Not Paid' else 'Paid' end payment_status, 
+										case go.payment_method when 1 then 'Cash On Delivery' when 2 then 'Loyalty Payment' when 3 then 'Card' when 4 then 'Gift Card' else 'Not Defined' end payment_method
+                                        from group_order go
+                                        LEFT JOIN groups_info gi ON gi.id = go.group_id
+                                        LEFT JOIN(
+                                        SELECT id,c_type,amount,min_order_amount 
+										FROM cupons 
+										WHERE status=1 and (customer_id = 18 or customer_id is null) 
+										AND (DATE_FORMAT(start_date, '%Y-%m-%d') <= '$date' 
+										AND DATE_FORMAT(end_date, '%Y-%m-%d') >= '$date')
+										)cp ON cp.id = go.cupon_id 
+                                        LEFT JOIN(
+                                        SELECT full_name, address, contact_no,customer_id from customer_infos 
+                                        )ci ON ci.customer_id=go.customer_id              
+                                         WHERE go.order_id=$order_id";
+        //echo $sql;die;
+        $stmt = $conn->prepare($sql);
+        $stmt->execute();
+        $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        $tax = $dbClass->getSingleRow("Select tax_type, tax_amount, tax_enable from general_settings where id=1");
+
+        $data['order_details']=$result[0];
+        $data['tax']=$tax;
+        echo json_encode($data);
         break;
 
 }
