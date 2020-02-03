@@ -7,7 +7,7 @@ $is_logged_in_customer = "";
 $website_url  = $dbClass->getDescription('website_url');
 $currency   = $dbClass->getDescription('currency_symbol');
 
-$logo         =$website_url."admin/".$dbClass->getDescription('company_logo');
+$logo       = $website_url."admin/".$dbClass->getDescription('company_logo');
 
 
 if(!isset($_SESSION['customer_id']) && $_SESSION['customer_id']!=""){ ob_start(); header("Location:index.php"); exit();}
@@ -211,8 +211,6 @@ else{
                 order_id:order_id
             },
             success: function(data){
-                //alert(data.item_id)
-                console.log(data)
                 if(!jQuery.isEmptyObject(data.records)){
                     $.each(data.records, function(i,data){
                         $('#ord_title_vw').html(data.invoice_no);
@@ -228,7 +226,6 @@ else{
                         order_infos	 = data.order_info;
                         var order_arr = order_infos.split('..,');
                         $.each(order_arr, function(i,orderInfo){
-                            //alert(orderInfo)
                             var order_info_arr = orderInfo.split('#');
                             var total = ((parseFloat(order_info_arr[4])*parseFloat(order_info_arr[5])));
                             order_tr += '<tr><td class="text-capitalize">'+order_info_arr[2]+' <br>'+order_info_arr[6].split('..')[0]+'</td><td align="center">'+order_info_arr[5]+'</td><td align="right">'+currency_symbol+''+order_info_arr[4]+'</td><td align="right">'+currency_symbol+''+total+'</td></tr>';

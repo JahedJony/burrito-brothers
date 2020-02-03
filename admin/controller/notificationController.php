@@ -42,11 +42,12 @@ switch ($q){
 	case "load_notifications":
 		$start = ($page_no*$limit)-$limit;
 		$end   = $limit;		
-		$total_unread_notification  = $dbClass->getSingleRow("SELECT count(id) unread FROM notification nt where nt.status=0");  
+		$total_unread_notification  = $dbClass->getSingleRow("SELECT count(id) unread FROM notification nt where nt.status=0 and nt.notification_user_type = 1");  
 		$data['total_unread']       = $total_unread_notification['unread'];					
 		$sql = "SELECT nt.id, nt.order_id, nt.status, nt.details, date_time
 				FROM notification nt
-				ORDER BY nt.status,nt.id DESC
+				WHERE nt.notification_user_type = 1
+				ORDER BY nt.status, nt.id DESC
 				limit $start, $end";	
 		//echo $sql;die;
 		$stmt = $conn->prepare($sql);

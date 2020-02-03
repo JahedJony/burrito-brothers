@@ -4,6 +4,8 @@ include '../dbConnect.php';
 include("../dbClass.php");
 
 $dbClass = new dbClass;
+$loggedUser = $dbClass->getUserId();
+
 extract($_REQUEST);
 
 switch ($q){
@@ -233,7 +235,6 @@ switch ($q){
                     $cupon_percent = $cupon_info['amount'];
                     $cupon_amount = ($total_cart_amount*$cupon_percent)/100;
                     $min_order_amount = $cupon_info['min_order_amount'];
-
                 }
                 else{
                     $cupon_amount = 0;
@@ -257,14 +258,11 @@ switch ($q){
     break;
 
 
-
     case "checkout":
-
-       // echo $loyalty_deduct; die;
-        if(!isset($_SESSION['cart']) || empty($_SESSION['cart']) || empty($_SESSION['customer_id']) || $_SESSION['customer_id']=="" ){echo "0"; die;}
+		//var_dump($_REQUEST);die;
+			
+		if(!isset($_SESSION['cart']) || empty($_SESSION['cart']) || empty($_SESSION['customer_id']) || $_SESSION['customer_id']=="" ){echo "0"; die;}
         else 	$cart = $_SESSION['cart'];
-        //echo 333;die;
-        //echo $_SESSION['customer_id'];die;
 
         //------------ generate invoice no  -------------------
         $c_y_m = date('my');
@@ -283,8 +281,6 @@ switch ($q){
 
         $invoice_no = "BB$c_y_m$str";
         //-----------------------------------------------------
-
-
 
 
         if(isset($_SESSION['group_master'])){
@@ -328,30 +324,14 @@ switch ($q){
                 'group_order_details_id'=>0
             );
         }
-
-        //echo 333;die;
-
-//echo $columns_value['total_paid_amount']; die;
+       
         if(isset($_SESSION['cupon_code']) || !empty($_SESSION['cupon_code'])){
             $columns_value['cupon_id'] 			= $_SESSION['cupon_code'];
             $columns_value['discount_amount']	= $_SESSION['total_discounted_amount'];
-
-            //echo $_SESSION['total_discounted_amount']; die;
-
         }
 
         $paid = 0; // not paid
-       /* if(isset($_POST['payment_type']) && ($_POST['payment_type'] == 1 || $_POST['payment_type'] == 2)){
-            $paid = 1;
-            $columns_value['payment_status'] 		= 2;
-            $columns_value['payment_method'] 		= $payment_type;
-            $columns_value['payment_reference_no']  = $reference_no;
-            $columns_value['total_paid_amount']  	= $grand_total;
-        }
-        else{
-            $columns_value['payment_status'] 		= 1;
-        }*/
-        //echo 333;die;
+      
         if(!isset($_SESSION['group_master']) ) {
             if ($total_paid_amount) {
 
@@ -363,29 +343,38 @@ switch ($q){
             }
         }
         $return_master = $dbClass->insert("order_master", $columns_value);
-       //var_dump($return_master);
-        if(isset($_SESSION['group_master']) ){
-            //SET Notification for group order
-
-        }else{
-            $column_array = array(
-                'order_id'=>$return_master,
-                'details'=>'Order placed',
-                'target_user'=>'admin',
-                'user_id'=>$_SESSION['customer_id']
-            );
-            $dbClass->insert("notification", $column_array);
-        }
-
+		//echo $return_master;die;
 
         //echo $return_master; die;
         if($return_master){
-            //echo 545; die;
-
+			
+			/* *********************************   notification Start       ************************* */
+			
+			//notification for group & single order			
+			$invoice_no = $dbClass->getSingleRow("SELECT invoice_no from order_master WHERE order_id = $return_master");
+			$customer_name = $dbClass->getSingleRow("SELECT full_name FROM customer_infos WHERE customer_id = '".$_SESSION['customer_id']."'");
+			extract($invoice_no);
+			
+			if(isset($_SESSION['group_master']) ){
+				//SET Notification for group order
+				$details = "".ucfirst($customer_name['full_name'])." Placed a Group Order (".$invoice_no.")";
+			}
+			else{
+				//set single notification details
+				$details = "".ucfirst($customer_name['full_name'])." Placed an Order (".$invoice_no.")";			
+			}
+			
+			//insert_notification function 
+			//param: order_id (int), 
+			//details (text), 
+			//notification_user_type (int) : 0=customer, 1: admin, 
+			//notified_to (int) : make notified_to null if notified target user type = admin	
+			$return_notifiction = $dbClass->insert_notification($return_master, $details, 1, NULL);	
+			
+			/* *********************************   notification END       ************************* */
+			
+			
             foreach($cart as $key=>$item){
-                //var_dump($item);die;
-                //var_dump($item['ingredient']['ingredient_name']);die;
-                //var_dump($item['ingredient']['ingredient_name']);die;
                 if(isset($item['ingredient']['id_list'])){
 
                     //var_dump($item['ingredient']['id_list']);
@@ -480,10 +469,6 @@ switch ($q){
                     unset($_SESSION['min_order_amount']);
                 }
 
-
-//
-//
-//echo $_SESSION['latest_order_id']; die;
                 echo $invoice_no; die;
 
                 // sending email will be here

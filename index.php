@@ -107,31 +107,57 @@ if(isset($_GET['search'])) $search_text = "";
                         </div>
                         <div class="header-top-right">
                             <div class="social-top">
-                                <ul>
-                                    <li><a href="<?php echo $facebook; ?>"><i class="fa fa-facebook" aria-hidden="true"></i></a></li>
-                                    <li><a href="<?php echo $twitter; ?>"><i class="fa fa-twitter" aria-hidden="true"></i></a></li>
-                                    <li><a href="<?php echo $instagram; ?>"><i class="fa fa-instagram" aria-hidden="true"></i></a></li>
-                                    <li><a href="<?php echo $yelp; ?>"><i class="fa fa-yelp" style="color:white"></i></a></li>
+								<ul>
+									<li><a href="<?php echo $facebook; ?>"><i class="fa fa-facebook" aria-hidden="true"></i></a></li>
+									<li><a href="<?php echo $twitter; ?>"><i class="fa fa-twitter" aria-hidden="true"></i></a></li>
+									<li><a href="<?php echo $instagram; ?>"><i class="fa fa-instagram" aria-hidden="true"></i></a></li>
+									<li><a href="<?php echo $yelp; ?>"><i class="fa fa-yelp" style="color:white"></i></a></li>
+									<li></li>
+									<li></li>
 									
-									<li class="language-menu">
-                                        <?php
-                                        if($is_logged_in_customer != "")
+									<!--<li class="language-menu">-->
+										<?php
+										if($is_logged_in_customer != ""){
 											//echo '<a href="index.php?page=account" class="current-lang" id="my_acc"><i class="fa fa-user" aria-hidden="true" ></i> My Account</a>';
-											echo '<a href="javascript:;" class="user-profile dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-												<img src="#" alt="">
-												<span class=" fa fa-angle-down"></span>
-											</a>
-											<ul class="dropdown-menu dropdown-usermenu animated fadeInDown pull-right">
-												<li><a href="index.php?module=personal&view=profile">  Profile</a></li>
-												<li><a href="logout.php"><i class="fa fa-sign-out pull-right"></i> Log Out</a></li>
-											</ul>';
-                                        else
-                                            echo '<a href="#" onclick="active_modal(1)" data-toggle="modal" data-target="#loginModal" class="current-lang" id="log_reg"><i class="fa fa-user" aria-hidden="true"></i> Login / Register</a>';
-                                        ?>
-                                    </li>
-                                </ul>
+											echo '
+												<li role="presentation" class="dropdown">
+													<a href="javascript:;" class="dropdown-toggle info-number" data-toggle="dropdown" aria-expanded="false">
+														<i class="fa fa-bell-slash"></i>
+														<span class="badge bg-red" id="unread_notifications"></span>
+													</a>
+													<ul id="notification_ul" class="dropdown-menu" role="menu">
+														<li>
+															<div class="text-left">
+																<button class="btn btn-primary btn-xs has-spinner" id="load_more_not_button">
+																	<span class="spinner"><i class="fa fa-spinner fa-spin fa-fw"></i></span>
+																	Load More Notificatons?
+																</button>
+															</div>																
+														</li>
+													</ul>
+												</li>
+												
+												<li class="language-menu">
+													<a href="#" class="user-profile dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+														<img src="images/user.png" alt="">&nbsp;&nbsp;
+														<span class="fa fa-angle-down"></span>
+													</a>
+													<ul class="dropdown-menu">
+														<li><a href="index.php?page=account"> My Account</a></li>
+														<li><a href="index.php?page=logout"><i class="fa fa-sign-out pull-right"></i> Log Out</a></li>
+													</ul>
+												</li>													
+													
+												';
+										}
+										else{
+											echo '<li class="language-menu"><a href="#" onclick="active_modal(1)" data-toggle="modal" data-target="#loginModal" class="current-lang" id="log_reg"><i class="fa fa-user" aria-hidden="true"></i> Login / Register</a></li>';
+										}
+										?>
+									<!--</li>-->
+								</ul>
 
-                            </div>
+							</div>
                         </div>
                     </div>
                 </div>
@@ -234,7 +260,7 @@ if(isset($_GET['search'])) $search_text = "";
                             <div class="alert alert-success alert-custom">
                                 <p>You have logged in successfully</p>
                             </div>
-                            <a href="account.php" id="" class="facebook-btn btn-change button-default"><i class="fa fa-user"></i>Browse your account?</a>
+                            <a href="index.php?page=account" id="" class="facebook-btn btn-change button-default"><i class="fa fa-user"></i>Browse your account?</a>
                         </div>
                     </div>
                 </div>
@@ -530,7 +556,6 @@ if(isset($_GET['search'])) $search_text = "";
 
     //loadPage('body_view');
 
-
     function active_modal(type){
         if(type==1){
             $('#forget_passModal').modal('hide');
@@ -545,8 +570,6 @@ if(isset($_GET['search'])) $search_text = "";
             setTimeout(function(){
                 $('#registerModal').modal();
             }, 400);
-
-
         }
     }
 
@@ -579,7 +602,7 @@ if(isset($_GET['search'])) $search_text = "";
                     else if($.isNumeric(data)==true && data==1){
                         $('#done_login').addClass("hide");
                         $('#done_login_msg').removeClass("hide");
-                        $('.language-menu').html('<a href="account.php" class="current-lang" id="my_acc"><i class="fa fa-user" aria-hidden="true" ></i> My Account</a>');
+                        $('.language-menu').html('<a href="index.php?page=account" class="current-lang" id="my_acc"><i class="fa fa-user" aria-hidden="true" ></i> My Account</a>');
                         if($('#islogged_in').length > 0 ){
                             $('#islogged_in').val(1);
                             $('.logged_in_already').addClass('hide');

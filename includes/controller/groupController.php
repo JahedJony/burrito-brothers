@@ -219,7 +219,6 @@ switch ($q) {
         break;
 
     case "group_member_order":
-
         $sql = "SELECT god.group_order_id, god.order_master_id, ci.full_name, gs.delivery_date from group_order_details god
             LEFT JOIN group_order gs ON gs.order_id=god.group_order_id
             LEFT JOIN customer_infos ci ON ci.customer_id=gs.customer_id
@@ -233,18 +232,15 @@ switch ($q) {
             $_SESSION['group_order_details_id'] = $group_order_details_id;
             echo 1;
         }
-        else
-        {
-            echo 0;
-        }
-        break;
+        else{ echo 0; }
+    break;
 
     case "set_session_group_order":
         //echo $order_id; die;
         $_SESSION['groupOrderId']= $order_id;
         $_SESSION['returnPage']= 'groupOrderDetails';
         echo 1;
-        break;
+    break;
 
     case "get_group_order_details":
         //echo $order_id; die;
@@ -302,7 +298,7 @@ switch ($q) {
         $data['order_details']=$result[0];
         $data['tax']=$tax;
         echo json_encode($data);
-        break;
+	break;
 
     case "apply_cupon":
         //echo $group_order_id; die;
@@ -311,11 +307,6 @@ switch ($q) {
         $date = date("Y-m-d");
 
         $cupon_info = $dbClass->getSingleRow("select id,c_type,amount,min_order_amount from cupons where status=1 and ((cupon_no='$cupon_code' and customer_id = ".$_SESSION['customer_id'].") or cupon_no='$cupon_code' and customer_id is null) and (DATE_FORMAT(start_date, '%Y-%m-%d') <= '$date' AND DATE_FORMAT(end_date, '%Y-%m-%d') >= '$date')");
-
-        //var_dump("select id,c_type,amount,min_order_amount from cupons where status=1 and ((cupon_no='$cupon_code' and customer_id = ".$_SESSION['customer_id'].") or cupon_no='$cupon_code' and customer_id is null) and (DATE_FORMAT(start_date, '%Y-%m-%d') <= '$date' AND DATE_FORMAT(end_date, '%Y-%m-%d') >= '$date')");
-//die;
-
-
 
         if($cupon_info['id']){
             $condition_array = array(
@@ -330,11 +321,10 @@ switch ($q) {
         }
         else echo 0;
 
-        break;
+    break;
 
     case "viewCartSummery":
         $tax = $dbClass->getSingleRow("Select tax_type, tax_amount, tax_enable from general_settings where id=1");
-
 
         $sql = "SELECT coalesce(oms.order_id, 'NAN') as order_id, god.id, coalesce(oms.total_order_amt, '0') as total_order_amt, coalesce(oms.order_status, '0') as order_status, gm.name, gm.email, god.id as group_order_details_id, god.order_key
                FROM group_order go
@@ -422,7 +412,7 @@ switch ($q) {
         $data['order_details']=$result[0];
         echo json_encode($data);
 
-        break;
+    break;
 
     case "checkout":
 
@@ -444,20 +434,19 @@ switch ($q) {
         $invoice_no = "BBGO$c_y_m$str";
         //-----------------------------------------------------
 
-    $columns_value = array(
-        'invoice_no'=>$invoice_no,
-        'payment_status'=>2,
-        'payment_method'=>$payment_method,
-        'loyalty_point'=>$loyalty_point,
-        'total_paid_amount'=>$total_paid_amount,
-        'order_status'=>4,
-    );
-    $condition_array = array(
-        'order_id'=>$group_order_id
-    );
+		$columns_value = array(
+			'invoice_no'=>$invoice_no,
+			'payment_status'=>2,
+			'payment_method'=>$payment_method,
+			'loyalty_point'=>$loyalty_point,
+			'total_paid_amount'=>$total_paid_amount,
+			'order_status'=>4,
+		);
+		$condition_array = array(
+			'order_id'=>$group_order_id
+		);
 
-    $return_master = $dbClass->update("group_order", $columns_value, $condition_array);
-
+		$return_master = $dbClass->update("group_order", $columns_value, $condition_array);
 
         $c_loyalty_points = $dbClass->getSingleRow('SELECT loyalty_points from customer_infos where customer_id='.$_SESSION["customer_id"]);
         //var_dump($c_loyalty_points['loyalty_points']);
@@ -472,135 +461,127 @@ switch ($q) {
             );
             $return_master = $dbClass->update("customer_infos", $columns_value, $condition_array);
 
-
-
             echo $invoice_no; die;
 
-                // sending email will be here
+			// sending email will be here
+
+			// send mail to customer account
+			if(isset($_SESSION['customer_email'])){
+				$customer_email = $_SESSION['customer_email'];
+				if($customer_email){
+					$sql = "SELECT m.order_id, m.customer_id, 
+							c.full_name customer_name, d.item_id, c.contact_no customer_contact_no, 
+							c.address customer_address, 
+							GROUP_CONCAT(ca.name,' >> ',ca.id,'#',ca.id,'#',p.name,' (',ca.name,' )','#',p.item_id,'#',s.name,'#',d.item_rate_id,'#',d.item_rate,'#',d.quantity) order_info,
+							m.order_date, m.delivery_date, m.delivery_type,m.delivery_charge, m.discount_amount, m.total_paid_amount,
+							m.address, m.delivery_charge_id, m.tax_amount,
+							m.remarks, m.order_status, m.payment_status, m.payment_method, 
+							m.payment_reference_no, m.invoice_no, m.total_order_amt,
+							case payment_status when payment_status=1 then 'Not Paid' else 'Paid' end paid_status, 
+							case payment_method when payment_method=1 then 'bKash' when payment_method=2 then 'Rocket'  else 'Cash On Delivery'  end payment_method
+							FROM order_master m
+							LEFT JOIN order_details d ON d.order_id = m.order_id
+							LEFT JOIN customer_infos c ON c.customer_id = m.customer_id
+							LEFT JOIN items p ON p.item_id = d.item_id
+							LEFT JOIN item_rate r on r.id = d.item_rate_id
+							LEFT JOIN size s ON s.id = r.size_id
+							LEFT JOIN category ca ON ca.id = p.category_id
+							WHERE m.invoice_no='$invoice_no'
+							GROUP BY d.order_id
+							ORDER BY m.order_id";
+					//echo $sql; die;
+					$stmt = $conn->prepare($sql);
+					$stmt->execute();
+					$result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+					foreach ($result as $row) {
+						extract($row);
+					}
+					//echo 55; die;
+
+					$to 	 = $customer_email;
+					$from 	 = 'admin@cakencookie.net';
+					$subject = "#$invoice_no Order Confirmation from Cakencookie";
+					$body 	 = '';
+
+					$headers = 'From: ' . $from . "\r\n" .
+						'Reply-To: ' . $from . "\r\n" .
+						'Content-type: text/html; charset=iso-8859-1' . "\r\n" .
+						'X-Mailer: PHP/' . phpversion();
+
+					$body .= "
+						<link rel='stylesheet' type='text/css' href='http://mbrotherssolution.com/CnC/plugin/bootstrap/bootstrap.css'>
+						<div id='order-div'>
+							<div class='title text-center'>
+								<h3 class='text-coffee left'> <a href='index.php'><img src='http://mbrotherssolution.com/CnC/images/logo.png' alt=''></a></h3>
+								<h4 class='text-coffee left'>Order No # <span id='ord_title_vw'>$invoice_no</span></h4>
+							</div>
+							<div class='done_registration '>							    
+								<div class='doc_content'>
+									<div class='col-md-12'>
+										<h4>Order Details:</h4>				
+										<div class='byline'>
+											<span id='ord_date'>Ordered Time: $order_date</span><br/> 
+											<span id='dlv_date'>Delivery Time $delivery_date</span> <br/> 
+											<span id='dlv_date'>Payment Status : $paid_status</span> <br/> 
+											<span id='dlv_date'>Payment Method : $payment_method</span>
+										</div>	
 
 
-                // send mail to customer account
-                if(isset($_SESSION['customer_email'])){
-                    $customer_email = $_SESSION['customer_email'];
-                    if($customer_email){
-                        $sql = "SELECT m.order_id, m.customer_id, 
-                                c.full_name customer_name, d.item_id, c.contact_no customer_contact_no, 
-                                c.address customer_address, 
-                                GROUP_CONCAT(ca.name,' >> ',ca.id,'#',ca.id,'#',p.name,' (',ca.name,' )','#',p.item_id,'#',s.name,'#',d.item_rate_id,'#',d.item_rate,'#',d.quantity) order_info,
-                                m.order_date, m.delivery_date, m.delivery_type,m.delivery_charge, m.discount_amount, m.total_paid_amount,
-                                m.address, m.delivery_charge_id, m.tax_amount,
-                                m.remarks, m.order_status, m.payment_status, m.payment_method, 
-                                m.payment_reference_no, m.invoice_no, m.total_order_amt,
-                                case payment_status when payment_status=1 then 'Not Paid' else 'Paid' end paid_status, 
-                                case payment_method when payment_method=1 then 'bKash' when payment_method=2 then 'Rocket'  else 'Cash On Delivery'  end payment_method
-                                FROM order_master m
-                                LEFT JOIN order_details d ON d.order_id = m.order_id
-                                LEFT JOIN customer_infos c ON c.customer_id = m.customer_id
-                                LEFT JOIN items p ON p.item_id = d.item_id
-                                LEFT JOIN item_rate r on r.id = d.item_rate_id
-                                LEFT JOIN size s ON s.id = r.size_id
-                                LEFT JOIN category ca ON ca.id = p.category_id
-                                WHERE m.invoice_no='$invoice_no'
-                                GROUP BY d.order_id
-                                ORDER BY m.order_id";
-                        //echo $sql; die;
-                        $stmt = $conn->prepare($sql);
-                        $stmt->execute();
-                        $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
-                        foreach ($result as $row) {
-                            extract($row);
-                        }
-                        //echo 55; die;
+										<h4>Customer Details:</h4> 								
+										<address id='customer_detail_vw'>
+										$customer_name
+										<br/><b>Mobile:</b>$customer_contact_no
+										<br/><b>Address:</b>$customer_address
+										</address>
+									</div>
+									<div id='ord_detail_vw col-md-12'> 
+										<table class='table table-bordered col-md-12' >
+											<thead>
+												<tr>
+													<th align='center'>Product</th>
+													<th width='18%' align='center'>Size</th>
+													<th width='10%' align='center'>Quantity</th>
+													<th width='18%' style='text-align:right'>Rate</th>                           
+													<th width='18%'  style='text-align:right'>Total</th>
+												</tr>
+											</thead>
+											<tbody>";
+					$order_info_arr = explode(',', $order_info);
+					$order_total = 0;
+					
+					foreach($order_info_arr as $key=>$item_details){
+						$item_details_arr = explode('#', $item_details);
+						$total = ($item_details_arr[7]*$item_details_arr[6]);
+						$body .= "<tr><td>".$item_details_arr[2]."</td><td align='left'>".$item_details_arr[4]."</td><td align='center'>".$item_details_arr[7]."</td><td align='right'>".$item_details_arr[6]."</td><td align='right'>".number_format($total,2)."</td></tr>";
+						$order_total += $total;
+					}
 
-                        $to 	 = $customer_email;
-                        $from 	 = 'admin@cakencookie.net';
-                        $subject = "#$invoice_no Order Confirmation from Cakencookie";
-                        $body 	 = '';
+					$total_order_bill = $order_total-$discount_amount;
+					$total_paid 	  = $total_paid_amount;
+					$body .= '<tr><td colspan="4" align="right" ><b>Total Product Bill</b></td><td align="right"><b>'.number_format($order_total ,2).'</b></td></tr>';
+					$body .= '<tr><td colspan="4" align="right" ><b>Discount Amount</b></td><td align="right"><b>'.number_format($discount_amount,2).'</b></td></tr>';
+					$body .= '<tr><td colspan="4" align="right" ><b>Total Order Bill</b></td><td align="right"><b>'.number_format($total_order_bill,2).'</b></td></tr>';
+					$body .= '<tr><td colspan="4" align="right" ><b>Delivery Charge</b></td><td align="right"><b>'.number_format($delivery_charge,2).'</b></td></tr>';
+					$body .= '<tr><td colspan="4" align="right" ><b>Total Paid</b></td><td align="right"><b>'.number_format($total_paid,2).'</b></td></tr>';
+					$body .= '<tr><td colspan="4" align="right" ><b>Balance</b></td><td align="right"><b>'.number_format((($total_order_bill+$delivery_charge)-$total_paid),2).'</b></td></tr>';
 
-                        $headers = 'From: ' . $from . "\r\n" .
-                            'Reply-To: ' . $from . "\r\n" .
-                            'Content-type: text/html; charset=iso-8859-1' . "\r\n" .
-                            'X-Mailer: PHP/' . phpversion();
+					$body .= "</tbody>
+							</table>
+							<p>Note: <span id='note_vw'>$remarks</span></p>
+							<p>Print Time :". date('Y-m-d h:m:s')."</p>
+							<br /><p style='font-weight:bold; text-align:center'>Thank you. Hope we will see you soon </p>
+							</div></div></div></div>";
+					//echo $body;die;
+					mail($to, $subject, $body, $headers);
+				}
+			}
 
-                        $body .= "
-                            <link rel='stylesheet' type='text/css' href='http://mbrotherssolution.com/CnC/plugin/bootstrap/bootstrap.css'>
-                            <div id='order-div'>
-                                <div class='title text-center'>
-                                    <h3 class='text-coffee left'> <a href='index.php'><img src='http://mbrotherssolution.com/CnC/images/logo.png' alt=''></a></h3>
-                                    <h4 class='text-coffee left'>Order No # <span id='ord_title_vw'>$invoice_no</span></h4>
-                                </div>
-                                <div class='done_registration '>							    
-                                    <div class='doc_content'>
-                                        <div class='col-md-12'>
-                                            <h4>Order Details:</h4>				
-                                            <div class='byline'>
-                                                <span id='ord_date'>Ordered Time: $order_date</span><br/> 
-                                                <span id='dlv_date'>Delivery Time $delivery_date</span> <br/> 
-                                                <span id='dlv_date'>Payment Status : $paid_status</span> <br/> 
-                                                <span id='dlv_date'>Payment Method : $payment_method</span>
-                                            </div>	
-    
-    
-                                            <h4>Customer Details:</h4> 								
-                                            <address id='customer_detail_vw'>
-                                            $customer_name
-                                            <br/><b>Mobile:</b>$customer_contact_no
-                                            <br/><b>Address:</b>$customer_address
-                                            </address>
-                                        </div>
-                                        <div id='ord_detail_vw col-md-12'> 
-                                            <table class='table table-bordered col-md-12' >
-                                                <thead>
-                                                    <tr>
-                                                        <th align='center'>Product</th>
-                                                        <th width='18%' align='center'>Size</th>
-                                                        <th width='10%' align='center'>Quantity</th>
-                                                        <th width='18%' style='text-align:right'>Rate</th>                           
-                                                        <th width='18%'  style='text-align:right'>Total</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody>";
-                        $order_info_arr = explode(',', $order_info);
-                        $order_total = 0;
-                        foreach($order_info_arr as $key=>$item_details){
-                            $item_details_arr = explode('#', $item_details);
-                            $total = ($item_details_arr[7]*$item_details_arr[6]);
-                            $body .= "<tr><td>".$item_details_arr[2]."</td><td align='left'>".$item_details_arr[4]."</td><td align='center'>".$item_details_arr[7]."</td><td align='right'>".$item_details_arr[6]."</td><td align='right'>".number_format($total,2)."</td></tr>";
-                            $order_total += $total;
-                        }
-
-                        $total_order_bill = $order_total-$discount_amount;
-                        $total_paid 	  = $total_paid_amount;
-                        $body .= '<tr><td colspan="4" align="right" ><b>Total Product Bill</b></td><td align="right"><b>'.number_format($order_total ,2).'</b></td></tr>';
-                        $body .= '<tr><td colspan="4" align="right" ><b>Discount Amount</b></td><td align="right"><b>'.number_format($discount_amount,2).'</b></td></tr>';
-                        $body .= '<tr><td colspan="4" align="right" ><b>Total Order Bill</b></td><td align="right"><b>'.number_format($total_order_bill,2).'</b></td></tr>';
-                        $body .= '<tr><td colspan="4" align="right" ><b>Delivery Charge</b></td><td align="right"><b>'.number_format($delivery_charge,2).'</b></td></tr>';
-                        $body .= '<tr><td colspan="4" align="right" ><b>Total Paid</b></td><td align="right"><b>'.number_format($total_paid,2).'</b></td></tr>';
-                        $body .= '<tr><td colspan="4" align="right" ><b>Balance</b></td><td align="right"><b>'.number_format((($total_order_bill+$delivery_charge)-$total_paid),2).'</b></td></tr>';
-
-                        $body .= "										
-                                                </tbody>
-                                            </table>
-                                            <p>Note: <span id='note_vw'>$remarks</span></p>
-                                            <p>Print Time :". date('Y-m-d h:m:s')."</p>
-                                            <br />
-                                            <p style='font-weight:bold; text-align:center'>Thank you. Hope we will see you soon </p>
-                                        </div> 
-                                    </div>									
-                                </div>							
-                            </div>
-                        ";
-                        //echo $body;die;
-                        mail($to, $subject, $body, $headers);
-                    }
-                }
-
-                //-------------------------------
-                echo $invoice_no;
+			//-------------------------------
+			echo $invoice_no;
 
         }
         else echo "0";
-        break;
+    break;
 
 
 
