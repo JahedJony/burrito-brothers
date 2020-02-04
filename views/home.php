@@ -119,7 +119,7 @@ $store_address=$dbClass->getDescription('store_address');
                                         <span class="menu-list-product">
                                             <img src="./images/img3.png" alt="">
                                         </span>
-                            <h5><a href="http://burritobrothers.test/index.php?page=item&id=88">REGULAR BURRITO LUNCH COMBO <span>$ 9.09</span></a></h5>
+                            <h5><a href="index.php?page=item&id=88">REGULAR BURRITO LUNCH COMBO <span>$ 9.09</span></a></h5>
                             <p>Includes a 20 oz. fountain drink.</p>
                         </div>
                     </div>
@@ -128,7 +128,7 @@ $store_address=$dbClass->getDescription('store_address');
                                         <span class="menu-list-product">
                                             <img src="./images/img4.png" alt="">
                                         </span>
-                            <h5><a href="http://burritobrothers.test/index.php?page=item&id=90">TACO SALAD LUNCH COMBO <span>$ 15.50</span></a></h5>
+                            <h5><a href="index.php?page=item&id=90">TACO SALAD LUNCH COMBO <span>$ 15.50</span></a></h5>
                             <p>Includes a 20 oz. fountain drink.</p>
                         </div>
                     </div>
@@ -137,7 +137,7 @@ $store_address=$dbClass->getDescription('store_address');
                                         <span class="menu-list-product">
                                             <img src="./images/img5.png" alt="">
                                         </span>
-                            <h5><a href="http://burritobrothers.test/index.php?page=item&id=96">MIXED FAJITA PLATTER LUNCH COMBO <span>$ 16.00</span></a></h5>
+                            <h5><a href="index.php?page=item&id=96">MIXED FAJITA PLATTER LUNCH COMBO <span>$ 16.00</span></a></h5>
                             <p>Bean and rice, grilled chicken and steak, green pepper, onions, lettuce...</p>
                         </div>
                     </div>
@@ -146,7 +146,7 @@ $store_address=$dbClass->getDescription('store_address');
                                         <span class="menu-list-product">
                                             <img src="./images/img6.png" alt="">
                                         </span>
-                            <h5><a href="http://burritobrothers.test/index.php?page=item&id=97">FISH PLATTER LUNCH COMBO <span>$ 17.00</span></a></h5>
+                            <h5><a href="index.php?page=item&id=97">FISH PLATTER LUNCH COMBO <span>$ 17.00</span></a></h5>
                             <p>Beans, rice, lettuce. pico de gallo, guacamole or sliced avocadoIncludes a 20 oz. fountain drink.</p>
                         </div>
                     </div>
@@ -155,7 +155,7 @@ $store_address=$dbClass->getDescription('store_address');
                                         <span class="menu-list-product">
                                             <img src="./images/img7.png" alt="">
                                         </span>
-                            <h5><a href="http://burritobrothers.test/index.php?page=item&id=71">NACHOS WITH MEAT <span>$ 11.00</span></a></h5>
+                            <h5><a href="index.php?page=item&id=71">NACHOS WITH MEAT <span>$ 11.00</span></a></h5>
                             <p>Corn chips topped with shredded cheddar or cheese sauce, beans, pico de gallo and your choice of meat.</p>
                         </div>
                     </div>
@@ -164,13 +164,13 @@ $store_address=$dbClass->getDescription('store_address');
                                         <span class="menu-list-product">
                                             <img src="./images/img8.png" alt="">
                                         </span>
-                            <h5><a href="http://burritobrothers.test/index.php?page=item&id=47">CALI BURRITO <span>$ 10.00</span></a></h5>
+                            <h5><a href="index.php?page=item&id=47">CALI BURRITO <span>$ 10.00</span></a></h5>
                             <p>One size; Made on a flour tortilla with your choice of meat, french fries</p>
                         </div>
                     </div>
                 </div>
                 <div class="btn-outer">
-                    <a href="#" class="btn-main btn-shadow">Explore Full Menu</a>
+                    <a href="index.php?page=categories" class="btn-main btn-shadow">Explore Full Menu</a>
                 </div>
             </div>
         </div>
@@ -215,7 +215,7 @@ $store_address=$dbClass->getDescription('store_address');
                             <div class="service-track-info">
                                 <h3>Group <span>Order</span></h3>
                             </div>
-                            <div class="service-track-overlay banner-bg" data-background="images/hover-img1.png">
+                            <div class="service-track-overlay banner-bg" onclick="group_order()" data-background="images/hover-img1.png">
                                 <img src="./images/img36.png" alt="">
                                 <h3>Group <span>Order</span></h3>
                                 <p>Aptent taciti sociosqu ad litora euismod atras vulputate iltricies etri elit class.</p>

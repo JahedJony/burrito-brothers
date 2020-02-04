@@ -4,6 +4,9 @@ include("../includes/dbConnect.php");
 include("../includes/dbClass.php");
 $dbClass = new dbClass;
 
+//unset($_SESSION['nexturl']);
+
+
 if(isset($_SESSION['customer_id']) && $_SESSION['customer_id']!=""){
     $is_logged_in_customer = 1; // here will be the customer id that will come from session when the customer will login
     $customer_info = $dbClass->getSingleRow("select * from customer_infos where customer_id=".$_SESSION['customer_id']);
@@ -77,6 +80,86 @@ if(isset($_GET['order_id']) && $_GET['order_id']!="") $order_id =  $_GET['order_
     </form>
 
 </section>
+
+<div class="modal fade booktable" id="order_modal_group" tabindex="-2" role="dialog" aria-labelledby="booktable">
+    <div class="modal-dialog" role="document" style="width:80% !important">
+        <div class="modal-content">
+            <div class="modal-body" style="margin-bottom: 50px">
+                <div id="order-div" >
+                    <div class="title text-center">
+                        <h3 class="text-coffee left"> <a href="index.php"><img src="<?php echo ($logo); ?>" alt="" style="height: 100px; width: 100px"></a></h3>
+                        <h4 class="text-coffee left">Order For  <span class="text-capitalize" id="ord_title_vw"></span></h4>
+                    </div>
+                    <div class="done_registration ">
+                        <div class="doc_content">
+                            <div class="col-md-12" style="margin-left: 0px; padding: 0px; margin-bottom: 20px">
+                                <div class="col-md-6" style="margin: 0px; padding: 0px">
+                                    <h4>Order Details:</h4>
+                                    <div class="byline">
+                                        <span class="after_order_initiate" id="inv_no" style="display: none"></span>
+                                        <span id="order_status"></span><br/>
+                                        <span id="ord_date"></span><br/>
+                                        <span id="ntf_date"></span> <br/>
+                                        <span id="dlv_date"></span> <br/>
+
+                                    </div>
+                                </div>
+                                <div class="col-md-6" style="text-align:right">
+                                    <h4>Customer Details:</h4>
+                                    <address id="customer_detail_vw">
+                                    </address>
+                                </div>
+
+                            </div>
+                            <p class="text-danger text-left before_order_initiate">*YOU CAN SELECT FOOD FOR THE MEMBERS</p>
+
+                            <div id="ord_detail_vw">
+                                <table class="table table-bordered" id="ord_detail_vw_big" >
+                                    <thead>
+                                    <tr>
+                                        <th align="center">Items</th>
+                                        <th width="10%" align="center">Quantity</th>
+                                        <th width="12%" style="text-align:right">Rate</th>
+                                        <th width="12%"  style="text-align:right">Price</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    </tbody>
+                                </table>
+                                <table class="table table-bordered" id="ord_detail_vw_small" style="display: none" >
+                                    <thead>
+                                    <tr>
+                                        <th align="center">Items</th>
+                                        <th width="12%"  style="text-align:right">Price</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    </tbody>
+                                </table>
+
+                                <p>Note: <span id="note_vw"></span></p>
+                                <p>Print Time : <?php echo date("Y-m-d h:m:s"); ?></p>
+                                <br />
+
+                                <p style="font-weight:bold; text-align:center" id="thankingNoted">Thank you. Hope we will see you soon </p>
+                            </div>
+
+                        </div>
+
+
+                    </div>
+                </div>
+
+                <div class="col-md-12 text-center before_order_initiate" style="margin-bottom: 10px" ><button type="button" class="btn btn-primary" onclick="checkout()">Proceed to Checkout</button></div>
+                <div id="checkout_error" class="text-center" style="display:none" ></div>
+
+
+                <div class="col-md-12" style="text-align: center"> <button type="button" class="btn btn-warning" id="order_print"><i class="fa fa-lg fa-print"></i></button></div>
+            </div>
+        </div>
+    </div>
+</div>
+
 
 <script>
 

@@ -8,6 +8,7 @@ extract($_POST);
 
 
 if($q=="login_customer"){
+
 	$username	= htmlspecialchars($_POST['username'],ENT_QUOTES);
 	$pass	  	 = $_POST['password'];
 	$query="select customer_id, password, email from customer_infos WHERE (username='".$username."' or email='".$username."')  and status=1";
@@ -126,6 +127,7 @@ if($q=="registration"){
             $_SESSION['customer_id']=$row['customer_id'];
             $_SESSION['customer_name']=$row['full_name'];
             $_SESSION['customer_email']=$row['email'];
+
         }
         echo "1";
     }

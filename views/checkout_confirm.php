@@ -32,6 +32,61 @@ if(!isset($_SESSION['customer_id']) && $_SESSION['customer_id']!="" && $_SESSION
 
     </div>
 </section>
+<div class="modal fade booktable" id="order_modal" tabindex="-2" role="dialog" aria-labelledby="booktable">
+    <div class="modal-dialog" role="document" style="width:80% !important">
+        <div class="modal-content">
+            <div class="modal-body">
+                <div id="order-div">
+                    <div class="title text-center">
+                        <h3 class="text-coffee left"> <a href="index.php"><img src="<?php echo ($logo); ?>" alt="" style="height: 100px; width: 100px"></a></h3>
+                        <h4 class="text-coffee left">Order No # <span id="ord_title_vw"></span></h4>
+                    </div>
+                    <div class="done_registration ">
+                        <div class="doc_content">
+                            <div class="col-md-12" style="margin-left: 0px; padding: 0px; margin-bottom: 20px">
+                                <div class="col-md-6" style="margin: 0px; padding: 0px">
+                                    <h4>Order Details:</h4>
+                                    <div class="byline">
+                                        <span id="ord_date"></span><br/>
+                                        <span id="dlv_date"></span> <br/>
+                                        <span id="dlv_ps"></span> <br/>
+                                        <span id="dlv_pm"></span><br/>
+                                    </div>
+                                </div>
+                                <div class="col-md-6" style="text-align:right">
+                                    <h4>Customer Details:</h4>
+                                    <address id="customer_detail_vw">
+                                    </address>
+                                </div>
+
+                            </div>
+                            <div id="ord_detail_vw">
+                                <table class="table table-bordered" >
+                                    <thead>
+                                    <tr>
+                                        <th align="center">Items</th>
+                                        <th width="10%" align="center">Quantity</th>
+                                        <th width="12%" style="text-align:right">Rate</th>
+                                        <th width="12%"  style="text-align:right">Price</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    </tbody>
+                                </table>
+                                <p>Note: <span id="note_vw"></span></p>
+                                <p>Print Time : <?php echo date("Y-m-d h:m:s"); ?></p>
+                                <br />
+                                <p style="font-weight:bold; text-align:center">Thank you. Hope we will see you soon </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-12 center"> <button type="button" class="btn btn-warning" id="order_print"><i class="fa fa-lg fa-print"></i></button></div>
+            </div>
+        </div>
+    </div>
+</div>
 
 <script>
     //alert('sdf')

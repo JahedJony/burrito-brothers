@@ -6,11 +6,8 @@
         <li><a href="index.php?page=aboutus" class="topmenu">About Us</a></li>-->
         <li><a href="index.php?page=categories" class="topmenu">Menu</a></li>
         <li><a href="index.php?page=catering" class="topmenu">Catering</a></li>
-        <li><a href="index.php?page=group_order" class="topmenu">Group Order</a></li>
+        <li><a href="#" onclick="group_order()" class="topmenu">Group Order</a></li>
         <li><a href="index.php?page=contact" class="topmenu">Contact</a></li>
-
-
-
 
     </ul>
 </div>

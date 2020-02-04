@@ -4,8 +4,14 @@ include("includes/dbConnect.php");
 include("includes/dbClass.php");
 $dbClass = new dbClass;
 
-if(isset($_SESSION['customer_id']) && $_SESSION['customer_id']) $is_logged_in_customer = 1; // here will be the customer id that will come from session when the customer will login
-else $is_logged_in_customer = "";
+if(isset($_SESSION['customer_id']) && $_SESSION['customer_id']){
+    $customer_id =$_SESSION['customer_id'];
+    $is_logged_in_customer = 1;
+}  // here will be the customer id that will come from session when the customer will login
+else {
+    $is_logged_in_customer = "";
+    $customer_id = 0;
+}
 
 
 
@@ -142,7 +148,7 @@ if(isset($_GET['search'])) $search_text = "";
                                     </div>
                                 </div>
                             </div>
-                            <div class="search-part">
+                            <div class="search-part" style="display: none">
                                 <a href="#"></a>
                                 <div class="search-box">
                                     <input type="text" name="txt" placeholder="Search">
@@ -225,7 +231,7 @@ if(isset($_GET['search'])) $search_text = "";
                             <div class="alert alert-success alert-custom">
                                 <p>You have logged in successfully</p>
                             </div>
-                            <a href="account.php" id="" class="facebook-btn btn-change button-default"><i class="fa fa-user"></i>Browse your account?</a>
+                            <a href="index.php?page=account" id="" class="facebook-btn btn-change button-default"><i class="fa fa-user"></i>Browse your account?</a>
                         </div>
                     </div>
                 </div>
@@ -265,6 +271,7 @@ if(isset($_GET['search'])) $search_text = "";
                                         <input type="number" name="cust_contact" id="cust_contact" pattern="[0-9]{11}" placeholder="Contact No" class="input-fields" required>
                                     </div>
                                     <div class="col-md-12 col-sm-12 col-xs-12">
+
                                         <input type="text" name="cust_address" id="cust_address" placeholder="Address" class="input-fields" >
                                     </div>
                                     <div class="col-md-12 col-sm-12 col-xs-12">
@@ -323,61 +330,6 @@ if(isset($_GET['search'])) $search_text = "";
         </div>
     </div>
     <!-- End login -->
-    <div class="modal fade booktable" id="order_modal" tabindex="-2" role="dialog" aria-labelledby="booktable">
-        <div class="modal-dialog" role="document" style="width:80% !important">
-            <div class="modal-content">
-                <div class="modal-body">
-                    <div id="order-div">
-                        <div class="title text-center">
-                            <h3 class="text-coffee left"> <a href="index.php"><img src="<?php echo ($logo); ?>" alt="" style="height: 100px; width: 100px"></a></h3>
-                            <h4 class="text-coffee left">Order No # <span id="ord_title_vw"></span></h4>
-                        </div>
-                        <div class="done_registration ">
-                            <div class="doc_content">
-                                <div class="col-md-12" style="margin-left: 0px; padding: 0px; margin-bottom: 20px">
-                                    <div class="col-md-6" style="margin: 0px; padding: 0px">
-                                        <h4>Order Details:</h4>
-                                        <div class="byline">
-                                            <span id="ord_date"></span><br/>
-                                            <span id="dlv_date"></span> <br/>
-                                            <span id="dlv_ps"></span> <br/>
-                                            <span id="dlv_pm"></span><br/>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6" style="text-align:right">
-                                        <h4>Customer Details:</h4>
-                                        <address id="customer_detail_vw">
-                                        </address>
-                                    </div>
-
-                                </div>
-                                <div id="ord_detail_vw">
-                                    <table class="table table-bordered" >
-                                        <thead>
-                                        <tr>
-                                            <th align="center">Items</th>
-                                            <th width="10%" align="center">Quantity</th>
-                                            <th width="12%" style="text-align:right">Rate</th>
-                                            <th width="12%"  style="text-align:right">Price</th>
-                                        </tr>
-                                        </thead>
-                                        <tbody>
-                                        </tbody>
-                                    </table>
-                                    <p>Note: <span id="note_vw"></span></p>
-                                    <p>Print Time : <?php echo date("Y-m-d h:m:s"); ?></p>
-                                    <br />
-                                    <p style="font-weight:bold; text-align:center">Thank you. Hope we will see you soon </p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-md-12 center"> <button type="button" class="btn btn-warning" id="order_print"><i class="fa fa-lg fa-print"></i></button></div>
-                </div>
-            </div>
-        </div>
-    </div>
 
 
 
@@ -455,14 +407,14 @@ if(isset($_GET['search'])) $search_text = "";
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                     <div class="table-title">
                         <h2>Opening Hours</h2>
-                        <ul class="time-list">
-                            <li><span class="week-name">Monday</span> <span>10-12 PM</span></li>
-                            <li><span class="week-name">Tuesday</span> <span>10-12 PM</span></li>
-                            <li><span class="week-name">Wednesday</span> <span>10-12 PM</span></li>
-                            <li><span class="week-name">Thursday</span> <span>10-12 PM</span></li>
-                            <li><span class="week-name">Friday</span> <span>10-12 PM</span></li>
-                            <li><span class="week-name">Saturday</span> <span>10-12 PM</span></li>
-                            <li><span class="week-name">Sunday</span> <span>4-12 PM</span></li>
+                        <ul class="time-list" >
+                            <li> <span class="week-name" style="text-align: left">Monday</span> <span>10-12 PM</span></li>
+                            <li><span class="week-name" style="text-align: left">Tuesday</span> <span>10-12 PM</span></li>
+                            <li><span class="week-name" style="text-align: left">Wednesday</span> <span>10-12 PM</span></li>
+                            <li><span class="week-name" style="text-align: left">Thursday</span> <span>10-12 PM</span></li>
+                            <li><span class="week-name" style="text-align: left">Friday</span> <span>10-12 PM</span></li>
+                            <li><span class="week-name" style="text-align: left">Saturday</span> <span>10-12 PM</span></li>
+                            <li><span class="week-name" style="text-align: left">Sunday</span> <span>4-12 PM</span></li>
                         </ul>
                     </div>
                 </div>
@@ -528,7 +480,29 @@ if(isset($_GET['search'])) $search_text = "";
 
     }
     ?>
-    showCart()
+
+    var customer_id = <?php echo $customer_id; ?>
+
+    //alert(nextPage)
+
+    ///alert(customer_id)
+        showCart()
+
+    function group_order(){
+        localStorage.setItem("nexturl", "grouporder");
+            //alert("IN group order")
+        if(customer_id==0){
+            //nextPage = 'group_order';
+            //$('.nexturl').val('grouporder')
+            $('#loginModal').modal();
+        }
+        else {
+            window.location=project_url+'index.php?page=account'
+
+        }
+
+    }
+
 
 
     var sWidth = window.screen.width;
@@ -599,10 +573,14 @@ if(isset($_GET['search'])) $search_text = "";
                     else if($.isNumeric(data)==true && data==1){
                         $('#done_login').addClass("hide");
                         $('#done_login_msg').removeClass("hide");
-                        $('.language-menu').html('<a href="account.php" class="current-lang" id="my_acc"><i class="fa fa-user" aria-hidden="true" ></i> My Account</a>');
+                        $('.language-menu').html('<a href="index.php?page=account" class="current-lang" id="my_acc"><i class="fa fa-user" aria-hidden="true" ></i> My Account</a>');
                         if($('#islogged_in').length > 0 ){
                             $('#islogged_in').val(1);
                             $('.logged_in_already').addClass('hide');
+                        }
+
+                        if(localStorage.getItem("nexturl")=='grouporder'){
+                            window.location=project_url+'index.php?page=account'
                         }
                     }
                 }
@@ -674,7 +652,7 @@ if(isset($_GET['search'])) $search_text = "";
                 cache:false,
                 contentType:false,processData:false,
                 success: function(data){
-                    alert(data)
+                    //alert(data)
                     if($.isNumeric(data)==true && data==2){
                         success_or_error_msg('#registration_submit_error',"danger","Username is already exist, please try with another one","#cust_username" );
                     }
@@ -684,6 +662,10 @@ if(isset($_GET['search'])) $search_text = "";
                     else if($.isNumeric(data)==true && data==1){
                         $('.done_registration').addClass("hide");
                         $('.done_registration_msg').removeClass("hide");
+                        //alert('done')
+                        if(localStorage.getItem("nexturl")=='grouporder'){
+                            window.location=project_url+'index.php?page=account'
+                        }
                     }
                     else{
                         success_or_error_msg('#registration_submit_error',"danger","Registration is not completed. please check your information again.","#cust_email" );

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Jan 21, 2020 at 03:08 PM
+-- Generation Time: Feb 04, 2020 at 11:13 AM
 -- Server version: 8.0.17
 -- PHP Version: 7.3.10
 
@@ -386,7 +386,7 @@ CREATE TABLE `btr_selleritems` (
   `name` varchar(150) NOT NULL,
   `description` text NOT NULL,
   `imgurl` text NOT NULL,
-  `is_pizza` text CHARACTER SET latin1 COLLATE latin1_swedish_ci,
+  `is_pizza` text,
   `max_select` smallint(11) NOT NULL COMMENT 'used for pizza items',
   `min_quantity` smallint(11) NOT NULL DEFAULT '1',
   `sideitems` varchar(255) NOT NULL,
@@ -3317,7 +3317,7 @@ INSERT INTO `btr_sellersides_lists` (`id`, `side`, `cost`) VALUES
 
 CREATE TABLE `category` (
   `id` int(11) NOT NULL,
-  `code` varchar(55) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '0',
+  `code` varchar(55) NOT NULL DEFAULT '0',
   `name` varchar(55) NOT NULL,
   `parent_id` int(11) DEFAULT NULL,
   `photo` varchar(250) DEFAULT NULL,
@@ -3369,15 +3369,17 @@ CREATE TABLE `cupons` (
 --
 
 INSERT INTO `cupons` (`id`, `cupon_no`, `c_type`, `start_date`, `end_date`, `entry_date`, `amount`, `status`, `customer_id`, `min_order_amount`) VALUES
-(1, '1111', 1, '2019-12-20 00:00:00', '2020-01-31 00:00:00', '2018-10-02 17:30:28', 100.00, 1, NULL, 0),
-(2, '2222', 2, '2017-10-02 17:30:20', '2020-01-31 00:00:00', '2018-10-02 17:30:28', 10.00, 1, NULL, 0),
+(1, '1111', 1, '2019-12-20 00:00:00', '2020-02-29 00:00:00', '2018-10-02 17:30:28', 100.00, 1, NULL, 0),
+(2, '2222', 2, '2017-10-02 17:30:20', '2020-02-27 00:00:00', '2018-10-02 17:30:28', 10.00, 1, NULL, 100),
 (3, '4444', 1, '2018-11-08 00:00:00', '2019-02-07 00:00:00', '2019-03-21 00:00:00', 33.00, 1, 1, 0),
 (4, '123321', 2, '2018-08-27 00:00:00', '2019-02-14 00:00:00', '2018-11-20 00:00:00', 10.00, 1, 0, 0),
 (5, '55555', 1, '2018-06-03 00:00:00', '2019-04-26 00:00:00', '0000-00-00 00:00:00', 55.00, 1, 8, 0),
 (6, '2018', 1, '2018-11-22 00:00:00', '2020-01-31 00:00:00', '2018-11-22 00:00:00', 100.00, 1, NULL, 0),
-(7, '2019', 1, '2019-12-20 00:00:00', '2020-01-31 00:00:00', '2019-12-27 00:00:00', 30.00, 1, NULL, 0),
-(8, '1234', 2, '2019-12-19 00:00:00', '2020-01-31 00:00:00', '2019-12-27 00:00:00', 10.00, 1, 0, 0),
-(9, 'aaaa', 1, '2019-12-26 00:00:00', '2020-01-31 00:00:00', '2019-12-27 00:00:00', 50.00, 1, NULL, 500);
+(7, '2019', 2, '2019-12-20 00:00:00', '2020-02-29 00:00:00', '2019-12-27 00:00:00', 30.00, 1, NULL, 0),
+(8, '1234', 2, '2019-12-19 00:00:00', '2020-01-28 00:00:00', '2020-01-27 00:00:00', 10.00, 1, 0, 0),
+(9, 'aaaa', 1, '2019-12-26 00:00:00', '2020-01-31 00:00:00', '2019-12-27 00:00:00', 50.00, 1, NULL, 500),
+(10, '12345', 2, '2020-01-28 00:00:00', '2020-02-29 00:00:00', '2020-01-29 00:00:00', 3.00, 1, NULL, 20),
+(11, '2020', 2, '2020-01-23 00:00:00', '2020-04-29 00:00:00', '2020-01-31 00:00:00', 3.00, 1, NULL, 10);
 
 -- --------------------------------------------------------
 
@@ -3392,7 +3394,7 @@ CREATE TABLE `customer_infos` (
   `password` varchar(100) DEFAULT NULL,
   `address` text NOT NULL,
   `age` date DEFAULT NULL,
-  `photo` varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
+  `photo` varchar(100) DEFAULT NULL,
   `contact_no` varchar(50) NOT NULL,
   `email` varchar(50) NOT NULL,
   `remarks` text,
@@ -3405,9 +3407,9 @@ CREATE TABLE `customer_infos` (
 --
 
 INSERT INTO `customer_infos` (`customer_id`, `full_name`, `username`, `password`, `address`, `age`, `photo`, `contact_no`, `email`, `remarks`, `status`, `loyalty_points`) VALUES
-(1, 'Moynul Hasan Momit', 'momit', 'e10adc3949ba59abbe56e057f20f883e', 'hfdlkbyiu asf', '1987-05-06', '/images/customer/1578044520moumit.jpg', '012100000', 'momit.litu@gmail.com', 'aaaaaaaaaaaa', 1, 402),
+(1, 'Moynul Hasan Momit', 'momit', 'e10adc3949ba59abbe56e057f20f883e', 'hfdlkbyiu asf', '1987-05-06', '/images/customer/1578044520moumit.jpg', '012100000', 'momit.litu@gmail.com', 'aaaaaaaaaaaa', 1, 280),
 (2, 'MUntakim Hasan', 'munif', 'e10adc3949ba59abbe56e057f20f883e', 'aaaaaaaaaaaaaaaa', '0000-00-00', 'images/customer/1537339731jahed.jpg', '012554455', 'munif.litu@gmail.com', 'aaaaaaaaaaaaaaa', 1, 0),
-(5, 'hasan', 'hasan', 'e10adc3949ba59abbe56e057f20f883e', 's sfdf,sdf ,sdfsd,dsf,', '0000-00-00', '', '01980340482', 'momi.df@gmaad.com', NULL, 1, 0),
+(5, 'hasan', 'hasan', '152d28b67117c8cb0528b834d4abac67', 's sfdf,sdf ,sdfsd,dsf,', '0000-00-00', '', '01980340482', 'momi.df@gmaad.com', NULL, 1, 0),
 (6, 'muntakim', 'muntakim', 'e10adc3949ba59abbe56e057f20f883e', 'sgfsf sdfdsfdfdsfs', '0000-00-00', '', '0198034082', 'm.k@gmail.com', NULL, 1, 0),
 (7, 'Mir Abu Sayef', 'M.A Sayef', 'e10adc3949ba59abbe56e057f20f883e', 'Mohammadpur, Chanmia Housing, 41/10, Road # 1, 5-A. Dhaka - 1207', '0000-00-00', '', '01630325935', 'mirabu.sayef@yahoo.com', NULL, 1, 0),
 (8, 'Shabir Alkama', 'Shabir', 'e10adc3949ba59abbe56e057f20f883e', 'Mohammadpur, Chanmia Housing, 41/10, Road # 1, 5-A. Dhaka - 1207', '0000-00-00', '', '01133', 'Shabiralkama@gmail.com', NULL, 1, 0),
@@ -3420,9 +3422,12 @@ INSERT INTO `customer_infos` (`customer_id`, `full_name`, `username`, `password`
 (15, 'chaki', NULL, NULL, '622, West shawrapara, mirpur', '2017-02-07', 'images/no_image.png', '234', '', '', 1, 0),
 (16, 'chaki', NULL, NULL, '622, West shawrapara, mirpur', '2019-12-10', 'images/no_image.png', '234', '', '', 1, 0),
 (17, 'kajol', 'kajol', '7131349a130e2ebdefede0527ba67d68', '622, West shawrapara, mirpur', NULL, NULL, '3245', 'kajol@gmail.com', NULL, 1, 0),
-(18, 'chaki', 'chaki', 'e10adc3949ba59abbe56e057f20f883e', '622, West shawrapara, mirpur', NULL, NULL, '123428', 'chaki@gmail.com', NULL, 1, 1228),
+(18, 'chaki', 'chaki', 'e10adc3949ba59abbe56e057f20f883e', '622, West shawrapara, mirpur', NULL, NULL, '123428', 'chaki@gmail.com', NULL, 1, 366),
 (19, 'joni', 'joni', 'e10adc3949ba59abbe56e057f20f883e', '622, West shawrapara, mirpur', NULL, NULL, '12345', 'joni@gmail.com', NULL, 1, 0),
-(20, 'aaa', 'aaa', 'e10adc3949ba59abbe56e057f20f883e', '622, West shawrapara, mirpur', NULL, NULL, '1210', 'aaa@d.sd', NULL, 1, 0);
+(20, 'aaa', 'aaa', 'e10adc3949ba59abbe56e057f20f883e', '622, West shawrapara, mirpur', NULL, NULL, '1210', 'aaa@d.sd', NULL, 1, 0),
+(21, 'jahed', 'jony', 'e10adc3949ba59abbe56e057f20f883e', '622, West shawrapara, mirpur', NULL, NULL, '12345', 'jony@gmail.com', NULL, 1, 36),
+(22, 'kajol', 'kajolchaki', 'e10adc3949ba59abbe56e057f20f883e', '622, West shawrapara, mirpur', NULL, NULL, '32454657', 'kajol@gmail.comdf', NULL, 1, 0),
+(23, 'sieam', 'sieam', 'e10adc3949ba59abbe56e057f20f883e', '622, West shawrapara, mirpur', NULL, NULL, '5647395', 'kajol@gmail.comsddsd', NULL, 1, 0);
 
 -- --------------------------------------------------------
 
@@ -3627,6 +3632,7 @@ CREATE TABLE `general_settings` (
   `tax_enable` tinyint(1) DEFAULT '0' COMMENT '1:enabled, 0:disable',
   `minimum_order_amount` double(10,2) DEFAULT NULL,
   `item_image_display` tinyint(1) NOT NULL DEFAULT '1' COMMENT '1:enabled, 0:disable',
+  `ingredient_image_display` tinyint(4) NOT NULL DEFAULT '1' COMMENT '0=no; 1=yes',
   `takeout` tinyint(1) NOT NULL DEFAULT '1' COMMENT '1:enabled, 0:disable',
   `delivery` tinyint(1) NOT NULL DEFAULT '1' COMMENT '1:enabled, 0:disable',
   `dinein` tinyint(1) NOT NULL DEFAULT '1' COMMENT '1:enabled, 0:disable',
@@ -3647,8 +3653,8 @@ CREATE TABLE `general_settings` (
 -- Dumping data for table `general_settings`
 --
 
-INSERT INTO `general_settings` (`id`, `company_name`, `website_title`, `website_url`, `web_admin_email`, `web_admin_contact`, `store_name`, `store_address`, `store_longitude`, `store_latitude`, `store_contact`, `store_incharge_name`, `company_logo`, `yelp_url`, `fb_url`, `tweeter_url`, `instagram_url`, `meta_description`, `meta_keywards`, `currency`, `currency_symbol`, `decimal_placement`, `tax_enable`, `minimum_order_amount`, `item_image_display`, `takeout`, `delivery`, `dinein`, `card_payment`, `cash_payment`, `loyelty_payment`, `payment_card_visa`, `payment_card_master`, `payment_card_amex`, `payment_card_discover`, `point_reserve_value`, `redeem_value`, `tax_type`, `tax_amount`) VALUES
-(1, 'Burrito Brothers', 'Burrito Brothers', 'http://burritobrothers.test/', 'info@ourburritobrothers.com', '+1 (202) 543683', 'Burrito Brothers', '205 PENNSYLVANIA AVENUE S.E. , WASHINGTON D.C. , UNITED STATES', '12.23', '13.123', '+1 (202) 5436835', 'kajol', 'images/banner/burritoLogo.png', 'http://burritobrothers.test/', 'https://www.facebook.com/Burrito-Brothers-113494652017378', 'https://twitter.com/dcburritobros', 'http://burritobrothers.test/', 'You can use a standard JS for..in loop - you don\'t need jQuery, though it has you covered too with its $.each() method. Either way gives you access to the property names and their corresponding values. Given you\'ve got nested objects you will probably want nested for..in or $.each() loops.\r\nYou don\'t make it at all clear what format your output should be, but here\'s a simple example that at least shows how to get the pieces you need:', 'food, pizza, takeout, group', 'USD', '$', 3, 0, 1.00, 1, 0, 0, 1, 1, 0, 1, 1, 1, 1, 0, 10, 10, 0, 0);
+INSERT INTO `general_settings` (`id`, `company_name`, `website_title`, `website_url`, `web_admin_email`, `web_admin_contact`, `store_name`, `store_address`, `store_longitude`, `store_latitude`, `store_contact`, `store_incharge_name`, `company_logo`, `yelp_url`, `fb_url`, `tweeter_url`, `instagram_url`, `meta_description`, `meta_keywards`, `currency`, `currency_symbol`, `decimal_placement`, `tax_enable`, `minimum_order_amount`, `item_image_display`, `ingredient_image_display`, `takeout`, `delivery`, `dinein`, `card_payment`, `cash_payment`, `loyelty_payment`, `payment_card_visa`, `payment_card_master`, `payment_card_amex`, `payment_card_discover`, `point_reserve_value`, `redeem_value`, `tax_type`, `tax_amount`) VALUES
+(1, 'Burrito Brothers', 'Burrito Brothers', 'http://burritobrothers.test/', 'info@ourburritobrothers.com', '+1 (202) 543683', 'Burrito Brothers', '205 PENNSYLVANIA AVENUE S.E. , WASHINGTON D.C. , UNITED STATES', '12.23', '13.123', '+1 (202) 5436835', 'kajol', 'images/banner/burritoLogo.png', 'http://burritobrothers.test/', 'https://www.facebook.com/Burrito-Brothers-113494652017378', 'https://twitter.com/dcburritobros', 'http://burritobrothers.test/', 'You can use a standard JS for..in loop - you don\'t need jQuery, though it has you covered too with its $.each() method. Either way gives you access to the property names and their corresponding values. Given you\'ve got nested objects you will probably want nested for..in or $.each() loops.\r\nYou don\'t make it at all clear what format your output should be, but here\'s a simple example that at least shows how to get the pieces you need:', 'food, pizza, takeout, group', 'USD', '$', 3, 0, 1.00, 0, 0, 0, 0, 1, 1, 0, 1, 1, 1, 1, 0, 10, 10, 0, 0);
 
 -- --------------------------------------------------------
 
@@ -3659,16 +3665,29 @@ INSERT INTO `general_settings` (`id`, `company_name`, `website_title`, `website_
 CREATE TABLE `groups_info` (
   `id` int(11) NOT NULL,
   `user_id` int(11) NOT NULL COMMENT 'creators id',
-  `name` varchar(255) NOT NULL,
+  `name` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
   `members` int(11) NOT NULL COMMENT 'number of members'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
 -- Dumping data for table `groups_info`
 --
 
 INSERT INTO `groups_info` (`id`, `user_id`, `name`, `members`) VALUES
-(1, 18, 'new 2', 3);
+(1, 1, 'Office It', 3),
+(2, 1, 'HR', 3),
+(3, 18, 'General Meeting', 3),
+(4, 21, 'new', 2),
+(5, 21, 'Office It', 2),
+(6, 21, 'HR', 2),
+(7, 21, 'HTR', 3),
+(8, 21, 'new group', 4),
+(9, 21, 'zXC', 2),
+(10, 21, 'AAA', 3),
+(11, 21, 'zXCsdf', 2),
+(12, 21, 'asdas', 2),
+(13, 1, 'HRD', 3),
+(14, 18, 'new order', 3);
 
 -- --------------------------------------------------------
 
@@ -3679,18 +3698,52 @@ INSERT INTO `groups_info` (`id`, `user_id`, `name`, `members`) VALUES
 CREATE TABLE `group_members` (
   `id` int(11) NOT NULL,
   `group_id` int(11) NOT NULL,
-  `name` varchar(255) NOT NULL,
-  `email` varchar(255) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  `name` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
+  `email` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
 -- Dumping data for table `group_members`
 --
 
 INSERT INTO `group_members` (`id`, `group_id`, `name`, `email`) VALUES
-(1, 1, 'chaki', 'chaki@gmail.com'),
-(2, 1, 'sss', 'asd'),
-(3, 1, 'aaa', 'sdasasd');
+(1, 1, 'Moynul Hasan Momit', 'momit.litu@gmail.com'),
+(2, 1, 'chaki', 'chaki@gmail.com'),
+(3, 1, 'sieam', 'sdf@asd.sdfd'),
+(4, 2, 'Moynul Hasan Momit', 'momit.litu@gmail.com'),
+(5, 2, 'Chanchal', 'sdf@asd.sdfd'),
+(6, 2, 'Jahed', 'sdf@asd.sdfd'),
+(7, 3, 'chaki', 'chaki@gmail.com'),
+(8, 3, 'Biplob', 'sdf@asd.sdfd'),
+(9, 3, 'Anto', 'sdf@asd.sdfsdd'),
+(10, 4, 'jahed', 'jony@gmail.com'),
+(11, 4, 'sdf', 'chaki@gmail.com'),
+(12, 5, 'jahed', 'jony@gmail.com'),
+(13, 5, 'xzcv', 'chaki@gmail.com'),
+(14, 6, 'jahed', 'jony@gmail.com'),
+(15, 6, 'sdf', 'sdf@asd.sdfd'),
+(16, 7, 'jahed', 'jony@gmail.com'),
+(17, 7, 'momit', 'momit@gmail.com'),
+(18, 7, 'siam', 'siam@gmail.com'),
+(19, 8, 'jahed', 'jony@gmail.com'),
+(20, 8, 'sadf', 'chaki@gmail.com'),
+(21, 8, 'sfsdf', 'sdf@asd.sdfd'),
+(22, 8, 'safdsdag', 'sdf@asd.sdf'),
+(23, 9, 'jahed', 'jony@gmail.com'),
+(24, 9, 'zcxv', 'chaki@gmail.com'),
+(25, 10, 'jahed', 'jony@gmail.com'),
+(26, 10, 'sadf', 'sdf@asd.sdfd'),
+(27, 10, 'sadfdsaf', 'sdf@asd.sdf'),
+(28, 11, 'jahed', 'jony@gmail.com'),
+(29, 11, 'sadf', 'sdf@asd.sdfd'),
+(30, 12, 'jahed', 'jony@gmail.com'),
+(31, 12, 'ASD', 'sdf@asd.sdfd'),
+(32, 13, 'Moynul Hasan Momit', 'momit.litu@gmail.com'),
+(33, 13, 'borhan', 'sdf@asd.sdf'),
+(34, 13, 'Saju', 'chaki@gmail.com'),
+(35, 14, 'chaki', 'chaki@gmail.com'),
+(36, 14, 'sadf', 'chaki@gmail.com'),
+(37, 14, 'sadfd', 'sdf@asd.sdfd');
 
 -- --------------------------------------------------------
 
@@ -3715,11 +3768,34 @@ CREATE TABLE `group_order` (
   `order_noticed_time` timestamp NULL DEFAULT NULL,
   `payment_time` timestamp NULL DEFAULT NULL,
   `payment_status` tinyint(1) DEFAULT '1' COMMENT '1:not paid,  2: paid ',
-  `payment_method` tinyint(1) NOT NULL COMMENT '1:cash,  2: loyalty_point, 3:card, 4:gift card ',
+  `payment_method` tinyint(1) NOT NULL DEFAULT '0' COMMENT '1:cash,  2: loyalty_point, 3:card, 4:gift card ',
   `payment_reference_no` varchar(20) DEFAULT NULL,
   `invoice_no` varchar(20) DEFAULT NULL,
-  `loyalty_point` int(11) NOT NULL DEFAULT '0'
+  `loyalty_point` int(11) NOT NULL DEFAULT '0',
+  `notification_time` datetime NOT NULL,
+  `tips` float NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `group_order`
+--
+
+INSERT INTO `group_order` (`order_id`, `customer_id`, `group_id`, `order_date`, `delivery_date`, `cupon_id`, `discount_amount`, `total_order_amt`, `total_paid_amount`, `tax_amount`, `remarks`, `order_status`, `order_noticed`, `order_noticed_time`, `payment_time`, `payment_status`, `payment_method`, `payment_reference_no`, `invoice_no`, `loyalty_point`, `notification_time`, `tips`) VALUES
+(1, 1, 1, '2020-01-30 15:32:38', '2020-01-07 12:00:00', NULL, 0.00, 0.00, 0.00, 0.00, NULL, 1, 1, NULL, NULL, 1, 0, NULL, NULL, 0, '2020-01-07 12:00:00', 0),
+(2, 1, 2, '2020-01-30 15:41:03', '2020-01-07 12:00:00', NULL, 0.00, 0.00, 0.00, 0.00, NULL, 1, 1, NULL, NULL, 1, 0, NULL, NULL, 0, '2020-01-07 12:00:00', 0),
+(3, 18, 3, '2020-01-30 15:45:00', '2020-01-07 12:00:00', 11, 0.00, 86.10, 86.10, 0.00, NULL, 4, 1, NULL, NULL, 2, 3, NULL, 'BBGO012000002', 8, '2020-01-07 12:00:00', 0),
+(4, 18, 3, '2020-01-30 17:06:17', '2020-01-07 12:00:00', 7, 10.47, 34.89, 24.42, 0.00, NULL, 4, 1, NULL, NULL, 2, 3, NULL, 'BBGO012000001', 2, '2020-01-07 12:00:00', 0),
+(5, 21, 4, '2020-02-02 17:06:56', '2020-01-07 12:00:00', 7, 14.38, 47.94, 33.56, 0.00, NULL, 4, 1, NULL, NULL, 2, 3, NULL, 'BBGO022000003', 3, '2020-01-07 12:00:00', 1),
+(6, 21, 5, '2020-02-02 18:46:13', '2020-01-07 12:00:00', 11, 0.87, 29.09, 0.00, 0.00, NULL, 1, 1, NULL, NULL, 1, 0, NULL, NULL, 0, '2020-01-07 12:00:00', 3),
+(7, 21, 6, '2020-02-02 19:05:12', '2020-01-07 12:00:00', 7, 12.94, 43.14, 30.20, 0.00, NULL, 4, 1, NULL, NULL, 2, 3, NULL, 'BBGO022000014', 3, '2020-01-07 12:00:00', 5),
+(8, 21, 7, '2020-02-03 11:47:20', '2020-01-07 12:00:00', 11, 0.44, 14.55, 14.11, 0.00, NULL, 4, 1, NULL, NULL, 2, 3, NULL, 'BBGO022000004', 1, '2020-01-07 12:00:00', 2),
+(9, 21, 8, '2020-02-03 13:07:24', '2020-01-07 12:00:00', 7, 39.02, 130.07, 91.04, 0.00, NULL, 4, 1, NULL, NULL, 2, 3, NULL, 'BBGO022000013', 9, '2020-01-07 12:00:00', 5),
+(10, 21, 9, '2020-02-03 15:21:02', '2020-01-07 12:00:00', NULL, 0.00, 19.80, 19.80, 0.00, NULL, 4, 1, NULL, NULL, 2, 3, NULL, 'BBGO022000011', 1, '2020-01-07 12:00:00', 0),
+(11, 21, 10, '2020-02-03 16:06:31', '2020-01-07 12:00:00', 7, 20.80, 69.32, 48.51, 0.00, NULL, 4, 1, NULL, NULL, 2, 3, NULL, 'BBGO022000015', 4, '2020-01-07 12:00:00', 5),
+(12, 21, 11, '2020-02-03 16:13:56', '2020-01-07 12:00:00', 7, 16.68, 55.60, 43.92, 0.00, NULL, 4, 1, NULL, NULL, 2, 3, NULL, 'BBGO022000016', 4, '2020-01-07 12:00:00', 5),
+(13, 21, 12, '2020-02-03 17:02:39', '2020-01-07 12:00:00', NULL, 0.00, 0.00, 0.00, 0.00, NULL, 1, 1, NULL, NULL, 1, 0, NULL, NULL, 0, '2020-01-07 12:00:00', 0),
+(14, 1, 13, '2020-02-03 22:46:26', '2020-01-07 12:00:00', NULL, 0.00, 0.00, 0.00, 0.00, NULL, 1, 1, NULL, NULL, 1, 0, NULL, NULL, 0, '2020-01-07 12:00:00', 0),
+(15, 18, 14, '2020-02-04 16:01:17', '2020-01-07 12:00:00', 7, 17.83, 59.44, 45.61, 0.00, NULL, 4, 1, NULL, NULL, 2, 3, NULL, 'BBGO022000017', 4, '2020-01-07 12:00:00', 4);
 
 -- --------------------------------------------------------
 
@@ -3730,12 +3806,58 @@ CREATE TABLE `group_order` (
 CREATE TABLE `group_order_details` (
   `id` int(11) NOT NULL,
   `group_member_id` int(11) NOT NULL,
-  `item_id` int(11) NOT NULL,
-  `ingredient_id` text NOT NULL,
-  `ingredient_list` text NOT NULL,
+  `order_master_id` int(11) DEFAULT '0',
+  `order_key` text CHARACTER SET utf8 COLLATE utf8_unicode_ci,
+  `ingredient_list` text CHARACTER SET utf8 COLLATE utf8_unicode_ci,
   `status` tinyint(4) NOT NULL DEFAULT '0' COMMENT '0:panding, 1:submitted',
   `group_order_id` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Dumping data for table `group_order_details`
+--
+
+INSERT INTO `group_order_details` (`id`, `group_member_id`, `order_master_id`, `order_key`, `ingredient_list`, `status`, `group_order_id`) VALUES
+(1, 1, 5, 'KjOYM7hk42dv56aZGeWS', NULL, 1, 1),
+(2, 2, 0, 'OailYCNgGI25bfVwUXvL', NULL, 0, 1),
+(3, 3, 0, 'CMNPfpJZjtA8o6ird2mE', NULL, 0, 1),
+(4, 4, 0, 'SDjM5Cdxzf2bL6QqvIrW', NULL, 0, 2),
+(5, 5, 0, 'geVXwEHADzt91ypfFaJx', NULL, 0, 2),
+(6, 6, 0, 'jIBXi7WUGexmbJn3KP9O', NULL, 0, 2),
+(7, 7, 15, 'IqbpoLS4hMFNetfzQ9aw', NULL, 1, 3),
+(8, 8, 16, '0aC2OJHKd1QMzoscUvmA', NULL, 1, 3),
+(9, 9, 17, '4yHmtk8jbsNC2EJWz6iS', NULL, 1, 3),
+(10, 7, 9, 'NHPVXqi95epRMdT324ty', NULL, 1, 4),
+(11, 8, 10, 'Yrav9mFX8e35knPd0cRK', NULL, 1, 4),
+(12, 9, 0, 'mydBVc6FDPqCWRsXk7UK', NULL, 0, 4),
+(13, 10, 19, 'HJpmOwzMcULoVA9W6Gq3', NULL, 1, 5),
+(14, 11, 20, 'IiW1QsYJZ7pN5vhV9b2K', NULL, 1, 5),
+(15, 12, 21, 'I6zVM3iuPFxQgWJU4TOt', NULL, 1, 6),
+(16, 13, 23, 'JVbFASCuZr0k6RxM7j4W', NULL, 1, 6),
+(17, 14, 24, 'AY4ZlnT3KPcpmbUduo97', NULL, 1, 7),
+(18, 15, 25, 'Ug27I8BpAtPL4F5wXOTu', NULL, 1, 7),
+(19, 16, 22, '9cJ0kXgb3DnvSVOYLlHK', NULL, 1, 8),
+(20, 17, 0, 'qAUbepPd6QWKws8OSDMF', NULL, 0, 8),
+(21, 18, 0, 'Yg0vuwATorI4ZzhM8CO5', NULL, 0, 8),
+(22, 19, 26, 'vCcl1iox80mySPVjbBfA', NULL, 1, 9),
+(23, 20, 27, 'i9Rc35FtnAuOGXQfE8TV', NULL, 1, 9),
+(24, 21, 0, 'tcHf3bJQ6982Mj47UW5i', NULL, 0, 9),
+(25, 22, 0, '2MRUc4pd5PnCtBJSkIVm', NULL, 0, 9),
+(26, 23, 28, 'XuiKg7lRBGaJFqf4rvon', NULL, 1, 10),
+(27, 24, 29, 'o4N2ZJDbv1qkmKyFda7A', NULL, 1, 10),
+(28, 25, 32, 'dW7HAycGDUVJnsYIzM4P', NULL, 1, 11),
+(29, 26, 33, 'FgaVMLCX6RBiZIwhTfr1', NULL, 1, 11),
+(30, 27, 34, 'xvPdw6tJAY0emyhlDXRr', NULL, 1, 11),
+(31, 28, 36, 'KRAShYW8vOXpjfLJZ4sG', NULL, 1, 12),
+(32, 29, 37, 'uS4gT70yqdDZ8vwGOKaL', NULL, 1, 12),
+(33, 30, 0, '2hJEY0cj1zxBZ9WwO8RI', NULL, 0, 13),
+(34, 31, 0, 'Ton9lOWXigbJ4Iqc2rGP', NULL, 0, 13),
+(35, 32, 0, 'ZASGcIuyPfgD8edMjhbw', NULL, 0, 14),
+(36, 33, 0, '2CxjBXwsV7lHRAmKrh6k', NULL, 0, 14),
+(37, 34, 0, 'MNVlJbjPKFXBznfZHAUG', NULL, 0, 14),
+(38, 35, 54, 'SNwGpzJkeu0DZHiAYaKm', NULL, 1, 15),
+(39, 36, 55, '3qsQKWtUGl6SpxmPfuyd', NULL, 1, 15),
+(40, 37, 56, 'sdlwaqpPiQSZN4K5tx1E', NULL, 1, 15);
 
 -- --------------------------------------------------------
 
@@ -3765,7 +3887,7 @@ INSERT INTO `image_album` (`id`, `album_name`) VALUES
 
 CREATE TABLE `ingredient` (
   `id` int(11) NOT NULL,
-  `code` varchar(55) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
+  `code` varchar(55) DEFAULT NULL,
   `name` varchar(55) NOT NULL,
   `size_id` int(11) DEFAULT NULL,
   `price` float DEFAULT NULL,
@@ -4423,7 +4545,7 @@ CREATE TABLE `items` (
   `item_id` int(11) NOT NULL,
   `name` varchar(200) NOT NULL,
   `price` double(20,2) NOT NULL DEFAULT '0.00',
-  `tags` varchar(200) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
+  `tags` varchar(200) DEFAULT NULL,
   `details` text,
   `short_description` text,
   `category_id` int(11) NOT NULL,
@@ -4627,12 +4749,12 @@ INSERT INTO `item_ingredient` (`id`, `item_id`, `ingredient_id`) VALUES
 CREATE TABLE `item_options` (
   `id` int(11) NOT NULL,
   `item_id` int(11) NOT NULL,
-  `name` varchar(255) NOT NULL,
+  `name` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
   `is_required` tinyint(4) NOT NULL DEFAULT '0' COMMENT '0=no; 1=yes',
   `minimum_choice` int(11) NOT NULL DEFAULT '0',
   `maximum_choice` int(11) NOT NULL DEFAULT '1',
-  `type` varchar(255) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  `type` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
 -- Dumping data for table `item_options`
@@ -4655,7 +4777,7 @@ INSERT INTO `item_options` (`id`, `item_id`, `name`, `is_required`, `minimum_cho
 (14, 8, 'flavor', 1, 0, 1, 'radio'),
 (15, 9, 'flavor', 1, 0, 1, 'radio'),
 (16, 10, 'flavor', 1, 0, 1, 'radio'),
-(17, 10, 'test1', 0, 0, 0, 'radio'),
+(17, 10, 'test1', 0, 0, 1, 'radio'),
 (18, 11, 'choose a size', 1, 0, 1, 'radio'),
 (19, 12, 'choose a cheese', 1, 0, 1, 'radio'),
 (20, 12, 'add', 0, 0, 0, 'checkbox'),
@@ -4734,18 +4856,18 @@ INSERT INTO `item_options` (`id`, `item_id`, `name`, `is_required`, `minimum_cho
 (93, 25, 'extra', 0, 0, 0, 'checkbox'),
 (94, 26, 'choose an egg preparation ', 1, 0, 1, 'radio'),
 (95, 26, 'add beans or rice', 0, 0, 1, 'radio'),
-(96, 26, 'choose', 0, 0, 0, 'radio'),
+(96, 26, 'choose', 0, 0, 1, 'radio'),
 (97, 26, 'extra toppings', 0, 0, 0, 'checkbox'),
 (98, 26, 'veggies', 0, 0, 0, 'checkbox'),
 (99, 26, 'extra', 0, 0, 0, 'checkbox'),
 (100, 27, 'choose an egg preparation ', 1, 0, 1, 'radio'),
 (101, 27, 'choose a meat', 1, 0, 1, 'radio'),
 (102, 27, 'extra', 0, 0, 0, 'checkbox'),
-(103, 27, 'options', 0, 0, 0, 'radio'),
+(103, 27, 'options', 0, 0, 1, 'radio'),
 (104, 28, 'choose a cheese', 1, 0, 1, 'radio'),
 (105, 28, 'choose a side', 1, 0, 1, 'radio'),
 (106, 28, 'beans', 1, 0, 1, 'radio'),
-(107, 28, 'choose', 0, 0, 0, 'radio'),
+(107, 28, 'choose', 0, 0, 1, 'radio'),
 (108, 28, 'extras', 0, 0, 0, 'checkbox'),
 (109, 28, 'option', 0, 0, 0, 'checkbox'),
 (110, 29, 'breakfast meat', 0, 0, 1, 'checkbox'),
@@ -4754,15 +4876,15 @@ INSERT INTO `item_options` (`id`, `item_id`, `name`, `is_required`, `minimum_cho
 (113, 29, 'toast', 0, 0, 2, 'checkbox'),
 (114, 30, 'choose a cheese', 1, 0, 1, 'radio'),
 (115, 30, 'add', 0, 0, 0, 'checkbox'),
-(116, 30, 'choose', 0, 0, 0, 'radio'),
+(116, 30, 'choose', 0, 0, 1, 'radio'),
 (117, 30, 'extra', 0, 0, 0, 'checkbox'),
 (118, 31, 'choose a cheese', 1, 0, 1, 'radio'),
 (119, 31, 'add', 0, 0, 0, 'checkbox'),
-(120, 31, 'choose', 0, 0, 0, 'radio'),
+(120, 31, 'choose', 0, 0, 1, 'radio'),
 (121, 31, 'extra', 0, 0, 0, 'checkbox'),
 (122, 32, 'choose a cheese', 1, 0, 1, 'radio'),
 (123, 32, 'add', 0, 0, 0, 'checkbox'),
-(124, 32, 'choose', 0, 0, 0, 'radio'),
+(124, 32, 'choose', 0, 0, 1, 'radio'),
 (125, 32, 'extra', 0, 0, 0, 'checkbox'),
 (126, 33, 'choose a cheese', 1, 0, 1, 'radio'),
 (127, 33, 'choose a side', 1, 0, 1, 'radio'),
@@ -4770,12 +4892,12 @@ INSERT INTO `item_options` (`id`, `item_id`, `name`, `is_required`, `minimum_cho
 (129, 33, 'extra', 0, 0, 0, 'checkbox'),
 (130, 34, 'choose a cheese', 1, 0, 1, 'radio'),
 (131, 34, 'add', 0, 0, 0, 'checkbox'),
-(132, 34, 'choose', 0, 0, 0, 'radio'),
+(132, 34, 'choose', 0, 0, 1, 'radio'),
 (133, 34, 'options', 0, 0, 0, 'checkbox'),
 (134, 34, 'extra', 0, 0, 0, 'checkbox'),
 (135, 35, 'choose a cheese', 1, 0, 1, 'radio'),
 (136, 35, 'add', 0, 0, 0, 'checkbox'),
-(137, 35, 'choose', 0, 0, 0, 'radio'),
+(137, 35, 'choose', 0, 0, 1, 'radio'),
 (138, 35, 'extra', 0, 0, 0, 'checkbox'),
 (139, 35, 'options', 0, 0, 0, 'checkbox'),
 (140, 36, 'choose a protein', 1, 0, 1, 'radio'),
@@ -4835,18 +4957,18 @@ INSERT INTO `item_options` (`id`, `item_id`, `name`, `is_required`, `minimum_cho
 (194, 47, 'choose a protien', 1, 0, 1, 'radio'),
 (195, 47, 'would you like toppings?', 0, 0, 0, 'checkbox'),
 (196, 47, 'extra', 0, 0, 0, 'checkbox'),
-(197, 48, 'choose a style', 1, 0, 0, 'radio'),
+(197, 48, 'choose a style', 1, 0, 1, 'radio'),
 (198, 48, 'choose a protein', 1, 0, 1, 'radio'),
 (199, 48, 'choose a cheese', 1, 0, 1, 'radio'),
 (200, 48, 'extras', 0, 0, 0, 'checkbox'),
 (201, 48, 'would you like beans?', 0, 0, 1, 'radio'),
 (202, 48, 'would you like toppings?', 0, 0, 0, 'checkbox'),
-(203, 49, 'choose a style', 1, 0, 0, 'radio'),
+(203, 49, 'choose a style', 1, 0, 1, 'radio'),
 (204, 49, 'choose a cheese', 1, 0, 1, 'radio'),
 (205, 49, 'beans', 1, 0, 1, 'checkbox'),
 (206, 49, 'extras', 0, 0, 0, 'checkbox'),
 (207, 49, 'options', 0, 0, 0, 'checkbox'),
-(208, 50, 'choose a style', 1, 0, 0, 'radio'),
+(208, 50, 'choose a style', 1, 0, 1, 'radio'),
 (209, 50, 'choose a protein', 1, 0, 3, 'checkbox'),
 (210, 50, 'add', 0, 0, 1, 'radio'),
 (211, 50, 'options', 0, 0, 0, 'checkbox'),
@@ -4871,9 +4993,9 @@ INSERT INTO `item_options` (`id`, `item_id`, `name`, `is_required`, `minimum_cho
 (230, 56, 'extras', 0, 0, 0, 'checkbox'),
 (231, 56, 'would you like toppings?', 0, 0, 0, 'checkbox'),
 (232, 57, 'choose a protein', 1, 0, 1, 'radio'),
-(233, 57, 'add', 0, 0, 0, 'radio'),
+(233, 57, 'add', 0, 0, 1, 'radio'),
 (234, 57, 'options', 0, 0, 0, 'checkbox'),
-(235, 57, 'beans', 1, 0, 0, 'radio'),
+(235, 57, 'beans', 1, 0, 1, 'radio'),
 (236, 58, 'options', 0, 0, 0, 'checkbox'),
 (237, 58, 'extra toppings', 0, 0, 0, 'checkbox'),
 (238, 60, 'choose a style', 1, 0, 1, 'radio'),
@@ -4943,7 +5065,7 @@ INSERT INTO `item_options` (`id`, `item_id`, `name`, `is_required`, `minimum_cho
 (302, 88, 'would you like toppings?', 0, 0, 0, 'checkbox'),
 (303, 88, 'add beans or rice', 0, 0, 1, 'radio'),
 (304, 88, 'rice', 1, 0, 1, 'radio'),
-(305, 89, 'choose a style', 1, 0, 0, 'radio'),
+(305, 89, 'choose a style', 1, 0, 1, 'radio'),
 (306, 89, 'choose a soda', 1, 0, 1, 'radio'),
 (307, 89, 'protein', 1, 0, 1, 'radio'),
 (308, 89, 'extra', 0, 0, 0, 'checkbox'),
@@ -4977,7 +5099,7 @@ INSERT INTO `item_options` (`id`, `item_id`, `name`, `is_required`, `minimum_cho
 (336, 93, 'choose', 1, 0, 1, 'checkbox'),
 (337, 94, 'choose a soda', 1, 0, 1, 'radio'),
 (338, 94, 'choose a protein', 1, 0, 0, 'checkbox'),
-(339, 94, 'choose a style', 1, 0, 0, 'radio'),
+(339, 94, 'choose a style', 1, 0, 1, 'radio'),
 (340, 94, 'would you like toppings?', 0, 0, 0, 'checkbox'),
 (341, 94, 'extra', 0, 0, 0, 'checkbox'),
 (342, 94, 'add', 1, 0, 1, 'radio'),
@@ -5147,7 +5269,49 @@ INSERT INTO `notification` (`id`, `order_id`, `details`, `status`, `date_time`, 
 (14, 18, 'Order placed', 0, '2020-01-17 07:43:22', NULL, 'admin', 18),
 (15, 19, 'Order placed', 0, '2020-01-17 08:17:28', NULL, 'admin', 18),
 (16, 20, 'Order placed', 0, '2020-01-17 09:20:41', NULL, 'admin', 18),
-(17, 21, 'Order placed', 0, '2020-01-21 14:47:28', NULL, 'admin', 18);
+(17, 21, 'Order placed', 0, '2020-01-21 14:47:28', NULL, 'admin', 18),
+(18, 24, 'Order placed', 0, '2020-01-22 14:12:55', NULL, 'admin', 18),
+(19, 25, 'Order placed', 0, '2020-01-22 14:14:03', NULL, 'admin', 18),
+(20, 26, 'Order placed', 0, '2020-01-22 14:14:57', NULL, 'admin', 18),
+(21, 27, 'Order placed', 0, '2020-01-22 14:15:34', NULL, 'admin', 18),
+(22, 28, 'Order placed', 0, '2020-01-22 14:17:48', NULL, 'admin', 18),
+(23, 29, 'Order placed', 0, '2020-01-22 14:19:30', NULL, 'admin', 18),
+(24, 30, 'Order placed', 0, '2020-01-22 14:20:27', NULL, 'admin', 18),
+(25, 31, 'Order placed', 0, '2020-01-22 14:21:26', NULL, 'admin', 18),
+(26, 35, 'Order placed', 0, '2020-01-23 05:43:44', NULL, 'admin', 18),
+(27, 36, 'Order placed', 0, '2020-01-23 05:48:48', NULL, 'admin', 18),
+(28, 37, 'Order placed', 0, '2020-01-23 05:54:03', NULL, 'admin', 18),
+(29, 42, 'Order placed', 0, '2020-01-27 06:08:25', NULL, 'admin', 1),
+(30, 6, 'Order placed', 0, '2020-01-27 11:17:51', NULL, 'admin', 18),
+(31, 7, 'Order placed', 0, '2020-01-29 05:23:10', NULL, 'admin', 18),
+(32, 14, 'Order placed', 0, '2020-01-30 06:37:27', NULL, 'admin', 18),
+(33, 1, 'Order placed', 0, '2020-01-30 07:14:25', NULL, 'admin', 1),
+(34, 2, 'Order placed', 0, '2020-01-30 07:24:11', NULL, 'admin', 1),
+(35, 3, 'Order placed', 0, '2020-01-30 07:26:50', NULL, 'admin', 1),
+(36, 4, 'Order placed', 0, '2020-01-30 07:31:58', NULL, 'admin', 1),
+(37, 6, 'Order placed', 0, '2020-01-30 07:45:58', NULL, 'admin', 18),
+(38, 7, 'Order placed', 0, '2020-01-30 07:49:03', NULL, 'admin', 18),
+(39, 8, 'Order placed', 0, '2020-01-30 10:49:06', NULL, 'admin', 18),
+(40, 11, 'Order placed', 0, '2020-01-31 11:35:42', NULL, 'admin', 18),
+(41, 12, 'Order placed', 0, '2020-01-31 11:40:06', NULL, 'admin', 18),
+(42, 13, 'Order placed', 0, '2020-01-31 12:18:18', NULL, 'admin', 18),
+(43, 14, 'Order placed', 0, '2020-01-31 12:54:29', NULL, 'admin', 18),
+(44, 18, 'Order placed', 0, '2020-02-02 10:53:58', NULL, 'admin', 21),
+(45, 39, 'Order placed', 0, '2020-02-03 11:36:45', NULL, 'admin', 21),
+(46, 40, 'Order placed', 0, '2020-02-03 11:40:24', NULL, 'admin', 21),
+(47, 41, 'Order placed', 0, '2020-02-03 11:43:42', NULL, 'admin', 21),
+(48, 42, 'Order placed', 0, '2020-02-03 11:49:51', NULL, 'admin', 21),
+(49, 43, 'Order placed', 0, '2020-02-03 12:01:49', NULL, 'admin', 21),
+(50, 44, 'Order placed', 0, '2020-02-03 12:06:04', NULL, 'admin', 21),
+(51, 45, 'Order placed', 0, '2020-02-03 13:40:54', NULL, 'admin', 1),
+(52, 46, 'Order placed', 0, '2020-02-03 13:46:07', NULL, 'admin', 1),
+(53, 47, 'Order placed', 0, '2020-02-03 13:47:16', NULL, 'admin', 1),
+(54, 48, 'Order placed', 0, '2020-02-03 13:49:05', NULL, 'admin', 1),
+(55, 49, 'Order placed', 0, '2020-02-03 13:50:55', NULL, 'admin', 1),
+(56, 50, 'Order placed', 0, '2020-02-03 13:54:36', NULL, 'admin', 1),
+(57, 51, 'Order placed', 0, '2020-02-03 13:57:32', NULL, 'admin', 1),
+(58, 52, 'Order placed', 0, '2020-02-03 14:00:17', NULL, 'admin', 1),
+(59, 53, 'Order placed', 0, '2020-02-03 16:45:01', NULL, 'admin', 1);
 
 -- --------------------------------------------------------
 
@@ -5159,9 +5323,9 @@ CREATE TABLE `options_items` (
   `id` int(11) NOT NULL,
   `option_id` int(11) NOT NULL,
   `ingredient_id` int(11) NOT NULL DEFAULT '0',
-  `name` varchar(255) NOT NULL,
+  `name` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
   `price` float NOT NULL DEFAULT '0'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
 -- Dumping data for table `options_items`
@@ -7510,84 +7674,186 @@ CREATE TABLE `order_details` (
   `item_rate` float(8,2) NOT NULL DEFAULT '0.00',
   `status` tinyint(1) DEFAULT '1' COMMENT '1:active,  2: canceled ',
   `ingredient_list` text NOT NULL,
-  `ingredient_name` text NOT NULL
+  `ingredient_name` text NOT NULL,
+  `special_instruction` text
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `order_details`
 --
 
-INSERT INTO `order_details` (`id`, `order_id`, `item_id`, `item_rate_id`, `quantity`, `item_rate`, `status`, `ingredient_list`, `ingredient_name`) VALUES
-(1, 1, 12, 0, 2, 19.25, 2, ',60,88,89,99', '14;extra egg;spinach;upgrade to 14;'),
-(2, 2, 84, 0, 1, 4.25, 1, '', ''),
-(3, 2, 5, 0, 1, 2.50, 1, '', ''),
-(4, 2, 6, 0, 1, 0.00, 1, '', ''),
-(5, 2, 7, 0, 1, 2.65, 1, '', ''),
-(6, 2, 9, 0, 1, 3.75, 1, '', ''),
-(7, 2, 12, 0, 1, 13.50, 1, ',60,64', '14;pico de gallo;'),
-(8, 3, 72, 0, 1, 3.00, 1, '', ''),
-(9, 3, 73, 0, 1, 3.00, 1, '', ''),
-(10, 3, 76, 0, 1, 2.50, 1, '', ''),
-(11, 3, 77, 0, 1, 2.25, 1, '', ''),
-(12, 3, 80, 0, 1, 0.00, 1, '', ''),
-(13, 3, 82, 0, 1, 5.50, 1, '', ''),
-(14, 3, 84, 0, 1, 4.25, 1, '', ''),
-(15, 3, 2, 0, 1, 6.00, 1, '', ''),
-(16, 3, 3, 0, 1, 6.00, 1, '', ''),
-(17, 3, 5, 0, 1, 2.50, 1, '', ''),
-(18, 3, 6, 0, 1, 0.00, 1, '', ''),
-(19, 3, 7, 0, 1, 2.65, 1, '', ''),
-(20, 3, 9, 0, 1, 3.75, 1, '', ''),
-(21, 3, 12, 0, 1, 19.05, 1, ',60,64,66,69,70,73,75,78,84,85,93,96,98', '14;pico de gallo;jalapenos;hot sauce;cilantro;fresh tomatoes;whole wheat tortilla;spinach tortilla;extra pico de gallo;sour cream;scrambled eggs;monterey jack;upgrade to 12;'),
-(22, 4, 72, 0, 1, 3.00, 1, '', ''),
-(23, 4, 73, 0, 1, 3.00, 1, '', ''),
-(24, 4, 76, 0, 1, 2.50, 1, '', ''),
-(25, 4, 77, 0, 1, 2.25, 1, '', ''),
-(26, 4, 80, 0, 1, 0.00, 1, '', ''),
-(27, 4, 82, 0, 1, 5.50, 1, '', ''),
-(28, 4, 84, 0, 1, 4.25, 1, '', ''),
-(29, 4, 2, 0, 1, 6.00, 1, '', ''),
-(30, 4, 3, 0, 1, 6.00, 1, '', ''),
-(31, 4, 5, 0, 1, 2.50, 1, '', ''),
-(32, 4, 6, 0, 1, 0.00, 1, '', ''),
-(33, 4, 7, 0, 1, 2.65, 1, '', ''),
-(34, 4, 9, 0, 1, 3.75, 1, '', ''),
-(35, 4, 12, 0, 1, 11.05, 1, ',64,66,69,70,73,75,78,84,85,93,96,98', 'pico de gallo;jalapenos;hot sauce;cilantro;fresh tomatoes;whole wheat tortilla;spinach tortilla;extra pico de gallo;sour cream;scrambled eggs;monterey jack;upgrade to 12;'),
-(36, 5, 72, 0, 1, 3.00, 1, '', ''),
-(37, 5, 76, 0, 1, 2.50, 1, '', ''),
-(38, 5, 12, 0, 1, 16.65, 1, ',60,65,75,80,91', '14 inch big daddy with cheese, lettuce, whole wheat tortilla, fresh avocado, egg white, '),
-(39, 6, 73, 0, 2, 3.00, 1, '', ''),
-(40, 6, 85, 0, 2, 0.75, 1, '', ''),
-(41, 6, 1, 0, 2, 1.10, 1, '', ''),
-(42, 6, 2, 0, 1, 6.00, 1, '', ''),
-(43, 6, 3, 0, 1, 6.00, 1, '', ''),
-(44, 6, 88, 0, 2, 19.14, 1, ',1882,1885,1886,1897,1898,1907,1911,1915,1922,1924', 'coke, salmon, beans and rice burrito, with chips, spinach, extra nacho cheese sauce, monterey jack, plain tomatoes, extra pinto beans, brown rice, '),
-(45, 7, 77, 0, 1, 2.25, 1, '', ''),
-(46, 7, 81, 0, 1, 5.00, 1, '', ''),
-(47, 7, 1, 0, 1, 1.10, 1, '', ''),
-(48, 7, 2, 0, 4, 6.00, 1, '', ''),
-(49, 7, 88, 0, 2, 23.64, 1, ',1882,1886,1890,1891,1894,1895,1899,1900,1903,1904,1918,1920,1923', 'coke, beans and rice burrito, carnitas burrito, tilapia, shrimp, grilled steak, extra egg, turkey bacon, cheddar cheese, bacon, lettuce, extra refried beans, mexican rice, '),
-(50, 8, 74, 0, 1, 3.00, 1, '', ''),
-(51, 8, 86, 0, 1, 2.35, 1, '', ''),
-(52, 8, 3, 0, 1, 6.00, 1, '', ''),
-(53, 8, 88, 0, 1, 18.24, 1, ',1882,1890,1895,1897,1898,1899,1907,1916,1921,1925', 'coke, carnitas burrito, grilled steak, with chips, spinach, extra egg, extra nacho cheese sauce, hot sauce, extra rice, no rice, '),
-(54, 9, 73, 0, 1, 3.00, 1, '', ''),
-(55, 9, 90, 0, 1, 21.30, 1, ',1969,1970,1973,1974,1981,1983,1987,1991,2001,2008', 'coke, diet coke, vegiterian / vegan : type in choice of beans, grilled steak, barbacoa, extra refried beans, brown rice, lettuce, fresh avocado, turkey bacon, '),
-(56, 18, 77, 0, 2, 2.25, 1, '', ''),
-(57, 18, 80, 0, 2, 0.00, 1, '', ''),
-(58, 18, 88, 0, 1, 12.34, 1, '', ''),
-(59, 19, 72, 0, 1, 3.00, 1, '', ''),
-(60, 19, 84, 0, 1, 4.25, 1, '', ''),
-(61, 19, 1, 0, 1, 1.10, 1, '', ''),
-(62, 19, 88, 0, 1, 17.59, 1, '', ''),
-(63, 20, 73, 0, 2, 3.00, 1, '', ''),
-(64, 20, 2, 0, 2, 6.00, 1, '', ''),
-(65, 20, 88, 0, 7, 16.89, 1, '', ''),
-(66, 21, 73, 0, 1, 3.00, 1, '', ''),
-(67, 21, 81, 0, 1, 5.00, 1, '', ''),
-(68, 21, 2, 0, 2, 6.00, 1, '', ''),
-(69, 21, 6, 0, 2, 0.00, 1, '', ''),
-(70, 21, 88, 0, 2, 17.19, 1, '', '');
+INSERT INTO `order_details` (`id`, `order_id`, `item_id`, `item_rate_id`, `quantity`, `item_rate`, `status`, `ingredient_list`, `ingredient_name`, `special_instruction`) VALUES
+(1, 1, 88, 0, 1, 9.09, 1, ',1883,1887,1888', 'diet coke, spinach burrito, chicken burrito, ', NULL),
+(2, 1, 88, 0, 4, 15.89, 1, ',1883,1886,1890,1897,1899,1907,1915,1920,1924', 'diet coke, beans and rice burrito, carnitas burrito, with chips, extra egg, extra nacho cheese sauce, plain tomatoes, extra refried beans, brown rice, ', NULL),
+(3, 2, 90, 0, 2, 21.20, 1, ',1971,1974,1977,1984,1988,1996,2001,2004,2011', 'sprite, grilled steak, carnitas, extra rice, no rice, cilantro, fresh avocado, sour cream, extra nacho cheese sauce, ', NULL),
+(4, 3, 93, 0, 1, 15.70, 1, ',2103,2110,2116,2133,2145,2149,2151', 'diet coke, carnitas, monterey jack, extra nacho cheese sauce, sour cream, no guacamole, ranch, ', NULL),
+(5, 4, 92, 0, 1, 12.05, 1, ',2067,2076,2084', 'sour cream, lettuce, fresh tomatoes, ', NULL),
+(6, 4, 1, 0, 1, 1.10, 1, '', '', NULL),
+(7, 4, 9, 0, 1, 3.75, 1, '', '', NULL),
+(8, 4, 76, 0, 1, 2.50, 1, '', '', NULL),
+(9, 4, 84, 0, 1, 4.25, 1, '', '', NULL),
+(10, 4, 92, 0, 1, 14.20, 1, ',2054,2057,2065,2071', 'diet coke, vegiterian / vegan : type in choice of beans, barbacoa, turkey bacon, ', NULL),
+(11, 5, 77, 0, 1, 2.25, 1, '', '', NULL),
+(12, 5, 2, 0, 1, 6.00, 1, '', '', NULL),
+(13, 5, 10, 0, 1, 2.20, 1, '', '', NULL),
+(14, 5, 88, 0, 1, 15.84, 1, ',1883,1890,1894,1903,1907,1915,1924', 'diet coke, carnitas burrito, shrimp, cheddar cheese, extra nacho cheese sauce, plain tomatoes, brown rice, ', NULL),
+(15, 6, 73, 0, 1, 3.00, 1, '', '', NULL),
+(16, 6, 81, 0, 1, 5.00, 1, '', '', NULL),
+(17, 6, 6, 0, 1, 0.00, 1, '', '', NULL),
+(18, 6, 10, 0, 1, 2.20, 1, '', '', NULL),
+(19, 6, 96, 0, 1, 17.85, 1, ',2214,2217,2221,2240,2247,2251', 'diet coke, extra refried beans, grilled chicken, plain tomatoes, brown rice, flour tortillas, ', NULL),
+(20, 7, 88, 0, 1, 9.09, 1, ',1883', 'diet coke, ', NULL),
+(21, 7, 6, 0, 1, 0.00, 1, '', '', NULL),
+(22, 7, 81, 0, 1, 5.00, 1, '', '', NULL),
+(23, 7, 85, 0, 1, 0.75, 1, '', '', NULL),
+(24, 7, 88, 0, 1, 11.09, 1, ',1895,1896,1925', 'grilled steak, barbacoa, no rice, ', NULL),
+(25, 8, 1, 0, 1, 1.10, 1, '', '', NULL),
+(26, 8, 70, 0, 4, 10.80, 1, ',1797,1800,1804', 'nacho cheese sauce, black beans, monterey jack, ', NULL),
+(27, 9, 2, 0, 1, 6.00, 1, '', '', NULL),
+(28, 9, 94, 0, 1, 13.50, 1, ',2153,2157,2160,2167', 'coke, grilled chicken, soft flour taco, plain tomatoes, ', NULL),
+(29, 10, 86, 0, 1, 2.35, 1, '', '', NULL),
+(30, 10, 88, 0, 1, 13.04, 1, ',1884,1891,1921', 'sprite, tilapia, extra rice, ', NULL),
+(31, 11, 88, 0, 6, 9.09, 1, ',1883,1887,1924', 'diet coke, spinach burrito, brown rice, ', ''),
+(32, 11, 3, 0, 1, 6.00, 1, '', '', ''),
+(33, 11, 7, 0, 1, 2.65, 1, '', '', ''),
+(34, 11, 74, 0, 2, 3.00, 1, '', '', ''),
+(35, 11, 72, 0, 4, 3.00, 1, '', '', ''),
+(36, 11, 88, 0, 5, 12.09, 1, ',1884,1885,1925', 'sprite, salmon, no rice, ', ''),
+(37, 11, 88, 0, 4, 3.00, 1, ',1883,1891,1925', 'diet coke, tilapia, no rice, ', ''),
+(38, 11, 79, 0, 1, 0.00, 1, '', '', ''),
+(39, 11, 77, 0, 1, 2.25, 1, '', '', ''),
+(40, 11, 85, 0, 1, 0.75, 1, '', '', ''),
+(41, 11, 2, 0, 1, 6.00, 1, '', '', ''),
+(42, 11, 6, 0, 1, 0.00, 1, '', '', ''),
+(43, 12, 73, 0, 1, 3.00, 1, '', '', ''),
+(44, 12, 2, 0, 1, 6.00, 1, '', '', ''),
+(45, 12, 88, 0, 1, 10.94, 1, ',1883,1886,1911,1920,1924', 'diet coke, beans and rice burrito, monterey jack, extra refried beans, brown rice, ', 'this is special instruction '),
+(46, 13, 73, 0, 1, 3.00, 1, '', '', ''),
+(47, 13, 74, 0, 1, 3.00, 1, '', '', ''),
+(48, 13, 77, 0, 1, 2.25, 1, '', '', ''),
+(49, 13, 78, 0, 1, 0.00, 1, '', '', ''),
+(50, 13, 84, 0, 1, 4.25, 1, '', '', ''),
+(51, 13, 1, 0, 1, 1.10, 1, '', '', ''),
+(52, 13, 2, 0, 1, 6.00, 1, '', '', ''),
+(53, 13, 10, 0, 1, 2.20, 1, '', '', ''),
+(54, 13, 88, 0, 1, 11.09, 1, ',1884,1887,1897,1923', 'sprite, spinach burrito, with chips, mexican rice, ', 'this is special instruction 2'),
+(55, 14, 3, 0, 1, 6.00, 1, '', '', ''),
+(56, 14, 96, 0, 1, 17.85, 1, ',2214,2217,2221,2222,2236,2247,2251', 'diet coke, extra refried beans, grilled chicken, grilled steak, cheddar cheese, brown rice, flour tortillas, ', ''),
+(57, 15, 73, 0, 1, 3.00, 1, '', '', ''),
+(58, 15, 2, 0, 1, 6.00, 1, '', '', ''),
+(59, 15, 90, 0, 2, 18.15, 1, ',1970,1973,1983,1988,1991,2004', 'diet coke, vegiterian / vegan : type in choice of beans, extra refried beans, no rice, lettuce, sour cream, ', 'safhdkj'),
+(60, 16, 74, 0, 1, 3.00, 1, '', '', ''),
+(61, 16, 82, 0, 1, 5.50, 1, '', '', ''),
+(62, 16, 3, 0, 1, 6.00, 1, '', '', ''),
+(63, 16, 93, 0, 1, 16.70, 1, ',2104,2107,2117,2126,2138,2152', 'sprite, grilled steak, cilantro, turkey bacon, onions, italian dressing, ', ''),
+(64, 17, 73, 0, 1, 3.00, 1, '', '', ''),
+(65, 17, 2, 0, 1, 6.00, 1, '', '', ''),
+(66, 17, 96, 0, 1, 18.75, 1, ',2214,2218,2222,2224,2233,2240,2247,2251', 'diet coke, extra rice, grilled steak, cheddar cheese, fresh avocado, plain tomatoes, brown rice, flour tortillas, ', ''),
+(67, 18, 72, 0, 1, 3.00, 1, '', '', ''),
+(68, 18, 89, 0, 1, 11.84, 1, ',1927,1930,1937,1943', 'hard taco, coke, chicken, extra chorizo, ', ''),
+(69, 19, 77, 0, 1, 2.25, 1, '', '', ''),
+(70, 19, 86, 0, 1, 2.35, 1, '', '', ''),
+(71, 19, 2, 0, 1, 6.00, 1, '', '', ''),
+(72, 19, 88, 0, 1, 13.94, 1, ',1884,1887,1897,1899,1920,1926', 'sprite, spinach burrito, with chips, extra egg, extra refried beans, white rice, ', ''),
+(73, 20, 81, 0, 1, 5.00, 1, '', '', ''),
+(74, 20, 2, 0, 1, 6.00, 1, '', '', ''),
+(75, 20, 70, 0, 1, 12.40, 1, ',1797,1799,1811,1816', 'nacho cheese sauce, no beans, guacamole, fresh jalopenos, ', ''),
+(76, 21, 73, 0, 1, 3.00, 1, '', '', ''),
+(77, 21, 88, 0, 1, 9.09, 1, ',1883,1886,1924', 'diet coke, beans and rice burrito, brown rice, ', ''),
+(78, 22, 51, 0, 1, 14.55, 1, ',1351,1356,1360,1365,1369', 'corn tortillas, jalapenos, cilantro, black, sour cream, ', 'zdfdgfhsd gjhg'),
+(79, 23, 75, 0, 1, 3.00, 1, '', '', ''),
+(80, 23, 82, 0, 1, 5.50, 1, '', '', ''),
+(81, 23, 3, 0, 1, 6.00, 1, '', '', ''),
+(82, 23, 76, 0, 1, 2.50, 1, '', '', ''),
+(83, 24, 72, 0, 2, 3.00, 1, '', '', ''),
+(84, 24, 88, 0, 1, 11.09, 1, ',1883,1886,1897,1923', 'diet coke, beans and rice burrito, with chips, mexican rice, ', ''),
+(85, 24, 88, 0, 1, 3.00, 1, ',1883,1886,1897,1923', 'diet coke, beans and rice burrito, with chips, mexican rice, ', ''),
+(86, 25, 77, 0, 1, 2.25, 1, '', '', ''),
+(87, 25, 2, 0, 1, 6.00, 1, '', '', ''),
+(88, 25, 3, 0, 1, 6.00, 1, '', '', ''),
+(89, 25, 70, 0, 1, 11.80, 1, ',1797,1800,1804,1812,1821', 'nacho cheese sauce, black beans, monterey jack, mushrooms, plain tomatoes, ', ''),
+(90, 26, 73, 0, 2, 3.00, 1, '', '', ''),
+(91, 26, 88, 0, 1, 13.94, 1, ',1883,1890,1897,1899,1915,1920,1924', 'diet coke, carnitas burrito, with chips, extra egg, plain tomatoes, extra refried beans, brown rice, ', ''),
+(92, 26, 74, 0, 8, 3.00, 1, '', '', ''),
+(93, 26, 75, 0, 5, 3.00, 1, '', '', ''),
+(94, 26, 78, 0, 1, 0.00, 1, '', '', ''),
+(95, 26, 79, 0, 2, 0.00, 1, '', '', ''),
+(96, 26, 82, 0, 1, 5.50, 1, '', '', ''),
+(97, 26, 77, 0, 1, 2.25, 1, '', '', ''),
+(98, 26, 83, 0, 1, 6.50, 1, '', '', ''),
+(99, 26, 74, 0, 1, 0.00, 1, '', '', ''),
+(100, 26, 88, 0, 1, 3.00, 1, ',1883,1886,1897,1898,1912,1921,1925', 'diet coke, beans and rice burrito, with chips, spinach, cilantro, extra rice, no rice, ', ''),
+(101, 27, 73, 0, 1, 3.00, 1, '', '', ''),
+(102, 27, 77, 0, 2, 2.25, 1, '', '', ''),
+(103, 27, 2, 0, 2, 6.00, 1, '', '', ''),
+(104, 27, 88, 0, 2, 14.19, 1, ',1883,1887,1897,1898,1918,1919,1923', 'diet coke, spinach burrito, with chips, spinach, lettuce, extra black beans, mexican rice, ', ''),
+(105, 27, 74, 0, 1, 3.00, 1, '', '', ''),
+(106, 27, 92, 0, 1, 3.00, 1, ',2054,2057,2067,2080,2090,2097', 'diet coke, vegiterian / vegan : type in choice of beans, sour cream, hot sauce, plain tomatoes, whole wheat, ', ''),
+(107, 28, 74, 0, 1, 3.00, 1, '', '', ''),
+(108, 28, 72, 0, 1, 3.00, 1, '', '', ''),
+(109, 29, 74, 0, 1, 3.00, 1, '', '', ''),
+(110, 29, 70, 0, 1, 10.80, 1, ',1798,1801,1805,1818', 'shredded cheese, pinto beans, sour cream, cilantro, ', 'xzv'),
+(111, 32, 81, 0, 2, 5.00, 1, '', '', ''),
+(112, 32, 88, 0, 2, 11.89, 1, ',1883,1886,1897,1903,1910,1923', 'diet coke, beans and rice burrito, with chips, cheddar cheese, fresh jalopenos, mexican rice, ', ''),
+(113, 33, 73, 0, 1, 3.00, 1, '', '', ''),
+(114, 33, 89, 0, 1, 11.74, 1, ',1928,1931,1938,1944,1957,1965', 'soft flour taco, diet coke, carnitas, monterey jack, extra refried beans, plain tomatoes, ', ''),
+(115, 34, 74, 0, 1, 3.00, 1, '', '', ''),
+(116, 34, 3, 0, 1, 6.00, 1, '', '', ''),
+(117, 34, 71, 0, 1, 11.80, 1, ',1826,1829,1841,1850,1862', 'nacho cheese sauce, grilled chicken, monterey jack, sour cream, black, ', ''),
+(118, 36, 73, 0, 1, 3.00, 1, '', '', ''),
+(119, 36, 74, 0, 1, 3.00, 1, '', '', ''),
+(120, 36, 76, 0, 1, 2.50, 1, '', '', ''),
+(121, 36, 77, 0, 1, 2.25, 1, '', '', ''),
+(122, 36, 78, 0, 1, 0.00, 1, '', '', ''),
+(123, 36, 80, 0, 1, 0.00, 1, '', '', ''),
+(124, 36, 81, 0, 1, 5.00, 1, '', '', ''),
+(125, 36, 82, 0, 1, 5.50, 1, '', '', ''),
+(126, 36, 1, 0, 1, 1.10, 1, '', '', ''),
+(127, 36, 2, 0, 1, 6.00, 1, '', '', ''),
+(128, 36, 3, 0, 1, 6.00, 1, '', '', ''),
+(129, 36, 70, 0, 1, 10.00, 1, ',1796,1799', 'no cheese, no beans, ', ''),
+(130, 37, 73, 0, 1, 3.00, 1, '', '', ''),
+(131, 37, 74, 0, 2, 3.00, 1, '', '', ''),
+(132, 37, 77, 0, 1, 2.25, 1, '', '', ''),
+(133, 37, 78, 0, 1, 0.00, 1, '', '', ''),
+(134, 39, 73, 0, 1, 3.00, 1, '', '', ''),
+(135, 39, 74, 0, 1, 3.00, 1, '', '', 'asd'),
+(136, 40, 75, 0, 2, 3.00, 1, '', '', ''),
+(137, 41, 88, 0, 1, 9.09, 1, ',1884,1886,1924', 'sprite, beans and rice burrito, brown rice, ', ''),
+(138, 42, 88, 0, 1, 9.09, 1, ',1883,1886,1924', 'diet coke, beans and rice burrito, brown rice, ', ''),
+(139, 43, 2, 0, 1, 6.00, 1, '', '', ''),
+(140, 43, 70, 0, 1, 10.80, 1, ',1797,1800,1804', 'nacho cheese sauce, black beans, monterey jack, ', ''),
+(141, 44, 73, 0, 1, 3.00, 1, '', '', ''),
+(142, 44, 88, 0, 1, 9.09, 1, ',1883,1886,1924', 'diet coke, beans and rice burrito, brown rice, ', ''),
+(143, 45, 74, 0, 2, 3.00, 1, '', '', ''),
+(144, 45, 78, 0, 1, 0.00, 1, '', '', ''),
+(145, 46, 74, 0, 1, 3.00, 1, '', '', ''),
+(146, 46, 75, 0, 1, 3.00, 1, '', '', ''),
+(147, 46, 76, 0, 1, 2.50, 1, '', '', ''),
+(148, 47, 74, 0, 1, 3.00, 1, '', '', ''),
+(149, 47, 71, 0, 1, 12.95, 1, ',1827,1830,1842,1855,1863', 'shredded cheese, ground beef, cilantro, extra cheese sauce, refried, ', ''),
+(150, 48, 75, 0, 2, 3.00, 1, '', '', ''),
+(151, 48, 79, 0, 1, 0.00, 1, '', '', ''),
+(152, 49, 74, 0, 1, 3.00, 1, '', '', ''),
+(153, 49, 75, 0, 2, 3.00, 1, '', '', ''),
+(154, 50, 74, 0, 1, 3.00, 1, '', '', ''),
+(155, 50, 75, 0, 1, 3.00, 1, '', '', ''),
+(156, 50, 73, 0, 1, 3.00, 1, '', '', ''),
+(157, 51, 74, 0, 1, 3.00, 1, '', '', ''),
+(158, 51, 77, 0, 1, 2.25, 1, '', '', ''),
+(159, 51, 73, 0, 1, 3.00, 1, '', '', ''),
+(160, 52, 73, 0, 2, 3.00, 1, '', '', ''),
+(161, 53, 88, 0, 2, 15.34, 1, ',1884,1885,1897,1898,1924', 'sprite, salmon, with chips, spinach, brown rice, ', ''),
+(162, 54, 73, 0, 1, 3.00, 1, '', '', ''),
+(163, 54, 74, 0, 1, 3.00, 1, '', '', ''),
+(164, 54, 89, 0, 1, 9.09, 1, ',1928,1931,1934', 'soft flour taco, diet coke, vegiterian / vegan : type in choice of beans, ', ''),
+(165, 55, 73, 0, 1, 3.00, 1, '', '', ''),
+(166, 55, 74, 0, 1, 3.00, 1, '', '', ''),
+(167, 55, 2, 0, 1, 6.00, 1, '', '', ''),
+(168, 55, 3, 0, 1, 6.00, 1, '', '', ''),
+(169, 55, 64, 0, 1, 14.50, 1, ',1611,1614,1618,1624', 'carne asada, black beans, brown rice, corn chips, ', ''),
+(170, 56, 78, 0, 1, 0.00, 1, '', '', ''),
+(171, 56, 71, 0, 1, 11.85, 1, ',1827,1830,1842,1851,1863', 'shredded cheese, ground beef, cilantro, corn, refried, ', '');
 
 -- --------------------------------------------------------
 
@@ -7601,7 +7867,7 @@ CREATE TABLE `order_master` (
   `order_date` datetime DEFAULT CURRENT_TIMESTAMP,
   `delivery_date` datetime DEFAULT NULL,
   `delivery_type` tinyint(1) DEFAULT '1' COMMENT '1:takeout, 2: delivery, 3:dine in',
-  `outlet_id` int(11) DEFAULT NULL,
+  `group_order_details_id` int(11) DEFAULT '0',
   `delivery_charge_id` int(11) DEFAULT NULL,
   `cupon_id` int(11) DEFAULT NULL,
   `discount_amount` float(12,2) DEFAULT '0.00',
@@ -7609,7 +7875,8 @@ CREATE TABLE `order_master` (
   `total_order_amt` float(12,2) DEFAULT '0.00',
   `total_paid_amount` float(12,2) DEFAULT '0.00',
   `tax_amount` float(12,2) DEFAULT '0.00',
-  `address` text CHARACTER SET utf8 COLLATE utf8_general_ci,
+  `tips` float NOT NULL DEFAULT '0',
+  `address` text,
   `remarks` text,
   `order_status` int(1) DEFAULT '1' COMMENT '1:ordered, 2:received, 3:preparing, 4: ready ,  5: delivered',
   `order_noticed` tinyint(1) DEFAULT '1' COMMENT '1:not seen, 2:seen',
@@ -7619,35 +7886,72 @@ CREATE TABLE `order_master` (
   `payment_method` tinyint(1) NOT NULL COMMENT '1:cash,  2: loyalty_point, 3:card, 4:gift card ',
   `payment_reference_no` varchar(20) DEFAULT NULL,
   `invoice_no` varchar(20) DEFAULT NULL,
-  `loyalty_point` int(11) NOT NULL DEFAULT '0'
+  `loyalty_point` int(11) NOT NULL DEFAULT '0',
+  `group_order_id` int(11) NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `order_master`
 --
 
-INSERT INTO `order_master` (`order_id`, `customer_id`, `order_date`, `delivery_date`, `delivery_type`, `outlet_id`, `delivery_charge_id`, `cupon_id`, `discount_amount`, `delivery_charge`, `total_order_amt`, `total_paid_amount`, `tax_amount`, `address`, `remarks`, `order_status`, `order_noticed`, `order_noticed_time`, `payment_time`, `payment_status`, `payment_method`, `payment_reference_no`, `invoice_no`, `loyalty_point`) VALUES
-(1, 1, '2020-01-13 15:36:40', '2020-01-07 12:00:00', 1, NULL, NULL, NULL, 0.00, 0.00, 40.70, 40.70, 0.00, NULL, '', 1, 1, NULL, NULL, 2, 3, '1', 'CnC012000001', 4),
-(2, 1, '2020-01-13 15:38:12', '2020-01-07 12:00:00', 1, NULL, NULL, NULL, 0.00, 0.00, 26.65, 26.65, 0.00, NULL, '', 5, 1, NULL, NULL, 2, 3, '1', 'CnC012000002', 2),
-(3, 1, '2020-01-13 15:47:24', '2020-01-07 12:00:00', 1, NULL, NULL, NULL, 0.00, 0.00, 60.45, 60.45, 0.00, NULL, '', 3, 2, '2020-01-13 05:00:37', NULL, 2, 3, '1', 'CnC012000003', 6),
-(4, 1, '2020-01-13 19:57:06', '2020-01-07 12:00:00', 1, NULL, NULL, NULL, 0.00, 0.00, 52.45, 52.45, 0.00, NULL, '', 1, 1, NULL, NULL, 2, 3, '1', 'CnC012000004', 5),
-(5, 1, '2020-01-13 19:58:41', '2020-01-07 12:00:00', 1, NULL, NULL, NULL, 0.00, 0.00, 22.15, 22.15, 0.00, NULL, '', 1, 1, NULL, NULL, 2, 3, '1', 'CnC012000005', 2),
-(6, 1, '2020-01-14 12:03:57', '2020-01-07 12:00:00', 1, NULL, NULL, NULL, 0.00, 0.00, 59.98, 59.98, 0.00, NULL, '', 1, 1, NULL, NULL, 2, 3, '1', 'CnC012000006', 5),
-(7, 18, '2020-01-17 13:16:42', '2020-01-07 12:00:00', 1, NULL, NULL, NULL, 0.00, 0.00, 79.63, 79.63, 0.00, NULL, '', 1, 1, NULL, NULL, 2, 2, '1', 'CnC012000007', 7),
-(8, 18, '2020-01-17 13:26:38', '2020-01-07 12:00:00', 1, NULL, NULL, NULL, 0.00, 0.00, 29.59, 29.59, 0.00, NULL, '', 1, 1, NULL, NULL, 2, 2, '1', 'CnC012000008', 2),
-(9, 18, '2020-01-17 13:29:16', '2020-01-07 12:00:00', 1, NULL, NULL, NULL, 0.00, 0.00, 24.30, 24.30, 0.00, NULL, '', 1, 1, NULL, NULL, 2, 3, '1', 'CnC012000009', 2),
-(10, 18, '2020-01-17 13:31:27', '2020-01-07 12:00:00', 1, NULL, NULL, NULL, 0.00, 0.00, 14.59, 14.59, 0.00, NULL, '', 1, 1, NULL, NULL, 2, 2, '1', 'CnC012000010', 1),
-(11, 18, '2020-01-17 13:32:32', '2020-01-07 12:00:00', 1, NULL, NULL, NULL, 0.00, 0.00, 14.59, 14.59, 0.00, NULL, '', 1, 1, NULL, NULL, 2, 2, '1', 'CnC012000011', 1),
-(12, 18, '2020-01-17 13:33:23', '2020-01-07 12:00:00', 1, NULL, NULL, NULL, 0.00, 0.00, 14.59, 14.59, 0.00, NULL, '', 1, 1, NULL, NULL, 2, 3, '1', 'CnC012000012', 1),
-(13, 18, '2020-01-17 13:34:43', '2020-01-07 12:00:00', 1, NULL, NULL, NULL, 0.00, 0.00, 14.59, 14.59, 0.00, NULL, '', 1, 1, NULL, NULL, 2, 2, '1', 'CnC012000013', 1),
-(14, 18, '2020-01-17 13:35:12', '2020-01-07 12:00:00', 1, NULL, NULL, NULL, 0.00, 0.00, 14.59, 14.59, 0.00, NULL, '', 1, 1, NULL, NULL, 2, 2, '1', 'CnC012000014', 1),
-(15, 18, '2020-01-17 13:40:04', '2020-01-07 12:00:00', 1, NULL, NULL, NULL, 0.00, 0.00, 16.84, 16.84, 0.00, NULL, '', 1, 1, NULL, NULL, 2, 3, '1', 'CnC012000015', 1),
-(16, 18, '2020-01-17 13:41:39', '2020-01-07 12:00:00', 1, NULL, NULL, NULL, 0.00, 0.00, 16.84, 16.84, 0.00, NULL, '', 1, 1, NULL, NULL, 2, 2, '1', 'CnC012000016', 1),
-(17, 18, '2020-01-17 13:42:38', '2020-01-07 12:00:00', 1, NULL, NULL, NULL, 0.00, 0.00, 16.84, 16.84, 0.00, NULL, '', 1, 1, NULL, NULL, 2, 3, '1', 'CnC012000017', 1),
-(18, 18, '2020-01-17 13:43:22', '2020-01-07 12:00:00', 1, NULL, NULL, NULL, 0.00, 0.00, 16.84, 16.84, 0.00, NULL, '', 1, 1, NULL, NULL, 2, 2, '1', 'CnC012000018', 1),
-(19, 18, '2020-01-17 14:17:28', '2020-01-07 12:00:00', 1, NULL, NULL, NULL, 0.00, 0.00, 25.94, 25.94, 0.00, NULL, '', 1, 1, NULL, NULL, 2, 3, '1', 'CnC012000019', 2),
-(20, 18, '2020-01-17 15:20:41', '2020-01-07 12:00:00', 1, NULL, NULL, NULL, 0.00, 0.00, 136.23, 136.23, 0.00, NULL, '', 3, 1, NULL, NULL, 2, 2, '1', 'CnC012000020', 13),
-(21, 18, '2020-01-21 20:47:28', '2020-01-07 12:00:00', 1, NULL, NULL, NULL, 0.00, 0.00, 54.38, 54.38, 0.00, NULL, '', 1, 1, NULL, NULL, 2, 2, '1', 'CnC012000021', 5);
+INSERT INTO `order_master` (`order_id`, `customer_id`, `order_date`, `delivery_date`, `delivery_type`, `group_order_details_id`, `delivery_charge_id`, `cupon_id`, `discount_amount`, `delivery_charge`, `total_order_amt`, `total_paid_amount`, `tax_amount`, `tips`, `address`, `remarks`, `order_status`, `order_noticed`, `order_noticed_time`, `payment_time`, `payment_status`, `payment_method`, `payment_reference_no`, `invoice_no`, `loyalty_point`, `group_order_id`) VALUES
+(1, 1, '2020-01-30 15:14:25', '2020-01-07 12:00:00', 1, 0, NULL, NULL, 0.00, 0.00, 72.65, 72.65, 0.00, 0, NULL, '', 1, 1, NULL, NULL, 2, 3, '1', 'BB012000001', 7, 0),
+(2, 1, '2020-01-30 15:24:11', '2020-01-07 12:00:00', 1, 0, NULL, NULL, 0.00, 0.00, 42.40, 42.40, 0.00, 0, NULL, '', 1, 1, NULL, NULL, 2, 3, '1', 'BB012000002', 4, 0),
+(3, 1, '2020-01-30 15:26:50', '2020-01-07 12:00:00', 1, 0, NULL, NULL, 0.00, 0.00, 15.70, 15.70, 0.00, 0, NULL, '', 1, 1, NULL, NULL, 2, 3, '1', 'BB012000003', 1, 0),
+(4, 1, '2020-01-30 15:31:58', '2020-01-07 12:00:00', 1, 0, NULL, NULL, 0.00, 0.00, 37.85, 37.85, 0.00, 0, NULL, '', 1, 1, NULL, NULL, 2, 3, '1', 'BB012000004', 3, 0),
+(5, 0, '2020-01-30 15:39:57', '2020-01-07 12:00:00', 1, 1, NULL, NULL, 0.00, 0.00, 26.29, 0.00, 0.00, 0, NULL, '', 0, 1, NULL, NULL, 1, 0, NULL, 'BB012000005', 0, 0),
+(6, 18, '2020-01-30 15:45:58', '2020-01-07 12:00:00', 1, 0, NULL, NULL, 0.00, 0.00, 28.05, 28.05, 0.00, 0, NULL, '', 1, 1, NULL, NULL, 2, 2, '1', 'BB012000006', 2, 0),
+(7, 18, '2020-01-30 13:49:03', '2020-01-07 12:00:00', 1, 0, NULL, NULL, 0.00, 0.00, 25.93, 25.93, 0.00, 0, NULL, '', 1, 1, NULL, NULL, 2, 3, '1', 'BB012000007', 2, 0),
+(8, 18, '2020-01-30 16:49:06', '2020-01-07 12:00:00', 1, 0, NULL, NULL, 0.00, 0.00, 44.30, 44.30, 0.00, 0, NULL, 'hgfhfgh hfghfghgfhfgh', 5, 1, NULL, NULL, 2, 3, '1', 'BB012000008', 4, 0),
+(9, 0, '2020-01-30 17:11:53', '2020-01-07 12:00:00', 1, 10, NULL, NULL, 0.00, 0.00, 19.50, 0.00, 0.00, 0, NULL, '', 0, 1, NULL, NULL, 1, 0, NULL, 'BB012000009', 0, 0),
+(10, 0, '2020-01-30 17:14:01', '2020-01-07 12:00:00', 1, 11, NULL, NULL, 0.00, 0.00, 15.39, 0.00, 0.00, 0, NULL, '', 0, 1, NULL, NULL, 1, 0, NULL, 'BB012000010', 0, 0),
+(11, 18, '2020-01-31 17:35:42', '2020-01-07 12:00:00', 1, 0, NULL, NULL, 0.00, 0.00, 162.64, 162.64, 0.00, 0, NULL, 'this is order notes', 1, 1, NULL, NULL, 2, 3, '1', 'BB012000011', 16, 0),
+(12, 18, '2020-01-31 17:40:06', '2020-01-07 12:00:00', 1, 0, NULL, NULL, 0.00, 0.00, 19.94, 19.94, 0.00, 0, NULL, 'this is order notes', 1, 1, NULL, NULL, 2, 2, '1', 'BB012000012', 1, 0),
+(13, 18, '2020-01-31 18:18:18', '2020-01-07 12:00:00', 1, 0, NULL, NULL, 0.00, 0.00, 32.89, 32.89, 0.00, 0, NULL, 'order note 2', 1, 1, NULL, NULL, 2, 3, '1', 'BB012000013', 3, 0),
+(14, 18, '2020-01-31 18:54:29', '2020-01-07 12:00:00', 1, 0, NULL, 2020, 0.57, 0.00, 23.85, 23.28, 0.00, 0, NULL, 'sdf', 1, 1, NULL, NULL, 2, 3, '1', 'BB012000014', 2, 0),
+(15, 0, '2020-01-31 18:58:12', '2020-01-07 12:00:00', 1, 7, NULL, NULL, 0.00, 0.00, 27.15, 0.00, 0.00, 0, NULL, '', 0, 1, NULL, NULL, 1, 0, NULL, 'BB012000015', 0, 0),
+(16, 0, '2020-01-31 18:59:49', '2020-01-07 12:00:00', 1, 8, NULL, NULL, 0.00, 0.00, 31.20, 0.00, 0.00, 0, NULL, '', 0, 1, NULL, NULL, 1, 0, NULL, 'BB012000016', 0, 0),
+(17, 0, '2020-01-31 19:00:52', '2020-01-07 12:00:00', 1, 9, NULL, NULL, 0.00, 0.00, 27.75, 0.00, 0.00, 0, NULL, '', 0, 1, NULL, NULL, 1, 0, NULL, 'BB012000017', 0, 0),
+(18, 21, '2020-02-02 16:53:58', '2020-01-07 12:00:00', 1, 0, NULL, 2019, 3.85, 0.00, 14.84, 17.84, 0.00, 3, NULL, 'order note', 1, 1, NULL, NULL, 2, 3, '1', 'BB022000018', 1, 0),
+(19, 0, '2020-02-02 17:08:05', '2020-01-07 12:00:00', 1, 13, NULL, NULL, 0.00, 0.00, 24.54, 0.00, 0.00, 0, NULL, '', 0, 1, NULL, NULL, 1, 0, NULL, 'BB022000019', 0, 0),
+(20, 0, '2020-02-02 17:22:07', '2020-01-07 12:00:00', 1, 14, NULL, NULL, 0.00, 0.00, 23.40, 0.00, 0.00, 0, NULL, '', 0, 1, NULL, NULL, 1, 0, NULL, 'BB022000020', 0, 0),
+(21, 0, '2020-02-02 19:02:34', '2020-01-07 12:00:00', 1, 15, NULL, NULL, 0.00, 0.00, 12.09, 0.00, 0.00, 0, NULL, '', 0, 1, NULL, NULL, 1, 0, NULL, 'BB022000021', 0, 0),
+(22, 0, '2020-02-03 11:51:11', '2020-01-07 12:00:00', 1, 19, NULL, NULL, 0.00, 0.00, 14.55, 0.00, 0.00, 0, NULL, '', 0, 1, NULL, NULL, 1, 0, NULL, 'BB022000022', 0, 0),
+(23, 0, '2020-02-03 12:59:52', '2020-01-07 12:00:00', 1, 16, NULL, NULL, 0.00, 0.00, 17.00, 0.00, 0.00, 0, NULL, '', 0, 1, NULL, NULL, 1, 0, NULL, 'BB022000023', 0, 0),
+(24, 0, '2020-02-03 13:02:51', '2020-01-07 12:00:00', 1, 17, NULL, NULL, 0.00, 0.00, 17.09, 0.00, 0.00, 0, NULL, '', 0, 1, NULL, NULL, 1, 0, NULL, 'BB022000024', 0, 0),
+(25, 0, '2020-02-03 13:06:00', '2020-01-07 12:00:00', 1, 18, NULL, NULL, 0.00, 0.00, 26.05, 0.00, 0.00, 0, NULL, '', 0, 1, NULL, NULL, 1, 0, NULL, 'BB022000025', 0, 0),
+(26, 0, '2020-02-03 13:28:50', '2020-01-07 12:00:00', 1, 22, NULL, NULL, 0.00, 0.00, 76.19, 0.00, 0.00, 0, NULL, '', 0, 1, NULL, NULL, 1, 0, NULL, 'BB022000026', 0, 0),
+(27, 0, '2020-02-03 14:27:42', '2020-01-07 12:00:00', 1, 23, NULL, NULL, 0.00, 0.00, 53.88, 0.00, 0.00, 0, NULL, '', 0, 1, NULL, NULL, 1, 0, NULL, 'BB022000027', 0, 0),
+(28, 0, '2020-02-03 15:21:37', '2020-01-07 12:00:00', 1, 26, NULL, NULL, 0.00, 0.00, 6.00, 0.00, 0.00, 0, NULL, '', 0, 1, NULL, NULL, 1, 0, NULL, 'BB022000028', 0, 0),
+(29, 0, '2020-02-03 15:22:14', '2020-01-07 12:00:00', 1, 27, NULL, NULL, 0.00, 0.00, 13.80, 0.00, 0.00, 0, NULL, '', 0, 1, NULL, NULL, 1, 0, NULL, 'BB022000029', 0, 0),
+(30, 21, '2020-02-03 15:41:48', '2020-01-07 12:00:00', 1, 0, NULL, NULL, 0.00, 0.00, 130.07, 91.04, 0.00, 5, NULL, NULL, 1, 1, NULL, NULL, 2, 3, NULL, 'BBGO022000013', 9, 9),
+(31, 21, '2020-02-03 15:50:13', '2020-01-07 12:00:00', 1, 0, NULL, NULL, 12.94, 0.00, 43.14, 30.20, 0.00, 5, NULL, NULL, 1, 1, NULL, NULL, 2, 3, NULL, 'BBGO022000014', 3, 7),
+(32, 0, '2020-02-03 16:07:20', '2020-01-07 12:00:00', 1, 28, NULL, NULL, 0.00, 0.00, 33.78, 0.00, 0.00, 0, NULL, '', 0, 1, NULL, NULL, 1, 0, NULL, 'BB022000030', 0, 0),
+(33, 0, '2020-02-03 16:08:01', '2020-01-07 12:00:00', 1, 29, NULL, NULL, 0.00, 0.00, 14.74, 0.00, 0.00, 0, NULL, '', 0, 1, NULL, NULL, 1, 0, NULL, 'BB022000031', 0, 0),
+(34, 0, '2020-02-03 16:08:47', '2020-01-07 12:00:00', 1, 30, NULL, NULL, 0.00, 0.00, 20.80, 0.00, 0.00, 0, NULL, '', 0, 1, NULL, NULL, 1, 0, NULL, 'BB022000032', 0, 0),
+(35, 21, '2020-02-03 16:09:27', '2020-01-07 12:00:00', 1, 0, NULL, NULL, 20.80, 0.00, 69.32, 48.51, 0.00, 5, NULL, NULL, 1, 1, NULL, NULL, 2, 3, NULL, 'BBGO022000015', 4, 11),
+(36, 0, '2020-02-03 16:14:40', '2020-01-07 12:00:00', 1, 31, NULL, NULL, 0.00, 0.00, 44.35, 0.00, 0.00, 0, NULL, '', 0, 1, NULL, NULL, 1, 0, NULL, 'BB022000033', 0, 0),
+(37, 0, '2020-02-03 16:15:17', '2020-01-07 12:00:00', 1, 32, NULL, NULL, 0.00, 0.00, 11.25, 0.00, 0.00, 0, NULL, '', 0, 1, NULL, NULL, 1, 0, NULL, 'BB022000034', 0, 0),
+(38, 21, '2020-02-03 16:21:17', '2020-01-07 12:00:00', 1, 0, NULL, NULL, 16.68, 0.00, 55.60, 43.92, 0.00, 5, NULL, NULL, 1, 1, NULL, NULL, 2, 3, NULL, 'BBGO022000016', 4, 12),
+(39, 21, '2020-02-03 17:36:45', '2020-01-07 12:00:00', 1, 0, NULL, NULL, 0.00, 0.00, 6.00, 6.00, 0.00, 0, NULL, '', 1, 1, NULL, NULL, 2, 3, '1', 'BB022000035', 0, 0),
+(40, 21, '2020-02-03 17:40:24', '2020-01-07 12:00:00', 1, 0, NULL, NULL, 0.00, 0.00, 6.00, 6.00, 0.00, 0, NULL, '', 1, 1, NULL, NULL, 2, 3, '1', 'BB022000036', 0, 0),
+(41, 21, '2020-02-03 17:43:42', '2020-01-07 12:00:00', 1, 0, NULL, NULL, 0.00, 0.00, 9.09, 9.09, 0.00, 0, NULL, '', 1, 1, NULL, NULL, 2, 3, '1', 'BB022000037', 0, 0),
+(42, 21, '2020-02-03 17:49:51', '2020-01-07 12:00:00', 1, 0, NULL, NULL, 0.00, 0.00, 9.09, 9.09, 0.00, 0, NULL, '', 1, 1, NULL, NULL, 2, 3, '1', 'BB022000038', 0, 0),
+(43, 21, '2020-02-03 18:01:49', '2020-01-07 12:00:00', 1, 0, NULL, NULL, 0.00, 0.00, 16.80, 16.80, 0.00, 0, NULL, '', 1, 1, NULL, NULL, 2, 3, '1', 'BB022000039', 1, 0),
+(44, 21, '2020-02-03 18:06:04', '2020-01-07 12:00:00', 1, 0, NULL, NULL, 0.00, 0.00, 12.09, 12.09, 0.00, 0, NULL, '', 1, 1, NULL, NULL, 2, 3, '1', 'BB022000040', 1, 0),
+(45, 1, '2020-02-03 19:40:54', '2020-01-07 12:00:00', 1, 0, NULL, NULL, 0.00, 0.00, 6.00, 6.00, 0.00, 0, NULL, '', 1, 1, NULL, NULL, 2, 3, '1', 'BB022000041', 0, 0),
+(46, 1, '2020-02-03 19:46:07', '2020-01-07 12:00:00', 1, 0, NULL, NULL, 0.00, 0.00, 8.50, 8.50, 0.00, 0, NULL, '', 1, 1, NULL, NULL, 2, 3, '1', 'BB022000042', 0, 0),
+(47, 1, '2020-02-03 19:47:16', '2020-01-07 12:00:00', 1, 0, NULL, NULL, 0.00, 0.00, 15.95, 15.95, 0.00, 0, NULL, '', 1, 1, NULL, NULL, 2, 3, '1', 'BB022000043', 1, 0),
+(48, 1, '2020-02-03 19:49:05', '2020-01-07 12:00:00', 1, 0, NULL, NULL, 0.00, 0.00, 6.00, 6.00, 0.00, 0, NULL, '', 1, 1, NULL, NULL, 2, 3, '1', 'BB022000044', 0, 0),
+(49, 1, '2020-02-03 19:50:55', '2020-01-07 12:00:00', 1, 0, NULL, NULL, 0.00, 0.00, 9.00, 9.00, 0.00, 0, NULL, '', 1, 1, NULL, NULL, 2, 3, '1', 'BB022000045', 0, 0),
+(50, 1, '2020-02-03 19:54:36', '2020-01-07 12:00:00', 1, 0, NULL, NULL, 0.00, 0.00, 9.00, 9.00, 0.00, 0, NULL, '', 1, 1, NULL, NULL, 2, 3, '1', 'BB022000046', 0, 0),
+(51, 1, '2020-02-03 19:57:32', '2020-01-07 12:00:00', 1, 0, NULL, NULL, 0.00, 0.00, 8.25, 8.25, 0.00, 0, NULL, '', 1, 1, NULL, NULL, 2, 3, '1', 'BB022000047', 0, 0),
+(52, 1, '2020-02-03 20:00:17', '2020-01-07 12:00:00', 1, 0, NULL, NULL, 0.00, 0.00, 6.00, 6.00, 0.00, 0, NULL, '', 1, 1, NULL, NULL, 2, 3, '1', 'BB022000048', 0, 0),
+(53, 1, '2020-02-03 22:45:01', '2020-01-07 12:00:00', 1, 0, NULL, 2019, 9.20, 0.00, 30.68, 34.68, 0.00, 4, NULL, '', 1, 1, NULL, NULL, 2, 3, '1', 'BB022000049', 3, 0),
+(54, 0, '2020-02-04 16:08:54', '2020-01-07 12:00:00', 1, 38, NULL, NULL, 0.00, 0.00, 15.09, 0.00, 0.00, 0, NULL, '', 0, 1, NULL, NULL, 1, 0, NULL, 'BB022000050', 0, 0),
+(55, 0, '2020-02-04 16:09:47', '2020-01-07 12:00:00', 1, 39, NULL, NULL, 0.00, 0.00, 32.50, 0.00, 0.00, 0, NULL, '', 0, 1, NULL, NULL, 1, 0, NULL, 'BB022000051', 0, 0),
+(56, 0, '2020-02-04 16:10:30', '2020-01-07 12:00:00', 1, 40, NULL, NULL, 0.00, 0.00, 11.85, 0.00, 0.00, 0, NULL, '', 0, 1, NULL, NULL, 1, 0, NULL, 'BB022000052', 0, 0),
+(57, 18, '2020-02-04 16:11:17', '2020-01-07 12:00:00', 1, 0, NULL, NULL, 17.83, 0.00, 59.44, 45.61, 0.00, 4, NULL, NULL, 1, 1, NULL, NULL, 2, 3, NULL, 'BBGO022000017', 4, 15);
 
 -- --------------------------------------------------------
 
@@ -8267,6 +8571,12 @@ ALTER TABLE `group_members`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `group_order`
+--
+ALTER TABLE `group_order`
+  ADD PRIMARY KEY (`order_id`);
+
+--
 -- Indexes for table `group_order_details`
 --
 ALTER TABLE `group_order_details`
@@ -8454,13 +8764,13 @@ ALTER TABLE `category`
 -- AUTO_INCREMENT for table `cupons`
 --
 ALTER TABLE `cupons`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT for table `customer_infos`
 --
 ALTER TABLE `customer_infos`
-  MODIFY `customer_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
+  MODIFY `customer_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
 
 --
 -- AUTO_INCREMENT for table `delivery_charge`
@@ -8508,19 +8818,25 @@ ALTER TABLE `gallary_images`
 -- AUTO_INCREMENT for table `groups_info`
 --
 ALTER TABLE `groups_info`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- AUTO_INCREMENT for table `group_members`
 --
 ALTER TABLE `group_members`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=38;
+
+--
+-- AUTO_INCREMENT for table `group_order`
+--
+ALTER TABLE `group_order`
+  MODIFY `order_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
 -- AUTO_INCREMENT for table `group_order_details`
 --
 ALTER TABLE `group_order_details`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=41;
 
 --
 -- AUTO_INCREMENT for table `image_album`
@@ -8574,13 +8890,13 @@ ALTER TABLE `item_review`
 -- AUTO_INCREMENT for table `item_stock`
 --
 ALTER TABLE `item_stock`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;
 
 --
 -- AUTO_INCREMENT for table `notification`
 --
 ALTER TABLE `notification`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=60;
 
 --
 -- AUTO_INCREMENT for table `options_items`
@@ -8592,13 +8908,13 @@ ALTER TABLE `options_items`
 -- AUTO_INCREMENT for table `order_details`
 --
 ALTER TABLE `order_details`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=71;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=172;
 
 --
 -- AUTO_INCREMENT for table `order_master`
 --
 ALTER TABLE `order_master`
-  MODIFY `order_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
+  MODIFY `order_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=58;
 
 --
 -- AUTO_INCREMENT for table `size`

@@ -92,7 +92,7 @@
                                 <div class="language-menu">
 								<?php 
 									if($is_logged_in_customer != "") 
-										echo '<a href="account.php" class="current-lang" id="my_acc"><i class="fa fa-user" aria-hidden="true" ></i> My Account</a>';
+										echo '<a href="index.php?page=account" class="current-lang" id="my_acc"><i class="fa fa-user" aria-hidden="true" ></i> My Account</a>';
 									else 
 										echo '<a href="#" onclick="active_modal(1)" data-toggle="modal" data-target="#loginModal" class="current-lang" id="log_reg"><i class="fa fa-user" aria-hidden="true"></i> Login / Register</a>';
 								?>

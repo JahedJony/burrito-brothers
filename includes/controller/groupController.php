@@ -270,7 +270,7 @@ switch ($q) {
                 LEFT JOIN category ca ON ca.id = p.category_id
                 GROUP BY d.order_id
                 )oms ON oms.group_order_details_id= god.id
-                WHERE go.order_id =$order_id";
+                WHERE go.order_id ='$order_id' OR go.invoice_no = '$order_id'";
         //echo $sql;die;
         $stmt = $conn->prepare($sql);
         $stmt->execute();
@@ -299,7 +299,7 @@ switch ($q) {
                                         LEFT JOIN(
                                         SELECT full_name, address, contact_no,customer_id from customer_infos 
                                         )ci ON ci.customer_id=go.customer_id              
-                                         WHERE go.order_id=$order_id";
+                                         WHERE go.order_id ='$order_id' OR go.invoice_no = '$order_id'";
         //echo $sql;die;
         $stmt = $conn->prepare($sql);
         $stmt->execute();

@@ -4,9 +4,11 @@ include("../includes/dbConnect.php");
 include("../includes/dbClass.php");
 $dbClass = new dbClass;
 
-if(!isset($_SESSION['customer_id']) && $_SESSION['customer_id']!=""){ ob_start(); header("Location:error.php"); exit();}
+if(!isset($_SESSION['customer_id']) && $_SESSION['customer_id']!=""){
+    ob_start(); header("Location:error.php"); exit();
+}
 //echo $_SESSION['customer_id']; die;
-
+ //var_dump($_SESSION);
 
 $customer_info = $dbClass->getSingleRow("select * from customer_infos where customer_id=".$_SESSION['customer_id']);
 $customer_id = $_SESSION['customer_id'];
@@ -74,6 +76,7 @@ if(isset($_GET['order_id']) && $_GET['order_id']!="") $order_id =  $_GET['order_
 <!-- End Main -->
 
 <script>
+
     var customer_id = "<?php echo $customer_id; ?>";
     var order_id = "<?php echo $order_id; ?>";
 
@@ -110,7 +113,6 @@ if(isset($_GET['order_id']) && $_GET['order_id']!="") $order_id =  $_GET['order_
         $("."+page_name).addClass('active');
     };
 
-    show_my_accounts('profile',order_id)
 
 
     $(document).on('click','#track_btn', function(){
@@ -199,7 +201,16 @@ if(isset($_GET['order_id']) && $_GET['order_id']!="") $order_id =  $_GET['order_
     }
 
 
+    //alert(localStorage.getItem("nexturl"))
 
+    if(localStorage.getItem("nexturl")=='grouporder') {
+        //alert("okkkk")
+        show_my_accounts('group_order', '')
+        localStorage.setItem("nexturl", "")
+    }
+
+
+    show_my_accounts('profile',order_id)
 
 </script>
 
@@ -210,6 +221,7 @@ if(isset($_SESSION['groupOrderId'])){
     ?>
     <script>
         //alert('ok');
+        //alert('ok')
         show_my_accounts('groupOrderDetails', '')
     </script>
     <?php

@@ -98,7 +98,7 @@ if(!isset($_SESSION['cart']) || !count($_SESSION['cart'])>0) {
                                     <div class="alert alert-success alert-custom">
                                         <p>You have logged in successfully</p>
                                     </div>
-                                    <a href="account.php" id="" class="facebook-btn btn-change button-default"><i class="fa fa-user"></i>Browse your account?</a>
+                                    <a href="index.php?page=account" id="" class="facebook-btn btn-change button-default"><i class="fa fa-user"></i>Browse your account?</a>
                                 </div>
                             </div>
                             <div id="register_div" style="display: none">
