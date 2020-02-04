@@ -2,20 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="289ea524-a539-47c6-a345-6f05b3774d37" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/admin/DB/burritobrothers_db.sql" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/common_view/top_menu.php" beforeDir="false" afterPath="$PROJECT_DIR$/common_view/top_menu.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/includes/controller/customerController.php" beforeDir="false" afterPath="$PROJECT_DIR$/includes/controller/customerController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/includes/controller/groupController.php" beforeDir="false" afterPath="$PROJECT_DIR$/includes/controller/groupController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/includes/footer.php" beforeDir="false" afterPath="$PROJECT_DIR$/includes/footer.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/includes/header.php" beforeDir="false" afterPath="$PROJECT_DIR$/includes/header.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/index.php" beforeDir="false" afterPath="$PROJECT_DIR$/index.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/views/account.php" beforeDir="false" afterPath="$PROJECT_DIR$/views/account.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/views/checkout.php" beforeDir="false" afterPath="$PROJECT_DIR$/views/checkout.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/views/checkout_confirm.php" beforeDir="false" afterPath="$PROJECT_DIR$/views/checkout_confirm.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/views/group_order.php" beforeDir="false" afterPath="$PROJECT_DIR$/views/group_order.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/views/home.php" beforeDir="false" afterPath="$PROJECT_DIR$/views/home.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/views/orders.php" beforeDir="false" afterPath="$PROJECT_DIR$/views/orders.php" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -52,19 +39,19 @@
     <property name="node.js.selected.package.tslint" value="(autodetect)" />
   </component>
   <component name="RecentsManager">
-    <key name="MoveFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$/images" />
-      <recent name="$PROJECT_DIR$/views" />
-      <recent name="$PROJECT_DIR$/body" />
-      <recent name="$PROJECT_DIR$" />
-      <recent name="$PROJECT_DIR$/admin" />
-    </key>
     <key name="CopyFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/admin/images/category" />
       <recent name="$PROJECT_DIR$/views" />
       <recent name="$PROJECT_DIR$/admin/images/item" />
       <recent name="$PROJECT_DIR$/images" />
       <recent name="$PROJECT_DIR$/images/payments" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/admin/DB" />
+      <recent name="$PROJECT_DIR$/images" />
+      <recent name="$PROJECT_DIR$/views" />
+      <recent name="$PROJECT_DIR$/body" />
+      <recent name="$PROJECT_DIR$" />
     </key>
   </component>
   <component name="RunDashboard">
@@ -108,7 +95,8 @@
       <workItem from="1578890872372" duration="31746000" />
       <workItem from="1579244903772" duration="102861000" />
       <workItem from="1580102510582" duration="92320000" />
-      <workItem from="1580622055968" duration="54517000" />
+      <workItem from="1580622055968" duration="54737000" />
+      <workItem from="1580815122907" duration="305000" />
     </task>
     <servers />
   </component>
@@ -134,7 +122,6 @@
         <line-breakpoint enabled="true" type="javascript">
           <url>file://$APPLICATION_HOME_DIR$/plugins/JavaScriptLanguage/jsLanguageServicesImpl/external/lib.dom.d.ts</url>
           <line>39</line>
-          <properties lambdaOrdinal="-1" />
           <option name="timeStamp" value="1" />
         </line-breakpoint>
       </breakpoints>
