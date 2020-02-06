@@ -107,7 +107,7 @@
         //alert(data['id'])
         var name = data['name'].split(' ').join('__')
 
-        var html='                <div class="col-md-3 col-sm-4 col-xs-12 wow fadeInDown" data-wow-duration="1000ms" data-wow-delay="300ms">\n' +
+        var html='                <div class="col-md-3 col-sm-4 col-xs-6 wow fadeInDown" data-wow-duration="1000ms" data-wow-delay="300ms">\n' +
             '                    <div class="shop-main-list" style="background-color: #e4b95b; border-radius: 15px">\n' +
             '                        <div class="shop-product" style="border-radius: 15px 15px 0px 0px">\n' +
             '                            <img src="'+ project_url+'admin/'+data['photo']+'" alt="" style="border-radius: 17px 17px 17px 17px">\n' +

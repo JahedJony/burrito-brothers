@@ -48,7 +48,7 @@ if(isset($_GET['order_id']) && $_GET['order_id']!="") $order_id =  $_GET['order_
                            <textarea class="form-control" rows="5" style="padding-bottom: 0px; margin-bottom: 0px" id="special_instruction"></textarea>
                        </div>
                        <div class="shop-checkout-right" >
-                            <label id="title_right" style="text-transform: capitalize; font-size: 20px"></label>
+                            <label id="title_right" style="text-transform: capitalize;"></label>
                             <div id="ingredient_summary"></div>
                             <div class="col-md-12 col-sm-12 col-xs-12 checkout-total" style="align-content: baseline"></div>
                             <div class="col-md-12 col-sm-12 col-xs-12 " >
@@ -81,13 +81,12 @@ if(isset($_GET['order_id']) && $_GET['order_id']!="") $order_id =  $_GET['order_
                         </div>
                         <div class="buttons_wrapper" style="padding-bottom: 15px">
                             <div class="col-md-6 col-sm-6 col-xs-6 " style="">
-                                <button type="button" class="btn-main btn-small btn-primary" style="border-radius: 8px"><a href="index.php?page=categories" style="color: white">Select More Items</a></button>
+                                <button type="button" class="btn-main btn-small btn-primary" style="border-radius: 4px"><a href="index.php?page=categories" style="color: white">Select More Items</a></button>
                             </div>
                             <div class="col-md-6 col-sm-6 col-xs-6">
-                                <button type="button" class="btn-main btn-small btn-primary" style="border-radius: 8px" ><a href="index.php?page=cart" style="color: white">Proceed to Cart</a></button>
+                                <button type="button" class="btn-main btn-small btn-primary" style="border-radius: 4px" ><a href="index.php?page=cart" style="color: white">Proceed to Cart</a></button>
 
                             </div>
-
                         </div>
                     </div>
 
@@ -288,7 +287,7 @@ if(isset($_GET['order_id']) && $_GET['order_id']!="") $order_id =  $_GET['order_
             }else {
                 var img ='           <div class="shop-main-list" style=" border-radius: 15px">\n' +
                     '                        <div class="shop-product" style="border-radius: 15px 15px 0px 0px; margin-bottom: 0px; padding-bottom: 0px">\n' +
-                    '                            <img src="'+project_url+'admin/images/category/noFood.png" alt="" style="border-radius: 17px 17px 17px 17px; height: 90px; width: 110px">\n' +
+                    '                            <img src="'+project_url+'admin/images/category/noFood.png" alt="" style="border-radius: 17px 17px 17px 17px;">\n' +
                     '                            <div class="cart-overlay-wrap" style="background-color: #372727; opacity: .5" >\n' +
                     '                                <div class="cart-overlay" >\n' +
                     '                                    <i class="fa fa-check" style="font-size:48px;color: white; opacity: 1"></i>\n\n' +
@@ -299,7 +298,7 @@ if(isset($_GET['order_id']) && $_GET['order_id']!="") $order_id =  $_GET['order_
                     '                    </div>\n'
             }
 
-            html+='    <div class="options-ingredient col-md-3 col-sm-4 col-xs-6" style="text-align: center; margin-top: 10px; height: 120px; overflow: hidden; border-width: 1px;">\n' +
+            html+='    <div class="options-ingredient col-md-3 col-sm-4 col-xs-6" style="text-align: center; margin-top: 10px; height: 150px; overflow: hidden; border-width: 1px;">\n' +
                 '       <input type="hidden" class="ingredient_id"    value="'+datas['id']+'" />\n' +
                 '       <input type="hidden" class="ingredient_rate"  value="'+datas['price']+'" />\n' +
                 '       <input type="hidden" class="ingredient_name"  value="'+datas['name']+'" />\n' + img +
@@ -350,7 +349,7 @@ if(isset($_GET['order_id']) && $_GET['order_id']!="") $order_id =  $_GET['order_
 
                     html3='<div class="col-md-12 col-sm-12 col-xs-12 option-div" name="option_div" style="background-color: rgba(244,242,237,1); padding-top: 25px; padding-bottom: 20px; margin-top: 5px; margin-bottom: 10px">\n' +
                         '       <!-- option id will come from DB  -->\n' +
-                        '       <div class="col-md-12 col-sm-12 col-xs-12 ">\n' +
+                        '       <div class="col-md-12 col-sm-12 col-xs-12 left-padding-0 ">\n' +
                         '             <span style="font-size: 20px; text-transform: capitalize"><b>'+datas['option_name']+'</b> </span><span>'+hints+'</span>\n' +
                         '       </div>\n' +
                         '       <input type="hidden" name="options[]" value="'+datas['option_id']+'" />\n' +

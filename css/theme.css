@@ -394,6 +394,13 @@ textarea{height:175px;padding:25px 30px;width:100%;border:2px solid #e5e5ee;-web
 .menu-main ul>li.has-child:hover>a:after{position:absolute;border-bottom:12px dashed #e4b95b;border-left:12px solid transparent;border-right:12px solid transparent;position:absolute;top:78px;left:50%;content:"";display:inline-block;margin-left:-6px;}
 .menu-icon{float:right;width:auto;display:none;}
 .menu-icon a{display:inline-block;height:24px;width:30px;margin-top:20px;margin-left:20px;position:relative;z-index:9999;}
+
+.cart-icon{float:right;width:auto;display:none;}
+.cart-icon a{display:inline-block;height:24px;width:30px;margin-top:10px;margin-left:20px;position:relative;z-index:9999;}
+
+
+
+
 .menu-icon a span{background:#ffffff none repeat scroll 0 0;-webkit-border-radius:3px;-moz-border-radius:3px;-ms-border-radius:3px;-o-border-radius:3px;border-radius:3px;display:inline-block;float:left;height:3px;margin:0 0 5px;position:relative;-webkit-transition:all 0.5s ease 0s;-moz-transition:all 0.5s ease 0s;-ms-transition:all 0.5s ease 0s;-o-transition:all 0.5s ease 0s;transition:all 0.5s ease 0s;width:100%;}
 .menu-icon a span:after{background:#959393 none repeat scroll 0 0;content:"";height:100%;position:absolute;right:0;top:0;width:0;}
 .menu-icon a span.bar-1:after{-webkit-transition:all 0.5s ease 0s;-moz-transition:all 0.5s ease 0s;-ms-transition:all 0.5s ease 0s;-o-transition:all 0.5s ease 0s;transition:all 0.5s ease 0s;}
@@ -438,7 +445,7 @@ textarea{height:175px;padding:25px 30px;width:100%;border:2px solid #e5e5ee;-web
 .cart-wrap{position:absolute;top:100%;right:0px;width:auto;padding-top:25px;z-index:99;display:none;}
 .shop-cart:hover .cart-wrap{display:block;}
 .shop-cart:hover .cart-blog:before{position:absolute;border-bottom:8px dashed #ffffff;border-left:8px solid transparent;border-right:8px solid transparent;position:absolute;top:0;right:35%;content:"";display:inline-block;margin-top:-8px;margin-left:-8px;z-index:99;}
-.cart-blog{background:#ffffff;min-width:380px;padding:40px 25px;color:#20202f;-webkit-border-radius:18px;-moz-border-radius:18px;-ms-border-radius:18px;-o-border-radius:18px;border-radius:18px;position:relative;z-index:99;}
+.cart-blog{background:#ffffff;min-width:300px;padding:40px 25px;color:#20202f;-webkit-border-radius:18px;-moz-border-radius:18px;-ms-border-radius:18px;-o-border-radius:18px;border-radius:18px;position:relative;z-index:99;}
 .cart-item{display:inline-block;width:100%;position:relative;margin-bottom:35px;}
 .cart-item-left{display:table-cell;width:66px;vertical-align:middle;}
 .cart-item-right{padding-left:20px;display:table-cell;vertical-align:middle;padding-right:20px;}
@@ -864,11 +871,11 @@ textarea{height:175px;padding:25px 30px;width:100%;border:2px solid #e5e5ee;-web
 .service-track-inner:hover .service-track-overlay{top:0px;}
 .service-track-overlay h3,
 .service-track-overlay h4,
-.service-track-overlay h5{color:#ffffff;}
+.service-track-overlay h5{color:#ffffff; text-shadow: rgb(111, 58, 2) 2px 2px;}
 .service-track-overlay h3 span,
 .service-track-overlay h4 span,
-.service-track-overlay h5 span{color:#ffffff;}
-.service-track-overlay a{color:#ffffff;}
+.service-track-overlay h5 span{color:#ffffff; text-shadow: rgb(111, 58, 2) 2px 2px;}
+.service-track-overlay a{color:#ffffff; text-shadow: rgb(111, 58, 2) 2px 2px;}
 .service-track-overlay h3{margin:15px 0 10px 0;}
 .service-track-overlay p{margin:0px;}
 .service-port{display:inline-block;width:100%;margin:0 0 95px 0;}
@@ -1253,6 +1260,26 @@ body main .team-page{padding-bottom:70px;}
 .table-condensed>tfoot>tr>td{padding-top:0px;padding-bottom:0px;}
 .client.banner-bg.invert.invert-black .icon-black{background:url('../images/pattern-black-sketch.png') no-repeat center center;}
 .account_container div {
+}
+.left-padding-0{
+	padding-left:0px;
+}
+.shop-product>img{
+	 height: 100px; width: 100px
+}
+.shop-main-list{
+	margin-bottom:40px;
+}
+.title_right{
+	font-size: 20px;
+	font-weight:bold;
+}
+.modal-content{
+	min-height: 150px;
+}
+.text-justify{
+  text-align: justify;
+  text-justify: inter-word;
 }
 @media screen and (max-width: 531px) {
     .account_container { display: flex; flex-flow: column-reverse; }

@@ -5,7 +5,7 @@ $(function () {
 
     var url_info = location.search.split('?')[1];
     if(!url_info) {
-        var url = location.search
+        var url = location.search;
         if(window.location.pathname.split('/')[1] =='account.php'){
             $("#content").load("views/account.php");
         }
@@ -14,9 +14,6 @@ $(function () {
         }
         else if(window.location.pathname.split('/')[1] =='checkout.php'){
             $("#content").load("views/checkout.php");
-        }
-        else{
-            $("#content").load("views/home.php");
         }
     }
     else{
@@ -53,40 +50,28 @@ $(function () {
                     }
                 }
             });
-        }
+        }		
         else if (url_info.split('=')[1].split('&')[0]== 'groupCheckout'){
-            //alert('sdfs')
             $("#content").load("views/groupCheckout.php");
         }
 
         var main_view=url_info.split('&')
         if(!main_view[1]){
             $("#content").load("views/"+main_view[0].split('page=')[1]+".php");
-            //alert('ok')
-        }else {
-            //alert(main_view[0]);
+		}
+        else {
             if(main_view[1].split('=')[0]=='category'){
-                //alert(main_view[1])
                 var data=main_view[1].split('category=')
                 data = data[1].split('__').join(' ')
                 $("#content").load("views/"+main_view[0].split('page=')[1]+".php");
             }
             else if(main_view[0].split('=')[1]=='item') {
-                //alert(main_view[1])
-                //var data=main_view[1].split('id=')
-                //data = data[1].split('__').join(' ')
                 $("#content").load("views/"+main_view[0].split('page=')[1]+".php");
             }
             else if(main_view[1].split('=')[0]=='id') {
-                //alert(main_view[1])
                 var data=main_view[1].split('id=')
-                //data = data[1].split('__').join(' ')
-                //$("#content").load("views/"+main_view[0].split('page=')[1]+".php");
             }
-
-
-            }
-
-        //alert(main_view[0].split('page=')[1])
+        }
+		
     }
 });

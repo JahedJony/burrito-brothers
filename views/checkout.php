@@ -310,6 +310,21 @@ var loyalty_points=0;
 var loyalty_point_value=0;
 var loyalty_reserve_value=0;
 
+
+
+$('.date-picker').daterangepicker({
+	singleDatePicker: true,
+	/*autoUpdateInput: false,*/
+	calender_style: "picker_2",
+	timePicker:true,
+	locale: {
+		format: 'YYYY-MM-DD h:mm',
+		separator: " - ",
+	}
+});
+
+
+
 $('#cust_username_').on('change', function () {
     //alert($('#cust_username_').val())
     var username= $('#cust_username_').val();
