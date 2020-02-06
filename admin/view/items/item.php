@@ -109,7 +109,7 @@ else{
                         <th class="column-title" width="15%">Item Name</th>
                         <th class="column-title" width="15%">Category Name</th>
                         <th class="column-title" width="">Details</th>
-                        <th class="column-title" width="25%">Rate</th>
+                        <th class="column-title" width="10%">Rate</th>
                         <th class="column-title" width="10%">Availability</th>
                         <th class="column-title no-link last" width="10%"><span class="nobr"></span></th>
                     </tr>
@@ -138,96 +138,112 @@ else{
                 <div class="clearfix"></div>
             </div>
             <div class="x_content" id="iniial_collapse">
-                <form method="POST" id="item_form" name="item_form" enctype="multipart/form-data" class="form-horizontal form-label-left">
                     <div class="row">
                         <div class="col-md-12">
-                            <div class="form-group">
-                                <label class="control-label col-md-2 col-sm-2 col-xs-12">Item Name<span class="required">*</span></label>
-                                <div class="col-md-4 col-sm-4 col-xs-12">
-                                    <input type="text" id="item_name" name="item_name" class="form-control col-lg-12"/>
-                                </div>
-                                <label class="control-label col-md-2 col-sm-2 col-xs-6">Item Code<span class="required">*</span></label>
-                                <div class="col-md-4 col-sm-4 col-xs-12">
-                                    <input type="text" id="item_code" name="item_code" class="form-control col-lg-12"/>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="control-label col-md-2 col-sm-2 col-xs-12">Details</label>
-                                <div class="col-md-10 col-sm-10 col-xs-12">
-                                    <textarea rows="2" cols="100" id="details" name="details" class="form-control col-lg-12"></textarea>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="control-label col-md-2 col-sm-2 col-xs-6">Category<span class="required">*</span></label>
-                                <div class="col-md-4 col-sm-4 col-xs-6">
-                                    <select class="form-control" name="category_option" id="category_option">
-                                    </select>
-                                </div>
-                                <!--<label class="control-label col-md-2 col-sm-2 col-xs-12">Feature Image</label>
-                                <div class="col-md-1 col-sm-1 col-xs-2">
-                                    <input type="checkbox" id="is_feature" name="is_feature"  class="form-control"/>
-                                </div>
-                                <div class="col-md-3 col-sm-3 col-xs-10">
-                                    <input type="file" name="feature_image_upload" id="feature_image_upload" class="form-control input-sm col-md-6 col-xs-10">
-                                </div>	-->
-                            </div>
-                            <div class="form-group hide">
-                                <label class="control-label col-md-2 col-sm-2 col-xs-12">Tags</label>
-                                <div class="col-md-10 col-sm-10 col-xs-12">
-                                    <input type="text" id="tag" name="tag" class="form-control col-lg-12"/>
-                                </div>
-                            </div>
-                            <div id="file_div" class="form-group">
-                                <label class="control-label col-md-2 col-sm-2 col-xs-12">Image</label>
-                                <div class="col-md-4 col-sm-4 col-xs-12" id="first_section">
-                                    <div class="input-group">
-                                        <input name="attached_file[]" class="form-control input-sm col-md-6 col-xs-12 attached_file" type="file"/>
-                                        <span class="input-group-btn">
-									<button type="button" class="btn btn-primary btn-sm" id="add_file_row"><span class="glyphicon glyphicon-plus"></span></button>
-								</span>
+                            <form method="POST" id="item_form" name="item_form" enctype="multipart/form-data" class="form-horizontal form-label-left">
+
+                            <div class="col-md-12 col-xs-12 col-sm-12" style="margin-bottom:20px; padding: 10px; padding-top: 20px; border-style: solid; border-width: 1px; border-color: #8a6d3b">
+
+                                <div class="form-group">
+                                    <label class="control-label col-md-2 col-sm-2 col-xs-12">Item Name<span class="required">*</span></label>
+                                    <div class="col-md-4 col-sm-4 col-xs-12">
+                                        <input type="text" id="item_name" name="item_name" class="form-control col-lg-12"/>
+                                        <input type="hidden" id="item_id" name="item_id" class="form-control col-lg-12" value=""/>
+
                                     </div>
-                                    <small style="color:red">Image size should be (4:3 ratio) and size under 3mb. </small><br>
+
+                                    <label class="control-label col-md-2 col-sm-2 col-xs-6">Category<span class="required">*</span></label>
+                                    <div class="col-md-4 col-sm-4 col-xs-6">
+                                        <select class="form-control" name="category_option" id="category_option">
+                                        </select>
+                                    </div>
+
                                 </div>
-                                <input type="text" class="tags form-control col-lg-12 hide" name="uploded_files" id="uploded_files" value=""/>
-                            </div>
-                            <div class="form-group" id="image_div"></div>
-                            <div class="form-group">
-                                <label class="control-label col-md-2 col-sm-2 col-xs-6" >Availability</label>
-                                <div class="col-md-4 col-sm-4 col-xs-6">
-                                    <input type="checkbox" id="is_active" name="is_active" checked="checked" class="form-control col-lg-12"/>
+                                <div class="form-group">
+                                    <label class="control-label col-md-2 col-sm-2 col-xs-12">Details</label>
+                                    <div class="col-md-10 col-sm-10 col-xs-12">
+                                        <textarea rows="2" cols="100" id="details" name="details" class="form-control col-lg-12"></textarea>
+                                    </div>
                                 </div>
-                                <label class="control-label col-md-2 col-sm-2 col-xs-6" >Sell From Stock</label>
-                                <div class="col-md-4 col-sm-4 col-xs-6">
-                                    <input type="checkbox" id="is_stock" name="is_stock" checked="checked" class="form-control col-lg-12"/>
+                                <div id="file_div" class="form-group">
+                                    <label class="control-label col-md-2 col-sm-2 col-xs-12">Image</label>
+                                    <div class="col-md-4 col-sm-4 col-xs-12" id="first_section">
+                                        <div class="input-group">
+                                            <input name="attached_file[]" class="form-control input-sm col-md-6 col-xs-12 attached_file" type="file"/>
+                                            <!--<span class="input-group-btn">
+									            <button type="button" class="btn btn-primary btn-sm" id="add_file_row"><span class="glyphicon glyphicon-plus"></span></button>
+								            </span>-->
+                                        </div>
+                                        <small style="color:red">Image size should be (4:3 ratio) and size under 3mb. </small><br>
+                                    </div>
+                                    <input type="text" class="tags form-control col-lg-12 hide" name="uploded_files" id="uploded_files" value=""/>
+                                    <label class="control-label col-md-2 col-sm-2 col-xs-12">Base Price<span class="required">*</span></label>
+                                    <div class="col-md-4 col-sm-4 col-xs-12">
+                                        <input type="text" id="rate" name="rate" class="form-control col-lg-12"/>
+                                    </div>
                                 </div>
+
+                                <div class="form-group" id="image_div"></div>
+                                <div class="form-group">
+                                    <label class="control-label col-md-2 col-sm-2 col-xs-6" >Availability</label>
+                                    <div class="col-md-4 col-sm-4 col-xs-6">
+                                        <input type="checkbox" id="is_active" name="is_active" checked="checked" class="form-control col-lg-12"/>
+                                    </div>
+                                    <label class="control-label col-md-2 col-sm-2 col-xs-6" >Sell From Stock</label>
+                                    <div class="col-md-4 col-sm-4 col-xs-6">
+                                        <input type="checkbox" id="is_stock" name="is_stock" checked="checked" class="form-control col-lg-12"/>
+                                    </div>
+                                </div>
+
                             </div>
-                            <div class="form-group">
-                                <label class="control-label col-md-2 col-sm-2 col-xs-12">Ingredient</label>
-                                <div id="ingredient_select" class="col-md-10 col-sm-10 col-xs-12"></div>
-                            </div>
-                            <div class="form-group">
-                                <label class="control-label col-md-2 col-sm-2 col-xs-12">Rate Info</label>
-                                <div class="table-responsive col-md-10 col-sm-10 col-xs-12">
-                                    <table class="table table-bordered" id="rateTable">
+                            </form>
+
+                            <div class="form-group col-lg-12 col-md-12 col-sm-12 col-xs-12" style="margin-bottom:20px; padding: 10px; padding-top: 20px; border-style: solid; border-width: 1px; border-color: #8a6d3b">
+                                <label class="control-label col-md-12 col-sm-12 col-xs-12 x_title" style="text-align: left; margin-bottom: 10px">Create Option</label>
+                                <hr>
+                                <div class="table-responsive col-md-12 col-sm-12 col-xs-12" id="" >
+                                    <form id="option_add_form">
+                                        <div class="form-group">
+                                            <label class="control-label col-md-2 col-sm-2 col-xs-6" >Option Name</label>
+                                            <div class="col-md-4 col-sm-4 col-xs-6" style="margin-bottom: 8px">
+                                                <input class="form-control" type="text" name="option_name" value="" >
+                                            </div>
+                                            <label class="control-label col-md-2 col-sm-2 col-xs-6" >Minimum Choice</label>
+                                            <div class="col-md-4 col-sm-4 col-xs-6" style="margin-bottom: 8px">
+                                                <input class="form-control" type="number" name="minimum" value="0" >
+                                            </div>
+                                            <label class="control-label col-md-2 col-sm-2 col-xs-6" >Maximum Choice</label>
+                                            <div class="col-md-4 col-sm-4 col-xs-6" style="margin-bottom: 8px">
+                                                <input class="form-control" type="number" name="maximum" value="0" >
+                                            </div>
+                                            <label class="control-label col-md-2 col-sm-2 col-xs-6" >Is Required</label>
+                                            <div class="col-md-4 col-sm-4 col-xs-6" style="margin-bottom: 8px">
+                                                <input type="checkbox" id="is_required" name="is_active" checked="checked" class="form-control" style="padding-top: 4px"/>
+                                            </div>
+
+                                        </div>
+
+                                    </form>
+
+                                    <table class="table table-bordered" id="ingredientTable" >
                                         <thead>
                                         <tr>
-                                            <th class="text-center">Size</th>
-                                            <th class="text-center">Sell Unit</th>
-                                            <th class="text-center">Stock Quantity</th>
-                                            <th class="text-center">Production Rate</th>
-                                            <th class="text-center">Sell Rate</th>
-                                            <th class="text-center">Discount Type</th>
-                                            <th class="text-center">Discount Amount</th>
-                                            <th class="text-center">Discounted Price</th>
-                                            <th width="6%"><button id='addRateRow' type='button' class='btn btn-info btn-xs'><span class='glyphicon glyphicon-plus'></span></button></th>
+                                            <th class="text-center">Ingredient Name</th>
+                                            <th class="text-center" >Price</th>
+                                            <th width="10%"><button id='addRateRow' type='button' class='btn btn-info btn-xs'><span class='glyphicon glyphicon-plus'></span></button></th>
                                         </tr>
                                         </thead>
                                         <tbody>
 
                                         </tbody>
                                     </table>
+                                    <button type="button" id="add_option" class="btn btn-success" style="margin-top: 15px; alignment: center">Add Option</button>
+
                                 </div>
                             </div>
+                            <div class="form-group col-lg-4 col-md-4 col-sm-4 col-xs-12" style="margin-left: 0px">
+                            </div>
+
                         </div>
                     </div>
 
@@ -242,7 +258,6 @@ else{
                             <div id="form_submit_error" class="text-center" style="display:none"></div>
                         </div>
                     </div>
-                </form>
             </div>
         </div>
         <?php
@@ -327,7 +342,14 @@ else{
         });
 
         // add file row
-        $('#add_file_row').click(function(){
+       /* $('#add_file_row').click(function(){
+            $('#first_section').children('div:last').after("<div class='input-group' id='first_file'><input name='attached_file[]' class='form-control input-sm col-md-6 col-xs-12' type='file'><span class='input-group-btn'><button type='button' class='btn btn-danger btn-sm remove_me'  ><span class='glyphicon glyphicon-minus'></span></button></span></div> ");
+            $('.remove_me').click(function(){
+                $(this).parent().parent().remove();
+            });
+        });*/
+
+        $('#add_option').click(function(){
             $('#first_section').children('div:last').after("<div class='input-group' id='first_file'><input name='attached_file[]' class='form-control input-sm col-md-6 col-xs-12' type='file'><span class='input-group-btn'><button type='button' class='btn btn-danger btn-sm remove_me'  ><span class='glyphicon glyphicon-minus'></span></button></span></div> ");
             $('.remove_me').click(function(){
                 $(this).parent().parent().remove();
@@ -335,7 +357,7 @@ else{
         });
 
         $('#addRateRow').click(function(){
-            $('#rateTable > tbody').append("<tr><td><input type='text' name='size[]' required class='form-control col-lg-12 size'/><input type='hidden' name='size_id[]' class='form-control col-lg-12 size_id'/></td><td><input type='text' name='unit[]' required class='form-control col-lg-12 unit'/><input type='hidden' name='unit_id[]' class='form-control col-lg-12 unit_id'/></td></td><td><input type='text' value='0' name='stock_quantity_val[]' disabled class='form-control col-lg-12 text-right stock_quantity_val'/><input type='hidden' name='stock_quantity[]' value='0' class='form-control col-lg-12 text-right stock_quantity'/></td></td><td><input type='text' name='production_rate[]' required class='form-control col-lg-12 text-right production_rate'/></td><td><input type='text' name='rate[]' value='0.00' required class='form-control col-lg-12 text-right rate'/></td><td><select class='form-control discount_type' name='discount_type[]'><option value='1'>Flat</option><option value='2'>Percentage</option></select></td><td><input type='text' name='discount_amount[]' value = '0.00' required class='form-control col-lg-12 text-right discount_amount'/></td><td><input type='text' name='discounted_rate[]' value = '0.00' required class='form-control col-lg-12 text-right discounted_rate'/></td><td><span class='input-group-btn'><button type='button' class='btn btn-danger btn-xs remove_row'><span class='glyphicon glyphicon-minus'></span></button></span></td></tr>");
+            $('#ingredientTable > tbody').append("<tr><td><input type='text' name='name[]' required class='form-control col-lg-12 size'/><input type='hidden' name='name_id[]' class='form-control col-lg-12 size_id'/></td><td><input type='text' value='0' name='price[]' class='form-control col-lg-12 text-right stock_quantity_val'/></td></td><td><span class='input-group-btn'><button type='button' class='btn btn-success btn-xs remove_row' style='text-align: center'>Delete</button></span></td></tr>");
 
             $('.remove_row').click(function(){
                 $(this).parent().parent().parent().remove();
@@ -366,31 +388,6 @@ else{
                 }
             });
 
-
-            $(".unit").autocomplete({
-                search: function() {
-                },
-                source: function(request, response) {
-                    $.ajax({
-                        url: project_url+'controller/itemController.php',
-                        dataType: "json",
-                        type: "post",
-                        async:false,
-                        data: {
-                            q: "unit_info",
-                            term: request.term
-                        },
-                        success: function(data) {
-                            response(data);
-                        }
-                    });
-                },
-                minLength: 2,
-                select: function(event, ui) {
-                    var item_id = ui.item.id;
-                    $(this).next().val(item_id);
-                }
-            });
 
             $('.rate').focusout(function(e) {
 
@@ -670,25 +667,19 @@ else{
         //insert item
         $('#save_item').click(function(event){
             event.preventDefault();
+            //alert('sdf')
             var formData = new FormData($('#item_form')[0]);
+            console.log(formData)
+            //return false;
             formData.append("q","insert_or_update");
             //validation
             if($.trim($('#item_name').val()) == ""){
                 success_or_error_msg('#form_submit_error','danger','Please Insert Item Name',"#item_name");
             }
-            else if($.trim($('#item_code').val()) == ""){
-                success_or_error_msg('#form_submit_error','danger','Please Insert Item Code',"#item_code");
-            }
             else if($.trim($('#category_option').val()) == "0"){
                 success_or_error_msg('#form_submit_error','danger',"Please Select Category","#category_option");
             }
-            else if($.trim($('.size_id').val()) == ""){
-                success_or_error_msg('#form_submit_error','danger',"Please select Size",".size");
-            }
-            else if($.trim($('.unit_id').val()) == ""){
-                success_or_error_msg('#form_submit_error','danger',"Please select Unit",".unit");
-            }
-            else if($.trim($('.rate').val()) == ""){
+            else if($.trim($('#rate').val()) == ""){
                 success_or_error_msg('#form_submit_error','danger',"Please select Rate",".rate");
             }
             else{
@@ -703,7 +694,8 @@ else{
                     contentType:false,
                     processData:false,
                     success: function(data){
-                        alert(data);
+                        //alert(data);
+                        console.log(data)
 
                         $('#save_item').removeAttr('disabled','disabled');
 
@@ -725,7 +717,7 @@ else{
         edit_item = function edit_item(item_id){
             $('#item_id').val(item_id);
             $('.img_label').after('');
-            $('#rateTable > tbody').html('');
+            $('#optionTable > tbody').html('');
             $('#ingredient_select').html('');
 
             $.ajax({
@@ -764,17 +756,17 @@ else{
                     if(!jQuery.isEmptyObject(data.rate_details)){
                         $.each(data.rate_details, function(i,data){
                             $( "#addRateRow" ).trigger( "click" );
-                            $('#rateTable > tbody > tr:last .size_id').val(data.size_id);
-                            $('#rateTable > tbody > tr:last .size').val(data.size_name);
-                            $('#rateTable > tbody > tr:last .unit_id').val(data.unit_id);
-                            $('#rateTable > tbody > tr:last .unit').val(data.unit_name);
-                            $('#rateTable > tbody > tr:last .stock_quantity').val(data.stock_quantity);
-                            $('#rateTable > tbody > tr:last .stock_quantity_val').val(data.stock_quantity);
-                            $('#rateTable > tbody > tr:last .production_rate').val(data.production_rate);
-                            $('#rateTable > tbody > tr:last .rate').val(data.rate);
-                            $("#rateTable > tbody > tr:last .discount_type option[value='"+data.discount_type+"']").attr('selected','selected');
-                            $('#rateTable > tbody > tr:last .discount_amount').val(data.discount_amount);
-                            $('#rateTable > tbody > tr:last .discounted_rate').val(data.discounted_rate);
+                            $('#optionTable > tbody > tr:last .size_id').val(data.size_id);
+                            $('#optionTable > tbody > tr:last .size').val(data.size_name);
+                            $('#optionTable > tbody > tr:last .unit_id').val(data.unit_id);
+                            $('#optionTable > tbody > tr:last .unit').val(data.unit_name);
+                            $('#optionTable > tbody > tr:last .stock_quantity').val(data.stock_quantity);
+                            $('#optionTable > tbody > tr:last .stock_quantity_val').val(data.stock_quantity);
+                            $('#optionTable > tbody > tr:last .production_rate').val(data.production_rate);
+                            $('#optionTable > tbody > tr:last .rate').val(data.rate);
+                            $("#optionTable > tbody > tr:last .discount_type option[value='"+data.discount_type+"']").attr('selected','selected');
+                            $('#optionTable > tbody > tr:last .discount_amount').val(data.discount_amount);
+                            $('#optionTable > tbody > tr:last .discounted_rate').val(data.discounted_rate);
                         });
                     }
 
@@ -891,7 +883,7 @@ else{
             load_category();
             load_ingredient();
 
-            $('#rateTable > tbody').html('');
+            $('#optionTable > tbody').html('');
             $( "#addRateRow" ).trigger( "click" );
 
             $('#item_form').iCheck({
