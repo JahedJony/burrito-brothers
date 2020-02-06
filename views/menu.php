@@ -89,10 +89,10 @@
         var html='<div class="col-md-6 col-sm-6 col-xs-12 isotope-item breakfast">\n' +
             '         <div class="menu-list" '+width+'>\n' +
             '              <span class="menu-list-product" style="'+ item_image_display +'">\n' +
-            '                <img  src="'+ project_url+'admin/'+data['photo']+'" onclick="cart('+data['item_id']+','+data['rate_id']+')" alt="" style="border-radius: 50px; min-height: 100px">\n' +
+            '                <img  src="'+ project_url+'admin/'+data['photo']+'" onclick="cart('+data['item_id']+','+data['rate_id']+')" alt="" style="">\n' +
             '              </span>\n' +
             '              <a href="index.php?page=item&id='+ data['item_id']+'">' +
-            '                   <h5 class="text-capitalize">'+ data['name']+' <span>'+ currency_symbol+''+data['price']+'</span></h5>' +
+            '                   <h5 class="text-capitalize margin-bottom-0 padding-bottom-4">'+ data['name']+' <span>'+ currency_symbol+''+data['price']+'</span></h5>' +
             '               </a>\n' +
             '              <p>'+ data['details']+'</p>\n' +
             '          </div>\n' +

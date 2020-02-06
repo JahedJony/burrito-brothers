@@ -1,6 +1,6 @@
 .tp-static-layers{position:absolute;z-index:505;top:0px;left:0px;}
 .tp-hide-revslider,.tp-caption.tp-hidden-caption{visibility:hidden !important;display:none !important;}
-.tp-caption{z-index:1;white-space:nowrap}
+.tp-caption{z-index:1;white-space:nowrap; text-shadow: rgb(111, 58, 2) 2px 2px;}
 .tp-caption-demo .tp-caption{position:relative !important;display:inline-block;margin-bottom:10px;margin-right:20px !important;}
 .tp-caption.whitedivider3px{color:#000000;text-shadow:none;background-color:rgb(255, 255, 255);background-color:rgba(255, 255, 255, 1);text-decoration:none;min-width:408px;min-height:3px;background-position:initial initial;background-repeat:initial initial;border-width:0px;border-color:#000000;border-style:none;}
 .tp-caption.finewide_large_white{color:#ffffff;text-shadow:none;font-size:60px;line-height:60px;font-weight:300;background-color:transparent;text-decoration:none;text-transform:uppercase;border-width:0px;border-color:rgb(0, 0, 0);border-style:none;}
