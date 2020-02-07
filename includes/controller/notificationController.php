@@ -1,6 +1,5 @@
 <?php 
 session_start();
-include '../includes/static_text.php';
 include("../dbConnect.php");
 include("../dbClass.php");
 
@@ -42,11 +41,11 @@ switch ($q){
 	case "load_notifications":
 		$start = ($page_no*$limit)-$limit;
 		$end   = $limit;		
-		$total_unread_notification  = $dbClass->getSingleRow("SELECT count(id) unread FROM notification nt where nt.status=0 and nt.notification_user_type = 1");  
+		$total_unread_notification  = $dbClass->getSingleRow("SELECT count(id) unread FROM notification nt where nt.status=0 and nt.notified_to = $customer_id");  
 		$data['total_unread']       = $total_unread_notification['unread'];					
 		$sql = "SELECT nt.id, nt.order_id, nt.status, nt.details, date_time
 				FROM notification nt
-				WHERE nt.notification_user_type = 1
+				WHERE nt.notification_user_type = 0 and nt.notified_to = $customer_id
 				ORDER BY nt.status, nt.id DESC
 				limit $start, $end";	
 		//echo $sql;die;
@@ -60,7 +59,7 @@ switch ($q){
 	break;
 	
 	case "load_notifications_no":
-		$total_unread_notification  = $dbClass->getSingleRow("SELECT count(id) unread FROM notification nt where nt.status=0 and nt.notification_user_type = 1");  
+		$total_unread_notification  = $dbClass->getSingleRow("SELECT count(id) unread FROM notification nt where nt.status=0 and nt.notified_to = $customer_id");  
 		$data['total_unread']       = $total_unread_notification['unread'];	
 		$data['nofication_details_message'] = "";
 		if($data['total_unread']>0){

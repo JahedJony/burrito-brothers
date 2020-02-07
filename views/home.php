@@ -430,4 +430,34 @@ $store_address=$dbClass->getDescription('store_address');
     function groupOrder(){
 
     }
+	
+	//Notification
+	
+	$(document).ready(function () {
+		var customer_id = "<?php echo $_SESSION['customer_id']; ?>";
+		
+		$('body').on("click", ".dropdown-menu", function (e) {
+			$(this).parent().is(".open") && e.stopPropagation();
+		});
+		
+		$('#load_more_not_button').click(function() {
+			 $(this).toggleClass('active');
+			 show_notifications(customer_id);
+		});
+		
+		
+		set_time_out_fn = function set_time_out_fn(){
+			setTimeout(function(){ 
+				show_notifications_no(customer_id);
+				set_time_out_fn();
+			}, 30000); 		
+		}
+		
+		set_time_out_fn();
+		show_notifications_no(customer_id);	
+		show_notifications(customer_id);
+		
+
+	});
+	
 </script>

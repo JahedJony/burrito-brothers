@@ -348,6 +348,7 @@ else{
 </html>
 
 <script>
+
 $(document).ready(function () {
 
 	var user_id = "<?php echo $_SESSION['user_id']; ?>";

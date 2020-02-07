@@ -283,7 +283,7 @@ switch ($q){
         //-----------------------------------------------------
 
 
-        if(isset($_SESSION['group_master'])){
+        if(isset($_SESSION['group_master'])){			
             $price = 0;
             foreach($cart as $key=>$item){
                 $price+=$item['discounted_rate'];
@@ -347,21 +347,33 @@ switch ($q){
 
         //echo $return_master; die;
         if($return_master){
+
 			
 			/* *********************************   notification Start       ************************* */
 			
 			//notification for group & single order			
-			$invoice_no = $dbClass->getSingleRow("SELECT invoice_no from order_master WHERE order_id = $return_master");
-			$customer_name = $dbClass->getSingleRow("SELECT full_name FROM customer_infos WHERE customer_id = '".$_SESSION['customer_id']."'");
-			extract($invoice_no);
-			
+
 			if(isset($_SESSION['group_master']) ){
 				//SET Notification for group order
-				$details = "".ucfirst($customer_name['full_name'])." Placed a Group Order (".$invoice_no.")";
+				//notfication to customer who created group order not admin
+				// mr chaki select his items				
+				$customer_id_group = $dbClass->getSingleRow("SELECT go.customer_id from  
+														 group_order_details god
+														 LEFT JOIN group_order go ON go.group_id = god.order_master_id
+														 WHERE god.id = $_SESSION['group_order_details_id']");
+				extract($customer_id_group);
+				$group_customer_name = $dbClass->getSingleRow("SELECT full_name FROM customer_infos WHERE customer_id = $customer_id_group");
+				extract($group_customer_name);
+				$details = "".ucfirst($group_customer_name)." select his items";
+				$return_notifiction = $dbClass->insert_notification($return_master, $details, 0, $customer_id_group);	
 			}
 			else{
 				//set single notification details
-				$details = "".ucfirst($customer_name['full_name'])." Placed an Order (".$invoice_no.")";			
+				$invoice_no = $dbClass->getSingleRow("SELECT invoice_no from order_master WHERE order_id = $return_master");
+				$customer_name = $dbClass->getSingleRow("SELECT full_name FROM customer_infos WHERE customer_id = '".$_SESSION['customer_id']."'");
+				extract($invoice_no);	
+				$details = "".ucfirst($customer_name['full_name'])." Placed an Order (".$invoice_no.")";	
+				$return_notifiction = $dbClass->insert_notification($return_master, $details, 1, NULL);	
 			}
 			
 			//insert_notification function 
@@ -369,7 +381,7 @@ switch ($q){
 			//details (text), 
 			//notification_user_type (int) : 0=customer, 1: admin, 
 			//notified_to (int) : make notified_to null if notified target user type = admin	
-			$return_notifiction = $dbClass->insert_notification($return_master, $details, 1, NULL);	
+			
 			
 			/* *********************************   notification END       ************************* */
 			

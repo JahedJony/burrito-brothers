@@ -40,7 +40,6 @@ $yelp  = $dbClass->getDescription('yelp_url');
 
 
 
-
 $search_text = "";
 if(isset($_GET['search'])) $search_text = "";
 
@@ -111,16 +110,19 @@ if(isset($_GET['search'])) $search_text = "";
 									<li><a href="<?php echo $facebook; ?>"><i class="fa fa-facebook" aria-hidden="true"></i></a></li>
 									<li><a href="<?php echo $twitter; ?>"><i class="fa fa-twitter" aria-hidden="true"></i></a></li>
 									<li><a href="<?php echo $instagram; ?>"><i class="fa fa-instagram" aria-hidden="true"></i></a></li>
-									<li><a href="<?php echo $yelp; ?>"><i class="fa fa-yelp" style="color:white"></i></a></li>
-									<li></li>
-									<li></li>
+									<li><a href="<?php echo $yelp; ?>"><i class="fa fa-yelp" style="color:white"></i></a></li>									
 									
-									<!--<li class="language-menu">-->
-										<?php
+									<?php
+										if($is_logged_in_customer == ""){
+											echo '<li class="language-menu"><a href="#" onclick="active_modal(1)" data-toggle="modal" data-target="#loginModal" class="current-lang" id="log_reg"><i class="fa fa-user" aria-hidden="true"></i> Login / Register</a></li>';
+										}
+									?>
+									
+									
+									<?php
 										if($is_logged_in_customer != ""){
-											//echo '<a href="index.php?page=account" class="current-lang" id="my_acc"><i class="fa fa-user" aria-hidden="true" ></i> My Account</a>';
-											echo '
-												<li role="presentation" class="dropdown">
+											echo '<li></li><li></li>	
+												<li class="dropdown">
 													<a href="javascript:;" class="dropdown-toggle info-number" data-toggle="dropdown" aria-expanded="false">
 														<i class="fa fa-bell-slash"></i>
 														<span class="badge bg-red" id="unread_notifications"></span>
@@ -135,29 +137,27 @@ if(isset($_GET['search'])) $search_text = "";
 															</div>																
 														</li>
 													</ul>
-												</li>
-												
-												<li class="language-menu">
-													<a href="#" class="user-profile dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-														<img src="images/user.png" alt="">&nbsp;&nbsp;
-														<span class="fa fa-angle-down"></span>
-													</a>
-													<ul class="dropdown-menu">
-														<li><a href="index.php?page=account"> My Account</a></li>
-														<li><a href="index.php?page=logout"><i class="fa fa-sign-out pull-right"></i> Log Out</a></li>
-													</ul>
-												</li>													
-													
-												';
-										}
-										else{
-											echo '<li class="language-menu"><a href="#" onclick="active_modal(1)" data-toggle="modal" data-target="#loginModal" class="current-lang" id="log_reg"><i class="fa fa-user" aria-hidden="true"></i> Login / Register</a></li>';
-										}
-										?>
-									<!--</li>-->
+												</li>';	
+										}	
+									?>
+									
 								</ul>
-
 							</div>
+							
+							<?php
+								if($is_logged_in_customer != ""){			
+									echo '<div class="language-menu">
+										<a href="#" class="current-lang">
+											<img src="images/user.png" alt=""> <i class="fa fa-caret-down" aria-hidden="true"></i>
+										</a>
+										<ul>
+											<li><a href="index.php?page=account"> My Account</a></li>
+											<li><a href="index.php?page=logout"> Log Out <i class="fa fa-sign-out"></i></a></li>
+										</ul>
+									</div>';
+								}
+							?>
+							
                         </div>
                     </div>
                 </div>
@@ -506,6 +506,7 @@ if(isset($_GET['search'])) $search_text = "";
 <script src="js/script.js"></script>
 <script src="js/url.js"></script>
 <script src="js/static_text.js"></script>
+<script src="js/common.js"></script>
 <script src="js/cart.js"></script>
 
 
@@ -839,5 +840,8 @@ if(isset($_GET['search'])) $search_text = "";
             clearInterval(set_interval);
         }, 2000);
     }
+		
+	
+	
 
 </script>
