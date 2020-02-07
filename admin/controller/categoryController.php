@@ -14,10 +14,11 @@ switch ($q){
 	case "insert_or_update":
 		if(isset($category_id) && $category_id == ""){
 			
-			$check_category_code_availability = $dbClass->getSingleRow("SELECT count(code) no_of_code FROM category where code='$category_code'");
-			if($check_category_code_availability['no_of_code']!=0) { echo 5; die;}
+			//$check_category_code_availability = $dbClass->getSingleRow("SELECT count(code) no_of_code FROM category where code='$category_code'");
+			//if($check_category_code_availability['no_of_code']!=0) { echo 5; die;}
 			
 			if(isset($_FILES['category_image_upload']) && $_FILES['category_image_upload']['name']!= ""){
+			    //echo 1; die;
 				$desired_dir = "../images/category";
 				chmod( "../images/category", 0777);
 				$file_name = $_FILES['category_image_upload']['name'];
@@ -41,7 +42,9 @@ switch ($q){
 				}			
 			}
 			else{
-				$photo  = "images/no_image.png";	
+                //echo 0; die;
+
+                $photo  = "images/no_image.png";
 			}
 			
 			$columns_value = array(
@@ -58,8 +61,8 @@ switch ($q){
 		}
 		else if(isset($category_id) && $category_id>0){
 			
-			$check_category_code_availability = $dbClass->getSingleRow("SELECT count(code) no_of_code FROM category where code='$category_code' and id !='$category_id'");
-			if($check_category_code_availability['no_of_code']!=0) { echo 5; die;}
+			//$check_category_code_availability = $dbClass->getSingleRow("SELECT count(code) no_of_code FROM category where code='$category_code' and id !='$category_id'");
+			//if($check_category_code_availability['no_of_code']!=0) { echo 5; die;}
 			
 			if(isset($_FILES['category_image_upload']) && $_FILES['category_image_upload']['name']!= ""){
 				$desired_dir = "../images/category";

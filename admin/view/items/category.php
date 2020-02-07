@@ -226,6 +226,7 @@ $(document).ready(function () {
 				cache:false,
 				contentType:false,processData:false,
 				success: function(data){
+				    //console.log(data)
 					$('#save_category').removeAttr('disabled','disabled');
 					
 					if($.isNumeric(data)==true && data == 5){
@@ -286,6 +287,7 @@ $(document).ready(function () {
 				async:false,
 				data: "q=delete_category&category_id="+category_id,
 				success: function(data){
+				    //console.log(data)
 					if($.trim(data) == 1){
 						success_or_error_msg('#page_notification_div',"success","Deleted Successfully");
 						load_category("");

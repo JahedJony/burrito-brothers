@@ -12,6 +12,48 @@ extract($_REQUEST);
 
 switch ($q){
     case "insert_or_update":
+        //echo json_encode($_FILES['uploded_files']['name']); die;
+
+        if(isset($_FILES['attached_file']) && $_FILES['attached_file']['name']!= ""){
+            echo 1; die;
+            $desired_dir = "../images/category";
+            chmod( "../images/category", 0777);
+            $file_name = $_FILES['category_image_upload']['name'];
+            $file_size =$_FILES['category_image_upload']['size'];
+            $file_tmp =$_FILES['category_image_upload']['tmp_name'];
+            $file_type=$_FILES['category_image_upload']['type'];
+            if($file_size < $file_max_length){
+                if(file_exists("$desired_dir/".$file_name)==false){
+                    if(move_uploaded_file($file_tmp,"$desired_dir/".$file_name))
+                        $photo = "$file_name";
+                }
+                else{//rename the file if another one exist
+                    $new_dir="$desired_dir/".time().$file_name;
+                    if(rename($file_tmp,$new_dir))
+                        $photo =time()."$file_name";
+                }
+                $photo  = "images/category/".$photo;
+            }
+            else {
+                echo $img_error_ln;die;
+            }
+        }
+        else{
+            echo 0; die;
+            $photo  = "images/no_image.png";
+        }
+
+
+
+        if($item_id!=''){
+
+        }
+        else{
+
+        }
+
+
+
         if(isset($item_id) && $item_id == ""){
             //var_dump($_REQUEST);die;
             $feature_image = "";
@@ -140,7 +182,7 @@ switch ($q){
 
         }
         else if(isset($item_id) && $item_id>0){
-            //var_dump($_REQUEST);die;
+            var_dump($_REQUEST);die;
             //echo '333'; die;
 
 
@@ -369,12 +411,12 @@ switch ($q){
         else{
             //echo '5';die;
 
-            $condition .=	" WHERE CONCAT(item_id, name, code, category_head_name) LIKE '%$search_txt%' ";
+            $condition .=	" WHERE CONCAT(item_id, name, category_head_name) LIKE '%$search_txt%' ";
         }
 
         $countsql = "SELECT count(item_id)
 					FROM(
-						SELECT i.category_id, i.item_id, i.name, i.code, i.details, GROUP_CONCAT(s.name,' >> ',r.discounted_rate) i_rate, tags,i.availability,
+					SELECT i.category_id, i.item_id, i.name, i.details, i.price as i_rate,i.availability,
 						CASE WHEN c.parent_id IS NULL THEN c.name WHEN c.parent_id IS NOT NULL THEN CONCAT(ec.name,' >> ',c.name) END category_head_name,
 						(CASE i.availability WHEN 1 THEN 'Available' WHEN 0 THEN 'Not-Available' END) active_status	
 						FROM items i
@@ -383,7 +425,7 @@ switch ($q){
 						LEFT JOIN category ec ON c.parent_id = ec.id
 						LEFT JOIN size s on s.id = r.size_id
 						group by i.item_id
-						ORDER BY i.item_id DESC 
+						ORDER BY i.item_id DESC  
 					)A
 					$condition";
         //echo $countsql;die;
@@ -395,10 +437,10 @@ switch ($q){
         $total_pages = $total_records/$limit;
         $data['total_pages'] = ceil($total_pages);
         if($category_grid_permission==1){
-            $sql = 	"SELECT category_id, item_id, name, code, category_head_name, i_rate, details,tags,active_status,availability,
+            $sql = 	"SELECT category_id, item_id, name, category_head_name, i_rate, details,active_status,availability,
 					$update_permission as update_status, $delete_permission as delete_status
 					FROM(
-						SELECT i.category_id, i.item_id, i.name, i.code, i.details, GROUP_CONCAT(s.name,' >> ',r.discounted_rate) i_rate, tags,i.availability,
+						SELECT i.category_id, i.item_id, i.name, i.details, i.price as i_rate,i.availability,
 						CASE WHEN c.parent_id IS NULL THEN c.name WHEN c.parent_id IS NOT NULL THEN CONCAT(ec.name,' >> ',c.name) END category_head_name,
 						(CASE i.availability WHEN 1 THEN 'Available' WHEN 0 THEN 'Not-Available' END) active_status	
 						FROM items i
@@ -407,7 +449,7 @@ switch ($q){
 						LEFT JOIN category ec ON c.parent_id = ec.id
 						LEFT JOIN size s on s.id = r.size_id
 						group by i.item_id
-						ORDER BY i.item_id DESC 
+						ORDER BY i.item_id DESC
 					)A
 					$condition
 					ORDER BY item_id DESC
