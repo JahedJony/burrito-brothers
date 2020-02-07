@@ -5,7 +5,7 @@
     <div class="container">
         <div class="breadcrumb-inner">
             <h2>CATEGORY ITEMS</h2>
-            <a href="index.php?page=home">Home</a>
+            <a href="index.php">Home</a>
             <span>Category Items</span>
         </div>
     </div>
