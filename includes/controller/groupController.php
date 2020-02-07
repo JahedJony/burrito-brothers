@@ -225,8 +225,6 @@ switch ($q) {
         break;
 
     case "group_member_order":
-
-
         $sql = "SELECT god.group_order_id, god.order_master_id, ci.full_name, gs.delivery_date from group_order_details god
             LEFT JOIN group_order gs ON gs.order_id=god.group_order_id
             LEFT JOIN customer_infos ci ON ci.customer_id=gs.customer_id
@@ -240,18 +238,15 @@ switch ($q) {
             $_SESSION['group_order_details_id'] = $group_order_details_id;
             echo 1;
         }
-        else
-        {
-            echo 0;
-        }
-        break;
+        else{ echo 0; }
+    break;
 
     case "set_session_group_order":
         //echo $order_id; die;
         $_SESSION['groupOrderId']= $order_id;
         $_SESSION['returnPage']= 'groupOrderDetails';
         echo 1;
-        break;
+    break;
 
     case "get_group_order_details":
         //echo $order_id; die;
@@ -309,7 +304,7 @@ switch ($q) {
         $data['order_details']=$result[0];
         $data['tax']=$tax;
         echo json_encode($data);
-        break;
+	break;
 
     case "apply_coupon":
         //echo $group_order_id; die;
@@ -329,6 +324,12 @@ switch ($q) {
 
 
         if($coupon_info['id'] && $order_info['total_order_amt']>=$coupon_info['min_order_amount']){
+        //var_dump("select id,c_type,amount,min_order_amount from cupons where status=1 and ((cupon_no='$cupon_code' and customer_id = ".$_SESSION['customer_id'].") or cupon_no='$cupon_code' and customer_id is null) and (DATE_FORMAT(start_date, '%Y-%m-%d') <= '$date' AND DATE_FORMAT(end_date, '%Y-%m-%d') >= '$date')");
+//die;
+
+
+
+        if($cupon_info['id']){
             $condition_array = array(
                 'order_id'=>$group_order_id
             );
@@ -341,7 +342,7 @@ switch ($q) {
         }
         else echo 2;
 
-        break;
+    break;
 
     case "add_tips":
         $condition_array = array(
@@ -356,7 +357,6 @@ switch ($q) {
 
     case "viewCartSummery":
         $tax = $dbClass->getSingleRow("Select tax_type, tax_amount, tax_enable from general_settings where id=1");
-
 
         $sql = "SELECT coalesce(oms.order_id, 'NAN') as order_id, god.id, coalesce(oms.total_order_amt, '0') as total_order_amt, coalesce(oms.order_status, '0') as order_status, gm.name, gm.email, god.id as group_order_details_id, god.order_key
                FROM group_order go
@@ -448,7 +448,7 @@ switch ($q) {
         $data['order_details']=$result[0];
         echo json_encode($data);
 
-        break;
+    break;
 
     case "checkout":
 
@@ -470,21 +470,22 @@ switch ($q) {
         $invoice_no = "BBGO$c_y_m$str";
         //-----------------------------------------------------
 
-    $columns_value = array(
-        'invoice_no'=>$invoice_no,
-        'payment_status'=>2,
-        'payment_method'=>$payment_method,
-        'loyalty_point'=>$loyalty_point,
-        'total_paid_amount'=>$total_paid_amount,
-        'order_status'=>4,
-    );
-    $condition_array = array(
-        'order_id'=>$group_order_id
-    );
-
-    $return_master = $dbClass->update("group_order", $columns_value, $condition_array);
+		$columns_value = array(
+			'invoice_no'=>$invoice_no,
+			'payment_status'=>2,
+			'payment_method'=>$payment_method,
+			'loyalty_point'=>$loyalty_point,
+			'total_paid_amount'=>$total_paid_amount,
+			'order_status'=>4,
+		);
+		$condition_array = array(
+			'order_id'=>$group_order_id
+		);
 
         $order_details = $dbClass->getSingleRow("SELECT * FROM group_order where invoice_no='$invoice_no' ");
+
+		$return_master = $dbClass->update("group_order", $columns_value, $condition_array);
+
         $c_loyalty_points = $dbClass->getSingleRow('SELECT loyalty_points from customer_infos where customer_id='.$_SESSION["customer_id"]);
 
         $columns_value = array(
@@ -527,7 +528,11 @@ switch ($q) {
 
             $_SESSION['Last_invoice_no']=$invoice_no;
 
+
+
+
             echo $invoice_no; die;
+
 
                 // sending email will be here
 
@@ -649,12 +654,11 @@ switch ($q) {
                 }
 
                 //-------------------------------
-
-            echo $invoice_no;
+                echo $invoice_no;
 
         }
         else echo "0";
-        break;
+    break;
 
 
 
