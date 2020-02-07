@@ -14,7 +14,7 @@ var No_data_available_in_table_ln = "No data available in table";
 // post
 var post_ln ="Post";
 var no_of_post_at_a_time_wall = 5;
-var project_url="http://localhost/burrito-brothers/admin/";
+var project_url="http://burritobrothers.test/admin/";
 var employee_import_url="";
 
 

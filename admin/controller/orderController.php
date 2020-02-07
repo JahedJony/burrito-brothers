@@ -161,6 +161,7 @@ switch ($q){
     break;
 
     case "grid_data":
+
         $start = ($page_no*$limit)-$limit;
         $end   = $limit;
         $data = array();
@@ -185,11 +186,17 @@ switch ($q){
             if($ad_is_order != 0)  			$condition  .=" and order_status = $ad_is_order";
             //$condition .=	"where s.name LIKE '%$std_name%' AND sch.name LIKE '%$sch_name%' AND s.class LIKE '%$std_class%'  AND s.address LIKE '%$std_address%'  AND s.upazilla LIKE '%$std_upazilla%' AND s.zilla LIKE '%$std_zilla%'  AND s.division LIKE '%$std_division%'";
         }
-   
+        // textfield search for grid
+        /*else{
+            $condition .=	" CONCAT(order_id, customer_name, p_name, item_rate) LIKE '%$search_txt%' ";
+        }*/
+
+        //echo '1'; die;
+
 
         $countsql = "SELECT count(order_id)
 					FROM(
-						SELECT m.order_id, m.customer_id, c.full_name as customer_name, m.invoice_no,
+						   SELECT m.order_id, m.customer_id, c.full_name as customer_name, m.invoice_no,
 						d.item_id,d.item_rate, d.item_rate_id,  d.ingredient_list, m.order_date, m.delivery_date, p.name as p_name,
 						m.delivery_type, order_noticed,
 						m.address, m.remarks, m.order_status, m.payment_status, m.payment_method, m.payment_reference_no
@@ -197,7 +204,7 @@ switch ($q){
 						LEFT JOIN order_details d ON d.order_id = m.order_id
 						LEFT JOIN customer_infos c ON c.customer_id = m.customer_id
 						LEFT JOIN items p ON p.item_id = d.item_id
-						WHERE m.order_status !=6
+						WHERE d.status=1
 						GROUP BY d.order_id
 						ORDER BY m.order_id DESC
 					)A
@@ -214,7 +221,8 @@ switch ($q){
             $sql = 	"SELECT order_id, customer_id, customer_name, item_id, item_rate, ingredient_list,item_rate_id, p_name, order_date,
 					order_noticed, order_status, delivery_date, delivery_type, address, total_order_amt, remarks, payment_reference_no, invoice_no, 
 					$update_permission as update_status, $delete_permission as delete_status,
-					case payment_status when 1 then 'Not Paid' else 'Paid' end paid_status, payment_method
+					case payment_status when payment_status=1 then 'Not Paid' else 'Paid' end paid_status, 
+					case payment_method when payment_method=1 then 'bKash' when payment_method=2 then 'Rocket'  else 'Cash On Delivery'  end payment_method
 					FROM(
 						SELECT m.order_id, m.customer_id, c.full_name as customer_name, m.invoice_no,
 						d.item_id,d.item_rate, d.item_rate_id, m.total_order_amt, d.ingredient_list, m.order_date, m.delivery_date, p.name as p_name,
@@ -228,16 +236,17 @@ switch ($q){
 							WHEN m.order_status = 5 THEN 'Delivered'
 						END as order_status
 						FROM order_master m
+						LEFT JOIN order_details d ON d.order_id = m.order_id
 						LEFT JOIN customer_infos c ON c.customer_id = m.customer_id
 						LEFT JOIN items p ON p.item_id = d.item_id
 						WHERE m.order_status !=6
 						GROUP BY d.order_id
 						ORDER BY m.order_id DESC					
 					)A
-					WHERE CONCAT(invoice_no, order_id, customer_name) LIKE '%$search_txt%' $condition
+					WHERE CONCAT(invoice_no, order_id, customer_name, p_name, item_rate) LIKE '%$search_txt%' $condition
 					ORDER BY order_id desc
 					LIMIT $start, $end";
-            //echo $sql;
+            //echo $sql;die;
             $stmt = $conn->prepare($sql);
             $stmt->execute();
             $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -246,6 +255,7 @@ switch ($q){
             }
             echo json_encode($data);
         }
+
     break;
 
     case "get_order_details":

@@ -10,8 +10,8 @@ session_destroy();
 <script src="../js/static_text.js"></script>
 <script>
 	//alert(project_url)
-	//window.location.replace(project_url+'index.php');
-	window.location.replace('http://localhost/burrito-brothers/index.php');
+	window.location.replace(project_url+'index.php');
+	//window.location.replace('http://localhost/burrito-brothers/index.php');
 </script>
 
 
