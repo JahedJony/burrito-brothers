@@ -516,8 +516,6 @@ payments = function payments(){
     if(loyalty_points/loyalty_point_value<$('#total_paid_amount').val()){
         $('#loyalty_redio').attr('disabled',true);
     }
-
-
 }
 
 general_settings = function general_settings(){
@@ -675,7 +673,7 @@ $('#login').click(function(event){
                             $('#islogged_in').val(1);
                             $('.logged_in_already').addClass('hide');
                         }
-                        window.location.href = project_url+ "checkout.php";
+                        window.location.href = project_url+ "index.php?page=checkout";
 
 
 
