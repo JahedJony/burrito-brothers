@@ -2,20 +2,11 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="289ea524-a539-47c6-a345-6f05b3774d37" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/sqldialects.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/imageLibrary.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/controller/generalSettingController.php" beforeDir="false" afterPath="$PROJECT_DIR$/controller/generalSettingController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/controller/loginController.php" beforeDir="false" afterPath="$PROJECT_DIR$/controller/loginController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/controller/userController.php" beforeDir="false" afterPath="$PROJECT_DIR$/controller/userController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/controller/webSiteSettingsController.php" beforeDir="false" afterPath="$PROJECT_DIR$/controller/webSiteSettingsController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dbClass.php" beforeDir="false" afterPath="$PROJECT_DIR$/dbClass.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/includes/static_text.php" beforeDir="false" afterPath="$PROJECT_DIR$/includes/static_text.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/js/login.js" beforeDir="false" afterPath="$PROJECT_DIR$/js/login.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/login.php" beforeDir="false" afterPath="$PROJECT_DIR$/login.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/view/personal/emp_profile.php" beforeDir="false" afterPath="$PROJECT_DIR$/view/personal/emp_profile.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/view/settings/general.php" beforeDir="false" afterPath="$PROJECT_DIR$/view/settings/general.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/view/user/user.php" beforeDir="false" afterPath="$PROJECT_DIR$/view/user/user.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/admin/controller/itemController.php" beforeDir="false" afterPath="$PROJECT_DIR$/admin/controller/itemController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/admin/view/items/item.php" beforeDir="false" afterPath="$PROJECT_DIR$/admin/view/items/item.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/includes/controller/ecommerceController.php" beforeDir="false" afterPath="$PROJECT_DIR$/includes/controller/ecommerceController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/views/categories.php" beforeDir="false" afterPath="$PROJECT_DIR$/views/categories.php" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -28,6 +19,13 @@
       <executable />
     </execution>
   </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="JavaScript File" />
+      </list>
+    </option>
+  </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
@@ -36,7 +34,7 @@
   <component name="PropertiesComponent">
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/admin/images/category" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.detected.package.tslint" value="true" />
     <property name="node.js.path.for.package.eslint" value="project" />
@@ -46,14 +44,18 @@
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$" />
-      <recent name="$PROJECT_DIR$/view/settings" />
-      <recent name="$PROJECT_DIR$/controller" />
-      <recent name="$PROJECT_DIR$/view" />
+      <recent name="$PROJECT_DIR$/admin/images/category" />
+      <recent name="$PROJECT_DIR$/views" />
+      <recent name="$PROJECT_DIR$/admin/images/item" />
+      <recent name="$PROJECT_DIR$/images" />
+      <recent name="$PROJECT_DIR$/images/payments" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$/controller" />
-      <recent name="$PROJECT_DIR$/view/settings" />
+      <recent name="$PROJECT_DIR$/admin/DB" />
+      <recent name="$PROJECT_DIR$/images" />
+      <recent name="$PROJECT_DIR$/views" />
+      <recent name="$PROJECT_DIR$/body" />
+      <recent name="$PROJECT_DIR$" />
     </key>
   </component>
   <component name="RunDashboard">
@@ -80,6 +82,27 @@
       <updated>1574507923535</updated>
       <workItem from="1574507924990" duration="22901000" />
       <workItem from="1574655901483" duration="24129000" />
+      <workItem from="1574860869644" duration="597000" />
+      <workItem from="1575203460658" duration="960000" />
+      <workItem from="1575447141505" duration="13695000" />
+      <workItem from="1575531902229" duration="12377000" />
+      <workItem from="1575696798924" duration="541000" />
+      <workItem from="1575698417636" duration="6812000" />
+      <workItem from="1575716013272" duration="1715000" />
+      <workItem from="1575870409263" duration="18615000" />
+      <workItem from="1575957419023" duration="21452000" />
+      <workItem from="1576420054371" duration="180899000" />
+      <workItem from="1577950729157" duration="97912000" />
+      <workItem from="1578805223707" duration="171000" />
+      <workItem from="1578805640395" duration="100000" />
+      <workItem from="1578806417504" duration="598000" />
+      <workItem from="1578890872372" duration="31746000" />
+      <workItem from="1579244903772" duration="102861000" />
+      <workItem from="1580102510582" duration="92320000" />
+      <workItem from="1580622055968" duration="54737000" />
+      <workItem from="1580815122907" duration="305000" />
+      <workItem from="1580815456073" duration="1685000" />
+      <workItem from="1580997418106" duration="4881000" />
     </task>
     <servers />
   </component>
@@ -98,5 +121,16 @@
         </entry>
       </map>
     </option>
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="javascript">
+          <url>file://$APPLICATION_HOME_DIR$/plugins/JavaScriptLanguage/jsLanguageServicesImpl/external/lib.dom.d.ts</url>
+          <line>39</line>
+          <option name="timeStamp" value="1" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>
