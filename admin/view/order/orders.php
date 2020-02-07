@@ -112,10 +112,9 @@ else{
                     <thead >
                     <th class="column-title" width="">Invoice No</th>
                     <th class="column-title" width="">Customer</th>
-                    <th class="column-title" width="18%">Product</th>
-                    <th class="column-title" width="8%">Order Date</th>
-                    <th class="column-title" width="8%">Delivery Date</th>
-                    <th class="column-title" width="8%">Payment Status</th>
+                    <th class="column-title" width="12%">Order Date</th>
+                    <th class="column-title" width="12%">Delivery Date</th>
+                    <th class="column-title" width="8%">Payment Type</th>
                     <th class="column-title" width="8%">Order Status</th>
                     <th class="column-title" width="10%">Order Amount</th>
                     <th class="column-title no-link last" width="10%"><span class="nobr"></span></th>
@@ -435,119 +434,6 @@ else{
             });
         }
 
-        load_orders = function load_order(search_txt){
-            //alert('order')
-            $("#search_order_button").toggleClass('active');
-            var order_Table_length = parseInt($('#order_Table_length').val());
-            var ad_product_name = $("#ad_product_name").val();
-            var ad_order_date = $("#ad_order_date").val();
-            //var ad_delivery_date = $("#ad_delivery_date").val();
-            var ad_item_id = $("#ad_item_id").val();
-            var ad_is_payment = $("input[name=ad_is_payment]:checked").val();
-            var ad_is_order = $("input[name=ad_is_order]:checked").val();
-            //alert('order2')
-
-            $.ajax({
-                url: project_url+"controller/orderController.php",
-                dataType: "json",
-                type: "post",
-                async:false,
-                data: {
-                    q: "grid_data",
-                    ad_order_date: ad_order_date,
-                    //ad_delivery_date: ad_delivery_date,
-                    ad_product_name: ad_product_name,
-                    ad_item_id: ad_item_id,
-                    ad_is_payment: ad_is_payment,
-                    ad_is_order: ad_is_order,
-                    search_txt: search_txt,
-                    limit:order_Table_length,
-                    page_no:current_page_no
-                },
-                success: function(data) {
-                    //alert(data)
-                    //console.log(data)
-                    var todate = "<?php echo date("Y-m-d"); ?>";
-                    var user_name =  "<?php echo $user_name; ?>";
-                    var html = "";
-                    if($.trim(search_txt) == "Print"){
-                        var serach_areas= "";
-                        if(ad_product_name != '')  	serach_areas += "Product Name: "+ad_product_name+" <br>";
-                        if(ad_order_date != '')  	serach_areas += "Order Date: "+ad_order_date+" <br>";
-                        //if(ad_delivery_date != '')  serach_areas += "Delivery Date: "+ad_delivery_date+" <br>";
-                        if(ad_is_payment == 2)  	serach_areas += "Paid <br>";
-                        if(ad_is_payment == 1)  	serach_areas += "Not Paid <br>";
-                        if(ad_is_order == 1)    	serach_areas += "Ordered <br>";
-                        if(ad_is_order == 2)  	    serach_areas += "Ready <br>";
-                        if(ad_is_order == 3)  	    serach_areas += "Picked <br>";
-
-                        /*<button class="no-print" onclick="window.print()">Print</button>*/
-
-                        html +='<button class="no-print" onclick="window.print()">Print</button><div width="100%"  style="text-align:center"><img src="'+employee_import_url+'/images/logo.png" width="80"/></div><h2 style="text-align:center">Cakencookie</h2><h4 style="text-align:center">Order Information Report</h4><table width="100%"><tr><th width="60%" style="text-align:left"><small>'+serach_areas+'</small></th><th width="40%"  style="text-align:right"><small>Printed By: '+user_name+', Date:'+todate+'</small></th></tr></table>';
-
-                        if(!jQuery.isEmptyObject(data.records)){
-
-                            html +='<table width="100%" cellpadding="10" border="1px" style="margin-top:10px;border-collapse:collapse"><thead><tr><th style="text-align:center">Order No</th><th style="text-align:center">Customer</th><th style="text-align:center">Product</th><th style="text-align:center">Order Date</th><th style="text-align:center">Delivery Date</th><th style="text-align:center">Payment Status</th><th style="text-align:center">Order Status</th></tr></thead><tbody>';
-
-                            $.each(data.records, function(i,data){
-                                //alert(data)
-                                html += "<tr>";
-                                html +="<td style='text-align:left'>"+data.invoice_no+"</td>";
-                                html +="<td style='text-align:left'>"+data.customer_name+"</td>";
-                                var name = data.p_name;
-                                var pname = name.replace(", ", "</br>");
-                                html +="<td style='text-align:left'>"+pname+"</td>";
-                                html +="<td style='text-align:left'>"+data.order_date+"</td>";
-                                html +="<td style='text-align:left'>"+data.delivery_date+"</td>";
-                                html +="<td style='text-align:center'>"+data.payment_status_text+"</td>";
-                                html +="<td style='text-align:center'>"+data.order_status_text+"</td>";
-                                html += '</tr>';
-                            });
-                            html +="</tbody></table>"
-                        }
-                        else{
-                            html += "<table width='100%' border='1px' style='margin-top:10px;border-collapse:collapse'><tr><td><h4 style='text-align:center'>There is no data.</h4></td></tr></table>";
-                        }
-                        WinId = window.open("", "Order Report","width=1150,height=800,left=50,toolbar=no,menubar=YES,status=YES,resizable=YES,location=no,directories=no, scrollbars=YES");
-                        WinId.document.open();
-                        WinId.document.write(html);
-                        WinId.document.close();
-                    }
-                    else{
-                        if(data.entry_status==0){
-                            $('.order_entry_cl').hide();
-                        }
-                        //for  showing grid's no of records from total no of records
-                        show_record_no(current_page_no, order_Table_length, data.total_records )
-
-                        var total_pages = data.total_pages;
-                        var records_array = data.records;
-                        $('#order_Table tbody tr').remove();
-                        $("#search_order_button").toggleClass('active');
-
-                        if(!jQuery.isEmptyObject(records_array)){
-                            //create and set grid table row
-                            var colums_array=["order_id*identifier*hidden","invoice_no","customer_name","p_name","order_date","delivery_date","payment_method","order_status","total_order_amt"];
-                            //first element is for view , edit condition, delete condition
-                            //"all" will show /"no" will show nothing
-                            var condition_array=["","","update_status", "1","",""];
-                            //create_set_grid_table_row(records_array,colums_array,int_fields_array, condition_arraymodule_name,table/grid id, is_checkbox to select tr );
-                            //cauton: not posssible to use multiple grid in same page
-                            create_set_grid_table_row(records_array,colums_array,condition_array,"order","order_Table", 0);
-                            //show the showing no of records and paging for records
-                            $('#order_Table_div').show();
-                            //code for dynamic pagination
-                            paging(total_pages, current_page_no, "order_Table" );
-                        }
-                        //if the table has no records / no matching records
-                        else{
-                            grid_has_no_result("order_Table",10);
-                        }
-                    }
-
-                }
-            });
-        }
         // load desire page on clik specific page no
         load_page = function load_page(page_no){
             if(page_no != 0){

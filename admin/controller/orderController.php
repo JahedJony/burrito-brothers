@@ -159,9 +159,7 @@ switch ($q){
             else                echo "0";
         }
     break;
-
     case "grid_data":
-
         $start = ($page_no*$limit)-$limit;
         $end   = $limit;
         $data = array();
@@ -218,32 +216,24 @@ switch ($q){
         $total_pages = $total_records/$limit;
         $data['total_pages'] = ceil($total_pages);
         if($category_grid_permission==1){
-            $sql = 	"SELECT order_id, customer_id, customer_name, item_id, item_rate, ingredient_list,item_rate_id, p_name, order_date,
-					order_noticed, order_status, delivery_date, delivery_type, address, total_order_amt, remarks, payment_reference_no, invoice_no, 
+            $sql = 	"SELECT order_id, customer_id, customer_name, order_date,order_noticed,order_status,
+					delivery_date, delivery_type, total_order_amt, remarks, payment_reference_no, invoice_no, 
 					$update_permission as update_status, $delete_permission as delete_status,
-					case payment_status when payment_status=1 then 'Not Paid' else 'Paid' end paid_status, 
-					case payment_method when payment_method=1 then 'bKash' when payment_method=2 then 'Rocket'  else 'Cash On Delivery'  end payment_method
+					case order_status when 1 then 'Ordered' when 2 then 'Received' when 3 then 'Preparing' when 4 then 'Ready' else 'Delivered' end order_status,
+					case payment_status when 1 then 'Not Paid' else 'Paid' end paid_status, payment_method
 					FROM(
-						SELECT m.order_id, m.customer_id, c.full_name as customer_name, m.invoice_no,
-						d.item_id,d.item_rate, d.item_rate_id, m.total_order_amt, d.ingredient_list, m.order_date, m.delivery_date, p.name as p_name,
+						 SELECT m.order_id, m.customer_id, c.full_name as customer_name, m.invoice_no,
+						m.order_date, m.delivery_date,m.total_order_amt,
 						m.delivery_type, order_noticed,
-						m.address, m.remarks, m.payment_status, m.payment_method, m.payment_reference_no,
-						case 
-							WHEN m.order_status = 1 THEN 'Ordered'
-							WHEN m.order_status = 2 THEN 'Received'
-							WHEN m.order_status = 3 THEN 'Preparing'
-							WHEN m.order_status = 4 THEN 'Ready'
-							WHEN m.order_status = 5 THEN 'Delivered'
-						END as order_status
+						m.address, m.remarks, m.order_status, m.payment_status, m.payment_reference_no,
+						case m.payment_method when 1 then 'Cash' when 2 then 'Loyalty Point' when 3 then 'Card' else 'Gift Card'  end payment_method
 						FROM order_master m
-						LEFT JOIN order_details d ON d.order_id = m.order_id
 						LEFT JOIN customer_infos c ON c.customer_id = m.customer_id
-						LEFT JOIN items p ON p.item_id = d.item_id
-						WHERE m.order_status !=6
-						GROUP BY d.order_id
-						ORDER BY m.order_id DESC					
+						GROUP BY m.order_id
+						ORDER BY m.order_id DESC
+				
 					)A
-					WHERE CONCAT(invoice_no, order_id, customer_name, p_name, item_rate) LIKE '%$search_txt%' $condition
+					WHERE CONCAT(invoice_no, order_id, customer_name) LIKE '%$search_txt%' $condition
 					ORDER BY order_id desc
 					LIMIT $start, $end";
             //echo $sql;die;
@@ -255,8 +245,7 @@ switch ($q){
             }
             echo json_encode($data);
         }
-
-    break;
+        break;
 
     case "get_order_details":
         $update_permission = $dbClass->getUserGroupPermission(76);

@@ -4,9 +4,7 @@
     <list default="true" id="289ea524-a539-47c6-a345-6f05b3774d37" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/admin/controller/orderController.php" beforeDir="false" afterPath="$PROJECT_DIR$/admin/controller/orderController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/admin/js/static_text.js" beforeDir="false" afterPath="$PROJECT_DIR$/admin/js/static_text.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/js/static_text.js" beforeDir="false" afterPath="$PROJECT_DIR$/js/static_text.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/views/logout.php" beforeDir="false" afterPath="$PROJECT_DIR$/views/logout.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/admin/view/order/orders.php" beforeDir="false" afterPath="$PROJECT_DIR$/admin/view/order/orders.php" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
