@@ -47,7 +47,7 @@ function showCart(){
                 });
                 total = total.toFixed(2);
                 html += '<div class="subtotal"><div class="col-md-6 col-sm-6 col-xs-6"><h6>Subtotal :</h6></div><div class="col-md-6 col-sm-6 col-xs-6"><span>'+ currency_symbol+' '+ total+'</span></div></div>';
-                html  += '<div class="cart-btn"><div class="col-sm-6"><a href="index.php?page=cart" class="btn-main checkout">VIEW ALL</a></div><div class="col-sm-6"><a href="index.php?page=checkout" class="btn-main checkout">CHECK OUT</a></div></div>';
+                html  += '<div class="cart-btn"><div class="col-sm-6 col-xs-6"><a href="index.php?page=cart" class="btn-main checkout">VIEW ALL</a></div><div class="col-sm-6 col-xs-6"><a href="index.php?page=checkout" class="btn-main checkout">CHECK OUT</a></div></div>';
                 $('#total_item_in_cart').html(count);
             }
             else{

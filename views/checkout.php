@@ -38,7 +38,7 @@ if(!isset($_SESSION['cart']) || !count($_SESSION['cart'])>0) {
           </div>
           <div class="row">
                <div class="col-md-12 col-sm-12 col-xs-12 wow fadeInDown  tab-content" data-wow-duration="1000ms" data-wow-delay="300ms" >
-                     <ul class="nav nav-tabs" role="tablist" style="margin-right: 43%; margin-top: 20px; font-size: 20px; border-radius: 15px 15px 0px 0px">
+                     <ul class="nav nav-tabs" role="tablist" style="margin-right: 43%; margin-top: 20px;  border-radius: 15px 15px 0px 0px">
                             <li role="presentation" onclick="user_details()" id="userDetails" style="background-color: #EAEAEA">
                                 <a href="#description" aria-controls="account" role="tab" data-toggle="tab">Your Details</a>
                             </li>
@@ -204,14 +204,14 @@ if(!isset($_SESSION['cart']) || !count($_SESSION['cart'])>0) {
                                     <h5>Coupon and Tips</h5>
                                 </div>
                                 <div class="col-md-12 col-sm-12 col-xs-12">
-                                    <label style=" font-size: 18px"> Do you have any cupon code </label>
+                                    <label> Do you have any cupon code </label>
                                     <input type="text" name="coupon" id="coupon" placeholder="Enter The Coupon Code" class="input-fields" style="border-radius: 10px">
                                     <div id="coupon_error" class="text-center" style="display:none"></div>
 
                                 </div>
 
                                 <div class="col-md-12 col-sm-12 col-xs-12">
-                                    <label style=" font-size: 18px"> Want to give some Tips </label>
+                                    <label> Want to give some Tips </label>
                                     <input type="text" name="tips" id="tips" placeholder="Tips amount" class="input-fields" style="border-radius: 10px">
                                 </div>
 
@@ -220,20 +220,20 @@ if(!isset($_SESSION['cart']) || !count($_SESSION['cart'])>0) {
                                 </div>
                                 <div class="col-md-12 col-sm-12 col-xs-12">
                                     <br />
-                                    <label style=" font-size: 20px"> Confirm TakeOut Location </label>
+                                    <label> Confirm TakeOut Location </label>
                                     <div class="payment-mode" style="margin: auto">
-                                        <span><input type="checkbox" name="take_out_location" id="take_out_location" ><label id="take_out_location_" style="padding-left: 10px; padding-top: 10px; font-size: 18px"></label></span>
+                                        <span><input type="checkbox" name="take_out_location" id="take_out_location" ><label id="take_out_location_" style="padding-left: 10px; padding-top: 10px;"></label></span>
                                     </div>
                                 </div>
 
                                 <div class="col-md-12 col-sm-12 col-xs-12">
                                     <br />
-                                    <label style=" font-size: 20px"> Please select date and time </label>
+                                    <label> Please select date and time </label>
                                     <input type="text" name="pickup_date_time" id="pickup_date_time" placeholder="Date and Time" class="input-fields date-picker" required value="2020-01-07 12:00:00" style="border-radius: 10px">
                                 </div>
 
                                 <div class="col-md-12 col-sm-12 col-xs-12">
-                                    <label style=" font-size: 20px"> Order Notes </label>
+                                    <label> Order Notes </label>
                                     <textarea placeholder="Order Notes" name="secial_notes" id="secial_notes" style="border-radius: 10px"></textarea>
                                 </div>
 
@@ -250,7 +250,7 @@ if(!isset($_SESSION['cart']) || !count($_SESSION['cart'])>0) {
                                 <div id="payment_alert" class="text-center" style="display:none"></div>
 
                                 <div class="checkout-terms">
-                                    <input type="checkbox" name="tarm_condition" id="tarm_condition"><label style="padding-left: 10px; padding-top: 10px; font-size: 18px">I’ve read and accept the terms &amp; conditions *</label>
+                                    <input type="checkbox" name="tarm_condition" id="tarm_condition"><label style="padding-left: 10px; padding-top: 10px;">I’ve read and accept the terms &amp; conditions *</label>
                                 </div>
                                 <input type="hidden" name="total_order_amt" id="total_order_amt">
                                  <input type="hidden" name="tax_amount" id="tax_amount">
@@ -292,7 +292,7 @@ if(!isset($_SESSION['cart']) || !count($_SESSION['cart'])>0) {
                                     <div class="checkout-total">
                                         <h6>ORDER TOTAL <small class="price-big" id="total_amount_"></small></h6>
                                     </div>
-                                    <div class="" style=" background-color: #add8e6 ;" >
+                                    <div class="text-center" style=" background-color: #add8e6; border-radius:4px;" >
                                         <label id="loyalty_point_earn" style="text-align: center; margin: auto; padding: 8px; margin-left: 10px"></label>
                                     </div>
 
@@ -541,17 +541,17 @@ general_settings = function general_settings(){
                     $('#take_out_location_').html(data.store_address);
                     if(data.cash_payment==1){
                         html+='<div class="payment-mode">\n' +
-                            '       <input type="radio" name="payment_method" value="1" onclick="payment_check()"><label style="padding-left: 10px; padding-top: 10px; font-size: 18px">Cash on Delivery</label>\n' +
+                            '       <input type="radio" name="payment_method" value="1" onclick="payment_check()"><label style="padding-left: 10px; padding-top: 10px;">Cash on Delivery</label>\n' +
                             '  </div>'
                     }
                     if(data.loyelty_payment==1 ){
                         html+='<div class="payment-mode">\n' +
-                            '      <input type="radio" name="payment_method" id="loyalty_redio" value="2"  onclick="payment_check()"><label style="padding-left: 10px; padding-top: 10px; font-size: 18px">Use Loyalty Point <span id="loyalty_spend"></span></label>\n' +
+                            '      <input type="radio" name="payment_method" id="loyalty_redio" value="2"  onclick="payment_check()"><label style="padding-left: 10px; padding-top: 10px;">Use Loyalty Point <span id="loyalty_spend"></span></label>\n' +
                             '  </div>'
                     }
                     if(data.card_payment==1){
                         html+='<div class="payment-mode">\n' +                      
-                            '      <input type="radio" name="payment_method" value="3"  onclick="payment_check()"><label style="padding-left: 10px; padding-top: 10px; font-size: 18px">Credit Card</label>'
+                            '      <input type="radio" name="payment_method" value="3"  onclick="payment_check()"><label style="padding-left: 10px; padding-top: 10px;">Credit Card</label>'
                         if(data.payment_card_visa==1){
                             html+='<img src="./images/payments/visa.png" style="height: 30px">'
                         }
