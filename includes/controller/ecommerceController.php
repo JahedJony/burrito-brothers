@@ -383,7 +383,6 @@ switch ($q){
             $dbClass->insert("notification", $column_array);
         }
 
-
         //echo $return_master; die;
         if($return_master){
             //echo 545; die;

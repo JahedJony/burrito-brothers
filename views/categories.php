@@ -108,18 +108,19 @@
         var name = data['name'].split(' ').join('__')
 
         var html='                <div class="col-md-3 col-sm-4 col-xs-6 wow fadeInDown" data-wow-duration="1000ms" data-wow-delay="300ms">\n' +
-            '                    <div class="shop-main-list" style=" border-radius: 15px; max-width: 220px;" >\n' +
+            '                    <div class="shop-main-list" style=" border-radius: 15px; border: 1px solid #e4ba5e; max-width: 220px;" >\n' +
             '                        <div class="shop-product" style="border-radius: 15px 15px 0px 0px; padding-bottom: 0px; margin-bottom: 0px">\n' +
             '                            <img src="'+ project_url+'admin/'+data['photo']+'" alt="" style="border-radius: 17px 17px 0px 0px">\n' +
-            '                            <div class="cart-overlay-wrap" style="border-radius: 17px 17px 0px 0px">\n' +
+            '                        <div style=" padding-top: 8px; padding-bottom: 8px; border-radius: 0px 0px 17px 17px">\n' +
+            '                             <a href="index.php?page=menu&category='+ name+'"><h5 style="text-transform: uppercase">'+ data['name']+'</h5></a>' +
+            '                        </div>\n'+
+            '                            <div class="cart-overlay-wrap" style="border-radius: 17px 17px 17px 17px">\n' +
             '                                <div class="cart-overlay" >\n' +
             '                                    <a href="index.php?page=menu&category='+ name+'" class="shop-cart-btn">Choose Menu</a>\n' +
             '                                </div>\n' +
             '                            </div>\n' +
             '                        </div>' +
-            '                        <div style="background-color: rgba(228, 185, 91, 0.9); padding-top: 8px; padding-bottom: 8px; border-radius: 0px 0px 17px 17px">\n' +
-            '                             <a href="index.php?page=menu&category='+ name+'"><h5 style="text-transform: uppercase">'+ data['name']+'</h5></a>' +
-            '                        </div>\n'+
+
             '                    </div>\n' +
             '                </div>\n'
 

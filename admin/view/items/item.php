@@ -169,12 +169,12 @@ else{
                                     <label class="control-label col-md-2 col-sm-2 col-xs-12">Image</label>
                                     <div class="col-md-4 col-sm-4 col-xs-12" id="first_section">
                                         <div class="input-group">
-                                            <input name="attached_file[]" class="form-control input-sm col-md-6 col-xs-12 attached_file" type="file"/>
+                                            <input name="attached_file" class="form-control input-sm col-md-6 col-xs-12 attached_file" type="file"/>
                                             <!--<span class="input-group-btn">
 									            <button type="button" class="btn btn-primary btn-sm" id="add_file_row"><span class="glyphicon glyphicon-plus"></span></button>
 								            </span>-->
                                         </div>
-                                        <small style="color:red">Image size should be (4:3 ratio) and size under 3mb. </small><br>
+                                        <small style="color:red">Image size should be (1:1 ratio) and size under 3mb. </small><br>
                                     </div>
                                     <input type="text" class="tags form-control col-lg-12 hide" name="uploded_files" id="uploded_files" value=""/>
                                     <label class="control-label col-md-2 col-sm-2 col-xs-12">Base Price<span class="required">*</span></label>

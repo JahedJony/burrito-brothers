@@ -14,7 +14,7 @@ switch ($q){
     case "insert_or_update":
         //echo json_encode($_FILES['uploded_files']['name']); die;
 
-        if(isset($_FILES['uploded_files']) && $_FILES['uploded_files']['name']!= ""){
+        if(isset($_FILES['attached_file']) && $_FILES['attached_file']['name']!= ""){
             echo 1; die;
             $desired_dir = "../images/category";
             chmod( "../images/category", 0777);
