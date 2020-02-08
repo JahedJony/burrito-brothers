@@ -38,7 +38,7 @@ if(!isset($_SESSION['cart']) || !count($_SESSION['cart'])>0) {
           </div>
           <div class="row">
                <div class="col-md-12 col-sm-12 col-xs-12 wow fadeInDown  tab-content" data-wow-duration="1000ms" data-wow-delay="300ms" >
-                     <ul class="nav nav-tabs" role="tablist" style="margin-right: 43%; margin-top: 20px;  border-radius: 15px 15px 0px 0px">
+                     <ul class="nav nav-tabs" role="tablist" style="margin-right: 43%; margin-top: 40px;  border-radius: 15px 15px 0px 0px">
                             <li role="presentation" onclick="user_details()" id="userDetails" style="background-color: #EAEAEA">
                                 <a href="#description" aria-controls="account" role="tab" data-toggle="tab">Your Details</a>
                             </li>
@@ -69,8 +69,7 @@ if(!isset($_SESSION['cart']) || !count($_SESSION['cart'])>0) {
                                                 <div class="col-md-12 col-sm-12 col-xs-12">
                                                     <div class="row">
                                                         <div class="col-md-6 col-sm-6 col-xs-12">
-                                                            <label>
-                                                                <input type="checkbox" name="chkbox">Remember me</label>
+                                                            <label><input type="checkbox" name="chkbox">Remember me</label>
                                                         </div>
                                                         <div class="col-md-6 col-sm-6 col-xs-12">
                                                             <a  onclick="forgetPass()" class="pull-right" id="send_password_"><i class="fa fa-user" aria-hidden="true"></i> Lost your password?</a>
@@ -219,6 +218,7 @@ if(!isset($_SESSION['cart']) || !count($_SESSION['cart'])>0) {
                                     <h5>Takeout Details</h5>
                                 </div>
                                 <div class="col-md-12 col-sm-12 col-xs-12">
+
                                     <br />
                                     <label> Confirm TakeOut Location </label>
                                     <div class="payment-mode" style="margin: auto">
@@ -310,7 +310,7 @@ var loyalty_points=0;
 var loyalty_point_value=0;
 var loyalty_reserve_value=0;
 
-
+$('select.select-dropbox, input[type="radio"], input[type="checkbox"]').styler({selectSearch:true,});
 
 $('.date-picker').daterangepicker({
 	singleDatePicker: true,

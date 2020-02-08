@@ -1288,6 +1288,9 @@ body main .team-page{padding-bottom:70px;}
 	width:80% !important;
 }
 
+.pointer{
+	cursor:pointer;
+}
 @media screen and (max-width: 531px) {
     .account_container { display: flex; flex-flow: column-reverse; }
 }
