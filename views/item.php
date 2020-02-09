@@ -20,7 +20,7 @@ if(isset($_GET['order_id']) && $_GET['order_id']!="") $order_id =  $_GET['order_
     <div class="container">
         <div class="breadcrumb-inner">
             <h2>ITEM NAME</h2>
-            <a href="index.php?page=home">Home</a>
+            <a href="index.php">Home</a>
             <span>Item name</span>
         </div>
     </div>

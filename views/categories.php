@@ -2,7 +2,7 @@
     <div class="container">
             <div class="breadcrumb-inner">
                 <h2>HOME CATEGORY</h2>
-                <a href="index.php?page=home">Home</a>
+                <a href="index.php">Home</a>
                 <span>Home Category</span>
             </div>
         </div>

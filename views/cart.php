@@ -9,7 +9,7 @@ if(!isset($_SESSION['cart']) || !count($_SESSION['cart'])>0) {
     <div class="container">
         <div class="breadcrumb-inner">
             <h2>CART ITEMS</h2>
-            <a href="index.php?page=home">Home</a>
+            <a href="index.php">Home</a>
             <span>Cart Items</span>
         </div>
     </div>

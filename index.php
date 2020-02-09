@@ -30,18 +30,18 @@ $currency   = $dbClass->getDescription('currency_symbol');
 $item_image_display=$dbClass->getDescription('item_image_display');
 $ingredient_image_display=$dbClass->getDescription('ingredient_image_display');
 
-$logo         =$website_url."admin/".$dbClass->getDescription('company_logo');
+
+$logo         = $website_url."admin/".$dbClass->getDescription('company_logo');
 //$feature      = $dbClass->getDescription(47);
 //$special_menu = $dbClass->getDescription(48);
 //$subtitle     = $dbClass->getDescription(49);
 //$why_we_best  = $dbClass->getDescription(50);
-
+//echo $logo;die;
 
 $facebook  = $dbClass->getDescription('fb_url');
 $twitter  = $dbClass->getDescription('tweeter_url');
 $instagram  = $dbClass->getDescription('instagram_url');
 $yelp  = $dbClass->getDescription('yelp_url');
-
 
 
 
@@ -112,22 +112,59 @@ if(isset($_GET['search'])) $search_text = "";
                         </div>
                         <div class="header-top-right">
                             <div class="social-top">
-                                <ul>
-                                    <li><a href="<?php echo $facebook; ?>"><i class="fa fa-facebook" aria-hidden="true"></i></a></li>
-                                    <li><a href="<?php echo $twitter; ?>"><i class="fa fa-twitter" aria-hidden="true"></i></a></li>
-                                    <li><a href="<?php echo $instagram; ?>"><i class="fa fa-instagram" aria-hidden="true"></i></a></li>
-                                    <li><a href="<?php echo $yelp; ?>"><i class="fa fa-yelp" style="color:white"></i></a></li>
-                                    <li class="language-menu">
-                                        <?php
-                                        if($is_logged_in_customer != "")
-                                            echo '<a href="index.php?page=account" class="current-lang" id="my_acc"><i class="fa fa-user" aria-hidden="true" ></i> My Account</a>';
-                                        else
-                                            echo '<a href="#" onclick="active_modal(1)" data-toggle="modal" data-target="#loginModal" class="current-lang" id="log_reg"><i class="fa fa-user" aria-hidden="true"></i> <span >Login<span></a>';
-                                        ?>
-                                    </li>
-                                </ul>
 
-                            </div>
+								<ul>
+									<li><a href="<?php echo $facebook; ?>"><i class="fa fa-facebook" aria-hidden="true"></i></a></li>
+									<li><a href="<?php echo $twitter; ?>"><i class="fa fa-twitter" aria-hidden="true"></i></a></li>
+									<li><a href="<?php echo $instagram; ?>"><i class="fa fa-instagram" aria-hidden="true"></i></a></li>
+									<li><a href="<?php echo $yelp; ?>"><i class="fa fa-yelp" style="color:white"></i></a></li>									
+									
+									<?php
+										if($is_logged_in_customer == ""){
+											echo '<li class="language-menu"><a href="#" onclick="active_modal(1)" data-toggle="modal" data-target="#loginModal" class="current-lang" id="log_reg"><i class="fa fa-user" aria-hidden="true"></i> Login / Register</a></li>';
+										}
+									?>
+									
+									
+									<?php
+										if($is_logged_in_customer != ""){
+											echo '<li></li><li></li>	
+												<li class="dropdown">
+													<a href="javascript:;" class="dropdown-toggle info-number" data-toggle="dropdown" aria-expanded="false">
+														<i class="fa fa-bell-slash"></i>
+														<span class="badge bg-red" id="unread_notifications"></span>
+													</a>
+													<ul id="notification_ul" class="dropdown-menu" role="menu">
+														<li>
+															<div class="text-left">
+																<button class="btn btn-primary btn-xs has-spinner" id="load_more_not_button">
+																	<span class="spinner"><i class="fa fa-spinner fa-spin fa-fw"></i></span>
+																	Load More Notificatons?
+																</button>
+															</div>																
+														</li>
+													</ul>
+												</li>';	
+										}	
+									?>
+									
+								</ul>
+							</div>
+							
+							<?php
+								if($is_logged_in_customer != ""){			
+									echo '<div class="language-menu">
+										<a href="#" class="current-lang">
+											<img src="images/user.png" alt=""> <i class="fa fa-caret-down" aria-hidden="true"></i>
+										</a>
+										<ul>
+											<li><a href="index.php?page=account"> My Account</a></li>
+											<li><a href="index.php?page=logout"> Log Out <i class="fa fa-sign-out"></i></a></li>
+										</ul>
+									</div>';
+								}
+							?>
+							
                         </div>
                     </div>
                 </div>
@@ -855,6 +892,7 @@ if(isset($_GET['search'])) $search_text = "";
 <script src="js/script.js"></script>
 <script src="js/url.js"></script>
 <script src="js/static_text.js"></script>
+<script src="js/common.js"></script>
 <script src="js/cart.js"></script>
 
 
@@ -916,7 +954,6 @@ if(isset($_GET['search'])) $search_text = "";
 
     //loadPage('body_view');
 
-
     function active_modal(type){
         if(type==1){
             $('#forget_passModal').modal('hide');
@@ -931,8 +968,6 @@ if(isset($_GET['search'])) $search_text = "";
             setTimeout(function(){
                 $('#registerModal').modal();
             }, 400);
-
-
         }
     }
 
@@ -1187,6 +1222,9 @@ if(isset($_GET['search'])) $search_text = "";
             clearInterval(set_interval);
         }, 2000);
     }
+		
+	
+	
 
 
 

@@ -431,83 +431,87 @@ $('#coupon').on('change',function () {
 
 
 load_customer_profile = function load_customer_profile(id){
-        $.ajax({
-                url:"./includes/controller/ecommerceController.php",
-                dataType: "json",
-                type: "post",
-                async:false,
-                data: {
-                    q: "get_customer_details",
-                    customer_id: customer_id,
-                },
-                success: function(data){
-                    if(!jQuery.isEmptyObject(data.records)){
-                        $.each(data.records, function(i,data){
-                            $('#customer_id').html(data.customer_id);
-                            $('#customer_name').html(data.full_name);
-                            $('#contact_no').html(data.contact_no);
-                            $('#email').html(data.email);
-                            $('#address').html(data.address);
-                            $('#customer_status').html(data.status_text);
-                            $('#loyalty_points').html(data.loyalty_points);
-                            loyalty_points = data.loyalty_points;
-                            if(data.photo == ""){
-                                $('#customer_img').attr("src",'admin/images/no_image.png');
-                            }else{
-                                $('#customer_img').attr("src","admin/"+data.photo);
-                            }
-                            $('#customer_img').attr("width", "70%","height","70%");
-                        });
+$.ajax({
+		url:"./includes/controller/ecommerceController.php",
+		dataType: "json",
+		type: "post",
+		async:false,
+		data: {
+			q: "get_customer_details",
+			customer_id: customer_id,
+		},
+		success: function(data){
+			if(!jQuery.isEmptyObject(data.records)){
+				$.each(data.records, function(i,data){
+					$('#customer_id').html(data.customer_id);
+					$('#customer_name').html(data.full_name);
+					$('#contact_no').html(data.contact_no);
+					$('#email').html(data.email);
+					$('#address').html(data.address);
+					$('#customer_status').html(data.status_text);
+					$('#loyalty_points').html(data.loyalty_points);
+					loyalty_points = data.loyalty_points;
+					if(data.photo == ""){
+						$('#customer_img').attr("src",'admin/images/no_image.png');
+					}else{
+						$('#customer_img').attr("src","admin/"+data.photo);
+					}
+					$('#customer_img').attr("width", "70%","height","70%");
+				});
 
-                    }
-                    //alert(loyalty_points)
-                }
-            });
-    }
+			}
+			//alert(loyalty_points)
+		}
+	});
+}
+
 display_div = function display_div(){
-        $("#login_div").css("display", "none");
-        $("#register_div").css("display", "none");
-        $("#forget_pass_div").css("display", "none");
-        $("#profile").css("display", "none");
-        $("#take_out").css("display", "none");
-        $("#payments").css("display", "none");
-        document.getElementById("userDetails").classList.remove('active');
-        document.getElementById("take_out_menu").classList.remove('active');
-        document.getElementById("payments_menu").classList.remove('active');
-    }
+	$("#login_div").css("display", "none");
+	$("#register_div").css("display", "none");
+	$("#forget_pass_div").css("display", "none");
+	$("#profile").css("display", "none");
+	$("#take_out").css("display", "none");
+	$("#payments").css("display", "none");
+	document.getElementById("userDetails").classList.remove('active');
+	document.getElementById("take_out_menu").classList.remove('active');
+	document.getElementById("payments_menu").classList.remove('active');
+}
+
 user_details = function user_details(){
-        if(customer_id && customer_id>0){
-            //alert(customer_id)
-            display_div()
-            //document.getElementById("userDetails").classList.add('active');
-            //$("#profile").css("display", "block");
-        }
-        else {
-            display_div()
-            login()
-        }
-    }
+	if(customer_id && customer_id>0){
+		//alert(customer_id)
+		display_div()
+		//document.getElementById("userDetails").classList.add('active');
+		//$("#profile").css("display", "block");
+	}
+	else {
+		display_div()
+		login()
+	}
+}
 login = function login() {
-        display_div()
-        document.getElementById("userDetails").classList.add('active');
-        $("#login_div").css("display", "block");
-    }
+	display_div()
+	document.getElementById("userDetails").classList.add('active');
+	$("#login_div").css("display", "block");
+}
 registration = function registration() {
-        display_div()
-        document.getElementById("userDetails").classList.add('active');
-        $("#register_div").css("display", "block");
-    }
+	display_div()
+	document.getElementById("userDetails").classList.add('active');
+	$("#register_div").css("display", "block");
+}
 forgetPass = function forgetPass() {
-        display_div()
-        document.getElementById("userDetails").classList.add('active');
-        $("#forget_pass_div").css("display", "block");
-    }
+	display_div()
+	document.getElementById("userDetails").classList.add('active');
+	$("#forget_pass_div").css("display", "block");
+}
+
 take_out = function take_out(){
     load_customer_profile()
     display_div()
     document.getElementById("take_out_menu").classList.add('active');
     $("#take_out").css("display", "block");
-    }
+}
+
 payments = function payments(){
     display_div()
     document.getElementById("payments_menu").classList.add('active');
@@ -641,6 +645,7 @@ order_summary()
 //load_customer_profile()
 
 $('#login').click(function(event){
+
         event.preventDefault();
         var formData = new FormData($('#login_form')[0]);
         formData.append("q","login_customer");
@@ -683,6 +688,7 @@ $('#login').click(function(event){
         }
     })
 
+
 $('#foget_pass_submit_').click(function(event){
     event.preventDefault();
         var formData = new FormData($('#forget_pass_form')[0]);
@@ -713,6 +719,7 @@ $('#foget_pass_submit_').click(function(event){
             });
         }
     })
+	
 // send mail if forget password
 $('#register_submit_').click(function(event){
     event.preventDefault();
@@ -758,7 +765,7 @@ $('#register_submit_').click(function(event){
                 else if($.isNumeric(data)==true && data==1){
                     $('.done_registration').addClass("hide");
                     $('.done_registration_msg').removeClass("hide");
-                    window.location.href = project_url+ "checkout.php";
+                    window.location.href = project_url+ "index.php?page=checkout";
                 }
                 else{
                     success_or_error_msg('#registration_submit_error_',"danger","Registration is not completed. please check your information again.","#cust_email" );
@@ -778,7 +785,7 @@ $('#checkout_submit').click(function(event) {
     event.preventDefault();
     //$('#grand_total').val($('#total_amount_').html());
       //  alert($('#grand_total').val())
-    var loyalty_value =Math.floor( $('#total_paid_amount').val()/loyalty_reserve_value);
+    var loyalty_value = Math.floor( $('#total_paid_amount').val()/loyalty_reserve_value);
     var loyalty_deduct = 0;
     if($('input[name=payment_method]:checked', '#checkout-form').val()==2){
         loyalty_deduct = Math.ceil($('#total_paid_amount').val()*loyalty_point_value);
@@ -828,7 +835,7 @@ $('#checkout_submit').click(function(event) {
             cache:false,
             contentType:false,processData:false,
             success: function(data){
-                console.log(data)
+                //console.log(data)
                 if(data==0){
                     success_or_error_msg('#logn_reg_error',"danger","Order Faild. please check your information properly","#checkout_submit" );
                 }
