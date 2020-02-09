@@ -307,42 +307,34 @@ switch ($q) {
 	break;
 
     case "apply_coupon":
-        //echo $group_order_id; die;
-
-        //echo $coupon_code; die;
 
         $coupon_amount = 0;
         $date = date("Y-m-d");
 
         $coupon_info = $dbClass->getSingleRow("select id,c_type,amount,min_order_amount from cupons where status=1 and ((cupon_no='$coupon_code' and customer_id = ".$_SESSION['customer_id'].") or cupon_no='$coupon_code' and customer_id is null) and (DATE_FORMAT(start_date, '%Y-%m-%d') <= '$date' AND DATE_FORMAT(end_date, '%Y-%m-%d') >= '$date')");
 
-        //var_dump("select id,c_type,amount,min_order_amount from cupons where status=1 and ((cupon_no='$cupon_code' and customer_id = ".$_SESSION['customer_id'].") or cupon_no='$cupon_code' and customer_id is null) and (DATE_FORMAT(start_date, '%Y-%m-%d') <= '$date' AND DATE_FORMAT(end_date, '%Y-%m-%d') >= '$date')");
-//die;
-
-       // echo($coupon_info);die;
-        $order_info = $dbClass->getSingleRow("select total_order_amt from group_order where order_id=$group_order_id");
+        $order_info = $dbClass->getSingleRow("select total_order_amt from group_order where order_id=".$group_order_id);
 
 
         if($coupon_info['id'] && $order_info['total_order_amt']>=$coupon_info['min_order_amount']){
-        //var_dump("select id,c_type,amount,min_order_amount from cupons where status=1 and ((cupon_no='$cupon_code' and customer_id = ".$_SESSION['customer_id'].") or cupon_no='$cupon_code' and customer_id is null) and (DATE_FORMAT(start_date, '%Y-%m-%d') <= '$date' AND DATE_FORMAT(end_date, '%Y-%m-%d') >= '$date')");
-//die;
 
+            if($cupon_info['id']){
+                $condition_array = array(
+                    'order_id'=>$group_order_id
+                );
+                $columns_value = array(
+                    'cupon_id'=>$coupon_info['id']
+                );
+                $return = $dbClass->update("group_order", $columns_value, $condition_array);
+                echo 1;
 
-
-        if($cupon_info['id']){
-            $condition_array = array(
-                'order_id'=>$group_order_id
-            );
-            $columns_value = array(
-                'cupon_id'=>$coupon_info['id']
-            );
-            $return = $dbClass->update("group_order", $columns_value, $condition_array);
-            echo 1;
-
+            }
         }
-        else echo 2;
+        else{
+            echo 2;
+        }
 
-    break;
+        break;
 
     case "add_tips":
         $condition_array = array(

@@ -3,27 +3,9 @@
   <component name="ChangeListManager">
     <list default="true" id="289ea524-a539-47c6-a345-6f05b3774d37" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/admin/controller/itemController.php" beforeDir="false" afterPath="$PROJECT_DIR$/admin/controller/itemController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/admin/images/item/1576556840gallery30.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/admin/images/item/1576557060gallery30.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/admin/images/item/1576557272gallery30.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/admin/images/item/1576659587gallery30.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/admin/images/item/1576659735gallery31.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/admin/images/item/chicken.jpeg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/admin/images/item/gallery15.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/admin/images/item/gallery22.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/admin/images/item/gallery30.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/admin/images/item/gallery31.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/admin/images/item/gallery5.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/admin/images/item/img63.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/admin/images/item/mesonary6.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/admin/images/item/vegetable.jpeg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/admin/js/common.js" beforeDir="false" afterPath="$PROJECT_DIR$/admin/js/common.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/admin/view/items/item.php" beforeDir="false" afterPath="$PROJECT_DIR$/admin/view/items/item.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/index.php" beforeDir="false" afterPath="$PROJECT_DIR$/index.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/js/common.js" beforeDir="false" afterPath="$PROJECT_DIR$/js/common.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/views/item.php" beforeDir="false" afterPath="$PROJECT_DIR$/views/item.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/views/logout.php" beforeDir="false" afterPath="$PROJECT_DIR$/views/logout.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/includes/controller/ecommerceController.php" beforeDir="false" afterPath="$PROJECT_DIR$/includes/controller/ecommerceController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/includes/controller/groupController.php" beforeDir="false" afterPath="$PROJECT_DIR$/includes/controller/groupController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/includes/dbConnect.php" beforeDir="false" afterPath="$PROJECT_DIR$/includes/dbConnect.php" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -120,7 +102,7 @@
       <workItem from="1580815122907" duration="305000" />
       <workItem from="1580815456073" duration="1685000" />
       <workItem from="1580997418106" duration="11112000" />
-      <workItem from="1581098916002" duration="29877000" />
+      <workItem from="1581098916002" duration="31326000" />
     </task>
     <servers />
   </component>
