@@ -157,6 +157,21 @@ var loyalty_point_value=0;
 var loyalty_reserve_value=0;
 var total = 0;
 
+
+$('select.select-dropbox, input[type="radio"], input[type="checkbox"]').styler({selectSearch:true,});
+
+$('.date-picker').daterangepicker({
+	singleDatePicker: true,
+	/*autoUpdateInput: false,*/
+	calender_style: "picker_2",
+	timePicker:true,
+	locale: {
+		format: 'YYYY-MM-DD h:mm',
+		separator: " - ",
+	}
+});
+
+
 $('#tips').on('change',function () {
 alert('sdf')
     var tips = $('#tips').val();

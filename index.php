@@ -240,9 +240,8 @@ if(isset($_GET['search'])) $search_text = "";
                                         <div class="col-md-12 col-sm-12 col-xs-12">
                                             <div class="row">
                                                 <div class="col-md-6 col-sm-6 col-xs-12">
-                                                    <label>
-                                                        <input type="checkbox" name="chkbox">Remember me</label>
-                                                </div>
+                                                    <label><input type="checkbox" name="chkbox">Remember me</label>
+													</div>
                                                 <div class="col-md-6 col-sm-6 col-xs-12">
                                                     <a href="javascript:void(0)" onclick="active_modal(2)"class="pull-right" data-toggle="modal" data-target="#forget_passModal" id="send_password"><i class="fa fa-user" aria-hidden="true"></i> Lost your password?</a>
                                                 </div>
@@ -877,8 +876,8 @@ if(isset($_GET['search'])) $search_text = "";
 </html>
 <script src="plugin/bootstrap/bootstrap.min.js"></script>
 <script src="plugin/bootstrap/bootstrap-datepicker.js"></script>
-    <script type="text/javascript" src="admin/theme/js/moment/moment.min.js"></script>
-    <script type="text/javascript" src="admin/theme/js/datepicker/daterangepicker.js"></script>
+<script type="text/javascript" src="admin/theme/js/moment/moment.min.js"></script>
+<script type="text/javascript" src="admin/theme/js/datepicker/daterangepicker.js"></script>
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAf6My1Jfdi1Fmj-DUmX_CcNOZ6FLkQ4Os"></script>
 <script src="plugin/form-field/jquery.formstyler.min.js"></script>
 <script src="plugin/revolution-plugin/jquery.themepunch.plugins.min.js"></script>

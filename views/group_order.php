@@ -165,6 +165,20 @@ if(isset($_GET['order_id']) && $_GET['order_id']!="") $order_id =  $_GET['order_
 
 $(document).ready(function () {
 
+$('select.select-dropbox, input[type="radio"], input[type="checkbox"]').styler({selectSearch:true,});
+
+$('.date-picker').daterangepicker({
+	singleDatePicker: true,
+	/*autoUpdateInput: false,*/
+	calender_style: "picker_2",
+	timePicker:true,
+	locale: {
+		format: 'YYYY-MM-DD h:mm',
+		separator: " - ",
+	}
+});
+
+
     $('#group_name').on("keyup change", function () {
         //alert( $('#group_name').val())
         $.ajax({

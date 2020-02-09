@@ -157,7 +157,7 @@ else{
 
                                     </div>
                                 </div>
-                                <div class="col-md-6" style="text-align:right">
+                                <div class="col-md-6 text-right text-right-l left-padding-0 left-margin-0">
                                     <h4>Customer Details:</h4>
                                     <address id="customer_detail_vw">
                                     </address>
