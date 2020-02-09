@@ -66,7 +66,7 @@ else{
 					</tr>
 				  </tbody>
 			</table>
-            <table class="table table-bordered table-hover" id=""  width: 100%">
+            <!--<table class="table table-bordered table-hover" id=""  width: 100%">
                 <thead>
                 <tr style="background-color: #e4b95b; alignment: center">
                     <th style='font-size: 13px'>Order No</th>
@@ -93,6 +93,7 @@ else{
                 </tr>
                 </tbody>
             </table>
+			-->
 
             <table class="table table-bordered table-hover" id="table_small" >
                 <thead>
@@ -127,17 +128,16 @@ else{
 }
 ?>
 <div class="modal fade booktable" id="order_modal" tabindex="-2" role="dialog" aria-labelledby="booktable">
-    <div class="modal-dialog" role="document" style="width:80% !important">
+    <div class="modal-dialog width_80_p" role="document" >
         <div class="modal-content">
             <div class="modal-body" style="margin-bottom: 50px">
                 <div id="order-div" >
                     <div class="title text-center">
                         <h3 class="text-coffee left"> <a href="index.php"><img src="<?php echo ($logo); ?>" alt="" style="height: 100px; width: 100px"></a></h3>
-                        <h4 class="text-coffee left">Order For  <span class="text-capitalize" id="ord_title_vw"></span></h4>
                     </div>
                     <div class="done_registration ">
                         <div class="doc_content">
-                            <div class="col-md-12" style="margin-left: 0px; padding: 0px; margin-bottom: 20px">
+                            <div class="col-md-12 left-margin-0" style=" padding: 0px; margin-bottom: 20px">
                                 <div class="col-md-6" style="margin: 0px; padding: 0px">
                                     <h4>Order Details:</h4>
                                     <div class="byline">
@@ -148,7 +148,7 @@ else{
 
                                     </div>
                                 </div>
-                                <div class="col-md-6" style="text-align:right">
+                                <div class="col-md-6 text-right text-right-l left-margin-0  left-padding-0">
                                     <h4>Customer Details:</h4>
                                     <address id="customer_detail_vw">
                                     </address>
