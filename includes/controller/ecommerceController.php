@@ -376,11 +376,15 @@ switch ($q){
 			if(isset($_SESSION['group_master']) ){
 				//SET Notification for group order
 				//notfication to customer who created group order not admin
-				// mr chaki select his items				
+				// mr chaki select his items
+                //
+
+
 				$customer_id_group = $dbClass->getSingleRow("SELECT go.customer_id from  
 														 group_order_details god
 														 LEFT JOIN group_order go ON go.group_id = god.order_master_id
-														 WHERE god.id = $_SESSION['group_order_details_id']");
+														 WHERE god.id = ".$_SESSION['group_order_details_id']);
+
 				extract($customer_id_group);
 				$group_customer_name = $dbClass->getSingleRow("SELECT full_name FROM customer_infos WHERE customer_id = $customer_id_group");
 				extract($group_customer_name);

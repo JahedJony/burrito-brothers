@@ -477,7 +477,7 @@ if(isset($_GET['order_id']) && $_GET['order_id']!="") $order_id =  $_GET['order_
             }
         });
 
-        if((Object.keys(selected_item_list).length!=0 || cart_side_check!=0)  && select_ingredinet_check==1){
+        //if((Object.keys(selected_item_list).length!=0 || cart_side_check!=0)  && select_ingredinet_check==1){
             //alert('cart_side_check')
             $.ajax({
                 url: "./includes/controller/ecommerceController.php",
@@ -501,7 +501,7 @@ if(isset($_GET['order_id']) && $_GET['order_id']!="") $order_id =  $_GET['order_
                     $('#cart_confirmation').modal()
                 }
             });
-        }
+       // }
         else if(Object.keys(selected_item_list).length==0 && select_ingredinet_check!=0){
             success_or_error_msg('#select_side','warning',"You did not select any BEVERAGE ","#side_order");
             cart_side_check=1

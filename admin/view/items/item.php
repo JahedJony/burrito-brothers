@@ -102,6 +102,7 @@ else{
                 </span>
                 </div>
             </div>
+
             <div style="height:250px; width:100%; overflow-y:scroll">
                 <table id="item_Table" name="table_records" class="table table-bordered  responsive-utilities jambo_table table-striped  table-scroll ">
                     <thead >
@@ -142,101 +143,120 @@ else{
                         <div class="col-md-12">
                             <form method="POST" id="item_form" name="item_form" enctype="multipart/form-data" class="form-horizontal form-label-left">
 
-                            <div class="col-md-12 col-xs-12 col-sm-12" style="margin-bottom:20px; padding: 10px; padding-top: 20px; border-style: solid; border-width: 1px; border-color: #8a6d3b">
+                                <div class="col-md-12 col-xs-12 col-sm-12" style="margin-bottom:20px; padding: 10px; padding-top: 20px; border-style: solid; border-width: 1px; border-color: #8a6d3b">
 
-                                <div class="form-group">
-                                    <label class="control-label col-md-2 col-sm-2 col-xs-12">Item Name<span class="required">*</span></label>
-                                    <div class="col-md-4 col-sm-4 col-xs-12">
-                                        <input type="text" id="item_name" name="item_name" class="form-control col-lg-12"/>
-                                        <input type="hidden" id="item_id" name="item_id" class="form-control col-lg-12" value=""/>
+                                    <div class="form-group">
+                                        <label class="control-label col-md-2 col-sm-2 col-xs-12">Item Name<span class="required">*</span></label>
+                                        <div class="col-md-4 col-sm-4 col-xs-12">
+                                            <input type="text" id="item_name" name="item_name" class="form-control col-lg-12"/>
+                                            <input type="hidden" id="item_id" name="item_id" class="form-control col-lg-12" value=""/>
 
-                                    </div>
-
-                                    <label class="control-label col-md-2 col-sm-2 col-xs-6">Category<span class="required">*</span></label>
-                                    <div class="col-md-4 col-sm-4 col-xs-6">
-                                        <select class="form-control" name="category_option" id="category_option">
-                                        </select>
-                                    </div>
-
-                                </div>
-                                <div class="form-group">
-                                    <label class="control-label col-md-2 col-sm-2 col-xs-12">Details</label>
-                                    <div class="col-md-10 col-sm-10 col-xs-12">
-                                        <textarea rows="2" cols="100" id="details" name="details" class="form-control col-lg-12"></textarea>
-                                    </div>
-                                </div>
-                                <div id="file_div" class="form-group">
-                                    <label class="control-label col-md-2 col-sm-2 col-xs-12">Image</label>
-                                    <div class="col-md-4 col-sm-4 col-xs-12" id="first_section">
-                                        <div class="input-group">
-                                            <input name="attached_file" class="form-control input-sm col-md-6 col-xs-12 attached_file" type="file"/>
-                                            <!--<span class="input-group-btn">
-									            <button type="button" class="btn btn-primary btn-sm" id="add_file_row"><span class="glyphicon glyphicon-plus"></span></button>
-								            </span>-->
                                         </div>
-                                        <small style="color:red">Image size should be (1:1 ratio) and size under 3mb. </small><br>
+
+                                        <label class="control-label col-md-2 col-sm-2 col-xs-6">Category<span class="required">*</span></label>
+                                        <div class="col-md-4 col-sm-4 col-xs-6">
+                                            <select class="form-control" name="category_option" id="category_option">
+                                            </select>
+                                        </div>
+
                                     </div>
-                                    <input type="text" class="tags form-control col-lg-12 hide" name="uploded_files" id="uploded_files" value=""/>
-                                    <label class="control-label col-md-2 col-sm-2 col-xs-12">Base Price<span class="required">*</span></label>
-                                    <div class="col-md-4 col-sm-4 col-xs-12">
-                                        <input type="text" id="rate" name="rate" class="form-control col-lg-12"/>
+                                    <div class="form-group">
+                                        <label class="control-label col-md-2 col-sm-2 col-xs-12">Details</label>
+                                        <div class="col-md-10 col-sm-10 col-xs-12">
+                                            <textarea rows="2" cols="100" id="details" name="details" class="form-control col-lg-12"></textarea>
+                                        </div>
+                                    </div>
+                                    <div id="file_div" class="form-group">
+                                        <label class="control-label col-md-2 col-sm-2 col-xs-12">Image</label>
+                                        <div class="col-md-4 col-sm-4 col-xs-12" id="first_section">
+                                            <div class="input-group">
+                                                <input name="item_image" class="form-control input-sm col-md-6 col-xs-12 attached_file" type="file"/>
+                                                <!--<span class="input-group-btn">
+                                                    <button type="button" class="btn btn-primary btn-sm" id="add_file_row"><span class="glyphicon glyphicon-plus"></span></button>
+                                                </span>-->
+                                            </div>
+                                            <small style="color:red">Image size should be (1:1 ratio) and size under 3mb. </small><br>
+                                        </div>
+                                        <input type="text" class="tags form-control col-lg-12 hide" name="uploded_files" id="uploded_files" value=""/>
+                                        <label class="control-label col-md-2 col-sm-2 col-xs-12">Base Price<span class="required">*</span></label>
+                                        <div class="col-md-4 col-sm-4 col-xs-12">
+                                            <input type="text" id="base_price" name="base_price" class="form-control col-lg-12"/>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group" id="image_div"></div>
+                                    <div class="form-group">
+                                        <label class="control-label col-md-2 col-sm-2 col-xs-6" >Availability</label>
+                                        <div class="col-md-4 col-sm-4 col-xs-6">
+                                            <input type="checkbox" id="is_active" name="is_active" checked="checked" class="form-control col-lg-12" value="1"/>
+                                        </div>
+                                        <label class="control-label col-md-2 col-sm-2 col-xs-6" >Sell From Stock</label>
+                                        <div class="col-md-4 col-sm-4 col-xs-6">
+                                            <input type="checkbox" id="is_stock" name="is_stock" checked="checked" class="form-control col-lg-12" value="1"/>
+                                        </div>
                                     </div>
                                 </div>
-
-                                <div class="form-group" id="image_div"></div>
-                                <div class="form-group">
-                                    <label class="control-label col-md-2 col-sm-2 col-xs-6" >Availability</label>
-                                    <div class="col-md-4 col-sm-4 col-xs-6">
-                                        <input type="checkbox" id="is_active" name="is_active" checked="checked" class="form-control col-lg-12"/>
-                                    </div>
-                                    <label class="control-label col-md-2 col-sm-2 col-xs-6" >Sell From Stock</label>
-                                    <div class="col-md-4 col-sm-4 col-xs-6">
-                                        <input type="checkbox" id="is_stock" name="is_stock" checked="checked" class="form-control col-lg-12"/>
-                                    </div>
-                                </div>
-
-                            </div>
                             </form>
 
-                            <div class="form-group col-lg-12 col-md-12 col-sm-12 col-xs-12" style="margin-bottom:20px; padding: 10px; padding-top: 20px; border-style: solid; border-width: 1px; border-color: #8a6d3b">
+                            <div id="option_list" style="max-height:250px; width:100%; overflow-y:scroll; display: none; margin-bottom: 15px; border: solid 1px gray">
+                                <table id="options_table" name="options_table" class="table table-bordered  responsive-utilities jambo_table table-striped  table-scroll ">
+                                    <thead >
+                                    <tr class="headings">
+                                        <th class="column-title" width="">Option Name</th>
+                                        <th class="column-title" width="15%">Required</th>
+                                        <th class="column-title" width="10%">Minimum Choice</th>
+                                        <th class="column-title" width="10%">Maximum Choice</th>
+                                        <th class="column-title no-link last" width="10%"><span class="nobr"></span></th>
+                                    </tr>
+                                    </thead>
+                                    <tbody id="options_table_body" class="scrollable">
+
+                                    </tbody>
+                                </table>
+                            </div>
+
+                            <div id="option_entry" class="form-group col-lg-12 col-md-12 col-sm-12 col-xs-12" style=" margin-bottom:20px; padding: 10px; padding-top: 20px; border-style: solid; border-width: 1px; border-color: #8a6d3b; display: none">
                                 <label class="control-label col-md-12 col-sm-12 col-xs-12 x_title" style="text-align: left; margin-bottom: 10px">Create Option</label>
                                 <hr>
-                                <div class="table-responsive col-md-12 col-sm-12 col-xs-12" id="" >
+                                <div class="table-responsive col-md-12 col-sm-12 col-xs-12" id="options_input" >
                                     <form id="option_add_form">
-                                        <div class="form-group">
+                                        <div class="form-group" style="margin-bottom: 10px">
                                             <label class="control-label col-md-2 col-sm-2 col-xs-6" >Option Name</label>
                                             <div class="col-md-4 col-sm-4 col-xs-6" style="margin-bottom: 8px">
-                                                <input class="form-control" type="text" name="option_name" value="" >
+                                                <input class="form-control option_name" type="text" name="option_name_input" id="option_name_input" value="" >
+                                                <input type="hidden" id="option_id_input" name="option_id_input" value="0">
                                             </div>
                                             <label class="control-label col-md-2 col-sm-2 col-xs-6" >Minimum Choice</label>
                                             <div class="col-md-4 col-sm-4 col-xs-6" style="margin-bottom: 8px">
-                                                <input class="form-control" type="number" name="minimum" value="0" >
+                                                <input class="form-control" type="number" name="minimum_choice_input" id="minimum_choice_input" value="0" >
                                             </div>
                                             <label class="control-label col-md-2 col-sm-2 col-xs-6" >Maximum Choice</label>
                                             <div class="col-md-4 col-sm-4 col-xs-6" style="margin-bottom: 8px">
-                                                <input class="form-control" type="number" name="maximum" value="0" >
+                                                <input class="form-control" type="number" name="maximum_choice_input" value="0" id="maximum_choice_input" >
                                             </div>
                                             <label class="control-label col-md-2 col-sm-2 col-xs-6" >Is Required</label>
                                             <div class="col-md-4 col-sm-4 col-xs-6" style="margin-bottom: 8px">
-                                                <input type="checkbox" id="is_required" name="is_active" checked="checked" class="form-control" style="padding-top: 4px"/>
+                                                <input type="checkbox" id="is_required_input" name="is_required_input" checked="checked" class="form-control" value="1" style="padding-top: 4px"/>
                                             </div>
 
                                         </div>
 
+
+
+                                        <table class="table table-bordered " id="ingredient_input" >
+                                            <thead>
+                                                <tr>
+                                                    <th class="text-center" width="60%">Ingredient Name</th>
+                                                    <th class="text-center" >Price</th>
+                                                    <th width="10%"><button id='addIngredientRow' type='button' class='btn btn-info btn-xs'><span class='glyphicon glyphicon-plus'></span></button></th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                            </tbody>
+                                        </table>
+
                                     </form>
 
-                                    <table class="table table-bordered" id="ingredientTable" >
-                                        <thead>
-                                        <tr>
-                                            <th class="text-center">Ingredient Name</th>
-                                            <th class="text-center" >Price</th>
-                                            <th width="10%"><button id='addRateRow' type='button' class='btn btn-info btn-xs'><span class='glyphicon glyphicon-plus'></span></button></th>
-                                        </tr>
-                                        </thead>
-                                        <tbody>
-
-                                        </tbody>
-                                    </table>
                                     <button type="button" id="add_option" class="btn btn-success" style="margin-top: 15px; alignment: center">Add Option</button>
 
                                 </div>
@@ -250,8 +270,8 @@ else{
                     <div class="form-group">
                         <div class="ln_solid"></div>
                         <div class="col-md-7 col-sm-7 col-xs-12" style="text-align:right">
-                            <input type="hidden" id="item_id" name="item_id" />
                             <button type="submit" id="save_item" class="btn btn-success">Save</button>
+                            <button type="submit" id="submit_item" class="btn btn-success" style="display: none">Save</button>
                             <button type="button" id="clear_button"  class="btn btn-primary">Clear</button>
                         </div>
                         <div class="col-md-5 col-sm-5 col-xs-12">
@@ -267,13 +287,126 @@ else{
 <script src="js/customTable.js"></script>
 <script>
     //------------------------------------- general & UI  --------------------------------------
-    /*
-    develped by @momit
-    =>load grid with paging
-    =>search records
-    */
-    $(document).ready(function () {
+
+    var itemId=0;
+
+    function  deleteoption(id){
+        $.ajax({
+            url: project_url+"controller/itemController.php",
+            dataType: "json",
+            type: "post",
+            async:false,
+            data:{
+                q: "load_options",
+                item_id: item_id
+            },
+            success: function(data){
+                //console.log(data.records);
+                //itemId = data
+                var html = ''
+                $.each(data.records, function(i,data){
+                    html+= '<tr><td style="text-align: center">'+data['name']+'</td><td style="text-align: center">'+data['is_required']+'</td><td style="text-align: right">'+data['minimum_choice']+'</td><td style="text-align: right">'+data['maximum_choice']+'</td><td><button class="btn btn-primary btn-xs" onclick="editoption('+parseInt(data['id'])+')" type="button"><i class="fa fa-pencil"></i></button><button class="btn btn-danger btn-xs" onclick="deleteoption('+parseInt(data['id'])+')" type="button"><i class="fa fa-trash"></i></button></td></tr>'
+                    //option_html += '<option value="'+data.id+'">'+data.category_name+'</option>';
+                });
+
+                $('#options_table > tbody').html(html)
+                $('#option_list').css('display','block')
+
+
+            }
+        });
+    }
+
+    //load all the ingredients for a single option for edit
+    function  editoption(option_id){
+
+        alert($('#option_id_input').val())
+        //return false;
+
+        $.ajax({
+            url: project_url+"controller/itemController.php",
+            dataType: "json",
+            type: "post",
+            async:false,
+            data:{
+                q: "load_options_items",
+                option_id: option_id
+            },
+            success: function(data){
+                //console.log(data);
+                alert(data)
+                html=''
+
+                $.each(data.ingredients, function(i,datas){
+                    //console.log(datas['name'])
+
+                    html +="<tr><td><input type='text' name='ingredient_name[]' value='"+datas['name']+"' required class='form-control col-lg-12 size'/><input type='hidden' name='ingredient_id[]' value='"+datas['id']+"'></td>" +
+                        "<td><input type='text' name='ingredient_price[]' value='"+datas['price']+"' required class='form-control col-lg-12 text-right rate'/></td>" +
+                        "<td style='text-align: center'><span class='input-group-btn'><button type='button' class='btn btn-danger btn-xs remove_row'><span class='glyphicon glyphicon-minus'></span></button></span></td></tr>";
+
+                    //option_html += '<option value="'+data.id+'">'+data.category_name+'</option>';
+                });
+                $('#ingredient_input > tbody').html(html)
+                $('#option_entry').css('display', 'block')
+
+                $('#option_name_input').val(data.records.name)
+                $('#option_id_input').val(data.records.id)
+
+                $('#maximum_choice_input').val(data.records.maximum_choice)
+                $('#minimum_choice_input').val(data.records.minimum_choice)
+
+                if(data.records.is_required != 1){
+                    $('#is_required_input').iCheck('uncheck');
+                }
+                else {
+                    $('#is_required_input').iCheck('check');
+                }
+
+                $('#option_entry').css('display','block')
+
+            }
+        });
+    }
+
+
+
+    $(document).ready(function (item_id) {
         // close form submit section onload page
+
+
+        //to view all the option for a single item like 'choose a chese'
+        load_item_options = function load_item_options(item_id){
+            //alert(item_id)
+            $('#option_entry').css('display', 'none')
+            itemId = item_id;
+
+            $.ajax({
+                url: project_url+"controller/itemController.php",
+                dataType: "json",
+                type: "post",
+                async:false,
+                data:{
+                    q: "load_options",
+                    item_id: item_id
+                },
+                success: function(data){
+                    //console.log(data.records);
+                    //itemId = data
+                    var html = ''
+                    $.each(data.records, function(i,data){
+                        html+= '<tr><td style="text-align: center">'+data['name']+'</td><td style="text-align: center">'+data['is_required']+'</td><td style="text-align: right">'+data['minimum_choice']+'</td><td style="text-align: right">'+data['maximum_choice']+'</td><td><button class="btn btn-primary btn-xs" onclick="editoption('+parseInt(data['id'])+')" type="button"><i class="fa fa-pencil"></i></button><button class="btn btn-danger btn-xs" onclick="deleteoption('+parseInt(data['id'])+')" type="button"><i class="fa fa-trash"></i></button></td></tr>'
+                        //option_html += '<option value="'+data.id+'">'+data.category_name+'</option>';
+                    });
+
+                    $('#options_table > tbody').html(html)
+                    $('#option_list').css('display','block')
+
+
+
+                }
+            });
+        }
+        //load_item_options(104)
 
 
         $('#item_form').iCheck({
@@ -286,6 +419,85 @@ else{
             radioClass: 'iradio_flat-green'
         });
 
+
+        // auto suggest option name for option input
+        $('#options_input').click(function(){
+           // alert('option')
+            $("#option_name_input").autocomplete({
+                search: function() {
+                },
+                source: function(request, response) {
+                    //alert('sdf')
+                    $.ajax({
+                        url: project_url+'controller/itemController.php',
+                        dataType: "json",
+                        type: "post",
+                        async:false,
+                        data: {
+                            q: "option_info",
+                            term: request.term
+                        },
+                        success: function(data) {
+                            response(data);
+                        }
+                    });
+                },
+                minLength: 3,
+                select: function(event, ui) {
+                    var id = ui.item.id;
+                    $(this).next().val(id);
+                }
+            });
+
+        });
+
+        //add a new row for insert ingredint
+        $('#addIngredientRow').click(function () {
+            $('#ingredient_input > tbody').append("<tr><td><input type='text' name='ingredient_name[]' required class='form-control col-lg-12 size'/><input type='hidden' name='ingredient_id[]' value='0'></td>" +
+                "<td><input type='text' name='ingredient_price[]' value='0.00' required class='form-control col-lg-12 text-right rate'/></td>" +
+                "<td style='text-align: center'><span class='input-group-btn'><button type='button' class='btn btn-danger btn-xs remove_row'><span class='glyphicon glyphicon-minus'></span></button></span></td></tr>");
+        })
+
+
+
+
+        //auto suggest ingredient name for item input for a option
+        $('#ingredient_input').click(function(){
+            //alert('option')
+            $(".ingredient_name").autocomplete({
+                search: function() {
+                },
+                source: function(request, response) {
+                    //alert('sdf')
+                    $.ajax({
+                        url: project_url+'controller/itemController.php',
+                        dataType: "json",
+                        type: "post",
+                        async:false,
+                        data: {
+                            q: "ingredient_info",
+                            term: request.term
+                        },
+                        success: function(data) {
+                           // alert(data)
+                            //console.log(data)
+                            response(data);
+                        }
+                    });
+                },
+                minLength: 3,
+                select: function(event, ui) {
+                    //console.log(ui.name)
+                    alert(ui)
+                    var ingredient_id = ui.id;
+                    $(this).next().val(ingredient_id);
+                }
+            });
+
+        });
+
+
+        // auto suggest category name for a item
         $("#ad_category_name").autocomplete({
             search: function() {
             },
@@ -311,6 +523,7 @@ else{
             }
         });
 
+        // auto suggest item name for a item
         $("#ad_item_name").autocomplete({
             search: function() {
                 category_id  = $('#ad_category_id').val();
@@ -341,103 +554,55 @@ else{
             }
         });
 
-        // add file row
-       /* $('#add_file_row').click(function(){
-            $('#first_section').children('div:last').after("<div class='input-group' id='first_file'><input name='attached_file[]' class='form-control input-sm col-md-6 col-xs-12' type='file'><span class='input-group-btn'><button type='button' class='btn btn-danger btn-sm remove_me'  ><span class='glyphicon glyphicon-minus'></span></button></span></div> ");
-            $('.remove_me').click(function(){
-                $(this).parent().parent().remove();
-            });
-        });*/
-
+        // add a option with its' ingredient for a item
         $('#add_option').click(function(){
-            $('#first_section').children('div:last').after("<div class='input-group' id='first_file'><input name='attached_file[]' class='form-control input-sm col-md-6 col-xs-12' type='file'><span class='input-group-btn'><button type='button' class='btn btn-danger btn-sm remove_me'  ><span class='glyphicon glyphicon-minus'></span></button></span></div> ");
-            $('.remove_me').click(function(){
-                $(this).parent().parent().remove();
-            });
-        });
+            //alert($('#option_id_input').val())
 
-        $('#addRateRow').click(function(){
-            $('#ingredientTable > tbody').append("<tr><td><input type='text' name='name[]' required class='form-control col-lg-12 size'/><input type='hidden' name='name_id[]' class='form-control col-lg-12 size_id'/></td><td><input type='text' value='0' name='price[]' class='form-control col-lg-12 text-right stock_quantity_val'/></td></td><td><span class='input-group-btn'><button type='button' class='btn btn-success btn-xs remove_row' style='text-align: center'>Delete</button></span></td></tr>");
+            //option_name_input, minimum_choice, maximum_choice_input, is_required_input
 
-            $('.remove_row').click(function(){
-                $(this).parent().parent().parent().remove();
-            });
-
-            $(".size").autocomplete({
-                search: function() {
-                },
-                source: function(request, response) {
+                event.preventDefault();
+                //alert(itemId)
+                var formData = new FormData($('#option_add_form')[0]);
+                //return false;
+                formData.append("q","insert_or_update_option");
+                formData.append("item_id",itemId);
+                //alert('aaa')
+            //validation
+                if($.trim($('#option_name_input').val()) == ""){
+                    success_or_error_msg('#form_submit_error','danger','Please Insert Option Name',"#item_name");
+                }
+                else{
+                    //alert('sfdsfs')
                     $.ajax({
-                        url: project_url+'controller/itemController.php',
-                        dataType: "json",
-                        type: "post",
+                        url: project_url+"controller/itemController.php",
+                        type:'POST',
+                        data:formData,
                         async:false,
-                        data: {
-                            q: "size_info",
-                            term: request.term
-                        },
-                        success: function(data) {
-                            response(data);
+                        cache:false,
+                        contentType:false,
+                        processData:false,
+                        success: function(data){
+                           // alert(data);
+                            //console.log(data)
+                            //itemId = data
+                                if($.isNumeric(data)==true && data>0){
+                                success_or_error_msg('#form_submit_error',"success","Save Successfully");
+                                //load_item("");
+                                //clear_form();
+                            }
                         }
                     });
-                },
-                minLength: 2,
-                select: function(event, ui) {
-                    var item_id = ui.item.id;
-                    $(this).next().val(item_id);
+
                 }
-            });
-
-
-            $('.rate').focusout(function(e) {
-
-                var      rate       = $(this).val();
-                var discount_type   = $(this).parent().siblings().find('.discount_type').val();
-                var discount_amount = $(this).parent().siblings().find('.discount_amount').val();
-
-                if(discount_type==1){
-                    $(this).parent().next().next().next().find('.discounted_rate').val(parseInt(rate)-discount_amount);
-                }
-                else{
-                    $(this).parent().next().next().next().find('.discounted_rate').val(parseInt(rate)-(rate*(discount_amount/100)));
-                }
-
-            });
-
-            $('.discount_type').change(function() {
-
-                var discount_type   = $(this).val();
-                var rate            = $(this).parent().siblings().find('.rate').val();
-                var discount_amount = $(this).parent().siblings().find('.discount_amount').val();
-
-                if(discount_type==1){
-                    $(this).parent().next().next().find('.discounted_rate').val(parseInt(rate)-discount_amount);
-                }
-                else{
-                    $(this).parent().next().next().find('.discounted_rate').val(parseInt(rate)-(rate*(discount_amount/100)));
-                }
-
-            });
-
-            $('.discount_amount').focusout(function(e) {
-
-                var discount_amount = $(this).val();
-                var discount_type   = $(this).parent().siblings().find('.discount_type').val();
-                var rate            = $(this).parent().siblings().find('.rate').val();
-
-                if(discount_type==1){
-                    $(this).parent().next().find('.discounted_rate').val(parseInt(rate)-discount_amount);
-                }
-                else{
-                    $(this).parent().next().find('.discounted_rate').val(parseInt(rate)-(rate*(discount_amount/100)));
-                }
-
-            });
+            $('#option_add_form')[0].reset();
+            $('#ingredient_input > tbody').html('')
+            $( "#addRateRow" ).trigger( "click" );
+            load_item_options(itemId)
 
 
         });
 
-        $( "#addRateRow" ).trigger( "click" );
+
 
         load_category = function load_category(){
             $.ajax({
@@ -604,7 +769,7 @@ else{
                             var colums_array=["item_id*identifier*hidden","name","category_head_name","details","i_rate","active_status"];
                             //first element is for view , edit condition, delete condition
                             //"all" will show /"no" will show nothing
-                            var condition_array=["","","update_status", "1","delete_status","1"];
+                            var condition_array=["view_status","1","update_status", "1","delete_status","1"];
                             //create_set_grid_table_row(records_array,colums_array,int_fields_array, condition_arraymodule_name,table/grid id, is_checkbox to select tr );
                             //cauton: not posssible to use multiple grid in same page
                             create_set_grid_table_row(records_array,colums_array,condition_array,"item","item_Table", 0);
@@ -664,22 +829,18 @@ else{
 
     $(document).ready(function () {
 
-        //insert item
+        //insert or update item details
         $('#save_item').click(function(event){
             event.preventDefault();
-            //alert('sdf')
             var formData = new FormData($('#item_form')[0]);
-            console.log(formData)
-            //return false;
             formData.append("q","insert_or_update");
-            //validation
             if($.trim($('#item_name').val()) == ""){
                 success_or_error_msg('#form_submit_error','danger','Please Insert Item Name',"#item_name");
             }
             else if($.trim($('#category_option').val()) == "0"){
                 success_or_error_msg('#form_submit_error','danger',"Please Select Category","#category_option");
             }
-            else if($.trim($('#rate').val()) == ""){
+            else if($.trim($('#base_price').val()) == ""){
                 success_or_error_msg('#form_submit_error','danger',"Please select Rate",".rate");
             }
             else{
@@ -695,17 +856,24 @@ else{
                     processData:false,
                     success: function(data){
                         //alert(data);
-                        console.log(data)
+                        itemId = data
+                        //console.log(data)
 
-                        $('#save_item').removeAttr('disabled','disabled');
+                        //$('#save_item').removeAttr('disabled','disabled');
 
                         if($.isNumeric(data)==true && data == 3){
+                            alert('not')
                             alert("Item Already Ordered. Only update those category which Item is not Ordered.")
                         }
-                        else if($.isNumeric(data)==true && data>0){
+                        else if(parseInt(data)>0){
+                            //alert('ok')
                             success_or_error_msg('#form_submit_error',"success","Save Successfully");
                             load_item("");
-                            clear_form();
+                            $('#option_list').css('display','block')
+                            $('#option_entry').css('display', 'block')
+                            $('#save_item').css('display', 'none')
+                            $('#addIngredientRow').trigger('click')
+
                         }
                     }
                 });
@@ -713,8 +881,9 @@ else{
             }
         })
 
-        //edit item
+        //load single item for edit
         edit_item = function edit_item(item_id){
+            //alert('df')
             $('#item_id').val(item_id);
             $('.img_label').after('');
             $('#optionTable > tbody').html('');
@@ -730,18 +899,25 @@ else{
                     item_id: item_id
                 },
                 success: function(data){
+                    //alert(data)
                     if(!jQuery.isEmptyObject(data.records)){
                         $.each(data.records, function(i,data){
                             $('#item_name').val(data.name);
-                            $('#item_code').val(data.code);
                             $('#details').val(data.details);
                             $('#category_option').val(data.category_id);
-                            $('#tag').val(data.tags);
+                            $('#base_price').val(data.price);
+
 
                             if(data.availability==1){
                                 $('#is_active').iCheck('check');
                             }else{
                                 $('#is_active').iCheck('uncheck');
+                            }
+
+                            if(data.sell_from_stock==1){
+                                $('#is_stock').iCheck('check');
+                            }else{
+                                $('#is_stock').iCheck('uncheck');
                             }
 
                             if(data.feature_image!=""){
@@ -752,78 +928,7 @@ else{
                         });
                     }
 
-                    //rate info table create on update
-                    if(!jQuery.isEmptyObject(data.rate_details)){
-                        $.each(data.rate_details, function(i,data){
-                            $( "#addRateRow" ).trigger( "click" );
-                            $('#optionTable > tbody > tr:last .size_id').val(data.size_id);
-                            $('#optionTable > tbody > tr:last .size').val(data.size_name);
-                            $('#optionTable > tbody > tr:last .unit_id').val(data.unit_id);
-                            $('#optionTable > tbody > tr:last .unit').val(data.unit_name);
-                            $('#optionTable > tbody > tr:last .stock_quantity').val(data.stock_quantity);
-                            $('#optionTable > tbody > tr:last .stock_quantity_val').val(data.stock_quantity);
-                            $('#optionTable > tbody > tr:last .production_rate').val(data.production_rate);
-                            $('#optionTable > tbody > tr:last .rate').val(data.rate);
-                            $("#optionTable > tbody > tr:last .discount_type option[value='"+data.discount_type+"']").attr('selected','selected');
-                            $('#optionTable > tbody > tr:last .discount_amount').val(data.discount_amount);
-                            $('#optionTable > tbody > tr:last .discounted_rate').val(data.discounted_rate);
-                        });
-                    }
-
-                    $('#ingredient_select').html(html);
-
-                    $('#image_div').html('<label class="control-label col-md-2 col-sm-2 col-xs-12 img_label"></label>');
-                    if(!jQuery.isEmptyObject(data.attachment)){
-                        attachement_html   = '<div class="col-md-10">';
-                        $.each(data.attachment, function(i,data){
-                            if($.trim(data) != ""){
-                                attachement_html   += '<div class="col-md-2 text-center" id="item_image_'+data.img_id+'"><img src="'+project_url+"images/item/thumb/"+$.trim(data.item_image)+'" class="img-thumbnail"><button type="button" class="btn btn-danger btn-xs remove_img" onclick="delete_gallary_image('+data.img_id+','+item_id+')"><span class="glyphicon glyphicon-remove"></span></button></div>';
-                                $('.remove_img').click(function(){
-                                    $(this).parent().parent().remove();
-                                });
-                            }
-                        });
-                        attachement_html   += '</div>';
-                        $('.img_label').after(attachement_html);
-                    }
-
-
-                    if(!jQuery.isEmptyObject(data.ingredient)){
-                        var html = '<table class="table table-bordered jambo_table"><thead><tr class="headings"><th class="column-title text-center" class="col-md-8 col-sm-8 col-xs-8">Ingredients</th><th class="col-md-2 col-sm-2 col-xs-12"><input type="checkbox" id="check-all" class="tableflat">Select All</th></tr></thead>';
-                        $.each(data.ingredient, function(i,datas){
-                            html += '<tr><td colspan="2">';
-                            $.each(datas.detail, function(i,detail){
-                                detail_arr = detail.split("*");
-                                if(detail_arr[2]==1){
-                                    html += '<div class="col-md-3" ><input type="checkbox" name="ingredient[]"  class="tableflat" checked="checked" value="'+detail_arr[0]+'"/> '+detail_arr[1]+'</div>';
-                                }else{
-                                    html += '<div class="col-md-3" ><input type="checkbox" name="ingredient[]"  class="tableflat"  value="'+detail_arr[0]+'"/> '+detail_arr[1]+'</div>';
-                                }
-                            });
-                            html += '</td></tr>';
-
-                        });
-                        html +='</table>';
-                    }
-
-                    $('#ingredient_select').html(html);
-
-                    $('#item_form').iCheck({
-                        checkboxClass: 'icheckbox_flat-green',
-                        radioClass: 'iradio_flat-green'
-                    });
-
-                    $('#item_form input#check-all').on('ifChecked', function () {
-                        //alert('check');
-                        $("#item_form .tableflat").iCheck('check');
-                    });
-
-                    $('#item_form input#check-all').on('ifUnchecked', function () {
-                        //alert('ucheck');
-                        $("#item_form .tableflat").iCheck('uncheck');
-                    });
-
-
+                    load_item_options(item_id)
                     $('#save_item').html('Update');
                     // to open submit post section
                     if($.trim($('#toggle_form i').attr("class"))=="fa fa-chevron-down")

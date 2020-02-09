@@ -286,10 +286,10 @@ function show_notifications(){
 				var notification_li = "";
 				$.each(data.records, function(i,notification){ 
 					if(notification.status == 0){
-						notification_li +='<li><a id="noti_a_'+notification.id+'" style="color:#b66335 !important" onclick="show_notification_details('+notification.id+','+notification.order_id+')" ><span class="image"></span><span class="message">'+notification.date_time+'</span><span class="message">'+notification.details+'</span></a></li>';
+						notification_li +='<li><a id="noti_a_'+notification.id+'" style="color:#b66335 !important" onclick="show_notification_details('+notification.id+','+notification.order_id+')" ><span class="image"></span><span class="message">'+notification.details+'</span></a></li>';
 					}
 					else{
-						notification_li +='<li><a  onclick="show_notification_details('+notification.id+','+notification.order_id+')" ><span class="message">'+notification.date_time+'</span><span class="message">'+notification.details+'</span></a></li>';	
+						notification_li +='<li><a  onclick="show_notification_details('+notification.id+','+notification.order_id+')" ><span class="message">'+notification.details+'</span></a></li>';
 					}
 				})
 				$('#notification_ul>li:last').before(notification_li);
