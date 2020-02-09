@@ -68,7 +68,7 @@
 
     var menus = location.search.split('category=')[1];
     menus = menus.split('__').join(' ')
-
+	
     html_generator = function html_generator(data) {
         //alert(data['photo'])
         var html_op ='                <div class="col-md-4 col-sm-4 col-xs-12 wow fadeInDown" data-wow-duration="1000ms" data-wow-delay="300ms">\n' +

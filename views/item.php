@@ -80,7 +80,7 @@ if(isset($_GET['order_id']) && $_GET['order_id']!="") $order_id =  $_GET['order_
                             <h4 class="text-coffee left">Your Items Has Been Added To Cart<span id="ord_title_vw"></span></h4>
                         </div>
                         <div class="buttons_wrapper" style="padding-bottom: 15px">
-                            <div class="col-md-6 col-sm-6 col-xs-6 " style="">
+                            <div class="col-md-6 col-sm-6 col-xs-6 text-right" style="">
                                 <button type="button" class="btn-main btn-small btn-primary" style="border-radius: 4px"><a href="index.php?page=categories" style="color: white">Select More Items</a></button>
                             </div>
                             <div class="col-md-6 col-sm-6 col-xs-6">
@@ -250,13 +250,13 @@ if(isset($_GET['order_id']) && $_GET['order_id']!="") $order_id =  $_GET['order_
         $('#total_price').html(currency_symbol+''+base_price)
 
         $('#title_right').html(data['name'])
-        var html='<div  class="col-md-8 col-sm-12 col-xs-12"><h4 style="text-transform: uppercase;" id="item_name">'+data['name']+'</h4></div>' +
-            '     <div class="price-textbox col-md-2 col-sm-9 col-xs-9" style="text-align: right">\n' +
+        var html='<div class="row"><div  class="col-md-8 col-sm-6 col-xs-7"><h4 style="text-transform: uppercase;" id="item_name">'+data['name']+' ('+currency_symbol+'<b>'+data['price']+')</b></h4></div>' +
+            '     <div class="price-textbox price-textbox-item col-md-2 col-sm-6 col-xs-5" style="text-align: right">\n' +
             '           <span class="minus-text" onclick="minusProd('+data['item_id']+')" style="padding-left: 15px;"><i class="icon-minus"></i></span>\n' +
             '           <input name="quantity[]" id="item_'+data['item_id']+'" placeholder="1" type="text" value="1">\n' +
             '           <span class="plus-text" onclick="addProd('+data['item_id']+')" style="padding-right: 15px"><i class="icon-plus"></i></span>\n' +
-            '     </div>\n'+
-            '     <div class="col-md-1 col-sm-3 col-xs-3"><p  style="text-align: right;color: #0f3e68">'+currency_symbol+'<b>'+data['price']+'</b></p></div>\n' +
+            '     </div></div>\n'+
+           
             '        <input type="hidden" name="item_id[]" id="item_id" value="'+data['item_id']+'" />\n' +
             '        <input type="hidden" name="item_rate[]" value="15" />\n' +
             '     <div class="col-md-12 col-sm-12 col-xs-12"><label>'+data['details']+'</label></div>\n'
