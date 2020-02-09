@@ -269,7 +269,6 @@ function reset_autoSuggest_ids(columns){
 
 //************** Notification******************* /
 
-
 function show_notifications(){
 	$.ajax({
 		url: project_url+"controller/notificationController.php",
@@ -287,10 +286,10 @@ function show_notifications(){
 				var notification_li = "";
 				$.each(data.records, function(i,notification){ 
 					if(notification.status == 0){
-						notification_li +='<li><a id="noti_a_'+notification.id+'" style="color:#b66335 !important" onclick="show_notification_details('+notification.id+','+"'"+notification.module_name+"'"+','+notification.master_module_id+')" ><span class="image"><img src="'+notification.photo+'" alt="Profile Image" /></span><span class="message">@'+notification.date_time+'</span><span class="message">'+notification.details+'</span></a></li>';
+						notification_li +='<li><a id="noti_a_'+notification.id+'" style="color:#b66335 !important" onclick="show_notification_details('+notification.id+','+notification.order_id+')" ><span class="image"></span><span class="message">'+notification.details+'</span></a></li>';
 					}
 					else{
-						notification_li +='<li><a  onclick="show_notification_details('+notification.id+','+"'"+notification.module_name+"'"+','+notification.master_module_id+')" ><span class="image"><img src="'+notification.photo+'" alt="Profile Image" /></span><span class="message">@'+notification.date_time+'</span><span class="message">'+notification.details+'</span></a></li>';	
+						notification_li +='<li><a  onclick="show_notification_details('+notification.id+','+notification.order_id+')" ><span class="message">'+notification.details+'</span></a></li>';
 					}
 				})
 				$('#notification_ul>li:last').before(notification_li);
@@ -307,7 +306,9 @@ function show_notifications(){
 	});	
 }
 
+
 function show_notifications_no(){
+	//alert("show notification no");
 	$.ajax({
 		url: project_url+"controller/notificationController.php",
 		dataType: "json",
@@ -323,14 +324,8 @@ function show_notifications_no(){
 }
 
 
-function show_notification_details(notification_id, module_name, module_master_id ){
-	if($.trim(module_name) == "POST"){	
-		view_post(module_master_id);	
-	}else if($.trim(module_name) == "JOBS"){
-		view_jobs_notifications(module_master_id);	
-	}
-	// change notification status 
-	// get the updated unread notificitaion  
+function show_notification_details(notification_id, order_id){
+	view_notification_details(order_id);
 	$.ajax({
 		url: project_url+"controller/notificationController.php",
 		type: "post",

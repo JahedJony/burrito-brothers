@@ -157,6 +157,21 @@ var loyalty_point_value=0;
 var loyalty_reserve_value=0;
 var total = 0;
 
+
+$('select.select-dropbox, input[type="radio"], input[type="checkbox"]').styler({selectSearch:true,});
+
+$('.date-picker').daterangepicker({
+	singleDatePicker: true,
+	/*autoUpdateInput: false,*/
+	calender_style: "picker_2",
+	timePicker:true,
+	locale: {
+		format: 'YYYY-MM-DD h:mm',
+		separator: " - ",
+	}
+});
+
+
 $('#tips').on('change',function () {
 alert('sdf')
     var tips = $('#tips').val();
@@ -223,41 +238,38 @@ $('#coupon').on('change',function () {
 
 
 load_customer_profile = function load_customer_profile(id){
-        $.ajax({
-                url:"./includes/controller/ecommerceController.php",
-                dataType: "json",
-                type: "post",
-                async:false,
-                data: {
-                    q: "get_customer_details",
-                    customer_id: customer_id,
-                },
-                success: function(data){
-                    if(!jQuery.isEmptyObject(data.records)){
-                        $.each(data.records, function(i,data){
-                            loyalty_points = data.loyalty_points;
-                        });
+	$.ajax({
+		url:"./includes/controller/ecommerceController.php",
+		dataType: "json",
+		type: "post",
+		async:false,
+		data: {
+			q: "get_customer_details",
+			customer_id: customer_id,
+		},
+		success: function(data){
+			if(!jQuery.isEmptyObject(data.records)){
+				$.each(data.records, function(i,data){
+					loyalty_points = data.loyalty_points;
+				});
 
-                    }
-                    //alert(loyalty_points)
-                }
-            });
-    }
+			}
+			//alert(loyalty_points)
+		}
+	});
+}
 display_div = function display_div(){
-        $("#take_out").css("display", "none");
-        $("#payments").css("display", "none");
-        document.getElementById("take_out_menu").classList.remove('active');
-        document.getElementById("payments_menu").classList.remove('active');
-    }
+	$("#take_out").css("display", "none");
+	$("#payments").css("display", "none");
+	document.getElementById("take_out_menu").classList.remove('active');
+	document.getElementById("payments_menu").classList.remove('active');
+}
 
 take_out = function take_out(){
-    //alert('sfd')
-    //load_customer_profile()
-    //alert('ok')
     display_div()
     document.getElementById("take_out_menu").classList.add('active');
     $("#take_out").css("display", "block");
-    }
+}
 
 take_out()
 
@@ -269,8 +281,6 @@ payments = function payments(){
     if(loyalty_points/loyalty_point_value<parseFloat($('#total_amount_').html().split('$')[1])){
         $('#loyalty_redio').attr('disabled',true);
     }
-
-
 }
 
 general_settings = function general_settings(){
@@ -283,9 +293,6 @@ general_settings = function general_settings(){
             q: "get_settings_details",
         },
         success: function(data){
-            //alert($('#total_paid_amount').val())
-            //alert(loyalty_points)
-            //alert(loyalty_point_value)
             html=''
             if(!jQuery.isEmptyObject(data.records)){
                 $.each(data.records, function(i,data){
@@ -390,8 +397,9 @@ payment_check = function payment_check(){
     //alert(loyalty_point_value)
     //alert($('input[name=payment_method]:checked', '#checkout-form').val())
 }
-$('#checkout_submit').click(function(event){
 
+
+$('#checkout_submit').click(function(event){
 
     event.preventDefault();
     //$('#grand_total').val($('#total_amount_').html());
@@ -401,9 +409,6 @@ $('#checkout_submit').click(function(event){
     if($('input[name=payment_method]:checked', '#checkout-form').val()==2){
         loyalty_deduct = Math.ceil(parseFloat($('#total_amount_').html().split('$')[1])*loyalty_point_value);
     }
-
-    //alert(loyalty_value)
-    //alert(loyalty_deduct)
 
     delevery_type = $("[name='delevery_type']:checked").val();
     payment_type  = $("[name='payment_type']:checked").val();
@@ -458,7 +463,7 @@ $('#checkout_submit').click(function(event){
                 else{
                     //alert('done')
                     showCart()
-                    $("#content").load("views/checkout_confirm.php",{'invoice':data});
+                    $("#content").load("index.php?page=checkout_confirm",{'invoice':data});
 
                     //window.location = "completed.php?complete=success&order_id="+$.trim(data);
                 }

@@ -16,7 +16,7 @@ else if($dbClass->getUserGroupPermission(77) != 1 ){
 else{
     $user_name = $_SESSION['user_name'];
     $date = date("y-m-d");
-
+    $logo = $dbClass->getDescription('website_url')."admin/".$dbClass->getDescription('company_logo');
     ?>
 
     <div class="x_panel">
@@ -112,9 +112,9 @@ else{
                     <thead >
                     <th class="column-title" width="">Invoice No</th>
                     <th class="column-title" width="">Customer</th>
-                    <th class="column-title" width="15%">Order Date</th>
-                    <th class="column-title" width="15%">Delivery Date</th>
-                    <th class="column-title" width="8%">Payment Status</th>
+                    <th class="column-title" width="12%">Order Date</th>
+                    <th class="column-title" width="12%">Delivery Date</th>
+                    <th class="column-title" width="8%">Payment Type</th>
                     <th class="column-title" width="8%">Order Status</th>
                     <th class="column-title" width="10%">Order Amount</th>
                     <th class="column-title no-link last" width="10%"><span class="nobr"></span></th>
@@ -138,7 +138,7 @@ else{
                 <div class="modal-body">
                     <div id="order-div" style="margin-bottom: 30px">
                         <div class="title text-center">
-                            <h3 class="text-coffee left"> <a href="index.php"><img src="<?php echo ($logo); ?>" alt="" style="height: 100px; width: 100px"></a></h3>
+                            <h3 class="text-coffee left"> <a href="#"><img src="<?php echo ($logo); ?>" alt="" style="height: 100px; width: 100px"></a></h3>
                             <h4 class="text-coffee left">Order No # <span id="ord_title_vw"></span></h4>
                         </div>
                         <div class="done_registration ">
@@ -147,6 +147,7 @@ else{
                                     <div class="col-md-6" style="margin: 0px; padding: 0px">
                                         <h4>Order Details:</h4>
                                         <div class="">
+                                            <span><button id="order_status_option" type="button" style="min-width:60px" class="btn btn-sm btn-success btn-lg disabled"></button></span><br/>
                                             <span id="ord_date"></span><br/>
                                             <span id="dlv_date"></span> <br/>
                                             <span id="dlv_ps"></span> <br/>
@@ -156,7 +157,17 @@ else{
                                     <div class="col-md-6" style="text-align:right">
 
                                         <div class="col-md-10 col-sm-10 col-xs-6">
+                                            <input type="hidden" id="order_status_id" name="order_status_id" value="1" />
+                                            <input type="hidden" id="order_id_edit">
+                                            <input type="hidden" id="ordered_customer_id">
 
+                                            <button id="order_received" onclick="update_order_status(2)" type="button" style="min-width:60px" class="order_status_btn btn btn-success btn-lg">Received</button>
+                                            <button id="order_preparing" onclick="update_order_status(3)" type="button" style="min-width:60px" class="order_status_btn btn btn-success btn-lg">Preparing</button>
+                                            <button id="order_ready" onclick="update_order_status(4)" type="button" style="min-width:60px" class="order_status_btn btn btn-success btn-lg">Ready</button>
+                                            <button id="order_delivered" onclick="update_order_status(5)" type="button" style="min-width:60px" class="order_status_btn btn btn-success btn-lg">Delivered</button>
+                                            <button id="order_rejected" onclick="update_order_status(6)" type="button" style="min-width:60px" class="btn btn-danger btn-lg">Reject</button>
+
+                                            <!--
                                             <input type="hidden" id="order_status_id" name="order_status_id" value="1" />
                                             <input type="hidden" id="order_id_edit">
                                             <button class="btn btn-primary btn-lg dropdown-toggle" style="width:190px" type="button" id="dropdown_status" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">Change Status
@@ -169,6 +180,7 @@ else{
                                                 <li id="order_delivered"><a href="javascript:void(0)" onclick="update_order_status(5)">Delivered</a></li>
                                             </ul>
                                             <button id="order_status_option" type="button" style="min-width:60px" class="btn btn-success btn-lg disabled">Ordered</button>
+                                            -->
                                         </div>
 
                                     </div>
@@ -202,87 +214,8 @@ else{
             </div>
         </div>
     </div>
-    <div class="modal fade booktable" id="group_order_modal" tabindex="-2" role="dialog" aria-labelledby="booktable">
-        <div class="modal-dialog" role="document" style="width:80% !important">
-            <div class="modal-content">
-                <div class="modal-body" style="margin-bottom: 50px">
-                    <div id="order-div" >
-                        <div class="title text-center">
-                            <h3 class="text-coffee left"> <a href="index.php"><img src="<?php echo ($logo); ?>" alt="" style="height: 100px; width: 100px"></a></h3>
-                            <h4 class="text-coffee left">Order For  <span class="text-capitalize" id="ord_title_vw"></span></h4>
-                        </div>
-                        <div class="done_registration ">
-                            <div class="doc_content">
-                                <div class="col-md-12" style="margin-left: 0px; padding: 0px; margin-bottom: 20px">
-                                    <div class="col-md-6" style="margin: 0px; padding: 0px">
-                                        <h4>Order Details:</h4>
-                                        <div class="byline">
-                                            <span class="after_order_initiate" id="inv_no" style="display: none"></span>
-                                            <span id="order_status"></span><br/>
-                                            <span id="ord_date"></span><br/>
-                                            <span id="ntf_date"></span> <br/>
-                                            <span id="dlv_date"></span> <br/>
-
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6" style="text-align:right">
-                                        <h4>Customer Details:</h4>
-                                        <address id="customer_detail_vw">
-                                        </address>
-                                    </div>
-
-                                </div>
-                                <p class="text-danger text-left before_order_initiate">*YOU CAN SELECT FOOD FOR THE MEMBERS</p>
-
-                                <div id="ord_detail_vw">
-                                    <table class="table table-bordered" id="ord_detail_vw_big" >
-                                        <thead>
-                                        <tr>
-                                            <th align="center">Items</th>
-                                            <th width="10%" align="center">Quantity</th>
-                                            <th width="12%" style="text-align:right">Rate</th>
-                                            <th width="12%"  style="text-align:right">Price</th>
-                                        </tr>
-                                        </thead>
-                                        <tbody>
-                                        </tbody>
-                                    </table>
-                                    <table class="table table-bordered" id="ord_detail_vw_small" style="display: none" >
-                                        <thead>
-                                        <tr>
-                                            <th align="center">Items</th>
-                                            <th width="12%"  style="text-align:right">Price</th>
-                                        </tr>
-                                        </thead>
-                                        <tbody>
-                                        </tbody>
-                                    </table>
-
-                                    <p>Note: <span id="note_vw"></span></p>
-                                    <p>Print Time : <?php echo date("Y-m-d h:m:s"); ?></p>
-                                    <br />
-
-                                    <p style="font-weight:bold; text-align:center" id="thankingNoted">Thank you. Hope we will see you soon </p>
-                                </div>
-
-                            </div>
-
-
-                        </div>
-                    </div>
-
-                    <div class="col-md-12 text-center before_order_initiate" style="margin-bottom: 10px" ><button type="button" class="btn btn-primary" onclick="checkout()">Proceed to Checkout</button></div>
-                    <div id="checkout_error" class="text-center" style="display:none" ></div>
-
-
-                    <div class="col-md-12" style="text-align: center"> <button type="button" class="btn btn-warning" id="order_print"><i class="fa fa-lg fa-print"></i></button></div>
-                </div>
-            </div>
-        </div>
-    </div>
 
     <?php
-
 }
 ?>
 <script src="js/customTable.js"></script>
@@ -291,14 +224,14 @@ else{
 
     $('#show_invoice').hide();
 
-        //$('#delivery_date').val('');
+    //$('#delivery_date').val('');
 
     $(document).ready(function () {
 
+        //status update action from edit modal
         update_order_status = function update_order_status(status_id){
             var order_id = $('#order_id_edit').val();
-            //alert(order_id)
-            //alert(status_id)
+            var customer_id = $('#ordered_customer_id').val();
             var url = project_url+"controller/orderController.php";
             $.ajax({
                 url: url,
@@ -307,34 +240,63 @@ else{
                 data:{
                     q: "update_order_status",
                     order_id:order_id,
-                    status_id:status_id
+                    status_id:status_id,
+                    customer_id:customer_id
                 },
                 success: function(data){
-                    //console.log(data)
-
                     if(data==1){
                         if(status_id==2){
                             $('#order_status_option').html("Received");
                             $('#order_status_id').val(2);
+
+                            //next order status button show
+                            $('#order_received').hide();
+                            $('#order_preparing').show();
+                            $('#order_ready').hide();
+                            $('#order_delivered').hide();
+                            $('#order_rejected').show();
                         }
                         else if(status_id==3){
                             $('#order_status_option').html("Preparing");
                             $('#order_status_id').val(3);
+
+                            //next order status button show
+                            $('#order_received').hide();
+                            $('#order_preparing').hide();
+                            $('#order_ready').show();
+                            $('#order_delivered').hide();
+                            $('#order_rejected').show();
                         }
                         else if(status_id==4){
                             $('#order_status_option').html("Ready");
                             $('#order_status_id').val(4);
+
+                            //next order status button show
+                            $('#order_received').hide();
+                            $('#order_preparing').hide();
+                            $('#order_ready').hide();
+                            $('#order_delivered').show();
+                            $('#order_rejected').show();
                         }
                         else if(status_id==5){
-                            $('#order_status_option').html("Preparing");
+                            $('#order_status_option').html("Delivered");
                             $('#order_status_id').val(5);
+
+                            //next order status button show
+                            $('#order_received').hide();
+                            $('#order_preparing').hide();
+                            $('#order_ready').hide();
+                            $('#order_delivered').hide();
+                            $('#order_rejected').hide();
+                        }
+                        else if(status_id==6){
+                            $("#order_modal").click();
                         }
                     }
                 }
             });
-            edit_order(order_id);
-            load_order("")
 
+            load_order("")
         }
 
         var current_page_no=1;
@@ -370,7 +332,7 @@ else{
                     page_no:current_page_no
                 },
                 success: function(data) {
-                   //alert(data)
+                    //alert(data)
                     //console.log(data)
                     var todate = "<?php echo date("Y-m-d"); ?>";
                     var user_name =  "<?php echo $user_name; ?>";
@@ -431,21 +393,21 @@ else{
                         $("#search_order_button").toggleClass('active');
                         $.each(records_array, function (i, datas) {
                             //alert(i)
-                                if(records_array[i]['order_status']==1){
-                                    records_array[i]['order_status']='Ordered'
-                                }
-                                else if(records_array[i]['order_status']==2){
-                                    records_array[i]['order_status']='Received'
-                                }
-                                else if(records_array[i]['order_status']==3){
-                                    records_array[i]['order_status']='Preparing'
-                                }
-                                else if(records_array[i]['order_status']==4){
-                                    records_array[i]['order_status']='Ready'
-                                }
-                                else if(records_array[i]['order_status']==5){
-                                    records_array[i]['order_status']='Delivered'
-                                }
+                            if(records_array[i]['order_status']==1){
+                                records_array[i]['order_status']='Ordered'
+                            }
+                            else if(records_array[i]['order_status']==2){
+                                records_array[i]['order_status']='Received'
+                            }
+                            else if(records_array[i]['order_status']==3){
+                                records_array[i]['order_status']='Preparing'
+                            }
+                            else if(records_array[i]['order_status']==4){
+                                records_array[i]['order_status']='Ready'
+                            }
+                            else if(records_array[i]['order_status']==5){
+                                records_array[i]['order_status']='Delivered'
+                            }
 
                         })
                         if(!jQuery.isEmptyObject(records_array)){
@@ -473,6 +435,7 @@ else{
                 }
             });
         }
+
         // load desire page on clik specific page no
         load_page = function load_page(page_no){
             if(page_no != 0){
@@ -511,8 +474,6 @@ else{
             load_order("Print");
         });
 
-        //insert order
-
 
         $(document).on('click','#order_print', function(){
             var divContents = $("#order-div").html();
@@ -526,11 +487,9 @@ else{
             printWindow.print();
         });
 
-        //edit order
-        edit_order = function edit_order(order_id){
-            //order noticed update
 
-            //alert(order_id)
+        //order status update
+        edit_order = function edit_order(order_id){
             $('#ord_detail_vw>table>tbody').html('');
             $.ajax({
                 url: project_url+"controller/orderController.php",
@@ -539,303 +498,104 @@ else{
                 dataType: "json",
                 data:{
                     q: "get_order_details_by_invoice",
-                    order_id:order_id
-                },
-                success: function(data){
-                    console.log(data)
-                    //alert(data.item_id)
-                    //console.log(data)
-                    if(data['type']=='individual'){
-                        if(!jQuery.isEmptyObject(data.records)){
-                            $.each(data.records, function(i,data){
-                                $('#order_id_edit').val(data.order_id);
-                                $('#ord_title_vw').html(data.invoice_no);
-                                $('#ord_date').html("Ordered time: "+data.order_date);
-                                $('#dlv_date').html("Delivery time: "+data.delivery_date);
-                                $('#dlv_ps').html("Payment Status: "+data.paid_status);
-                                $('#dlv_pm').html("Payment Method: "+data.payment_method);
-                                $('#customer_detail_vw').html(" "+data.customer_name+"<br/><b>Mobile:</b> "+data.customer_contact_no+"<br/><b>Address:</b> "+data.customer_address);
-                                $('#note_vw').html(data.remarks);
-
-                                var order_tr = "";
-                                var order_total = 0;
-                                order_infos	 = data.order_info;
-                                var order_arr = order_infos.split('..,');
-                                //console.log(order_arr)
-                                $.each(order_arr, function(i,orderInfo){
-                                    //console.log(orderInfo)
-                                    //alert(i)
-                                    var order_info_arr = orderInfo.split('#');
-                                    var total = ((parseFloat(order_info_arr[4])*parseFloat(order_info_arr[5])));
-                                    order_tr += '<tr><td class="text-capitalize">'+order_info_arr[2].split('..')[0]+' <br>'+order_info_arr[6].split('..')[0]+'</td><td align="center">'+order_info_arr[5]+'</td><td align="right">'+order_info_arr[4]+'</td><td align="right">'+total+'</td></tr>';
-                                    order_total += total;
-                                });
-                                var total_order_bill = ((parseFloat(order_total)+parseFloat(data.delivery_charge))-parseFloat(data.discount_amount));
-                                var total_paid = data.total_paid_amount;
-                                order_tr += '<tr><td colspan="3" align="right" ><b>Total Amount</b></td><td align="right"><b>'+total_paid+'</b></td></tr>';
-                                $('#ord_detail_vw>table>tbody').append(order_tr);
-                                if(data.order_status==2){
-                                    $('#order_status_option').html("Received");
-                                    $('#order_status_id').val(2);
-                                }
-                                else if(data.order_status==3){
-                                    $('#order_status_option').html("Preparing");
-                                    $('#order_status_id').val(3);
-                                }
-                                else if(data.order_status==4){
-                                    $('#order_status_option').html("Ready");
-                                    $('#order_status_id').val(4);
-                                }
-                                else if(data.order_status==5){
-                                    $('#order_status_option').html("Preparing");
-                                    $('#order_status_id').val(5);
-                                }
-                                else{
-                                    $('#order_status_option').html("Ordered");
-                                    $('#order_status_id').val(1);
-                                }
-
-                                //for small device
-
-                            });
-                        }
-                        $('#order_modal').modal();
-
-                    }
-                    else {
-                        if(!jQuery.isEmptyObject(data.order_details)) {
-
-                            $('#ord_title_vw').html(data.order_details.name);
-                            $('#inv_no').html("Invoice Number: "+data.order_details.invoice_no);
-                            $('#ord_date').html("Ordered time: "+data.order_details.order_date);
-                            $('#dlv_date').html("Delivery time: "+data.order_details.delivery_date);
-                            $('#ntf_date').html("Notification time: "+data.order_details.notification_time);
-                            $('#order_status').html("Order Status: "+data.order_details.order_status);
-                            $('#customer_detail_vw').html(" "+data.order_details.full_name+"<br/><b>Mobile:</b> "+data.order_details.mobile+"<br/><b>Address:</b> "+data.order_details.c_address);
-                            //$('#note_vw').html(data.remarks);
-                        }
-                        let order_status = parseInt(data['order_details']['status'])
-                        if(order_status>3){
-                            $('.before_order_initiate').css('display','none')
-                            $('.after_order_initiate').css('display','block')
-
-                        }
-
-                        if(!jQuery.isEmptyObject(data.records)){
-                            var sub_total=0;
-                            $.each(data.records, function(i,data){
-                                //console.log(data)
-                                //alert(data['id'])
-
-                                var order_tr = '';//for big screen
-                                var order_total = 0;
-                                var order_tr_small = ''; //for small screen
-
-                                order_infos	 = data['order_info'];
-                                var order_arr = order_infos.split('..,');
-                                if(!order_arr[0] && order_status<4){
-                                    order_tr+='<tr><td colspan="4" align="left"  ><b>'+data['name']+' </b> ('+data['email']+')</td>'
-                                    order_tr_small+='<tr><td colspan="2" align="left"  ><b>'+data['name']+' </b> ('+data['email']+')</td>'
-                                    var tem = data['group_order_details_id']+'&'+data['order_key']
-                                    order_tr += '<tr><td class="text-capitalize">Not Selected<br><a href="#" onclick="selectItems('+order_id+','+"'"+data['group_order_details_id']+'&'+data['order_key']+"'"+')">Click here to Select item for <b>'+data['name']+'<b></a></td><td align="center"></td><td align="right"></td><td align="right">'+'00'+'</td></tr>';
-                                    order_tr_small+='<tr><td class="text-capitalize">Not Selected<br><a href="#" onclick="selectItems('+order_id+','+"'"+data['group_order_details_id']+'&'+data['order_key']+"'"+')">Click here to Select item for <b>'+data['name']+'<b></a></td><td align="right">'+'00'+'</td></tr>';
-
-                                }
-                                else if(order_arr[0]){
-                                    order_tr+='<tr><td colspan="4" align="left"  ><b>'+data['name']+' </b> ('+data['email']+')</td>'
-                                    order_tr_small+='<tr><td colspan="2" align="left"  ><b>'+data['name']+' </b> ('+data['email']+')</td>'
-                                    $.each(order_arr, function(i,orderInfo){
-                                        //alert(orderInfo)
-                                        var order_info_arr = orderInfo.split('#');
-                                        var total = ((parseFloat(order_info_arr[4])*parseFloat(order_info_arr[5])));
-                                        order_tr += '<tr><td class="text-capitalize">'+order_info_arr[2]+' <br>'+order_info_arr[6]+'</td><td align="center">'+order_info_arr[5]+'</td><td align="right">'+order_info_arr[4]+'</td><td align="right">'+total+'</td></tr>';
-                                        order_tr_small+='<tr><td class="text-capitalize">'+order_info_arr[2]+':'+order_info_arr[5]+'X'+order_info_arr[4]+'<br>'+order_info_arr[6]+'</td><td align="right">'+total+'</td></tr>';
-
-                                        order_total += total;
-                                    });
-                                    sub_total += order_total;
-                                }
-
-                                $('#ord_detail_vw_big>tbody').append(order_tr);
-                                $('#ord_detail_vw_small>tbody').append(order_tr);
-
-
-                                //for small device
-
-                            });
-
-                            var discount = 0;
-
-
-                            var order_tr='<tr align="right"><td colspan="3" ><b>Total Order Amount</b></td><td align="right"><b>'+sub_total.toFixed(2)+'</b></td></tr>'
-
-
-                            $('#ord_detail_vw>table>tbody').append(order_tr);
-                        }
-
-                        $('#group_order_modal').modal();
-
-                    }
-                }
-            });
-
-
-            /*
-            alert(order_id)
-            $.ajax({
-                url: project_url+"controller/orderController.php",
-                type:'POST',
-                async:false,
-                dataType: "json",
-                data:{
-                    q: "set_order_notice_details",
-                    order_id:order_id
-                },
-                success: function(data){
-                    //alert(data)
-                    //alert('Noticed Successfully');
-                }
-            });
-            //alert('edit2')
-
-            $('#delivery_address').hide();
-            //$('#delivery_outlet').hide();
-            $('#order_id').val(order_id);
-
-
-
-            $('#orderTable > tbody').html("");
-            //alert('edit3')
-
-
-            $.ajax({
-                url: project_url+"controller/orderController.php",
-                dataType: "json",
-                type: "post",
-                async:false,
-                data: {
-                    q: "get_order_details",
                     order_id: order_id
                 },
                 success: function(data){
-                    alert(data)
                     if(!jQuery.isEmptyObject(data.records)){
                         $.each(data.records, function(i,data){
+                            $('#order_id_edit').val(data.order_id);
+                            $('#ordered_customer_id').val(data.customer_id);
+                            $('#ord_title_vw').html(data.invoice_no);
+                            $('#ord_date').html("Ordered Time: "+data.order_date);
+                            $('#dlv_date').html("Delivery Time: "+data.delivery_date);
+                            $('#dlv_ps').html("Payment Status: "+data.paid_status);
+                            $('#dlv_pm').html("Payment Method: "+data.payment_method);
+                            $('#customer_detail_vw').html(" "+data.customer_name+"<br/><b>Mobile:</b> "+data.customer_contact_no+"<br/><b>Address:</b> "+data.customer_address);
+                            $('#note_vw').html(data.remarks);
 
-                            total_product_amount 	= data.total_order_amt;
-                            delivery_charge_amount 	= data.delivery_charge;
-                            tax_amount 				= data.tax_amount;
-                            coupon_amount 			= data.discount_amount;
-                            coupon_name 			= data.cupon_id;
-                            cu_amount 				= data.cu_amount;
-                            total_paid_amount 		= data.total_paid_amount;
-                            grand_total_amount 		= data.total_paid_amount;
+                            var order_tr = "";
+                            var order_total = 0;
+                            order_infos	 = data.order_info;
+                            var order_arr = order_infos.split('..,');
+                            //console.log(order_arr)
+                            $.each(order_arr, function(i,orderInfo){
+                                //console.log(orderInfo)
+                                //alert(i)
+                                var order_info_arr = orderInfo.split('#');
+                                var total = ((parseFloat(order_info_arr[4])*parseFloat(order_info_arr[5])));
+                                order_tr += '<tr><td class="text-capitalize">'+order_info_arr[2].split('..')[0]+' <br>'+order_info_arr[6].split('..')[0]+'</td><td align="center">'+order_info_arr[5]+'</td><td align="right">'+order_info_arr[4]+'</td><td align="right">'+total+'</td></tr>';
+                                order_total += total;
+                            });
 
-                            if(coupon_name != ""){
-                                if(data.cu_type ==1)		$('#coupon_name').val(coupon_name+">>"+cu_amount);
-                                else if(data.cu_type ==2)	$('#coupon_name').val(coupon_name+">>"+cu_amount+"%");
-                                $('#coupon_type').val(data.cu_type);
-                                $('#coupon_amount').val(cu_amount);
-                            }
+                            var total_order_bill = ((parseFloat(order_total)+parseFloat(data.delivery_charge))-parseFloat(data.discount_amount));
+                            var total_paid = data.total_paid_amount;
 
-                            if(data.order_status==1){
-                                $('#order_status_option').html("Ordered");
-                                $('#order_status_id').val(1);
-                                $('#order_ready').show();
-                                $('#order_picked').show();
-                            }
+                            order_tr += '<tr><td colspan="3" align="right" ><b>Total Amount</b></td><td align="right"><b>'+total_paid+'</b></td></tr>';
+
+                            $('#ord_detail_vw>table>tbody').append(order_tr);
+
                             if(data.order_status==2){
-                                $('#order_status_option').html("Ready");
+                                $('#order_status_option').html("Received");
                                 $('#order_status_id').val(2);
+
+                                //next order status button show
+                                $('#order_received').hide();
+                                $('#order_preparing').show();
                                 $('#order_ready').hide();
+                                $('#order_delivered').hide();
+                                $('#order_rejected').show();
                             }
                             else if(data.order_status==3){
-                                $('#order_status_option').html("Picked");
+                                $('#order_status_option').html("Preparing");
                                 $('#order_status_id').val(3);
+
+                                //next order status button show
+                                $('#order_received').hide();
+                                $('#order_preparing').hide();
+                                $('#order_ready').show();
+                                $('#order_delivered').hide();
+                                $('#order_rejected').show();
+                            }
+                            else if(data.order_status==4){
+                                $('#order_status_option').html("Ready");
+                                $('#order_status_id').val(4);
+
+                                //next order status button show
+                                $('#order_received').hide();
+                                $('#order_preparing').hide();
                                 $('#order_ready').hide();
-                                $('#order_picked').hide();
-                                $('#save').attr('disabled','disabled');
-                                $('#show_invoice').show();
+                                $('#order_delivered').show();
+                                $('#order_rejected').show();
                             }
+                            else if(data.order_status==5){
+                                $('#order_status_option').html("Delivered");
+                                $('#order_status_id').val(5);
 
-                            $('#customer_name').val(data.customer_name);
-                            $('#customer_id').val(data.customer_id);
-                            $('#customer_id').val(data.customer_id);
-                            $('#delivery_date').val(data.delivery_date);
-                            $('#delivery_option').val(data.delivery_type);
-                            $('#outlet_option').val(data.outlet_id);
-                            var option_html = '';
-                            //alert('edit4')
-
-                            if(data.delivery_type == 1){
-                                $('#delivery_outlet').show();
-                                $('#delivery_address').hide();
-                                $('#delivery_option_list').after().html('');
-                                $('#delivery_option_list_div').hide();
-
+                                //next order status button show
+                                $('#order_received').hide();
+                                $('#order_preparing').hide();
+                                $('#order_ready').hide();
+                                $('#order_delivered').hide();
+                                $('#order_rejected').hide();
                             }
                             else{
-                                $('#delivery_outlet').hide();
-                                $('#delivery_address').hide();
+                                $('#order_status_option').html("Ordered");
+                                $('#order_status_id').val(1);
+
+                                //next order status button show
+                                $('#order_received').show();
+                                $('#order_preparing').hide();
+                                $('#order_ready').hide();
+                                $('#order_delivered').hide();
+                                $('#order_rejected').show();
                             }
-
-                            $('#remarks').val(data.remarks);
-                            if(data.payment_method_id == 0 || data.payment_method_id == null){
-                                $('#payment_option').val(0);
-                            }
-                            else{
-                                $('#payment_option').val(data.payment_method_id);
-                            }
-
-
-                            $('#payment_referance_no').val(data.payment_reference_no);
-                            $('#payment_status').val(data.payment_status);
-                            $('#total_paid_amount').val(data.total_paid_amount);
-
-                            alert(data.order_info)
-                            order_infos	 = data.order_info;
-                            var order_arr = order_infos.split(',');
-
-                            $.each(order_arr, function(i,orderInfo){
-                                var order_info_arr = orderInfo.split('#');
-                                var total = ((parseFloat(order_info_arr[6])*parseFloat(order_info_arr[7])));
-                                $('#orderTable > tbody').append("<tr><td><input type='text' readonly name='product_name[]' class='form-control col-lg-12 product_name' value='"+order_info_arr[2]+"'/><input type='hidden' name='item_id[]' class='item_id' value='"+order_info_arr[3]+"'/></td><td><input type='text' name='rate[]' readonly value='"+order_info_arr[4]+"' required class='form-control col-lg-12 text-right rate'/></td><td><input type='text' name='quantity[]' readonly class='form-control col-lg-12 quantity' value='"+order_info_arr[5]+"' /></td><td><input type='text' name='total[]' value='"+order_info_arr[5]*order_info_arr[4]+"' required class='form-control col-lg-12 text-right total' readonly='readonly'/></td><td><span class='input-group-btn'><button type='button' class='btn btn-danger btn-xs remove_row'><span class='glyphicon glyphicon-minus'></span></button></span></td></tr>");
-                                //order_total += parseFloat(total);
-                            });
-
-                            var total_order_product_amount = 0;
-                            $("#orderTable>tbody>tr").each(function(){
-                                var total = $(this).find('.total').val();
-                                total_order_product_amount += parseFloat(total);
-                            })
-                            total_product_amount = total_order_product_amount;
-                            $('.remove_row').click(function(){
-                                $(this).parent().parent().parent().remove();
-
-                                var total_order_product_amount = 0;
-                                $("#orderTable>tbody>tr").each(function(){
-                                    var total = $(this).find('.total').val();
-                                    total_order_product_amount += parseFloat(total);
-                                })
-
-                                total_product_amount = total_order_product_amount;
-
-
-                            });
-
-
+                            //for small device
                         });
                     }
-
-                    $('#save_order').html('Update');
-
-                    // to open submit post section
-                    if($.trim($('#toggle_form i').attr("class"))=="fa fa-chevron-down")
-                        $( "#toggle_form" ).trigger( "click" );
                 }
             });
 
-            */
+            $('#order_modal').modal();
         }
 
         $('#show_invoice').click(function(){

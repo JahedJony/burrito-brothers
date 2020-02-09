@@ -9,7 +9,7 @@ if(!isset($_SESSION['cart']) || !count($_SESSION['cart'])>0) {
     <div class="container">
         <div class="breadcrumb-inner">
             <h2>CART ITEMS</h2>
-            <a href="index.php?page=home">Home</a>
+            <a href="index.php">Home</a>
             <span>Cart Items</span>
         </div>
     </div>
@@ -28,7 +28,7 @@ if(!isset($_SESSION['cart']) || !count($_SESSION['cart'])>0) {
                     </ul>
                 </div>
                 <form class="form" method="post" name="cart_detail" id="cart_detail">
-                <div class="shop-cart-list wow fadeInDown" data-wow-duration="1000ms" data-wow-delay="300ms">
+                <div class="shop-cart-list wow fadeInDown hidden-xs" data-wow-duration="1000ms" data-wow-delay="300ms">
                     <table class="shop-cart-table">
                         <thead>
                         <tr>
@@ -39,32 +39,42 @@ if(!isset($_SESSION['cart']) || !count($_SESSION['cart'])>0) {
                         </tr>
                         </thead>
                         <tbody id="cart_table">
-
                         </tbody>
                     </table>
                     <div class="product-cart-detail">
                         <input name="update_cart" id="update_cart"  value="UPDATE CART" class="btn-medium btn-skin pull-right" type="submit">
                     </div>
                 </div>
+				<div class="shop-cart-list wow fadeInDown hidden-sm hidden-md hidden-lg" data-wow-duration="1000ms" data-wow-delay="300ms">
+                    <table class="table table-bordered">
+                        <thead>
+                        <tr>
+                            <th>PRODUCT</th>
+                            <th>QUANTITY</th>
+                        </tr>
+                        </thead>
+                        <tbody id="sm_cart_table">
+                        </tbody>
+                    </table>
+					<div class="product-cart-detail">
+                        <input name="update_cart_xs" id="update_cart_xs"  value="UPDATE CART" class="btn-medium btn-skin pull-right" type="submit">
+                    </div>
+				</div>
+				
+				
                 </form>
-
-
-                    <div class="cart-total wow fadeInDown" data-wow-duration="1000ms" data-wow-delay="300ms" style="text-align: center">
-
+                <div class="cart-total wow fadeInDown" data-wow-duration="1000ms" data-wow-delay="300ms" style="text-align: center">
                     <div class="cart-total-title">
                         <h5>CART TOTALS</h5>
                     </div>
                     <div id="price_summary">
-
                     </div>
-
                     <div class="proceed-check">
                         <?php
                         if(isset($_SESSION['group_master'])){?>
                             <a href="#" class="btn-dark-coffee btn-medium" style="text-align: center" onclick="submitItem()">SUBMIT YOUR ITEMS</a>
                         <?php }
                         else{ ?>
-
                             <a href="index.php?page=checkout" class="btn-primary-gold btn-medium">PROCEED TO CHECKOUT</a>
                         <?php } ?>
                     </div>
@@ -110,7 +120,7 @@ if(!isset($_SESSION['cart']) || !count($_SESSION['cart'])>0) {
             },
             success: function(data) {
                 if(!jQuery.isEmptyObject(data.records)){
-                    var html = '';
+                    var html, html_xs = '';
                     var total = 0;
                     var sub_total = 0;
                     var count =0
@@ -118,18 +128,15 @@ if(!isset($_SESSION['cart']) || !count($_SESSION['cart'])>0) {
 
                         sub_total += parseFloat(datas.discounted_rate)*(datas.quantity);
                         html+=' <tr>\n' +
-                            '                            <th>PRODUCT</th>\n' +
                             '                            <td>\n' +
                             '                                <div class="product-cart" style="">\n' +
                             '                                    <img src="/admin/images/item/'+datas.item_image+'" alt="" style="height: 80px; width: 80px; border-radius: 10px;'+ item_image_display +'">\n' +
                             '                                    <span class="text-capitalize">'+datas.item_name+'</span>\n' +
                             '                                </div>\n' +
                             '                            </td>\n' +
-                            '                            <th>PRICE</th>\n' +
                             '                            <td>\n' +
                             '                                <strong>'+ currency_symbol+''+datas.discounted_rate+'</strong>\n' +
                             '                            </td>\n' +
-                            '                            <th>QUANTITY</th>\n' +
                             '                            <td>\n' +
                             '                                <div class="price-textbox">\n' +
                             '                                    <span class="minus-text" onclick="minusProd('+datas.item_id+')"><i class="icon-minus"></i></span>' +
@@ -138,19 +145,48 @@ if(!isset($_SESSION['cart']) || !count($_SESSION['cart'])>0) {
                             '                                    <span class="plus-text" onclick="addProd('+datas.item_id+')"><i class="icon-plus"></i></span>\n' +
                             '                                </div>\n' +
                             '                            </td>\n' +
-                            '                            <th>TOTAL</th>\n' +
                             '                            <td>\n' +
                             '                                '+ currency_symbol+''+datas.discounted_rate+' * '+datas.quantity+'='+ currency_symbol+''+datas.discounted_rate * datas.quantity+'\n' +
                             '                            </td>\n' +
                             '                            <td class="shop-cart-close"><i class="icon-cancel-5" onclick=deleteCartItem("'+i+'")></i></td>\n' +
-                            '                        </tr>'
+                            '                        </tr>';
+							
+						html_xs+=' <tr>\n' +
+                            '                            <td>\n' +
+                            '                                <div class="product-cart" style="">\n' +                    
+                            '                                    <span class="text-capitalize">'+datas.item_name+' ('+ currency_symbol+''+datas.discounted_rate+')</span>\n' +
+                            '                                </div>\n' +
+                            '                            </td>\n' +
+                            '                            <td>\n' +
+                            '                                <div class="price-textbox">\n' +
+                            '                                    <span class="minus-text" onclick="minusProd('+datas.item_id+')"><i class="icon-minus"></i></span>' +
+                            '                                    <input type="hidden" name="cart_key[]" value="'+i+'"/>\n' +
+                            '                                    <input name="quantity[]" id="quantity_'+datas.item_id+'" placeholder="'+datas.quantity+'" type="text" value="'+datas.quantity+'">\n' +
+                            '                                    <span class="plus-text" onclick="addProd('+datas.item_id+')"><i class="icon-plus"></i></span>\n' +
+                            '                                </div>\n' +
+                            '                            </td>\n' +
+                            '                            <td class="shop-cart-close"><i class="icon-cancel-5" onclick=deleteCartItem("'+i+'")></i></td>\n' +
+                            '                        </tr>';					
+							
+							
 
                         count++;
                         total += sub_total ;
                     });
-                    $('#quantity_15').val(15)
-                    $('#cart_table').html(html);
+					
+					
+					var sWidth = window.screen.width;
 
+					//alert("sWidth is: " + sWidth);
+					if(sWidth<601){
+						$('#sm_cart_table').html(html_xs);
+					}
+					else {
+						 $('#cart_table').html(html);
+					}		
+
+                   // $('#quantity_15').val(15)
+                   
                     total = total.toFixed(2);
                     html += '<div class="subtotal"><div class="col-md-6 col-sm-6 col-xs-6"><h6>Subtotal :</h6></div><div class="col-md-6 col-sm-6 col-xs-6"><span>Tk '+total+'</span></div></div>';
                     html  += '<div class="cart-btn"><div class="col-sm-6"><a href="cart.php" class="btn-main checkout">VIEW ALL</a></div><div class="col-sm-6"><a href="checkout.php" class="btn-main checkout">CHECK OUT</a></div></div>';
@@ -170,7 +206,7 @@ if(!isset($_SESSION['cart']) || !count($_SESSION['cart'])>0) {
 
 
     // send mail if forget password
-    $('#update_cart').click(function(event){
+    $('#update_cart, #update_cart_xs').click(function(event){
         event.preventDefault();
         var formData = new FormData($('#cart_detail')[0]);
         formData.append("q","update_cart");

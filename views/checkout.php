@@ -38,7 +38,7 @@ if(!isset($_SESSION['cart']) || !count($_SESSION['cart'])>0) {
           </div>
           <div class="row">
                <div class="col-md-12 col-sm-12 col-xs-12 wow fadeInDown  tab-content" data-wow-duration="1000ms" data-wow-delay="300ms" >
-                     <ul class="nav nav-tabs" role="tablist" style="margin-right: 43%; margin-top: 20px; font-size: 20px; border-radius: 15px 15px 0px 0px">
+                     <ul class="nav nav-tabs" role="tablist" style="margin-right: 43%; margin-top: 40px;  border-radius: 15px 15px 0px 0px">
                             <li role="presentation" onclick="user_details()" id="userDetails" style="background-color: #EAEAEA">
                                 <a href="#description" aria-controls="account" role="tab" data-toggle="tab">Your Details</a>
                             </li>
@@ -69,8 +69,7 @@ if(!isset($_SESSION['cart']) || !count($_SESSION['cart'])>0) {
                                                 <div class="col-md-12 col-sm-12 col-xs-12">
                                                     <div class="row">
                                                         <div class="col-md-6 col-sm-6 col-xs-12">
-                                                            <label>
-                                                                <input type="checkbox" name="chkbox">Remember me</label>
+                                                            <label><input type="checkbox" name="chkbox">Remember me</label>
                                                         </div>
                                                         <div class="col-md-6 col-sm-6 col-xs-12">
                                                             <a  onclick="forgetPass()" class="pull-right" id="send_password_"><i class="fa fa-user" aria-hidden="true"></i> Lost your password?</a>
@@ -204,14 +203,14 @@ if(!isset($_SESSION['cart']) || !count($_SESSION['cart'])>0) {
                                     <h5>Coupon and Tips</h5>
                                 </div>
                                 <div class="col-md-12 col-sm-12 col-xs-12">
-                                    <label style=" font-size: 18px"> Do you have any cupon code </label>
+                                    <label> Do you have any cupon code </label>
                                     <input type="text" name="coupon" id="coupon" placeholder="Enter The Coupon Code" class="input-fields" style="border-radius: 10px">
                                     <div id="coupon_error" class="text-center" style="display:none"></div>
 
                                 </div>
 
                                 <div class="col-md-12 col-sm-12 col-xs-12">
-                                    <label style=" font-size: 18px"> Want to give some Tips </label>
+                                    <label> Want to give some Tips </label>
                                     <input type="text" name="tips" id="tips" placeholder="Tips amount" class="input-fields" style="border-radius: 10px">
                                 </div>
 
@@ -219,21 +218,22 @@ if(!isset($_SESSION['cart']) || !count($_SESSION['cart'])>0) {
                                     <h5>Takeout Details</h5>
                                 </div>
                                 <div class="col-md-12 col-sm-12 col-xs-12">
+
                                     <br />
-                                    <label style=" font-size: 20px"> Confirm TakeOut Location </label>
+                                    <label> Confirm TakeOut Location </label>
                                     <div class="payment-mode" style="margin: auto">
-                                        <span><input type="checkbox" name="take_out_location" id="take_out_location" ><label id="take_out_location_" style="padding-left: 10px; padding-top: 10px; font-size: 18px"></label></span>
+                                        <span><input type="checkbox" name="take_out_location" id="take_out_location" ><label id="take_out_location_" style="padding-left: 10px; padding-top: 10px;"></label></span>
                                     </div>
                                 </div>
 
                                 <div class="col-md-12 col-sm-12 col-xs-12">
                                     <br />
-                                    <label style=" font-size: 20px"> Please select date and time </label>
+                                    <label> Please select date and time </label>
                                     <input type="text" name="pickup_date_time" id="pickup_date_time" placeholder="Date and Time" class="input-fields date-picker" required value="2020-01-07 12:00:00" style="border-radius: 10px">
                                 </div>
 
                                 <div class="col-md-12 col-sm-12 col-xs-12">
-                                    <label style=" font-size: 20px"> Order Notes </label>
+                                    <label> Order Notes </label>
                                     <textarea placeholder="Order Notes" name="secial_notes" id="secial_notes" style="border-radius: 10px"></textarea>
                                 </div>
 
@@ -250,7 +250,7 @@ if(!isset($_SESSION['cart']) || !count($_SESSION['cart'])>0) {
                                 <div id="payment_alert" class="text-center" style="display:none"></div>
 
                                 <div class="checkout-terms">
-                                    <input type="checkbox" name="tarm_condition" id="tarm_condition"><label style="padding-left: 10px; padding-top: 10px; font-size: 18px">I’ve read and accept the terms &amp; conditions *</label>
+                                    <input type="checkbox" name="tarm_condition" id="tarm_condition"><label style="padding-left: 10px; padding-top: 10px;">I’ve read and accept the terms &amp; conditions *</label>
                                 </div>
                                 <input type="hidden" name="total_order_amt" id="total_order_amt">
                                  <input type="hidden" name="tax_amount" id="tax_amount">
@@ -292,7 +292,7 @@ if(!isset($_SESSION['cart']) || !count($_SESSION['cart'])>0) {
                                     <div class="checkout-total">
                                         <h6>ORDER TOTAL <small class="price-big" id="total_amount_"></small></h6>
                                     </div>
-                                    <div class="" style=" background-color: #add8e6 ;" >
+                                    <div class="text-center" style=" background-color: #add8e6; border-radius:4px;" >
                                         <label id="loyalty_point_earn" style="text-align: center; margin: auto; padding: 8px; margin-left: 10px"></label>
                                     </div>
 
@@ -310,7 +310,7 @@ var loyalty_points=0;
 var loyalty_point_value=0;
 var loyalty_reserve_value=0;
 
-
+$('select.select-dropbox, input[type="radio"], input[type="checkbox"]').styler({selectSearch:true,});
 
 $('.date-picker').daterangepicker({
 	singleDatePicker: true,
@@ -431,83 +431,87 @@ $('#coupon').on('change',function () {
 
 
 load_customer_profile = function load_customer_profile(id){
-        $.ajax({
-                url:"./includes/controller/ecommerceController.php",
-                dataType: "json",
-                type: "post",
-                async:false,
-                data: {
-                    q: "get_customer_details",
-                    customer_id: customer_id,
-                },
-                success: function(data){
-                    if(!jQuery.isEmptyObject(data.records)){
-                        $.each(data.records, function(i,data){
-                            $('#customer_id').html(data.customer_id);
-                            $('#customer_name').html(data.full_name);
-                            $('#contact_no').html(data.contact_no);
-                            $('#email').html(data.email);
-                            $('#address').html(data.address);
-                            $('#customer_status').html(data.status_text);
-                            $('#loyalty_points').html(data.loyalty_points);
-                            loyalty_points = data.loyalty_points;
-                            if(data.photo == ""){
-                                $('#customer_img').attr("src",'admin/images/no_image.png');
-                            }else{
-                                $('#customer_img').attr("src","admin/"+data.photo);
-                            }
-                            $('#customer_img').attr("width", "70%","height","70%");
-                        });
+$.ajax({
+		url:"./includes/controller/ecommerceController.php",
+		dataType: "json",
+		type: "post",
+		async:false,
+		data: {
+			q: "get_customer_details",
+			customer_id: customer_id,
+		},
+		success: function(data){
+			if(!jQuery.isEmptyObject(data.records)){
+				$.each(data.records, function(i,data){
+					$('#customer_id').html(data.customer_id);
+					$('#customer_name').html(data.full_name);
+					$('#contact_no').html(data.contact_no);
+					$('#email').html(data.email);
+					$('#address').html(data.address);
+					$('#customer_status').html(data.status_text);
+					$('#loyalty_points').html(data.loyalty_points);
+					loyalty_points = data.loyalty_points;
+					if(data.photo == ""){
+						$('#customer_img').attr("src",'admin/images/no_image.png');
+					}else{
+						$('#customer_img').attr("src","admin/"+data.photo);
+					}
+					$('#customer_img').attr("width", "70%","height","70%");
+				});
 
-                    }
-                    //alert(loyalty_points)
-                }
-            });
-    }
+			}
+			//alert(loyalty_points)
+		}
+	});
+}
+
 display_div = function display_div(){
-        $("#login_div").css("display", "none");
-        $("#register_div").css("display", "none");
-        $("#forget_pass_div").css("display", "none");
-        $("#profile").css("display", "none");
-        $("#take_out").css("display", "none");
-        $("#payments").css("display", "none");
-        document.getElementById("userDetails").classList.remove('active');
-        document.getElementById("take_out_menu").classList.remove('active');
-        document.getElementById("payments_menu").classList.remove('active');
-    }
+	$("#login_div").css("display", "none");
+	$("#register_div").css("display", "none");
+	$("#forget_pass_div").css("display", "none");
+	$("#profile").css("display", "none");
+	$("#take_out").css("display", "none");
+	$("#payments").css("display", "none");
+	document.getElementById("userDetails").classList.remove('active');
+	document.getElementById("take_out_menu").classList.remove('active');
+	document.getElementById("payments_menu").classList.remove('active');
+}
+
 user_details = function user_details(){
-        if(customer_id && customer_id>0){
-            //alert(customer_id)
-            display_div()
-            //document.getElementById("userDetails").classList.add('active');
-            //$("#profile").css("display", "block");
-        }
-        else {
-            display_div()
-            login()
-        }
-    }
+	if(customer_id && customer_id>0){
+		//alert(customer_id)
+		display_div()
+		//document.getElementById("userDetails").classList.add('active');
+		//$("#profile").css("display", "block");
+	}
+	else {
+		display_div()
+		login()
+	}
+}
 login = function login() {
-        display_div()
-        document.getElementById("userDetails").classList.add('active');
-        $("#login_div").css("display", "block");
-    }
+	display_div()
+	document.getElementById("userDetails").classList.add('active');
+	$("#login_div").css("display", "block");
+}
 registration = function registration() {
-        display_div()
-        document.getElementById("userDetails").classList.add('active');
-        $("#register_div").css("display", "block");
-    }
+	display_div()
+	document.getElementById("userDetails").classList.add('active');
+	$("#register_div").css("display", "block");
+}
 forgetPass = function forgetPass() {
-        display_div()
-        document.getElementById("userDetails").classList.add('active');
-        $("#forget_pass_div").css("display", "block");
-    }
+	display_div()
+	document.getElementById("userDetails").classList.add('active');
+	$("#forget_pass_div").css("display", "block");
+}
+
 take_out = function take_out(){
     load_customer_profile()
     display_div()
     document.getElementById("take_out_menu").classList.add('active');
     $("#take_out").css("display", "block");
-    }
+}
+
 payments = function payments(){
     display_div()
     document.getElementById("payments_menu").classList.add('active');
@@ -516,8 +520,6 @@ payments = function payments(){
     if(loyalty_points/loyalty_point_value<$('#total_paid_amount').val()){
         $('#loyalty_redio').attr('disabled',true);
     }
-
-
 }
 
 general_settings = function general_settings(){
@@ -541,17 +543,17 @@ general_settings = function general_settings(){
                     $('#take_out_location_').html(data.store_address);
                     if(data.cash_payment==1){
                         html+='<div class="payment-mode">\n' +
-                            '       <input type="radio" name="payment_method" value="1" onclick="payment_check()"><label style="padding-left: 10px; padding-top: 10px; font-size: 18px">Cash on Delivery</label>\n' +
+                            '       <input type="radio" name="payment_method" value="1" onclick="payment_check()"><label style="padding-left: 10px; padding-top: 10px;">Cash on Delivery</label>\n' +
                             '  </div>'
                     }
                     if(data.loyelty_payment==1 ){
                         html+='<div class="payment-mode">\n' +
-                            '      <input type="radio" name="payment_method" id="loyalty_redio" value="2"  onclick="payment_check()"><label style="padding-left: 10px; padding-top: 10px; font-size: 18px">Use Loyalty Point <span id="loyalty_spend"></span></label>\n' +
+                            '      <input type="radio" name="payment_method" id="loyalty_redio" value="2"  onclick="payment_check()"><label style="padding-left: 10px; padding-top: 10px;">Use Loyalty Point <span id="loyalty_spend"></span></label>\n' +
                             '  </div>'
                     }
                     if(data.card_payment==1){
                         html+='<div class="payment-mode">\n' +                      
-                            '      <input type="radio" name="payment_method" value="3"  onclick="payment_check()"><label style="padding-left: 10px; padding-top: 10px; font-size: 18px">Credit Card</label>'
+                            '      <input type="radio" name="payment_method" value="3"  onclick="payment_check()"><label style="padding-left: 10px; padding-top: 10px;">Credit Card</label>'
                         if(data.payment_card_visa==1){
                             html+='<img src="./images/payments/visa.png" style="height: 30px">'
                         }
@@ -643,6 +645,7 @@ order_summary()
 //load_customer_profile()
 
 $('#login').click(function(event){
+
         event.preventDefault();
         var formData = new FormData($('#login_form')[0]);
         formData.append("q","login_customer");
@@ -675,7 +678,7 @@ $('#login').click(function(event){
                             $('#islogged_in').val(1);
                             $('.logged_in_already').addClass('hide');
                         }
-                        window.location.href = project_url+ "checkout.php";
+                        window.location.href = project_url+ "index.php?page=checkout";
 
 
 
@@ -684,6 +687,7 @@ $('#login').click(function(event){
             });
         }
     })
+
 
 $('#foget_pass_submit_').click(function(event){
     event.preventDefault();
@@ -715,6 +719,7 @@ $('#foget_pass_submit_').click(function(event){
             });
         }
     })
+	
 // send mail if forget password
 $('#register_submit_').click(function(event){
     event.preventDefault();
@@ -760,7 +765,7 @@ $('#register_submit_').click(function(event){
                 else if($.isNumeric(data)==true && data==1){
                     $('.done_registration').addClass("hide");
                     $('.done_registration_msg').removeClass("hide");
-                    window.location.href = project_url+ "checkout.php";
+                    window.location.href = project_url+ "index.php?page=checkout";
                 }
                 else{
                     success_or_error_msg('#registration_submit_error_',"danger","Registration is not completed. please check your information again.","#cust_email" );
@@ -780,7 +785,7 @@ $('#checkout_submit').click(function(event) {
     event.preventDefault();
     //$('#grand_total').val($('#total_amount_').html());
       //  alert($('#grand_total').val())
-    var loyalty_value =Math.floor( $('#total_paid_amount').val()/loyalty_reserve_value);
+    var loyalty_value = Math.floor( $('#total_paid_amount').val()/loyalty_reserve_value);
     var loyalty_deduct = 0;
     if($('input[name=payment_method]:checked', '#checkout-form').val()==2){
         loyalty_deduct = Math.ceil($('#total_paid_amount').val()*loyalty_point_value);
@@ -830,7 +835,7 @@ $('#checkout_submit').click(function(event) {
             cache:false,
             contentType:false,processData:false,
             success: function(data){
-                console.log(data)
+                //console.log(data)
                 if(data==0){
                     success_or_error_msg('#logn_reg_error',"danger","Order Faild. please check your information properly","#checkout_submit" );
                 }

@@ -2,7 +2,7 @@
     <div class="container">
         <div class="breadcrumb-inner">
             <h2>CATERING SERVICE</h2>
-            <a href="index.php?page=home">Home</a>
+            <a href="index.php">Home</a>
             <span>Catering Service</span>
         </div>
     </div>

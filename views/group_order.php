@@ -163,6 +163,21 @@ if(isset($_GET['order_id']) && $_GET['order_id']!="") $order_id =  $_GET['order_
 
 <script>
 
+$(document).ready(function () {
+
+$('select.select-dropbox, input[type="radio"], input[type="checkbox"]').styler({selectSearch:true,});
+
+$('.date-picker').daterangepicker({
+	singleDatePicker: true,
+	/*autoUpdateInput: false,*/
+	calender_style: "picker_2",
+	timePicker:true,
+	locale: {
+		format: 'YYYY-MM-DD h:mm',
+		separator: " - ",
+	}
+});
+
 
     $('#group_name').on("keyup change", function () {
         //alert( $('#group_name').val())
@@ -190,29 +205,30 @@ if(isset($_GET['order_id']) && $_GET['order_id']!="") $order_id =  $_GET['order_
         });
     })
 
-loadGroups = function loadGroup(){
-    var html=''
+	loadGroups = function loadGroup(){
+		var html=''
 
-    $.ajax({
-        url: "./includes/controller/groupController.php",
-        data:{
-            q: "groups",
-            customer_id: customer_id
-        },
-        type:'POST',
-        async:false,
-        dataType: "json",
-        success: function(data){
-            if(!jQuery.isEmptyObject(data.records)){
-                $.each(data.records, function(i,data){
-                    html+='<option>'+data['name']+'</option>'
-                })
-            }
-            $('#group_names').html(html)
-        }
-    });
-}
-loadGroups()
+		$.ajax({
+			url: "./includes/controller/groupController.php",
+			data:{
+				q: "groups",
+				customer_id: customer_id
+			},
+			type:'POST',
+			async:false,
+			dataType: "json",
+			success: function(data){
+				if(!jQuery.isEmptyObject(data.records)){
+					$.each(data.records, function(i,data){
+						html+='<option>'+data['name']+'</option>'
+					})
+				}
+				$('#group_names').html(html)
+			}
+		});
+	}
+	
+	loadGroups();
 
     addMember = function addMember(){
         var html =''
@@ -228,17 +244,16 @@ loadGroups()
             $(this).parent().parent().remove()
         })
     }
+	
+	var customer_id = "<?php echo $_SESSION['customer_id']; ?>";
 
     $('#save_group_order').click(function(event){
-        //alert('okkk')
-        alert()
         event.preventDefault();
         var formData = new FormData($('#group_order')[0]);
         formData.append("q","initiate_group_order");
-        formData.append("customer_id",<?php echo $customer_id; ?>);
+        formData.append("customer_id",customer_id);
 
         //validation
-        //console.log($.trim($('#take_out_location').val()))
         if(!$('input[name=take_out_location]:checked', '#group_order').val()){
             success_or_error_msg('#form_submit_error','danger','Please Confirm Take-Out Location',"#take_out_location");
         }
@@ -261,7 +276,7 @@ loadGroups()
                 cache:false,
                 contentType:false,processData:false,
                 success: function(data){
-                    alert(data)
+                   // alert(data)
                     success_or_error_msg('#form_submit_error','primary','Group Order Successfully Initiated',"#notification_date_time");
 
                     newForm()
@@ -336,15 +351,18 @@ loadGroups()
                     '    <td><input type="email" required name="memberEmail[]" value="'+data['records']['0']['email']+'" style="margin: 0px; padding: 3px; border-radius: 5px; height: 40px"></td>\n' +
                     '    <td style="margin-top: 10px"><button class="btn-danger deletes" >X</button></td>\n' +
                     '  </tr>'
-                $('#members_info').html(html)
+                $('#members_info').html(html);
 
-                addMember()
+                addMember();
 
             }
         });
     }
 
-    loadmembers()
+    loadmembers();
+	
+});
+	
 </script>
 
 

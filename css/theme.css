@@ -350,7 +350,7 @@ textarea{height:175px;padding:25px 30px;width:100%;border:2px solid #e5e5ee;-web
 .language-menu ul{right:0;position:absolute;top:64px;width:100%;background:#e4b95b;display:none;padding:20px 18px;min-width:135px;z-index:32;font-size:13px;-webkit-border-radius:18px;-moz-border-radius:18px;-ms-border-radius:18px;-o-border-radius:18px;border-radius:18px;}
 .language-menu>ul:after{width:0;height:0;border-left:8px solid transparent;border-right:8px solid transparent;border-bottom:8px solid #e4b95b;right:44px;position:absolute;top:-8px;content:"";}
 .language-menu li{display:block;vertical-align:middle;}
-.language-menu li .fa{margin-right:12px;font-size:15px;}
+.language-menu li .fa{margin-left:8px;font-size:15px;}
 .language-menu .current-lang{padding:4px 25px;}
 .language-menu .fa-caret-down{padding-left:17px;color:#e4b95b;font-size:16px;}
 .header-bottom{float:left;width:100%;background:#383848;position:relative;border-bottom:6px solid #1b1b29;}
@@ -1264,6 +1264,9 @@ body main .team-page{padding-bottom:70px;}
 .left-padding-0{
 	padding-left:0px;
 }
+.left-margin-0{
+	margin-left:0px;
+}
 .shop-product>img{
 	 height: 100px; width: 100px
 }
@@ -1281,6 +1284,17 @@ body main .team-page{padding-bottom:70px;}
   text-align: justify;
   text-justify: inter-word;
 }
+.width_80_p{
+	width:80% !important;
+}
+
+.pointer{
+	cursor:pointer;
+}
 @media screen and (max-width: 531px) {
     .account_container { display: flex; flex-flow: column-reverse; }
 }
+
+
+
+// custom

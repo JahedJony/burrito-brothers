@@ -7,11 +7,12 @@ else if($_REQUEST['view'] == "" ){ ob_start(); header("Location:".$activity_url.
 else{
 	include("dbConnect.php");
 	include("dbClass.php");
-	$dbClass = new dbClass;		
-	$user_id = $_SESSION['user_id'];
+	$dbClass   = new dbClass;		
+	$user_id   = $_SESSION['user_id'];
 	$user_type = $_SESSION['user_type'];
     //$currency   = $dbClass->getDescription('currency_symbol');
 
+	$logo      = $dbClass->getDescription('website_url')."admin/".$dbClass->getDescription('company_logo');
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -107,12 +108,14 @@ else{
                                     	<div class="text-left col-md-6">
 											<button class="btn btn-primary btn-xs has-spinner" id="load_more_not_button"><span class="spinner"><i class="fa fa-spinner fa-spin fa-fw"></i></span>Load More Notificatons?</button>
    										</div>
+										<!--
                                         <div class="text-right col-md-6">
                                             <a href="index.php?module=personal&view=notification">
                                                 <strong>All Notifications</strong>
                                                 <i class="fa fa-angle-right"></i>
                                             </a>
                                         </div>
+										-->
                                     </li>
                                 </ul>
                             </li>
@@ -174,6 +177,92 @@ else{
                         </div>
                     </div>
                 </div>
+				
+				
+				<!------ order modal --->
+				<div class="modal fade booktable" id="order_modal" tabindex="-2" role="dialog" aria-labelledby="booktable">
+					<div class="modal-dialog" role="document" style="width:80% !important">
+						<div class="modal-content">
+							<div class="modal-body">
+								<div id="order-div" style="margin-bottom: 30px">
+									<div class="title text-center">
+										<h3 class="text-coffee left"> <a href="#"><img src="<?php echo ($logo); ?>" alt="" style="height: 100px; width: 100px"></a></h3>
+										<h4 class="text-coffee left">Order No # <span id="ord_title_vw"></span></h4>
+									</div>
+									<div class="done_registration ">
+										<div class="doc_content">
+											<div class="col-md-12" style="margin-left: 0px; padding: 0px; margin-bottom: 20px">
+												<div class="col-md-6" style="margin: 0px; padding: 0px">
+													<h4>Order Details:</h4>
+													<div class="">
+														<span><button id="order_status_option" type="button" style="min-width:60px" class="btn btn-sm btn-success btn-lg disabled"></button></span><br/>
+														<span id="ord_date"></span><br/>
+														<span id="dlv_date"></span> <br/>
+														<span id="dlv_ps"></span> <br/>
+														<span id="dlv_pm"></span><br/>
+													</div>
+												</div>
+												<div class="col-md-6" style="text-align:right">
+
+													<div class="col-md-10 col-sm-10 col-xs-6">
+														<input type="hidden" id="order_status_id" name="order_status_id" value="1" />
+														<input type="hidden" id="order_id_edit">
+														<input type="hidden" id="ordered_customer_id">
+														
+														<button id="order_received" onclick="update_order_status(2)" type="button" style="min-width:60px" class="order_status_btn btn btn-success btn-lg">Received</button>
+														<button id="order_preparing" onclick="update_order_status(3)" type="button" style="min-width:60px" class="order_status_btn btn btn-success btn-lg">Preparing</button>
+														<button id="order_ready" onclick="update_order_status(4)" type="button" style="min-width:60px" class="order_status_btn btn btn-success btn-lg">Ready</button>
+														<button id="order_delivered" onclick="update_order_status(5)" type="button" style="min-width:60px" class="order_status_btn btn btn-success btn-lg">Delivered</button>
+														<button id="order_rejected" onclick="update_order_status(6)" type="button" style="min-width:60px" class="btn btn-danger btn-lg">Reject</button>
+														
+														<!--
+														<input type="hidden" id="order_status_id" name="order_status_id" value="1" />
+														<input type="hidden" id="order_id_edit">
+														<button class="btn btn-primary btn-lg dropdown-toggle" style="width:190px" type="button" id="dropdown_status" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">Change Status
+															<span class="caret"></span>
+														</button>
+														<ul class="dropdown-menu" aria-labelledby="dropdown_status">
+															<li id="order_received"><a href="javascript:void(0)" onclick="update_order_status(2)">Received</a></li>
+															<li id="order_preparing"><a href="javascript:void(0)" onclick="update_order_status(3)">Preparing</a></li>
+															<li id="order_ready"><a href="javascript:void(0)" onclick="update_order_status(4)">Ready</a></li>
+															<li id="order_delivered"><a href="javascript:void(0)" onclick="update_order_status(5)">Delivered</a></li>
+														</ul>
+														<button id="order_status_option" type="button" style="min-width:60px" class="btn btn-success btn-lg disabled">Ordered</button>
+														-->
+													</div>
+
+												</div>
+
+											</div>
+											<div id="ord_detail_vw">
+												<table class="table table-bordered" >
+													<thead>
+													<tr>
+														<th align="center">Items</th>
+														<th width="10%" align="center">Quantity</th>
+														<th width="12%" style="text-align:right">Rate</th>
+														<th width="12%"  style="text-align:right">Price</th>
+													</tr>
+													</thead>
+													<tbody>
+													</tbody>
+												</table>
+												<p>Note: <span id="note_vw"></span></p>
+												<p>Print Time : <?php echo date("Y-m-d h:m:s"); ?></p>
+												<br />
+											</div>
+										</div>
+										<div class="col-md-12 center"> <button type="button" class="btn btn-warning" id="order_print"><i class="fa fa-lg fa-print"></i></button></div>
+
+									</div>
+
+								</div>
+
+							</div>
+						</div>
+					</div>
+				</div>
+				
                 <!-- footer content -->
                 <footer>
                     <div class="">
@@ -261,6 +350,7 @@ else{
 </html>
 
 <script>
+
 $(document).ready(function () {
 
 	var user_id = "<?php echo $_SESSION['user_id']; ?>";
@@ -268,6 +358,200 @@ $(document).ready(function () {
 	$('body').on("click", ".dropdown-menu", function (e) {
 		$(this).parent().is(".open") && e.stopPropagation();
 	});
+	
+	$('#load_more_not_button').click(function() {
+		 $(this).toggleClass('active');
+		 show_notifications();
+    });
+	
+	
+	set_time_out_fn = function set_time_out_fn(){
+		setTimeout(function(){ 
+			show_notifications_no();
+			set_time_out_fn();
+		}, 30000); 		
+	}
+	
+	set_time_out_fn();
+	show_notifications_no();	
+	show_notifications();
+	
+	view_notification_details = function view_notification_details(order_id){
+		$('#ord_detail_vw>table>tbody').html('');
+		$.ajax({
+			url: project_url+"controller/orderController.php",
+			type:'POST',
+			async:false,
+			dataType: "json",
+			data:{
+				q: "get_order_details_by_invoice",
+				order_id: order_id
+			},
+			success: function(data){
+				if(!jQuery.isEmptyObject(data.records)){
+					$.each(data.records, function(i,data){
+						$('#order_id_edit').val(data.order_id);
+						$('#ordered_customer_id').val(data.customer_id);
+						$('#ord_title_vw').html(data.invoice_no);
+						$('#ord_date').html("Ordered Time: "+data.order_date);
+						$('#dlv_date').html("Delivery Time: "+data.delivery_date);
+						$('#dlv_ps').html("Payment Status: "+data.paid_status);
+						$('#dlv_pm').html("Payment Method: "+data.payment_method);
+						$('#customer_detail_vw').html(" "+data.customer_name+"<br/><b>Mobile:</b> "+data.customer_contact_no+"<br/><b>Address:</b> "+data.customer_address);
+						$('#note_vw').html(data.remarks);
+
+						var order_tr = "";
+						var order_total = 0;
+						order_infos	 = data.order_info;
+						var order_arr = order_infos.split('..,');
+						//console.log(order_arr)
+						$.each(order_arr, function(i,orderInfo){
+							//console.log(orderInfo)
+							//alert(i)
+							var order_info_arr = orderInfo.split('#');
+							var total = ((parseFloat(order_info_arr[4])*parseFloat(order_info_arr[5])));
+							order_tr += '<tr><td class="text-capitalize">'+order_info_arr[2].split('..')[0]+' <br>'+order_info_arr[6].split('..')[0]+'</td><td align="center">'+order_info_arr[5]+'</td><td align="right">'+order_info_arr[4]+'</td><td align="right">'+total+'</td></tr>';
+							order_total += total;
+						});
+						
+						var total_order_bill = ((parseFloat(order_total)+parseFloat(data.delivery_charge))-parseFloat(data.discount_amount));
+						var total_paid = data.total_paid_amount;
+						
+						order_tr += '<tr><td colspan="3" align="right" ><b>Total Amount</b></td><td align="right"><b>'+total_paid+'</b></td></tr>';
+						
+						$('#ord_detail_vw>table>tbody').append(order_tr);
+						
+						if(data.order_status==2){
+							$('#order_status_option').html("Received");
+							$('#order_status_id').val(2);
+							
+							//next order status button show
+							$('#order_received').hide();
+							$('#order_preparing').show();
+							$('#order_ready').hide();
+							$('#order_delivered').hide();
+							$('#order_rejected').show();
+						}
+						else if(data.order_status==3){
+							$('#order_status_option').html("Preparing");
+							$('#order_status_id').val(3);
+							
+							//next order status button show
+							$('#order_received').hide();
+							$('#order_preparing').hide();
+							$('#order_ready').show();
+							$('#order_delivered').hide();
+							$('#order_rejected').show();
+						}
+						else if(data.order_status==4){
+							$('#order_status_option').html("Ready");
+							$('#order_status_id').val(4);
+							
+							//next order status button show
+							$('#order_received').hide();
+							$('#order_preparing').hide();
+							$('#order_ready').hide();
+							$('#order_delivered').show();
+							$('#order_rejected').show();
+						}
+						else if(data.order_status==5){
+							$('#order_status_option').html("Delivered");
+							$('#order_status_id').val(5);
+							
+							//next order status button show
+							$('#order_received').hide();
+							$('#order_preparing').hide();
+							$('#order_ready').hide();
+							$('#order_delivered').hide();
+							$('#order_rejected').hide();
+						}
+						else{
+							$('#order_status_option').html("Ordered");
+							$('#order_status_id').val(1);
+							
+							//next order status button show
+							$('#order_received').show();
+							$('#order_preparing').hide();
+							$('#order_ready').hide();
+							$('#order_delivered').hide();
+							$('#order_rejected').show();
+						}
+						//for small device
+					});
+				}
+			}
+		});
+		
+		$('#order_modal').modal();
+	}
+	
+	update_order_status = function update_order_status(status_id){
+		var order_id = $('#order_id_edit').val();			
+		var customer_id = $('#ordered_customer_id').val();				
+		var url = project_url+"controller/orderController.php";
+		$.ajax({
+			url: url,
+			type:'POST',
+			async:false,
+			data:{
+				q: "update_order_status",
+				order_id:order_id,
+				status_id:status_id,
+				customer_id:customer_id
+			},
+			success: function(data){
+				if(data==1){
+					if(status_id==2){
+						$('#order_status_option').html("Received");
+						$('#order_status_id').val(2);
+						
+						//next order status button show
+						$('#order_received').hide();
+						$('#order_preparing').show();
+						$('#order_ready').hide();
+						$('#order_delivered').hide();
+						$('#order_rejected').show();
+					}
+					else if(status_id==3){
+						$('#order_status_option').html("Preparing");
+						$('#order_status_id').val(3);
+						
+						//next order status button show
+						$('#order_received').hide();
+						$('#order_preparing').hide();
+						$('#order_ready').show();
+						$('#order_delivered').hide();
+						$('#order_rejected').show();
+					}
+					else if(status_id==4){
+						$('#order_status_option').html("Ready");
+						$('#order_status_id').val(4);
+						
+						//next order status button show
+						$('#order_received').hide();
+						$('#order_preparing').hide();
+						$('#order_ready').hide();
+						$('#order_delivered').show();
+						$('#order_rejected').show();
+					}
+					else if(status_id==5){
+						$('#order_status_option').html("Delivered");
+						$('#order_status_id').val(5);
+						
+						//next order status button show
+						$('#order_received').hide();
+						$('#order_preparing').hide();
+						$('#order_ready').hide();
+						$('#order_delivered').hide();
+						$('#order_rejected').hide();
+					}
+					else if(status_id==6){
+						$("#order_modal").click();
+					}
+				}
+			}
+		});
+	}
 	
 	
 });

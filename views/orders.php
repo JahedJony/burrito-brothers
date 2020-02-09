@@ -1,4 +1,4 @@
-<?php 
+<?php
 session_start();
 include("../includes/dbConnect.php");
 include("../includes/dbClass.php");
@@ -12,7 +12,7 @@ $logo         =$website_url."admin/".$dbClass->getDescription('company_logo');
 
 if(!isset($_SESSION['customer_id']) && $_SESSION['customer_id']!=""){ ob_start(); header("Location:index.php"); exit();}
 else $is_logged_in_customer = 1;
-$customer_id = $_SESSION['customer_id'];	
+$customer_id = $_SESSION['customer_id'];
 $orders_info = $dbClass->getResultList("SELECT invoice_no order_no, order_id, order_date,delivery_date, 
 										CASE delivery_type WHEN 1 THEN 'Takeout' WHEN 2 THEN 'Delivery' END delevery_type, 
 										CASE order_status WHEN 1 THEN 'Ordered' WHEN 2 THEN 'Received' WHEN 3 THEN 'Preparing' WHEN 4 THEN 'Ready' WHEN 5 THEN 'Delivered'END order_status, 
@@ -22,56 +22,26 @@ $orders_info = $dbClass->getResultList("SELECT invoice_no order_no, order_id, or
 										order by order_id desc
 										");
 if(empty($orders_info)){
-	echo "<h6 class='center'>Your have no orders </h6>";
+    echo "<h6 class='center'>Your have no orders </h6>";
 }
 else{
-	
-?>
-	<h6 class="center">Your Order List </h6>
-	<hr>
-	<section class="home-icon shop-cart bg-skeen" style="padding-top: 20px">
-		<div class="container" style="max-width:100%" id="oredrs_div">		
-			<table class="table table-bordered table-hover" id="table_big" style="display: none; background-color: white">
-				  <thead>
-					<tr style="background-color: #e4b95b; alignment: center">
-					  <th>Order No</th>
-					  <th>Order Date</th>
-					  <th>Delevery date</th>
-					  <th>Type</th>
-					  <th>Amount</th>
-					  <th>Paid</th>
-					  <th>Status</th>
-					  <th></th>
-					</tr>
-				  </thead>
-				  <tbody>
-					<tr>
-					 <?php
-					 foreach($orders_info as $order){ 	
-						$order_no = '"'.$order['order_no'].'"';
-						echo
-						"<tr>
-							  <td style='font-weight: bold' onclick='view_order(".$order_no.")'><button style='background: none; border: none'>".$order['order_no']."</button></td>
-							  <td>".$order['order_date']."</td>
-							  <td>".$order['delivery_date']."</td>
-							  <td>".$order['delevery_type']."</td>
-							  <td>".$currency."".$order['total_order_amt']."</td>
-							  <td>".$currency."".$order['total_paid_amount']."</td>
-							  <td>".$order['order_status']."</td>
-							  <td><button class='btn btn-block'><i class='fa fa-search-plus pointer' onclick='view_order(".$order_no.")'></i></button></td>
-						  </tr>
-						";
-					  }
-					  ?>
-					</tr>
-				  </tbody>
-			</table>
-            <table class="table table-bordered table-hover" id=""  width: 100%">
+
+
+    ?>
+    <h6 class="center">Your Order List </h6>
+    <hr>
+    <section class="home-icon shop-cart bg-skeen" style="padding-top: 20px">
+        <div class="container" style="max-width:100%" id="oredrs_div">
+            <table class="table table-bordered table-hover" id="table_big" style="display: none; background-color: white">
                 <thead>
                 <tr style="background-color: #e4b95b; alignment: center">
-                    <th style='font-size: 13px'>Order No</th>
-                    <th style='font-size: 13px'>Amount</th>
-                    <th style='font-size: 13px'>Status</th>
+                    <th>Order No</th>
+                    <th>Order Date</th>
+                    <th>Delevery date</th>
+                    <th>Type</th>
+                    <th>Amount</th>
+                    <th>Paid</th>
+                    <th>Status</th>
                     <th></th>
                 </tr>
                 </thead>
@@ -82,16 +52,48 @@ else{
                         $order_no = '"'.$order['order_no'].'"';
                         echo
                             "<tr>
-							  <td style='font-s font-size: 11px'>".$order['order_no']."</td>
-							  <td style='font-size: 11px'>".$currency."".$order['total_order_amt']."</td>
-							  <td style='font-size: 11px'>".$order['order_status']."</td>
-							  <td style='background-color: #e4b95b'><i class='fa fa-search-plus pointer' onclick='view_order(".$order_no.")'></i></td>
+							  <td style='font-weight: bold' onclick='view_order(".$order_no.")'><button style='background: none; border: none'>".$order['order_no']."</button></td>
+							  <td>".$order['order_date']."</td>
+							  <td>".$order['delivery_date']."</td>
+							  <td>".$order['delevery_type']."</td>
+							  <td>".$currency."".$order['total_order_amt']."</td>
+							  <td>".$currency."".$order['total_paid_amount']."</td>
+							  <td>".$order['order_status']."</td>
+							  <td><button class='btn btn-block'><i class='fa fa-search-plus pointer' onclick='view_order(".$order_no.")'></i></button></td>
 						  </tr>
 						";
                     }
                     ?>
                 </tr>
                 </tbody>
+            </table>
+
+            <table class="table table-bordered table-hover" id=""  width: 100%">
+            <thead>
+            <tr style="background-color: #e4b95b; alignment: center">
+                <th style='font-size: 13px'>Order No</th>
+                <th style='font-size: 13px'>Amount</th>
+                <th style='font-size: 13px'>Status</th>
+                <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <?php
+                foreach($orders_info as $order){
+                    $order_no = '"'.$order['order_no'].'"';
+                    echo
+                        "<tr>
+							  <td style='font-s font-size: 11px'>".$order['order_no']."</td>
+							  <td style='font-size: 11px'>".$currency."".$order['total_order_amt']."</td>
+							  <td style='font-size: 11px'>".$order['order_status']."</td>
+							  <td style='background-color: #e4b95b'><i class='fa fa-search-plus pointer' onclick='view_order(".$order_no.")'></i></td>
+						  </tr>
+						";
+                }
+                ?>
+            </tr>
+            </tbody>
             </table>
 
             <table class="table table-bordered table-hover" id="table_small" >
@@ -121,23 +123,22 @@ else{
                 </tr>
                 </tbody>
             </table>
-		</div>
-	</section>
-<?php
+        </div>
+    </section>
+    <?php
 }
 ?>
 <div class="modal fade booktable" id="order_modal" tabindex="-2" role="dialog" aria-labelledby="booktable">
-    <div class="modal-dialog" role="document" style="width:80% !important">
+    <div class="modal-dialog width_80_p" role="document" >
         <div class="modal-content">
             <div class="modal-body" style="margin-bottom: 50px">
                 <div id="order-div" >
                     <div class="title text-center">
                         <h3 class="text-coffee left"> <a href="index.php"><img src="<?php echo ($logo); ?>" alt="" style="height: 100px; width: 100px"></a></h3>
-                        <h4 class="text-coffee left">Order For  <span class="text-capitalize" id="ord_title_vw"></span></h4>
                     </div>
                     <div class="done_registration ">
                         <div class="doc_content">
-                            <div class="col-md-12" style="margin-left: 0px; padding: 0px; margin-bottom: 20px">
+                            <div class="col-md-12 left-margin-0" style=" padding: 0px; margin-bottom: 20px">
                                 <div class="col-md-6" style="margin: 0px; padding: 0px">
                                     <h4>Order Details:</h4>
                                     <div class="byline">
@@ -148,7 +149,7 @@ else{
 
                                     </div>
                                 </div>
-                                <div class="col-md-6" style="text-align:right">
+                                <div class="col-md-6 text-right text-right-l left-margin-0  left-padding-0">
                                     <h4>Customer Details:</h4>
                                     <address id="customer_detail_vw">
                                     </address>
