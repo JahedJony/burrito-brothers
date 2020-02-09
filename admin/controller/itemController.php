@@ -10,18 +10,101 @@ $loggedUser = $dbClass->getUserId();
 
 extract($_REQUEST);
 
-switch ($q){
+switch ($q) {
+    case "insert_or_update_option":
+        //echo $option_id_input; die;
+
+        if(!isset($is_required_input)){
+            $is_required_input=0;
+        }
+        if($option_id_input!=0){
+            $columns_value = array(
+                'item_id'=>intval($item_id),
+                'name'=>$option_name_input,
+                'is_required'=>$is_required_input,
+                'maximum_choice'=>$maximum_choice_input,
+                'minimum_choice'=>$minimum_choice_input
+            );
+            $condition_array = array(
+                'id' => $option_id_input
+            );
+
+            $dbClass->update("item_options", $columns_value,$condition_array);
+            $return_option = intval($option_id_input);
+
+        }
+        else{
+            $columns_value = array(
+                'item_id'=>intval($item_id),
+                'name'=>$option_name_input,
+                'is_required'=>$is_required_input,
+                'maximum_choice'=>$maximum_choice_input,
+                'minimum_choice'=>$minimum_choice_input
+            );
+            $return_option = $dbClass->insert("item_options", $columns_value);
+        }
+
+        foreach ($ingredient_name as $i => $value){
+
+            $sql = "select id FROM ingredient WHERE name = '$value' AND price= '$ingredient_price[$i]'";
+            $ingredient = $dbClass->getSingleRow($sql);
+
+            if(!isset($ingredient['id'])){
+                $ing_id = 0;
+            }
+            else{
+                $ing_id = $ingredient['id'];
+            }
+
+
+            $columns_value = array(
+                'option_id'=>$return_option,
+                'ingredient_id'=>$ing_id,
+                'name'=>$value,
+                'price'=>$ingredient_price[$i]
+            );
+
+            if($ingredient_id!=0){
+                $condition_array = array(
+                    'id' =>$ingredient_id
+                );
+                $dbClass->update("options_items", $columns_value,$condition_array);
+            }
+            else{
+                $dbClass->insert("options_items", $columns_value);
+            }
+        }
+
+        echo json_encode($return_option);
+    break;
+
+
     case "insert_or_update":
+
+        if(!isset($is_stock)){
+            $is_stock=0;
+        }
+        if(!isset($is_active)){
+            $is_active=0;
+        }
+
+        //extract()
+
+       // echo json_encode($options[4]); die;
+
+        //echo $is_stock; die;
         //echo json_encode($_FILES['uploded_files']['name']); die;
 
-        if(isset($_FILES['attached_file']) && $_FILES['attached_file']['name']!= ""){
-            echo 1; die;
-            $desired_dir = "../images/category";
-            chmod( "../images/category", 0777);
-            $file_name = $_FILES['category_image_upload']['name'];
-            $file_size =$_FILES['category_image_upload']['size'];
-            $file_tmp =$_FILES['category_image_upload']['tmp_name'];
-            $file_type=$_FILES['category_image_upload']['type'];
+        /*
+
+        if(isset($_FILES['item_image']) && $_FILES['item_image']['name']!= ""){
+            //echo 1; die;
+            $desired_dir = "../images/item";
+            chmod( "../images/item", 0777);
+            $file_name = $_FILES['item_image']['name'];
+            $file_size =$_FILES['item_image']['size'];
+            $file_tmp =$_FILES['item_image']['tmp_name'];
+            $file_type=$_FILES['item_image']['type'];
             if($file_size < $file_max_length){
                 if(file_exists("$desired_dir/".$file_name)==false){
                     if(move_uploaded_file($file_tmp,"$desired_dir/".$file_name))
@@ -32,25 +115,42 @@ switch ($q){
                     if(rename($file_tmp,$new_dir))
                         $photo =time()."$file_name";
                 }
-                $photo  = "images/category/".$photo;
+                $photo  = "images/item/".$photo;
             }
             else {
                 echo $img_error_ln;die;
             }
         }
         else{
-            echo 0; die;
-            $photo  = "images/no_image.png";
+            //echo 0; die;
+            $photo  = "images/item/noFood.png";
         }
+        */
+        $photo  = "images/item/noFood.png";
 
 
 
-        if($item_id!=''){
+        $columns_value = array(
+            'name'=>$item_name,
+            'details'=>$details,
+            'category_id'=>$category_option,
+            'sell_from_stock'=>$is_stock,
+            'availability'=>$is_active,
+            'feature_image'=>$photo,
+            'price'=>$base_price
+        );
+        $return_item = $dbClass->insert("items", $columns_value);
 
-        }
-        else{
+        echo $return_item;
 
-        }
+
+
+
+
+
+
+        die;
+
 
 
 
@@ -465,10 +565,52 @@ switch ($q){
         }
         break;
 
+    case "load_options":
+
+        $sql = "SELECT id,name, minimum_choice, maximum_choice,
+            case is_required when 1 then 'yes' else 'no' end is_required
+            FROM item_options
+            WHERE item_id = '$item_id'";
+
+        $stmt = $conn->prepare($sql);
+        $stmt->execute();
+        $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        foreach ($result as $row) {
+            $data['records'][] = $row;
+        }
+        echo json_encode($data);
+        //echo 1; die;
+    break;
+
+    case "load_options_items":
+        $update_permission = $dbClass->getUserGroupPermission(64);
+        if($update_permission==1) {
+            $sql = "SELECT id,name, minimum_choice, maximum_choice, is_required 
+                FROM item_options
+                WHERE id = $option_id";
+            $data['records'] = $dbClass->getSingleRow($sql);
+
+
+            $sql = "SELECT id, name , price 
+                FROM options_items
+                WHERE option_id= $option_id";
+            $stmt = $conn->prepare($sql);
+            $stmt->execute();
+            $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            foreach ($result as $row) {
+                $data['ingredients'][] = $row;
+            }
+            echo json_encode($data);
+            die;
+        }
+
+    break;
+
+
     case "get_item_details":
         $update_permission = $dbClass->getUserGroupPermission(64);
         if($update_permission==1){
-            $sql = "SELECT p.item_id, p.name, p.code, p.details, c.id category_id, p.availability,feature_image, tags
+            $sql = "SELECT p.item_id, p.name, p.price, p.details, c.id category_id, p.availability,feature_image
 					FROM items p
 					LEFT JOIN category c ON c.id = p.category_id
 					WHERE p.item_id= $item_id";
@@ -479,44 +621,9 @@ switch ($q){
             foreach ($result as $row) {
                 $data['records'][] = $row;
             }
+            echo json_encode($data); die;
 
-            $rate_details = $dbClass->getResultList("SELECT pr.size_id, s.name size_name, pr.unit_id ,
-													u.unit_name, pr.stock_quantity, pr.production_rate, 
-													pr.rate, pr.discount_type, pr.discount_amount, pr.discounted_rate
-													FROM item_rate pr
-													LEFT JOIN size s ON s.id = pr.size_id
-													LEFT JOIN units u ON u.id = pr.unit_id
-													WHERE pr.item_id ='$item_id'");
-            //echo $rate_details; die;
-            foreach ($rate_details as $row) {
-                $data['rate_details'][] = $row;
-            }
 
-            $attachment_details = $dbClass->getResultList("select id img_id, item_image from item_image where item_id = '$item_id'");
-            foreach ($attachment_details as $row) {
-                $data['attachment'][] = $row;
-            }
-
-            $ingredient_details = $dbClass->getResultList("SELECT GROUP_CONCAT(id,'*',name,'*',check_status) details
-														FROM (
-															SELECT id, name, check_status 
-															FROM (
-																SELECT p.ingredient_id id, i.name, 1 check_status 
-																FROM item_ingredient p
-																LEFT JOIN ingredient i on i.id = p.ingredient_id 
-																WHERE item_id = '$item_id'	
-																UNION
-																SELECT id, name, 0 check_status
-																FROM ingredient 
-															)	A
-															GROUP BY id
-														) B");
-
-            foreach ($ingredient_details as $row) {
-                $detail_arr = explode(',',$row['details']);
-                $arr['detail']=$detail_arr;
-                $data['ingredient'][] = $arr;
-            }
 
             echo json_encode($data);
         }
@@ -600,15 +707,50 @@ switch ($q){
         echo json_encode($data);
         break;
 
-    case "get_ingredient":
-        $all_ingredient = $dbClass->getResultList("select group_concat(id,'*',name) module_group_ids
-												from ingredient");
-        foreach ($all_ingredient as $row) {
-            $module_group_ids_arr = explode(',',$row['module_group_ids']);
-            $arr['module_group']=$module_group_ids_arr;
-            $data['records'][] = $arr;
+    case "option_info":
+        $sql_query = "SELECT name 
+                    FROM item_options 
+                    WHERE name LIKE '%$term%'
+                    GROUP BY name
+                    ORDER BY name";
+
+        //echo $sql_query; die;
+        $stmt = $conn->prepare($sql_query);
+        $stmt->execute();
+        $json = array();
+        $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        $count = $stmt->rowCount();
+        if($count>0){
+            foreach ($result as $row) {
+                $json[] = $row;
+            }
+        } else {
+            $json[] = array('name' => "",'label' => "No option Found !!!");
         }
-        echo json_encode($data);
+        echo json_encode($json);
+        break;
+
+
+    case "ingredient_info":
+        $sql_query = "SELECT name, id, price
+                    FROM ingredient 
+                    WHERE name LIKE '%$term%'
+                    ORDER BY name";
+
+        //echo $sql_query; die;
+        $stmt = $conn->prepare($sql_query);
+        $stmt->execute();
+        $json = array();
+        $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        $count = $stmt->rowCount();
+        if($count>0){
+            foreach ($result as $row) {
+                $json[] = $row;
+            }
+        } else {
+            $json[] = array('name' => "",'label' => "No option Found !!!");
+        }
+        echo json_encode($json);
         break;
 
     case "size_info":

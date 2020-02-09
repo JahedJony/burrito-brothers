@@ -117,18 +117,19 @@ if(isset($_GET['search'])) $search_text = "";
 									<li><a href="<?php echo $facebook; ?>"><i class="fa fa-facebook" aria-hidden="true"></i></a></li>
 									<li><a href="<?php echo $twitter; ?>"><i class="fa fa-twitter" aria-hidden="true"></i></a></li>
 									<li><a href="<?php echo $instagram; ?>"><i class="fa fa-instagram" aria-hidden="true"></i></a></li>
-									<li><a href="<?php echo $yelp; ?>"><i class="fa fa-yelp" style="color:white"></i></a></li>									
-									
-									<?php
-										if($is_logged_in_customer == ""){
-											echo '<li class="language-menu"><a href="#" onclick="active_modal(1)" data-toggle="modal" data-target="#loginModal" class="current-lang" id="log_reg"><i class="fa fa-user" aria-hidden="true"></i> Login / Register</a></li>';
-										}
-									?>
-									
-									
-									<?php
-										if($is_logged_in_customer != ""){
-											echo '<li></li><li></li>	
+									<li><a href="<?php echo $yelp; ?>"><i class="fa fa-yelp" style="color:white"></i></a></li>
+
+
+                                    <?php
+                                    if($is_logged_in_customer == ""){
+                                        echo '<li class="language-menu"><a href="#" onclick="active_modal(1)" data-toggle="modal" data-target="#loginModal" class="current-lang" id="log_reg"><i class="fa fa-user" aria-hidden="true"></i> Login</a></li>';
+                                    }
+                                    ?>
+
+
+                                    <?php
+                                    if($is_logged_in_customer != ""){
+                                        echo '<li></li><li></li>	
 												<li class="dropdown">
 													<a href="javascript:;" class="dropdown-toggle info-number" data-toggle="dropdown" aria-expanded="false">
 														<i class="fa fa-bell-slash"></i>
@@ -144,16 +145,16 @@ if(isset($_GET['search'])) $search_text = "";
 															</div>																
 														</li>
 													</ul>
-												</li>';	
-										}	
-									?>
-									
-								</ul>
-							</div>
-							
-							<?php
-								if($is_logged_in_customer != ""){			
-									echo '<div class="language-menu">
+												</li>';
+                                    }
+                                    ?>
+
+                                </ul>
+                            </div>
+
+                            <?php
+                            if($is_logged_in_customer != ""){
+                                echo '<div class="language-menu">
 										<a href="#" class="current-lang">
 											<img src="images/user.png" alt=""> <i class="fa fa-caret-down" aria-hidden="true"></i>
 										</a>
@@ -162,8 +163,9 @@ if(isset($_GET['search'])) $search_text = "";
 											<li><a href="index.php?page=logout"> Log Out <i class="fa fa-sign-out"></i></a></li>
 										</ul>
 									</div>';
-								}
-							?>
+                            }
+                            ?>
+
 							
                         </div>
                     </div>
@@ -1223,10 +1225,39 @@ if(isset($_GET['search'])) $search_text = "";
             clearInterval(set_interval);
         }, 2000);
     }
-		
-	
-	
 
 
 
+    /*
+*/
+
+</script>
+
+<script>
+    $(document).ready(function () {
+        var customer_id = "<?php echo $_SESSION['customer_id']; ?>";
+
+        $('body').on("click", ".dropdown-menu", function (e) {
+            $(this).parent().is(".open") && e.stopPropagation();
+        });
+
+        $('#load_more_not_button').click(function() {
+            $(this).toggleClass('active');
+            show_notifications(customer_id);
+        });
+
+
+        set_time_out_fn = function set_time_out_fn(){
+            setTimeout(function(){
+                show_notifications_no(customer_id);
+                set_time_out_fn();
+            }, 30000);
+        }
+
+        set_time_out_fn();
+        show_notifications_no(customer_id);
+        show_notifications(customer_id);
+
+
+    });
 </script>
