@@ -502,7 +502,7 @@ if(isset($_GET['order_id']) && $_GET['order_id']!="") $order_id =  $_GET['order_
                 }
             });
        // }
-        else if(Object.keys(selected_item_list).length==0 && select_ingredinet_check!=0){
+        if(Object.keys(selected_item_list).length==0 && select_ingredinet_check!=0){
             success_or_error_msg('#select_side','warning',"You did not select any BEVERAGE ","#side_order");
             cart_side_check=1
        }

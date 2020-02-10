@@ -5,7 +5,7 @@ var notification_current_page_no = 1;
 
 function show_notifications(customer_id){
 	$.ajax({
-		url: project_url+"includes/controller/notificationController.php",
+		url: "includes/controller/notificationController.php",
 		dataType: "json",
 		type: "post",
 		async:false,
@@ -45,7 +45,7 @@ function show_notifications(customer_id){
 function show_notifications_no(customer_id){
 	//alert(customer_id);
 	$.ajax({
-		url: project_url+"includes/controller/notificationController.php",
+		url: "includes/controller/notificationController.php",
 		dataType: "json",
 		type: "post",
 		async:false,
@@ -63,7 +63,7 @@ function show_notifications_no(customer_id){
 function show_notification_details(notification_id, order_id){
 	view_notification_details(order_id);
 	$.ajax({
-		url: project_url+"includes/controller/notificationController.php",
+		url: "includes/controller/notificationController.php",
 		type: "post",
 		async:false,
 		data:{

@@ -56,11 +56,7 @@ else {
 
                                 </div>
 
-                                <div class="col-md-12 col-sm-12 col-xs-12">
-                                    <label style=" font-size: 18px"> Want to give some Tips </label>
-                                    <input type="text" name="tips" id="tips" placeholder="Tips amount" class="input-fields" style="border-radius: 10px">
-                                    <div id="tips_error" class="text-center" style="display:none"></div>
-
+                                <div class="col-md-12 col-sm-12 col-xs-12" style="margin: auto" id="tips_entry">
                                 </div>
 
 
@@ -140,6 +136,9 @@ else {
                                     <div class="checkout-total">
                                         <h6>ORDER TOTAL <small class="price-big" id="total_amount_"></small></h6>
                                     </div>
+                                    <div class="text-center" style=" background-color: #add8e6; border-radius:4px;" >
+                                        <label id="loyalty_point_earn" style="text-align: center; margin: auto; padding: 8px; margin-left: 10px"></label>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -171,9 +170,63 @@ $('.date-picker').daterangepicker({
 	}
 });
 
+function tips_add_to_db() {
+    var tips = $('#tips').val()
+    $.ajax({
+        url: "./includes/controller/groupController.php",
+        type:'POST',
+        async:false,
+        data: {
+            q:'add_tips',
+            tips:tips,
+            group_order_id: group_order_id
+        },
+        success: function(data){
+            if(data==1){
+                success_or_error_msg('#tips_error','success',"Thanks for the tips. ","#coupon");
+            }else if(data==2){
+                success_or_error_msg('#tips_error','danger',"Tips is not added. ","#coupon");
+            }
+            order_summary()
 
+        }
+    });
+
+}
+
+function tips_entry_form(){
+
+    var html = '<label> Want to give some Tips </label><br>\n' +
+        '              <input type="radio" value="0" class="icheckbox_flat" name="tips_percentage" id="0percente" style="margin-right: 5px"> <label>  Not today</label>\n' +
+        '              <input type="radio" value="18" name="tips_percentage" id="18percente" style="margin-right: 5px; margin-left: 10px"> <label>  18% </label>\n' +
+        '              <input type="radio" value="25" name="tips_percentage" id="25percente" style="margin-right: 5px; margin-left: 10px"> <label>  25% </label>\n' +
+        '              <input type="radio" value="30" name="tips_percentage" id="30percente" style="margin-right: 5px; margin-left: 10px"> <label>  30% </label>\n' +
+        '              <input type="radio" value="100" name="tips_percentage" id="100percente" style="margin-right: 5px; margin-left: 10px"> <span><label>  Custom</label></span>\n' +
+        '              <span><input type="number" step="0.01" name="tips" id="tips" placeholder="Tips amount" class="input-fields" value="0" style="border-radius: 10px; display: block;margin-top: 10px"></span>\n'+
+        '              <div id="tips_error" class="text-center" style="display:none"></div>\n'
+
+    $('#tips_entry').html(html)
+    $("input[name='tips_percentage']").change(function(){
+        var base_price =parseFloat($('#total_order_amt').val());
+
+        if($(this).val()==100){
+            $('#tips').css('display','block')
+            $('#fieldName').attr("read", false)
+            //$('#tips').attr()
+        }
+        else {
+            //alert(base_price)
+            $('#tips').val(base_price*parseInt($(this).val())/100)
+            $('#fieldName').attr("disabled", true)
+        }
+        tips_add_to_db()
+        //$('#tips').trigger('change')
+
+    });
+}
+/*
 $('#tips').on('change',function () {
-alert('sdf')
+//alert('sdf')
     var tips = $('#tips').val();
 
         $.ajax({
@@ -201,10 +254,16 @@ alert('sdf')
             }
         });
 
+    //$('#loyalty_spend').html("("+Math.ceil(total_amt/loyalty_point_value)+" point will spend)")
+    //$('#loyalty_point_earn').html(Math.floor(total_amt/loyalty_reserve_value)+' points will earn')
+
 
     //$('#tips_').html(currency_symbol+''+$('#tips').val())
 
 })
+*/
+
+
 
 $('#coupon').on('change',function () {
     var coupon_code = $('#coupon').val();
@@ -296,6 +355,8 @@ general_settings = function general_settings(){
             html=''
             if(!jQuery.isEmptyObject(data.records)){
                 $.each(data.records, function(i,data){
+                    //console.log(data)
+                    //alert(data.point_reserve_value)
                     loyalty_point_value=data.redeem_value;
                     loyalty_reserve_value=data.point_reserve_value;
                     $('#take_out_location_').html(data.store_address);
@@ -335,6 +396,7 @@ general_settings = function general_settings(){
     });
 
 }
+general_settings()
 
 
 order_summary = function order_summary(){
@@ -375,8 +437,9 @@ order_summary = function order_summary(){
                 $('#total_order_amt').val(data['order_details']['total_order_amt'])
                 $('#tax_amount').val(data['order_details']['tax_amount'])
                 $('#total_paid_amount').val(data['order_details']['total_order_amt'])
+                $('#loyalty_point_earn').html(Math.floor(parseFloat(data['order_details']['total_order_amt'])/loyalty_reserve_value)+' points will earn')
 
-                $('#loyalty_spend').html("("+Math.ceil(data['discounted_price']/loyalty_point_value)+" point will spend)")
+                $('#loyalty_spend').html("("+Math.ceil(parseFloat(data['order_details']['total_order_amt'])/loyalty_reserve_value)+" point will spend)")
 
 
 
@@ -385,12 +448,11 @@ order_summary = function order_summary(){
 
         }
     });
-
+    tips_entry_form()
 }
 
 order_summary()
 load_customer_profile()
-general_settings()
 
 payment_check = function payment_check(){
     //loyalty point deduction message will be here
@@ -461,9 +523,10 @@ $('#checkout_submit').click(function(event){
                     success_or_error_msg('#logn_reg_error',"danger","Order Faild. please check your information properly","#checkout_submit" );
                 }
                 else{
+                    //localStorage.setItem('last_invoice_no', data);
                     //alert('done')
                     showCart()
-                    $("#content").load("index.php?page=checkout_confirm",{'invoice':data});
+                    $("#content").load("index.php?page=checkout_confirm");
 
                     //window.location = "completed.php?complete=success&order_id="+$.trim(data);
                 }

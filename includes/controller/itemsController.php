@@ -52,6 +52,7 @@ if($q=="getOrder_status"){
 switch ($q){
 
     case "category_view":
+        //echo 1; die;
         $data = array();
         $sql = 	"SELECT id, name, code, photo,  c.id, c.code, c.name, ifnull(c.photo,'') photo
 					FROM category c	ORDER BY id desc";

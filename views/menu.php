@@ -4,7 +4,7 @@
 <section class="breadcrumb-part" data-stellar-offset-parent="true" data-stellar-background-ratio="0.5" style="background-image: url('./images/breadbg1.jpg');max-height: 220px">
     <div class="container">
         <div class="breadcrumb-inner">
-            <h2>CATEGORY ITEMS</h2>
+            <h2 id="category_name_head" class="text-uppercase">CATEGORY ITEMS</h2>
             <a href="index.php">Home</a>
             <span>Category Items</span>
         </div>
@@ -68,7 +68,9 @@
 
     var menus = location.search.split('category=')[1];
     menus = menus.split('__').join(' ')
-	
+    $('#category_name_head').html(menus)
+
+
     html_generator = function html_generator(data) {
         //alert(data['photo'])
         var html_op ='                <div class="col-md-4 col-sm-4 col-xs-12 wow fadeInDown" data-wow-duration="1000ms" data-wow-delay="300ms">\n' +

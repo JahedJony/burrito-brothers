@@ -203,15 +203,14 @@ if(!isset($_SESSION['cart']) || !count($_SESSION['cart'])>0) {
                                     <h5>Coupon and Tips</h5>
                                 </div>
                                 <div class="col-md-12 col-sm-12 col-xs-12">
-                                    <label> Do you have any cupon code </label>
+                                    <label> Do you have any coupon code </label>
                                     <input type="text" name="coupon" id="coupon" placeholder="Enter The Coupon Code" class="input-fields" style="border-radius: 10px">
                                     <div id="coupon_error" class="text-center" style="display:none"></div>
 
                                 </div>
 
-                                <div class="col-md-12 col-sm-12 col-xs-12">
-                                    <label> Want to give some Tips </label>
-                                    <input type="text" name="tips" id="tips" placeholder="Tips amount" class="input-fields" style="border-radius: 10px">
+                                <div class="col-md-12 col-sm-12 col-xs-12" style="margin: auto" id="tips_entry">
+
                                 </div>
 
                                 <div class="col-md-12 col-sm-12 col-xs-12">
@@ -385,21 +384,7 @@ $('#cust_email_').on('change', function () {
 
 })
 
-$('#tips').on('change',function () {
-    $('#tips_').html(currency_symbol+''+$('#tips').val())
 
-    total_amt = parseFloat($('#total_order_amt').val())+parseFloat($('#tips').val())
-    //alert(total_amt)
-    $('#total_amount_').html(currency_symbol+''+total_amt.toFixed(2))
-
-    $('#total_paid_amount').val(total_amt.toFixed(2))
-
-
-    //set loyalty point expense for this order
-    $('#loyalty_spend').html("("+Math.ceil(total_amt/loyalty_point_value)+" point will spend)")
-    $('#loyalty_point_earn').html(Math.floor(total_amt/loyalty_reserve_value)+' points will earn')
-
-})
 
 $('#coupon').on('change',function () {
     //alert('sdf')
@@ -578,6 +563,60 @@ general_settings = function general_settings(){
 
 }
 general_settings()
+$("input[type='checkbox']").on('ifChanged', function (e) {
+    $(this).val(e.target.checked == true);
+    alert('sdf')
+});
+
+
+function tips_entry_form(){
+
+    var html = '<label> Want to give some Tips </label><br>\n' +
+        '              <input type="radio" value="0" class="icheckbox_flat" name="tips_percentage" id="0percente" style="margin-right: 5px"> <label>  Not today</label>\n' +
+        '              <input type="radio" value="18" name="tips_percentage" id="18percente" style="margin-right: 5px; margin-left: 10px"> <label>  18% </label>\n' +
+        '              <input type="radio" value="25" name="tips_percentage" id="25percente" style="margin-right: 5px; margin-left: 10px"> <label>  25% </label>\n' +
+        '              <input type="radio" value="30" name="tips_percentage" id="30percente" style="margin-right: 5px; margin-left: 10px"> <label>  30% </label>\n' +
+        '              <input type="radio" value="100" name="tips_percentage" id="100percente" style="margin-right: 5px; margin-left: 10px"> <span><label>  Custom</label></span>\n' +
+        '              <span><input type="number" step="0.01" name="tips" id="tips" placeholder="Tips amount" class="input-fields" value="0" style="border-radius: 10px; display: block;margin-top: 10px"></span>'
+
+    $('#tips_entry').html(html)
+    $("input[name='tips_percentage']").change(function(){
+        var base_price =parseFloat($('#total_order_amt').val());
+
+        if($(this).val()==100){
+            $('#tips').css('display','block')
+            $('#fieldName').attr("read", false)
+            //$('#tips').attr()
+        }
+        else {
+            //alert(base_price)
+            $('#tips').val(base_price*parseInt($(this).val())/100)
+            $('#fieldName').attr("disabled", true)
+        }
+        $('#tips').trigger('change')
+
+
+        // Do something interesting here
+    });
+
+    $('#tips').on('change',function () {
+        //alert('ok')
+        $('#tips_').html(currency_symbol+''+$('#tips').val())
+
+        total_amt = parseFloat($('#total_order_amt').val())+parseFloat($('#tips').val())
+        //alert(total_amt)
+        $('#total_amount_').html(currency_symbol+''+total_amt.toFixed(2))
+
+        $('#total_paid_amount').val(total_amt.toFixed(2))
+
+
+        //set loyalty point expense for this order
+        $('#loyalty_spend').html("("+Math.ceil(total_amt/loyalty_point_value)+" point will spend)")
+        $('#loyalty_point_earn').html(Math.floor(total_amt/loyalty_reserve_value)+' points will earn')
+
+    })
+
+}
 
 
 order_summary = function order_summary(){
@@ -620,12 +659,18 @@ order_summary = function order_summary(){
                         $('#cart_total_').html(currency_symbol+''+data['total_price'].toFixed(2));
                         $('#discount_').html(currency_symbol+''+data['discount'].toFixed(2))
                         $('#tax_').html(currency_symbol+''+data['tax_amount'].toFixed(2))
-                        $('#total_amount_').html(currency_symbol+''+data['discounted_price'].toFixed(2))
                         $('#loyalty_point_earn').html(Math.floor(data['discounted_price']/loyalty_reserve_value)+' points will earn')
-                        $('#total_order_amt').val(data['total_price'])
+                        $('#total_order_amt').val(data['discounted_price'])
                         $('#tax_amount').val(data['tax_amount'])
-                        $('#total_paid_amount').val(data['discounted_price'])
+                        if($('#tips').val()){
+                            $('#total_paid_amount').val(data['discounted_price']+parseFloat($('#tips').val()))
+                        }
+                        else{
+                            $('#total_paid_amount').val(data['discounted_price'])
+                        }
+                        $('#total_amount_').html(currency_symbol+''+parseFloat($('#total_paid_amount').val()).toFixed(2))
 
+                        //alert()
 
                         //set loyalty point expense for this order
                         $('#loyalty_spend').html("("+Math.ceil(data['discounted_price']/loyalty_point_value)+" point will spend)")
@@ -638,10 +683,13 @@ order_summary = function order_summary(){
 
         }
     });
+    tips_entry_form()
 
 }
 
 order_summary()
+
+
 //load_customer_profile()
 
 $('#login').click(function(event){
@@ -678,9 +726,7 @@ $('#login').click(function(event){
                             $('#islogged_in').val(1);
                             $('.logged_in_already').addClass('hide');
                         }
-                        window.location.href = project_url+ "index.php?page=checkout";
-
-
+                        window.location.href = "index.php?page=checkout";
 
                     }
                 }
@@ -765,7 +811,7 @@ $('#register_submit_').click(function(event){
                 else if($.isNumeric(data)==true && data==1){
                     $('.done_registration').addClass("hide");
                     $('.done_registration_msg').removeClass("hide");
-                    window.location.href = project_url+ "index.php?page=checkout";
+                    window.location.href = "index.php?page=checkout";
                 }
                 else{
                     success_or_error_msg('#registration_submit_error_',"danger","Registration is not completed. please check your information again.","#cust_email" );

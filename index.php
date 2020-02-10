@@ -11,9 +11,10 @@ if(isset($_SESSION['customer_id']) && $_SESSION['customer_id']){
 else {
     $is_logged_in_customer = "";
     $customer_id = 0;
+
 }
 
-
+//echo $customer_id; die;
 
 //$is_logged_in_customer = "";
 
@@ -917,7 +918,7 @@ if(isset($_GET['search'])) $search_text = "";
 		ingredient_image_display="display: none"
 	}
 
-    var customer_id = <?php echo $customer_id; ?>;
+    var customer_id = "<?php echo $customer_id; ?>";
     showCart()
 
     function group_order(){
@@ -1234,7 +1235,7 @@ if(isset($_GET['search'])) $search_text = "";
 
 <script>
     $(document).ready(function () {
-        var customer_id = "<?php echo $_SESSION['customer_id']; ?>";
+        var customer_id = "<?php echo $customer_id; ?>";
 
         $('body').on("click", ".dropdown-menu", function (e) {
             $(this).parent().is(".open") && e.stopPropagation();

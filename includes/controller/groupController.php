@@ -314,11 +314,11 @@ switch ($q) {
         $coupon_info = $dbClass->getSingleRow("select id,c_type,amount,min_order_amount from cupons where status=1 and ((cupon_no='$coupon_code' and customer_id = ".$_SESSION['customer_id'].") or cupon_no='$coupon_code' and customer_id is null) and (DATE_FORMAT(start_date, '%Y-%m-%d') <= '$date' AND DATE_FORMAT(end_date, '%Y-%m-%d') >= '$date')");
 
         $order_info = $dbClass->getSingleRow("select total_order_amt from group_order where order_id=".$group_order_id);
+        //echo json_encode($coupon_info['id']); die;
 
+        if($coupon_info['id'] && intval($order_info['total_order_amt'])>=intval($coupon_info['min_order_amount'])){
 
-        if($coupon_info['id'] && $order_info['total_order_amt']>=$coupon_info['min_order_amount']){
-
-            if($cupon_info['id']){
+            if($coupon_info['id']){
                 $condition_array = array(
                     'order_id'=>$group_order_id
                 );
@@ -474,9 +474,14 @@ switch ($q) {
 			'order_id'=>$group_order_id
 		);
 
+		//echo $invoice_no; die;
+        $return_master = $dbClass->update("group_order", $columns_value, $condition_array);
+
+
         $order_details = $dbClass->getSingleRow("SELECT * FROM group_order where invoice_no='$invoice_no' ");
 
-		$return_master = $dbClass->update("group_order", $columns_value, $condition_array);
+        //echo json_encode($order_details); die;
+
 
         $c_loyalty_points = $dbClass->getSingleRow('SELECT loyalty_points from customer_infos where customer_id='.$_SESSION["customer_id"]);
 
@@ -502,10 +507,11 @@ switch ($q) {
         //var_dump($columns_value);
         //var_dump($order_details);
 
-        $dbClass->insert("order_master", $columns_value);
+        $aa = $dbClass->insert("order_master", $columns_value);
 
 
         //var_dump($c_loyalty_points['loyalty_points']);
+        //echo $aa;
 
         if($return_master){
             $columns_value = array(

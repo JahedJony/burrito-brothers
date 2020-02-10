@@ -5,7 +5,18 @@
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/includes/controller/ecommerceController.php" beforeDir="false" afterPath="$PROJECT_DIR$/includes/controller/ecommerceController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/includes/controller/groupController.php" beforeDir="false" afterPath="$PROJECT_DIR$/includes/controller/groupController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/includes/dbConnect.php" beforeDir="false" afterPath="$PROJECT_DIR$/includes/dbConnect.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/includes/controller/itemsController.php" beforeDir="false" afterPath="$PROJECT_DIR$/includes/controller/itemsController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/index.php" beforeDir="false" afterPath="$PROJECT_DIR$/index.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/js/common.js" beforeDir="false" afterPath="$PROJECT_DIR$/js/common.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/js/static_text.js" beforeDir="false" afterPath="$PROJECT_DIR$/js/static_text.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/views/cart.php" beforeDir="false" afterPath="$PROJECT_DIR$/views/cart.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/views/categories.php" beforeDir="false" afterPath="$PROJECT_DIR$/views/categories.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/views/checkout.php" beforeDir="false" afterPath="$PROJECT_DIR$/views/checkout.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/views/groupCheckout.php" beforeDir="false" afterPath="$PROJECT_DIR$/views/groupCheckout.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/views/home.php" beforeDir="false" afterPath="$PROJECT_DIR$/views/home.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/views/item.php" beforeDir="false" afterPath="$PROJECT_DIR$/views/item.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/views/logout.php" beforeDir="false" afterPath="$PROJECT_DIR$/views/logout.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/views/menu.php" beforeDir="false" afterPath="$PROJECT_DIR$/views/menu.php" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />

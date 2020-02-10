@@ -1,7 +1,7 @@
  <section class="breadcrumb-part" data-stellar-offset-parent="true" data-stellar-background-ratio="0.5" style="background-image: url('./images/breadbg1.jpg');max-height: 220px">
     <div class="container">
             <div class="breadcrumb-inner">
-                <h2>HOME CATEGORY</h2>
+                <h2 >HOME CATEGORY</h2>
                 <a href="index.php">Home</a>
                 <span>Home Category</span>
             </div>
@@ -69,7 +69,7 @@
         $('#cart_empty').modal('hide');
 
         $.ajax({
-            url: project_url + "includes/controller/groupController.php",
+            url: "includes/controller/groupController.php",
             dataType: "json",
             type: "post",
             async: false,
@@ -84,8 +84,9 @@
 
 
     load_category = function load_category() {
+        //alert(project_url)
         $.ajax({
-            url: project_url + "includes/controller/itemsController.php",
+            url:"includes/controller/itemsController.php",
             dataType: "json",
             type: "post",
             async: false,
@@ -93,6 +94,8 @@
                 q: "category_view",
             },
             success: function (data) {
+                //alert(data);
+                //alert('sdfs')
                 //alert(data[0]['id'])
                 var category_html=''
                 for(var i=0 ; i<data.length; i++){
@@ -103,6 +106,9 @@
             }
         });
     }
+
+
+    load_category();
     function categoryView(data){
         //alert(data['id'])
         var name = data['name'].split(' ').join('__')
@@ -110,7 +116,7 @@
         var html='                <div class="col-md-3 col-sm-4 col-xs-6 wow fadeInDown" data-wow-duration="1000ms" data-wow-delay="300ms">\n' +
             '                    <div class="shop-main-list" style=" border-radius: 15px; border: 1px solid #e4ba5e; max-width: 220px;" >\n' +
             '                        <div class="shop-product" style="border-radius: 15px 15px 0px 0px; padding-bottom: 0px; margin-bottom: 0px">\n' +
-            '                            <img src="'+ project_url+'admin/'+data['photo']+'" alt="" style="border-radius: 17px 17px 0px 0px">\n' +
+            '                            <img src="admin/'+data['photo']+'" alt="" style="border-radius: 17px 17px 0px 0px">\n' +
             '                        <div style=" padding-top: 8px; padding-bottom: 8px; border-radius: 0px 0px 17px 17px">\n' +
             '                             <a href="index.php?page=menu&category='+ name+'"><h5 style="text-transform: uppercase">'+ data['name']+'</h5></a>' +
             '                        </div>\n'+
@@ -127,5 +133,5 @@
         return html;
 
     }
-    load_category()
+    //load_category()
 </script>

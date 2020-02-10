@@ -424,7 +424,7 @@ $store_address=$dbClass->getDescription('store_address');
 
     function catering() {
         //alert('sdf')
-        window.location.href= project_url+'index.php?page=catering'
+        window.location.href= 'index.php?page=catering'
     }
 
     function groupOrder(){

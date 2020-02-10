@@ -98,11 +98,12 @@ if(!isset($_SESSION['cart']) || !count($_SESSION['cart'])>0) {
                 q: "checkout"
             },
             success: function(data) {
+                console.log(data)
                 if(data=='111'){
                     $("#content").load("views/checkout_confirm.php");
                 }
                 else if(data=='222'){
-                    window.location.href= project_url+"index.php?page=account";
+                    window.location.href= "index.php?page=account";
                 }
             }
 

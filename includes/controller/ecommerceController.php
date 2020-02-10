@@ -379,23 +379,33 @@ switch ($q){
 				// mr chaki select his items
                 //
 
+                $t_sql = "SELECT go.customer_id from  
+                            group_order_details god
+                            LEFT JOIN group_order go ON go.order_id = god.group_order_id
+                            WHERE god.id = ".$_SESSION['group_order_details_id'];
+                //echo $t_sql; die;
 
-				$customer_id_group = $dbClass->getSingleRow("SELECT go.customer_id from  
-														 group_order_details god
-														 LEFT JOIN group_order go ON go.group_id = god.order_master_id
-														 WHERE god.id = ".$_SESSION['group_order_details_id']);
 
-				extract($customer_id_group);
-				$group_customer_name = $dbClass->getSingleRow("SELECT full_name FROM customer_infos WHERE customer_id = $customer_id_group");
-				extract($group_customer_name);
-				$details = "".ucfirst($group_customer_name)." select his items";
-				$return_notifiction = $dbClass->insert_notification($return_master, $details, 0, $customer_id_group);	
+				$customer_id_group = $dbClass->getSingleRow($t_sql);
+				//echo json_encode($customer_id_group);
+                //die;
+
+                //extract($customer_id_group);
+                $c_sql ="SELECT full_name FROM customer_infos WHERE customer_id = ".$customer_id_group['customer_id'];
+                //echo $c_sql; die;
+				$group_customer_name = $dbClass->getSingleRow($c_sql);
+				//extract($group_customer_name);
+				//echo json_encode($group_customer_name);
+				//die;
+                //echo $group_customer_name['full_name']; die;
+				$details = "".ucfirst($group_customer_name['full_name'])." select his items";
+				$return_notifiction = $dbClass->insert_notification($return_master, $details, 0, $customer_id_group['customer_id']);
 			}
 			else{
 				//set single notification details
-				$invoice_no = $dbClass->getSingleRow("SELECT invoice_no from order_master WHERE order_id = $return_master");
+				//$invoice_no = $dbClass->getSingleRow("SELECT invoice_no from order_master WHERE order_id = $return_master");
 				$customer_name = $dbClass->getSingleRow("SELECT full_name FROM customer_infos WHERE customer_id = '".$_SESSION['customer_id']."'");
-				extract($invoice_no);	
+				//extract($invoice_no);
 				$details = "".ucfirst($customer_name['full_name'])." Placed an Order (".$invoice_no.")";	
 				$return_notifiction = $dbClass->insert_notification($return_master, $details, 1, NULL);	
 			}
@@ -408,8 +418,10 @@ switch ($q){
 			
 			
 			/* *********************************   notification END       ************************* */
-			
-			
+
+
+
+
             foreach($cart as $key=>$item){
                 if(isset($item['ingredient']['id_list'])){
 
@@ -449,6 +461,7 @@ switch ($q){
 
             }
             //echo 123;
+
             //var_dump($_SESSION['cart'] );
             if($return_details){
                 if(!isset($_SESSION['group_master'])){
