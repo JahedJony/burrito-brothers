@@ -509,6 +509,26 @@ switch ($q) {
 
         $aa = $dbClass->insert("order_master", $columns_value);
 
+/*check this code-> added by Jony..............................////
+        $return_order_master = $dbClass->insert("order_master", $columns_value);
+
+        /****************              notification start       *********************/
+
+        //insert_notification($order_id, details, notification_user_type, $notified_to, $notification_type)
+        //param: order_id (int),
+        //details (text),
+        //notification_user_type (int) : 0=customer, 1: admin,
+        //notified_to (int) : make notified_to null if notified target user type = admin
+        //notification_type (tinint) : 0: order_type, 1:cupon_type
+/*
+        $invoice_no = $dbClass->getSingleRow("SELECT invoice_no from order_master WHERE order_id = $return_order_master");
+        $customer_name = $dbClass->getSingleRow("SELECT full_name FROM customer_infos WHERE customer_id = '".$_SESSION['customer_id']."'");
+        extract($invoice_no);
+        $details = "".ucfirst($customer_name['full_name'])." Placed a Group Order (".$invoice_no.")";
+        $return_notifiction = $dbClass->insert_notification($return_order_master, $details, 1, NULL, 0);
+
+        /****************              notification end       *********************/
+
 
         //var_dump($c_loyalty_points['loyalty_points']);
         //echo $aa;

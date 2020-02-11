@@ -37,6 +37,42 @@ switch ($q){
 
             $return = $dbClass->insert("cupons", $columns_value);
 
+            /****************              notification start       *********************/
+
+            //insert_notification($order_id, details, notification_user_type, $notified_to, $notification_type)
+            //param: order_id (int), make it null for coupon
+            //details (text),
+            //notification_user_type (int) : 0=customer, 1: admin,
+            //notified_to (int) : make notified_to null if notified target user type = admin
+            //notification_type (tinint) : 0: order_type, 1:cupon_type
+
+            if($return){
+
+                $coupon_details = $dbClass->getSingleRow("SELECT c.cupon_no, c.min_order_amount,
+													CASE 
+														WHEN c.c_type = 1 THEN concat(c.amount, ' TK')
+														WHEN c.c_type = 2 THEN concat(c.amount,'%')
+													END AS cupon_amount	  
+													FROM cupons c
+													WHERE c.`status` = 1 AND c.id = $return");
+
+                $details = "We are offering ".$coupon_details['cupon_amount']." discount coupon no (".$coupon_details['cupon_no'].") which is valid from ".date($start_date)." to ".date($end_date)."";
+
+                if($customer_id == NULL || $customer_id == ''){
+                    $customer_ids = $dbClass->getResultlist("SELECT customer_id FROM customer_infos");
+                    foreach($customer_ids as $id){
+                        $return_notifiction = $dbClass->insert_notification(NULL, $details, 0, $id['customer_id'], 1);
+                    }
+                }else{
+                    $return_notifiction = $dbClass->insert_notification(NULL, $details, 0, $customer_id, 1);
+                }
+
+            }
+
+
+            /****************              notification end       *********************/
+
+
             if($return){
                 echo "1";
             }
@@ -76,6 +112,42 @@ switch ($q){
                 'id'=>$coupon_id
             );
             $return = $dbClass->update("cupons", $columns_value,$condition_array);
+
+            /****************              notification start       *********************/
+
+            //insert_notification($order_id, details, notification_user_type, $notified_to, $notification_type)
+            //param: order_id (int), make it null for coupon
+            //details (text),
+            //notification_user_type (int) : 0=customer, 1: admin,
+            //notified_to (int) : make notified_to null if notified target user type = admin
+            //notification_type (tinint) : 0: order_type, 1:cupon_type
+
+            if($return){
+
+                $coupon_details = $dbClass->getSingleRow("SELECT c.cupon_no, c.min_order_amount,
+													CASE 
+														WHEN c.c_type = 1 THEN concat(c.amount, ' TK')
+														WHEN c.c_type = 2 THEN concat(c.amount,'%')
+													END AS cupon_amount	  
+													FROM cupons c
+													WHERE c.`status` = 1 AND c.id = $return");
+
+                $details = "We are offering ".$coupon_details['cupon_amount']." discount coupon no (".$coupon_details['cupon_no'].") which is valid from ".date($start_date)." to ".date($end_date)."";
+
+                if($customer_id == NULL || $customer_id == ''){
+                    $customer_ids = $dbClass->getResultlist("SELECT customer_id FROM customer_infos");
+                    foreach($customer_ids as $id){
+                        $return_notifiction = $dbClass->insert_notification(NULL, $details, 0, $id['customer_id'], 1);
+                    }
+                }else{
+                    $return_notifiction = $dbClass->insert_notification(NULL, $details, 0, $customer_id, 1);
+                }
+
+            }
+
+
+            /****************              notification end       *********************/
+
 
             if($return) echo "2";
             else        echo "0";
