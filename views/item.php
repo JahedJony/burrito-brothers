@@ -38,32 +38,32 @@ if(isset($_GET['order_id']) && $_GET['order_id']!="") $order_id =  $_GET['order_
         </div>
     <?php } ?>
     <div class="container">
-          <div class="row">
-               <div class="col-md-12 col-sm-12 col-xs-12 wow fadeInDown  tab-content" id="item_body" data-wow-duration="1000ms" data-wow-delay="300ms" >
-                   <div class="col-md-8 col-sm-8 col-xs-12" id="option_body" style="background-color: white; border-radius: 12px 12px 0px 0px; padding-top: 25px; padding-bottom: 20px; margin-bottom: 10px">
-                   </div>
-                   <div class="col-md-4 col-sm-4 col-xs-12 wow fadeInDown" data-wow-duration="1000ms" data-wow-delay="300ms" style="position: sticky; alignment: right; float: right">
-                       <div class="shop-checkout-right" style="margin-bottom: 10px">
-                           <label>Special Instruction</label>
-                           <textarea class="form-control" rows="5" style="padding-bottom: 0px; margin-bottom: 0px" id="special_instruction"></textarea>
-                       </div>
-                       <div class="shop-checkout-right" >
-                            <label id="title_right" style="text-transform: capitalize;"></label>
-                            <div id="ingredient_summary"></div>
-                            <div class="col-md-12 col-sm-12 col-xs-12 checkout-total" style="align-content: baseline"></div>
-                            <div class="col-md-12 col-sm-12 col-xs-12 " >
-                                <div class="col-md-9 col-sm-9 col-xs-9"><b>Sub Total</b></div>
-                                <div class="col-md-3 col-sm-3 col-xs-3" id="total_price"><b>$00.00</b></div>
-                            </div>
+        <div class="row">
+            <div class="col-md-12 col-sm-12 col-xs-12 wow fadeInDown  tab-content" id="item_body" data-wow-duration="1000ms" data-wow-delay="300ms" >
+                <div class="col-md-8 col-sm-8 col-xs-12" id="option_body" style="background-color: white; border-radius: 12px 12px 0px 0px; padding-top: 25px; padding-bottom: 20px; margin-bottom: 10px">
+                </div>
+                <div class="col-md-4 col-sm-4 col-xs-12 wow fadeInDown" data-wow-duration="1000ms" data-wow-delay="300ms" style="position: sticky; alignment: right; float: right">
+                    <div class="shop-checkout-right" style="margin-bottom: 10px">
+                        <label>Special Instruction</label>
+                        <textarea class="form-control" rows="5" style="padding-bottom: 0px; margin-bottom: 0px" id="special_instruction"></textarea>
+                    </div>
+                    <div class="shop-checkout-right" >
+                        <label id="title_right" style="text-transform: capitalize;"></label>
+                        <div id="ingredient_summary"></div>
+                        <div class="col-md-12 col-sm-12 col-xs-12 checkout-total" style="align-content: baseline"></div>
+                        <div class="col-md-12 col-sm-12 col-xs-12 " >
+                            <div class="col-md-9 col-sm-9 col-xs-9"><b>Sub Total</b></div>
+                            <div class="col-md-3 col-sm-3 col-xs-3" id="total_price"><b>$00.00</b></div>
+                        </div>
 
-                           <button class="button-default button-default-submit" style="width: 100%; background-color: #e4b95b; color: white; margin-top: 15px" onclick="addToCart()"><b>Add to Cart</b></button>
-                           <div id="select_ingredinet" class="text-center" style="display:none"></div>
-                           <div id="select_side" class="text-center" style="display:none"></div>
+                        <button class="button-default button-default-submit" style="width: 100%; background-color: #e4b95b; color: white; margin-top: 15px" onclick="addToCart()"><b>Add to Cart</b></button>
+                        <div id="select_ingredinet" class="text-center" style="display:none"></div>
+                        <div id="select_side" class="text-center" style="display:none"></div>
 
-                       </div>
-                   </div>
-               </div>
-          </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </section>
 
@@ -129,6 +129,7 @@ if(isset($_GET['order_id']) && $_GET['order_id']!="") $order_id =  $_GET['order_
     var choosed_ingredient_number = {}
     var cart_side_check=0
     var select_ingredinet_check = 1;
+    var is_combo = 0;
 
 
     chose_summary= function  chose_summary() {
@@ -280,7 +281,7 @@ if(isset($_GET['order_id']) && $_GET['order_id']!="") $order_id =  $_GET['order_
             '           <input name="quantity[]" id="item_'+data['item_id']+'" placeholder="1" type="text" value="1">\n' +
             '           <span class="plus-text" onclick="addProd('+data['item_id']+')" style="padding-right: 15px"><i class="icon-plus"></i></span>\n' +
             '     </div></div>\n'+
-           
+
             '        <input type="hidden" name="item_id[]" id="item_id" value="'+data['item_id']+'" />\n' +
             '        <input type="hidden" name="item_rate[]" value="15" />\n' +
             '     <div class="col-md-12 col-sm-12 col-xs-12"><label>'+data['details']+'</label></div>\n'
@@ -348,6 +349,7 @@ if(isset($_GET['order_id']) && $_GET['order_id']!="") $order_id =  $_GET['order_
 
                 var html = '';
                 html+=set_item_header(data['item'])
+                is_combo = data['item']['is_combo']
                 $.each(data['option'], function(i,datas){
                     //console.log(datas)
                     var hints=''
@@ -567,7 +569,7 @@ if(isset($_GET['order_id']) && $_GET['order_id']!="") $order_id =  $_GET['order_
         });
 
 
-        if(Object.keys(selected_item_list).length==0 && select_ingredinet_check!=0){
+        if((Object.keys(selected_item_list).length==0 && is_combo==0) && select_ingredinet_check!=0){
             $('#item_body').focus();
             success_or_error_msg('#select_side','warning',"You did not select any BEVERAGE ","#side_order");
             cart_side_check=1

@@ -3,14 +3,151 @@
   <component name="ChangeListManager">
     <list default="true" id="289ea524-a539-47c6-a345-6f05b3774d37" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/includes/controller/ecommerceController.php" beforeDir="false" afterPath="$PROJECT_DIR$/includes/controller/ecommerceController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/includes/controller/itemsController.php" beforeDir="false" afterPath="$PROJECT_DIR$/includes/controller/itemsController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/views/checkout.php" beforeDir="false" afterPath="$PROJECT_DIR$/views/checkout.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/views/checkout_confirm.php" beforeDir="false" afterPath="$PROJECT_DIR$/views/checkout_confirm.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/category_image/break.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/category_image/break_platter.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/category_image/break_sides.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/category_image/burrito.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/category_image/burrito_cat.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/category_image/lunch_platter.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/category_image/lunch_platter_cat.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/category_image/make_our_own.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/category_image/mexican-omelette.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/category_image/nacho.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/category_image/no_image-512.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/category_image/papusa.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/category_image/platter.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/category_image/q_subs.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/category_image/side.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/category_image/sub.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/category_image/taco.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/category_image/tamales1.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/category_image/tamales_cat.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/css/theme.css" beforeDir="false" afterPath="$PROJECT_DIR$/css/theme.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ingredient image/american_cheese.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ingredient image/avocado.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ingredient image/bacon.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ingredient image/balsamic_vinnaigrette.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ingredient image/banana.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ingredient image/barbecue_sauce.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ingredient image/black_beans.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ingredient image/black_olives.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ingredient image/blt.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ingredient image/brown_rice.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ingredient image/butter.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ingredient image/carne_asada.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ingredient image/cheddar_cheese.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ingredient image/cheese.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ingredient image/cheese_sauce.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ingredient image/chicken.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ingredient image/chicken_burrito.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ingredient image/chips.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ingredient image/chips_with_guacamole.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ingredient image/chips_with_salsa.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ingredient image/chocolate.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ingredient image/chorizo.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ingredient image/cilantro.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ingredient image/coke.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ingredient image/corn.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ingredient image/corn_chips.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ingredient image/corn_salsa.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ingredient image/corn_tortilla.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ingredient image/croissant.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ingredient image/diet_coke.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ingredient image/egg_and_bacon_sandwich.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ingredient image/egg_and_cheese_sandwich.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ingredient image/egg_and_ham_sandwich.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ingredient image/egg_and_sausage_sandwich.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ingredient image/egg_and_steak_sandwich.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ingredient image/egg_and_turkey_bacon_sandwich.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ingredient image/egg_white.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ingredient image/english_muffin.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ingredient image/fish.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ingredient image/fish_taco.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ingredient image/flour_tortilla.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ingredient image/floured_tortillas.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ingredient image/french_fries.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ingredient image/fresh_jalopenos.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ingredient image/fresh_tomatoes.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ingredient image/fried_egg.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ingredient image/green_peppers.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ingredient image/grilled_chicken.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ingredient image/grilled_steak.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ingredient image/ground_beef.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ingredient image/guacamole.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ingredient image/ham.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ingredient image/hard_taco.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ingredient image/home_fries.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ingredient image/hot_jalapenos.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ingredient image/hot_sauce.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ingredient image/jelly.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ingredient image/lettuce.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ingredient image/loroco.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ingredient image/mandarina.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ingredient image/mango.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ingredient image/mexican_rice.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ingredient image/minute_maid_lemonade.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ingredient image/mix_chicken_and_shrimp.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ingredient image/mix_of_chicken_and_steak.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ingredient image/monterey_jack_cheese.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ingredient image/mushrooms.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ingredient image/nacho_cheese_sauce.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ingredient image/onion.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ingredient image/over_easy_eggs.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ingredient image/pancake.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ingredient image/passion_fruit.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ingredient image/peach.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ingredient image/peppers.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ingredient image/pico_de_gallo.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ingredient image/pina_collada.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ingredient image/pinto_beans.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ingredient image/pinto_beans_taco.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ingredient image/plantain.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ingredient image/pollo_asada.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ingredient image/pork.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ingredient image/queso_fresco.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ingredient image/raspberry.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ingredient image/red_onions.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ingredient image/refried_beans.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ingredient image/regular_tortilla.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ingredient image/romaine_lettuce.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ingredient image/salad.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ingredient image/salmon.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ingredient image/salmon_fillet.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ingredient image/salsa_verde.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ingredient image/sausage.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ingredient image/scrambled_egg.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ingredient image/shredded_chicken.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ingredient image/shrimp.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ingredient image/sliced_avocado.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ingredient image/soft_flour_tortillas.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ingredient image/sour_cream.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ingredient image/spinach.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ingredient image/spinach_burrito.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ingredient image/spinach_tortilla.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ingredient image/sprite.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ingredient image/steak.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ingredient image/steak_burrito.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ingredient image/strawberry.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ingredient image/sunny_side_up_egg.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ingredient image/sweet_potato_fries.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ingredient image/sweet_potatoes.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ingredient image/swiss_cheese.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ingredient image/syrup.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ingredient image/tamarindo.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ingredient image/tilapia.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ingredient image/tilapia_fish_fillet.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ingredient image/toast.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ingredient image/toffu.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ingredient image/turkey_bacon.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ingredient image/veggie_omelet.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ingredient image/veggies.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ingredient image/wheat.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ingredient image/white_rice.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ingredient image/whole_wheat.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ingredient image/whole_wheat_tortilla.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/views/cart.php" beforeDir="false" afterPath="$PROJECT_DIR$/views/cart.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/views/groupCheckout.php" beforeDir="false" afterPath="$PROJECT_DIR$/views/groupCheckout.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/views/item.php" beforeDir="false" afterPath="$PROJECT_DIR$/views/item.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/views/menu.php" beforeDir="false" afterPath="$PROJECT_DIR$/views/menu.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/views/orders.php" beforeDir="false" afterPath="$PROJECT_DIR$/views/orders.php" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />

@@ -16,71 +16,71 @@ if(!isset($_SESSION['cart']) || !count($_SESSION['cart'])>0) {
 </section>
 
 <section class="home-icon shop-cart bg-skeen">
-            <div class="icon-default icon-skeen">
-                <img src="../images/scroll-arrow.png" alt="">
-            </div>
-            <div class="container" style="margin: auto">
-                <div class="checkout-wrap wow fadeInDown" data-wow-duration="1000ms" data-wow-delay="300ms">
-                    <ul class="checkout-bar">
-                        <li class="active"><a href="index.php?page=cart">Shopping Cart</a></li>
-                        <li class=""><a href="index.php?page=checkout">Checkout</a></li>
-                        <li>Order Complete</li>
-                    </ul>
-                </div>
-                <form class="form" method="post" name="cart_detail" id="cart_detail">
-                <div class="shop-cart-list wow fadeInDown hidden-xs" data-wow-duration="1000ms" data-wow-delay="300ms">
-                    <table class="shop-cart-table">
-                        <thead>
-                        <tr>
-                            <th>PRODUCT</th>
-                            <th>PRICE</th>
-                            <th>QUANTITY</th>
-                            <th>TOTAL</th>
-                        </tr>
-                        </thead>
-                        <tbody id="cart_table">
-                        </tbody>
-                    </table>
-                    <div class="product-cart-detail">
-                        <input name="update_cart" id="update_cart"  value="UPDATE CART" class="btn-medium btn-skin pull-right" type="submit">
-                    </div>
-                </div>
-				<div class="shop-cart-list wow fadeInDown hidden-sm hidden-md hidden-lg" data-wow-duration="1000ms" data-wow-delay="300ms">
-                    <table class="table table-bordered">
-                        <thead>
-                        <tr>
-                            <th>PRODUCT</th>
-                            <th>QUANTITY</th>
-                        </tr>
-                        </thead>
-                        <tbody id="sm_cart_table">
-                        </tbody>
-                    </table>
-					<div class="product-cart-detail">
-                        <input name="update_cart_xs" id="update_cart_xs"  value="UPDATE CART" class="btn-medium btn-skin pull-right" type="submit">
-                    </div>
-				</div>
-				
-				
-                </form>
-                <div class="cart-total wow fadeInDown" data-wow-duration="1000ms" data-wow-delay="300ms" style="text-align: center">
-                    <div class="cart-total-title">
-                        <h5>CART TOTALS</h5>
-                    </div>
-                    <div id="price_summary">
-                    </div>
-                    <div class="proceed-check">
-                        <?php
-                        if(isset($_SESSION['group_master'])){?>
-                            <a href="#" class="btn-dark-coffee btn-medium" style="text-align: center" onclick="submitItem()">SUBMIT YOUR ITEMS</a>
-                        <?php }
-                        else{ ?>
-                            <a href="index.php?page=checkout" class="btn-primary-gold btn-medium">PROCEED TO CHECKOUT</a>
-                        <?php } ?>
-                    </div>
+    <div class="icon-default icon-skeen">
+        <img src="./images/scroll-arrow.png" alt="">
+    </div>
+    <div class="container" style="margin: auto">
+        <div class="checkout-wrap wow fadeInDown" data-wow-duration="1000ms" data-wow-delay="300ms">
+            <ul class="checkout-bar">
+                <li class="active"><a href="index.php?page=cart">Shopping Cart</a></li>
+                <li class=""><a href="index.php?page=checkout">Checkout</a></li>
+                <li>Order Complete</li>
+            </ul>
+        </div>
+        <form class="form" method="post" name="cart_detail" id="cart_detail">
+            <div class="shop-cart-list wow fadeInDown hidden-xs" data-wow-duration="1000ms" data-wow-delay="300ms">
+                <table class="shop-cart-table">
+                    <thead>
+                    <tr>
+                        <th>PRODUCT</th>
+                        <th>PRICE</th>
+                        <th>QUANTITY</th>
+                        <th>TOTAL</th>
+                    </tr>
+                    </thead>
+                    <tbody id="cart_table">
+                    </tbody>
+                </table>
+                <div class="product-cart-detail">
+                    <input name="update_cart" id="update_cart"  value="UPDATE CART" class="btn-medium btn-skin pull-right" type="submit">
                 </div>
             </div>
-        </section>
+            <div class="shop-cart-list wow fadeInDown hidden-sm hidden-md hidden-lg" data-wow-duration="1000ms" data-wow-delay="300ms">
+                <table class="table table-bordered">
+                    <thead>
+                    <tr>
+                        <th>PRODUCT</th>
+                        <th>QUANTITY</th>
+                    </tr>
+                    </thead>
+                    <tbody id="sm_cart_table">
+                    </tbody>
+                </table>
+                <div class="product-cart-detail">
+                    <input name="update_cart_xs" id="update_cart_xs"  value="UPDATE CART" class="btn-medium btn-skin pull-right" type="submit">
+                </div>
+            </div>
+
+
+        </form>
+        <div class="cart-total wow fadeInDown" data-wow-duration="1000ms" data-wow-delay="300ms" style="text-align: center">
+            <div class="cart-total-title">
+                <h5>CART TOTALS</h5>
+            </div>
+            <div id="price_summary">
+            </div>
+            <div class="proceed-check">
+                <?php
+                if(isset($_SESSION['group_master'])){?>
+                    <a href="#" class="btn-dark-coffee btn-medium" style="text-align: center" onclick="submitItem()">SUBMIT YOUR ITEMS</a>
+                <?php }
+                else{ ?>
+                    <a href="index.php?page=checkout" class="btn-primary-gold btn-medium">PROCEED TO CHECKOUT</a>
+                <?php } ?>
+            </div>
+        </div>
+    </div>
+</section>
 
 
 <script src="js/cart.js"></script>
@@ -89,6 +89,7 @@ if(!isset($_SESSION['cart']) || !count($_SESSION['cart'])>0) {
     $("#price_summary").load("views/order_price_summary.php");
 
     submitItem= function submitItem() {
+        alert('checkout')
         $.ajax({
             url: "./includes/controller/ecommerceController.php",
             dataType: "json",
@@ -98,12 +99,13 @@ if(!isset($_SESSION['cart']) || !count($_SESSION['cart'])>0) {
                 q: "checkout"
             },
             success: function(data) {
+                alert('ok')
                 console.log(data)
                 if(data=='111'){
                     $("#content").load("views/checkout_confirm.php");
                 }
                 else if(data=='222'){
-                    window.location.href= "index.php?page=account";
+                    window.location.href= project_url+"index.php?page=account";
                 }
             }
 
@@ -131,7 +133,7 @@ if(!isset($_SESSION['cart']) || !count($_SESSION['cart'])>0) {
                         html+=' <tr>\n' +
                             '                            <td>\n' +
                             '                                <div class="product-cart" style="">\n' +
-                            '                                    <img src="/admin/images/item/'+datas.item_image+'" alt="" style="height: 80px; width: 80px; border-radius: 10px;'+ item_image_display +'">\n' +
+                            '                                    <img src="'+project_url+'/admin/images/item/'+datas.item_image+'" alt="" style="height: 80px; width: 80px; border-radius: 10px;'+ item_image_display +'">\n' +
                             '                                    <span class="text-capitalize">'+datas.item_name+'</span>\n' +
                             '                                </div>\n' +
                             '                            </td>\n' +
@@ -151,10 +153,10 @@ if(!isset($_SESSION['cart']) || !count($_SESSION['cart'])>0) {
                             '                            </td>\n' +
                             '                            <td class="shop-cart-close"><i class="icon-cancel-5" onclick=deleteCartItem("'+i+'")></i></td>\n' +
                             '                        </tr>';
-							
-						html_xs+=' <tr>\n' +
+
+                        html_xs+=' <tr>\n' +
                             '                            <td>\n' +
-                            '                                <div class="product-cart" style="">\n' +                    
+                            '                                <div class="product-cart" style="">\n' +
                             '                                    <span class="text-capitalize">'+datas.item_name+' ('+ currency_symbol+''+datas.discounted_rate+')</span>\n' +
                             '                                </div>\n' +
                             '                            </td>\n' +
@@ -167,27 +169,27 @@ if(!isset($_SESSION['cart']) || !count($_SESSION['cart'])>0) {
                             '                                </div>\n' +
                             '                            </td>\n' +
                             '                            <td class="shop-cart-close"><i class="icon-cancel-5" onclick=deleteCartItem("'+i+'")></i></td>\n' +
-                            '                        </tr>';					
-							
-							
+                            '                        </tr>';
+
+
 
                         count++;
                         total += sub_total ;
                     });
-					
-					
-					var sWidth = window.screen.width;
 
-					//alert("sWidth is: " + sWidth);
-					if(sWidth<601){
-						$('#sm_cart_table').html(html_xs);
-					}
-					else {
-						 $('#cart_table').html(html);
-					}		
 
-                   // $('#quantity_15').val(15)
-                   
+                    var sWidth = window.screen.width;
+
+                    //alert("sWidth is: " + sWidth);
+                    if(sWidth<601){
+                        $('#sm_cart_table').html(html_xs);
+                    }
+                    else {
+                        $('#cart_table').html(html);
+                    }
+
+                    // $('#quantity_15').val(15)
+
                     total = total.toFixed(2);
                     html += '<div class="subtotal"><div class="col-md-6 col-sm-6 col-xs-6"><h6>Subtotal :</h6></div><div class="col-md-6 col-sm-6 col-xs-6"><span>Tk '+total+'</span></div></div>';
                     html  += '<div class="cart-btn"><div class="col-sm-6"><a href="cart.php" class="btn-main checkout">VIEW ALL</a></div><div class="col-sm-6"><a href="checkout.php" class="btn-main checkout">CHECK OUT</a></div></div>';
