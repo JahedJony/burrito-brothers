@@ -135,7 +135,7 @@ switch ($q){
         $data = [];
         $item_id = $item_id;
         // get item details
-        $sql = 	"Select i.item_id,i.price, i.name, i.details from items i where i.item_id=$item_id";
+        $sql = 	"Select i.item_id,i.price, i.name,is_combo, i.category_id, i.details from items i where i.item_id=$item_id";
         $stmt = $conn->prepare($sql);
         $stmt->execute();
         $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -165,13 +165,16 @@ switch ($q){
             $i+=1;
         }
 
+        if($data['item']['is_combo']==1 || $side_item==0 || $data['item']['category_id']==45 || $data['item']['category_id']==6 ){
+            echo json_encode($data); die;
+        }
+
         $sql = 	"Select name from category where id=45";
         $stmt = $conn->prepare($sql);
         $stmt->execute();
         $result_cat = $stmt->fetchAll(PDO::FETCH_ASSOC);
         //$data['side_item'][0]=$result;
     //var_dump($result_cat[0]['name']); die;
-
         $sql = 	"Select i.item_id,i.price, i.name, i.details from items i where i.category_id=45";
         $stmt = $conn->prepare($sql);
         $stmt->execute();

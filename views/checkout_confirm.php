@@ -130,6 +130,9 @@ if(!isset($_SESSION['customer_id']) && $_SESSION['customer_id']!="" && $_SESSION
                         });
                         var total_order_bill = ((parseFloat(order_total)+parseFloat(data.delivery_charge))-parseFloat(data.discount_amount));
                         var total_paid = data.total_paid_amount;
+                        order_tr += '<tr><td colspan="3" align="right" ><b>Discount</b></td><td align="right"><b>'+currency_symbol+''+data.discount_amount+'</b></td></tr>';
+                        order_tr += '<tr><td colspan="3" align="right" ><b>Tax</b></td><td align="right"><b>'+currency_symbol+''+data.tax_amount+'</b></td></tr>';
+                        order_tr += '<tr><td colspan="3" align="right" ><b>Tips</b></td><td align="right"><b>'+currency_symbol+''+data.tips+'</b></td></tr>';
                         order_tr += '<tr><td colspan="3" align="right" ><b>Total Amount</b></td><td align="right"><b>'+currency_symbol+''+total_paid+'</b></td></tr>';
                         $('#ord_detail_vw>table>tbody').append(order_tr);
 

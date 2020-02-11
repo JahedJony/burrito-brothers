@@ -94,6 +94,27 @@ if(isset($_GET['order_id']) && $_GET['order_id']!="") $order_id =  $_GET['order_
             </div>
         </div>
     </div>
+    <div class="modal fade " id="side_selection" tabindex="-2" role="dialog" aria-labelledby="booktable">
+        <div class="modal-dialog modal-sm" role="document" style="max-width: 90% ">
+            <div class="modal-content">
+                <div class="modal-body" style="padding-left: 0px; padding-right: 0px; height: auto">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+
+                    <div id="order-div">
+                        <div class="title text-center">
+                            <h4 class="text-coffee left text-capitalize" id="side_item_title"><span id="ord_title_vw"></span></h4>
+                        </div>
+                        <div class="buttons_wrapper" style="padding-bottom: 15px" id="side_selection_body">
+                        </div>
+                    </div>
+
+                    <div class="col-md-12 col-sm-12 col-xs-12">
+                        <button type="button" class="btn-main btn-small btn-primary" style="border-radius: 4px" >Confirm</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
 </section>
 
@@ -247,6 +268,9 @@ if(isset($_GET['order_id']) && $_GET['order_id']!="") $order_id =  $_GET['order_
     //Set the header for the main menu like name, id, quantity  minimum price etc
     set_item_header = function set_item_header(data) {
         base_price=parseFloat(data['price']);
+        if(data['is_combo']==1){
+            cart_side_check = 1;
+        }
         $('#total_price').html(currency_symbol+''+base_price)
 
         $('#title_right').html(data['name'])
@@ -317,7 +341,8 @@ if(isset($_GET['order_id']) && $_GET['order_id']!="") $order_id =  $_GET['order_
             async:false,
             data: {
                 q: "menu_options_view",
-                item_id:item_id
+                item_id:item_id,
+                side_item: 1
             },
             success: function(data){
 
@@ -374,10 +399,6 @@ if(isset($_GET['order_id']) && $_GET['order_id']!="") $order_id =  $_GET['order_
                     html_side+='<div class="col-md-8 col-sm-8 col-xs-12" id="additional_items" style="background-color: white; padding-top: 25px; padding-bottom: 20px; margin-bottom: 15px">\n' +
                         '           <div  class="col-md-12 col-sm-12 col-xs-12"><h4 style="text-transform: uppercase;" id="item_name">'+i+'</h4></div>\n'+
                         '           <div class="col-md-12 col-sm-12 col-xs-12 option-div"  style="background-color: rgba(244,242,237,1); padding-top: 25px; padding-bottom: 20px; margin-top: 5px; margin-bottom: 10px">'
-
-
-
-
 
                     $.each(datas, function (j, items) {
                         if(ingredient_image_display=="display: none"){
@@ -457,9 +478,74 @@ if(isset($_GET['order_id']) && $_GET['order_id']!="") $order_id =  $_GET['order_
         var item_price = $(this).children('input:eq(1)').val()
         var category_name = $(this).children('input:eq(3)').val()
         var quantity = 1
+        //alert('clicked')
+
+        $.ajax({
+            url:"./includes/controller/itemsController.php",
+            dataType: "json",
+            type: "post",
+            async:false,
+            data: {
+                q: "menu_options_view",
+                item_id:item_id,
+                side_item: 0
+            },
+            success: function(data){
+                //alert('dsf')
+                console.log(data)
+                html = ''
+                $('#side_item_title').html(data['item']['name'])
+                $.each(data['option'], function(i,datas){
+                    //console.log(datas)
+                    var hints=''
+                    if(parseInt(datas['is_required'])==1 || parseInt(datas['minimum_choice'])>=1){
+                        if(parseInt(datas['maximum_choice'])>0){
+                            hints+='  (Required: Max-'+parseInt(datas['maximum_choice'])+')'
+                        }else {
+                            hints+='  (Required)'
+                        }
+                    }else {
+                        if(parseInt(datas['maximum_choice'])>0){
+                            hints+='  (Max-'+parseInt(datas['maximum_choice'])+')'
+                        }else {
+                            hints+='  (Max- Unlimited)'
+                        }
+                    }
+
+                    choosed_ingredient_number[datas['option_id']]=0
+
+                    html3='<div class="col-md-12 col-sm-12 col-xs-12 option-div" name="option_div" style="background-color: rgba(244,242,237,1); padding-top: 25px; padding-bottom: 20px; margin-top: 5px; margin-bottom: 10px">\n' +
+                        '       <!-- option id will come from DB  -->\n' +
+                        '       <div class="col-md-12 col-sm-12 col-xs-12 left-padding-0 ">\n' +
+                        '             <span style="font-size: 20px; text-transform: capitalize"><b>'+datas['option_name']+'</b> </span><span>'+hints+'</span>\n' +
+                        '       </div>\n' +
+                        '       <input type="hidden" name="options[]" value="'+datas['option_id']+'" />\n' +
+                        '       <input type="hidden" name="options_name[]" value="'+datas['option_name']+'" />\n' +
+                        '       <input type="hidden" name="option_selected[]" value="0" />\n' +
+                        '       <input type="hidden" id="option_required_1" value="'+datas['is_required']+'" />\n' +
+                        '       <input type="hidden" id="option_maximum_1" value="'+datas['maximum_choice']+'" />\n' +
+                        '       <input type="hidden" id="option_minimum_1" value="'+datas['minimum_choice']+'" />\n' +
+                        '       <input type="hidden" id="select_no_1" value="'+datas['option_id']+'" />'
+                    html3 +=set_ingredient(datas['ingredient'][0])
+                    html3 +='</div>\n' +
+                        '     </div>'
+                    html+=html3;
+                });
+
+                if(html!=''){
+                    $('#side_selection_body').html(html);
+                    $('#side_selection').modal()
+                }
+                else {
+                    alert('fdsf')
+                    add_items(item_id, item_name, category_name, quantity, item_price)
+                }
+
+            }
+        })
 
         //alert(item_id+'>'+item_name+'>'+category_name+'>'+quantity+'>'+item_price)
-        add_items(item_id, item_name, category_name, quantity, item_price)
+        //add_items(item_id, item_name, category_name, quantity, item_price)
 
         //add_to_meal(option_id,option_name,ing_id,ing_rate,ing_name);
 
@@ -467,6 +553,9 @@ if(isset($_GET['order_id']) && $_GET['order_id']!="") $order_id =  $_GET['order_
     })
 
     addToCart = function addToCart(){
+        //alert('sdf')
+        //alert(Object.keys(selected_item_list).length)
+
 
         //check if any Mendatory field is not selected
         $.each(choosed_ingredient_number, function (j, ingredient) {
@@ -477,8 +566,13 @@ if(isset($_GET['order_id']) && $_GET['order_id']!="") $order_id =  $_GET['order_
             }
         });
 
-        //if((Object.keys(selected_item_list).length!=0 || cart_side_check!=0)  && select_ingredinet_check==1){
-            //alert('cart_side_check')
+
+        if(Object.keys(selected_item_list).length==0 && select_ingredinet_check!=0){
+            $('#item_body').focus();
+            success_or_error_msg('#select_side','warning',"You did not select any BEVERAGE ","#side_order");
+            cart_side_check=1
+        }
+        else {
             $.ajax({
                 url: "./includes/controller/ecommerceController.php",
                 dataType: "json",
@@ -501,11 +595,8 @@ if(isset($_GET['order_id']) && $_GET['order_id']!="") $order_id =  $_GET['order_
                     $('#cart_confirmation').modal()
                 }
             });
-       // }
-        if(Object.keys(selected_item_list).length==0 && select_ingredinet_check!=0){
-            success_or_error_msg('#select_side','warning',"You did not select any BEVERAGE ","#side_order");
-            cart_side_check=1
-       }
+
+        }
         showCart()
     }
 

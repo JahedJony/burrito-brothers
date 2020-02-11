@@ -210,7 +210,14 @@ if(!isset($_SESSION['cart']) || !count($_SESSION['cart'])>0) {
                                 </div>
 
                                 <div class="col-md-12 col-sm-12 col-xs-12" style="margin: auto" id="tips_entry">
-
+                                    <label> Want to give some Tips </label><br>
+                                    <input type="radio" value="0" class="icheckbox_flat" name="tips_percentage" id="0percente" style="margin-right: 5px"> <label>  Not today</label>
+                                    <input type="radio" value="18" name="tips_percentage" id="18percente" style="margin-right: 5px; margin-left: 10px"> <label>  18% </label>
+                                    <input type="radio" value="25" name="tips_percentage" id="25percente" style="margin-right: 5px; margin-left: 10px"> <label>  25% </label>
+                                    <input type="radio" value="30" name="tips_percentage" id="30percente" style="margin-right: 5px; margin-left: 10px"> <label>  30% </label>
+                                    <input type="radio" value="100" name="tips_percentage" id="100percente" style="margin-right: 5px; margin-left: 10px"> <span><label>  Custom</label></span>
+                                    <span><input type="number" step="0.01" name="tips" id="tips" placeholder="Tips amount" class="input-fields" value="0" style="border-radius: 10px; display: block;margin-top: 10px"></span>
+                                    <div id="tips_error" class="text-center" style="display:none"></div>
                                 </div>
 
                                 <div class="col-md-12 col-sm-12 col-xs-12">
@@ -436,6 +443,8 @@ $.ajax({
 					$('#customer_status').html(data.status_text);
 					$('#loyalty_points').html(data.loyalty_points);
 					loyalty_points = data.loyalty_points;
+					//
+                    // alert(loyalty_points+'---')
 					if(data.photo == ""){
 						$('#customer_img').attr("src",'admin/images/no_image.png');
 					}else{
@@ -449,7 +458,7 @@ $.ajax({
 		}
 	});
 }
-
+load_customer_profile()
 display_div = function display_div(){
 	$("#login_div").css("display", "none");
 	$("#register_div").css("display", "none");
@@ -502,6 +511,8 @@ payments = function payments(){
     document.getElementById("payments_menu").classList.add('active');
     $("#payments").css("display", "block");
 
+
+
     if(loyalty_points/loyalty_point_value<$('#total_paid_amount').val()){
         $('#loyalty_redio').attr('disabled',true);
     }
@@ -532,6 +543,8 @@ general_settings = function general_settings(){
                             '  </div>'
                     }
                     if(data.loyelty_payment==1 ){
+                       // alert(loyalty_points+'-+-')
+
                         html+='<div class="payment-mode">\n' +
                             '      <input type="radio" name="payment_method" id="loyalty_redio" value="2"  onclick="payment_check()"><label style="padding-left: 10px; padding-top: 10px;">Use Loyalty Point <span id="loyalty_spend"></span></label>\n' +
                             '  </div>'
@@ -565,58 +578,44 @@ general_settings = function general_settings(){
 general_settings()
 $("input[type='checkbox']").on('ifChanged', function (e) {
     $(this).val(e.target.checked == true);
-    alert('sdf')
+    //alert('sdf')
 });
 
+$("input[name='tips_percentage']").change(function(){
+    var base_price =parseFloat($('#total_order_amt').val());
 
-function tips_entry_form(){
-
-    var html = '<label> Want to give some Tips </label><br>\n' +
-        '              <input type="radio" value="0" class="icheckbox_flat" name="tips_percentage" id="0percente" style="margin-right: 5px"> <label>  Not today</label>\n' +
-        '              <input type="radio" value="18" name="tips_percentage" id="18percente" style="margin-right: 5px; margin-left: 10px"> <label>  18% </label>\n' +
-        '              <input type="radio" value="25" name="tips_percentage" id="25percente" style="margin-right: 5px; margin-left: 10px"> <label>  25% </label>\n' +
-        '              <input type="radio" value="30" name="tips_percentage" id="30percente" style="margin-right: 5px; margin-left: 10px"> <label>  30% </label>\n' +
-        '              <input type="radio" value="100" name="tips_percentage" id="100percente" style="margin-right: 5px; margin-left: 10px"> <span><label>  Custom</label></span>\n' +
-        '              <span><input type="number" step="0.01" name="tips" id="tips" placeholder="Tips amount" class="input-fields" value="0" style="border-radius: 10px; display: block;margin-top: 10px"></span>'
-
-    $('#tips_entry').html(html)
-    $("input[name='tips_percentage']").change(function(){
-        var base_price =parseFloat($('#total_order_amt').val());
-
-        if($(this).val()==100){
-            $('#tips').css('display','block')
-            $('#fieldName').attr("read", false)
-            //$('#tips').attr()
-        }
-        else {
-            //alert(base_price)
-            $('#tips').val(base_price*parseInt($(this).val())/100)
-            $('#fieldName').attr("disabled", true)
-        }
-        $('#tips').trigger('change')
+    if($(this).val()==100){
+        $('#tips').css('display','block')
+        $('#fieldName').attr("read", false)
+        //$('#tips').attr()
+    }
+    else {
+        //alert(base_price)
+        $('#tips').val(base_price*parseInt($(this).val())/100)
+        $('#fieldName').attr("disabled", true)
+    }
+    $('#tips').trigger('change')
 
 
-        // Do something interesting here
-    });
+    // Do something interesting here
+});
 
-    $('#tips').on('change',function () {
-        //alert('ok')
-        $('#tips_').html(currency_symbol+''+$('#tips').val())
+$('#tips').on('change',function () {
+    //alert('ok')
+    $('#tips_').html(currency_symbol+''+$('#tips').val())
 
-        total_amt = parseFloat($('#total_order_amt').val())+parseFloat($('#tips').val())
-        //alert(total_amt)
-        $('#total_amount_').html(currency_symbol+''+total_amt.toFixed(2))
+    total_amt = parseFloat($('#total_order_amt').val())+parseFloat($('#tips').val())
+    //alert(total_amt)
+    $('#total_amount_').html(currency_symbol+''+total_amt.toFixed(2))
 
-        $('#total_paid_amount').val(total_amt.toFixed(2))
+    $('#total_paid_amount').val(total_amt.toFixed(2))
 
 
-        //set loyalty point expense for this order
-        $('#loyalty_spend').html("("+Math.ceil(total_amt/loyalty_point_value)+" point will spend)")
-        $('#loyalty_point_earn').html(Math.floor(total_amt/loyalty_reserve_value)+' points will earn')
+    //set loyalty point expense for this order
+    $('#loyalty_spend').html("("+Math.ceil(total_amt*loyalty_point_value)+" point will spend you have"+loyalty_points+")" )
+    $('#loyalty_point_earn').html(Math.floor(total_amt/loyalty_reserve_value)+' points will earn')
 
-    })
-
-}
+})
 
 
 order_summary = function order_summary(){
@@ -669,21 +668,14 @@ order_summary = function order_summary(){
                             $('#total_paid_amount').val(data['discounted_price'])
                         }
                         $('#total_amount_').html(currency_symbol+''+parseFloat($('#total_paid_amount').val()).toFixed(2))
-
-                        //alert()
-
-                        //set loyalty point expense for this order
-                        $('#loyalty_spend').html("("+Math.ceil(data['discounted_price']/loyalty_point_value)+" point will spend)")
-
+                        $('#loyalty_spend').html("("+Math.ceil(data['discounted_price']*loyalty_point_value)+" point will spend; you have "+loyalty_points+")" )
 
                     }   
                 }
             });
 
-
         }
     });
-    tips_entry_form()
 
 }
 
@@ -801,7 +793,8 @@ $('#register_submit_').click(function(event){
             cache:false,
             contentType:false,processData:false,
             success: function(data){
-                alert(data)
+                //
+                // alert(data)
                 if($.isNumeric(data)==true && data==2){
                     success_or_error_msg('#registration_submit_error_',"danger","Username is already exist, please try with another one","#cust_username" );
                 }
@@ -888,7 +881,7 @@ $('#checkout_submit').click(function(event) {
                 else{
                     //alert('done')
                     showCart()
-                    alert(data)
+                   // alert(data)
                     $("#content").load("views/checkout_confirm.php");
 
                     //window.location = "completed.php?complete=success&order_id="+$.trim(data);

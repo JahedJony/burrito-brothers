@@ -57,6 +57,14 @@ else {
                                 </div>
 
                                 <div class="col-md-12 col-sm-12 col-xs-12" style="margin: auto" id="tips_entry">
+                                      <label> Want to give some Tips </label><br>
+                                      <input type="radio" value="0" class="icheckbox_flat" name="tips_percentage" id="0percente" style="margin-right: 5px"> <label>  Not today</label>
+                                      <input type="radio" value="18" name="tips_percentage" id="18percente" style="margin-right: 5px; margin-left: 10px"> <label>  18% </label>
+                                      <input type="radio" value="25" name="tips_percentage" id="25percente" style="margin-right: 5px; margin-left: 10px"> <label>  25% </label>
+                                      <input type="radio" value="30" name="tips_percentage" id="30percente" style="margin-right: 5px; margin-left: 10px"> <label>  30% </label>
+                                      <input type="radio" value="100" name="tips_percentage" id="100percente" style="margin-right: 5px; margin-left: 10px"> <span><label>  Custom</label></span>
+                                      <span><input type="number" step="0.01" name="tips" id="tips" placeholder="Tips amount" class="input-fields" value="0" style="border-radius: 10px; display: block;margin-top: 10px"></span>
+                                      <div id="tips_error" class="text-center" style="display:none"></div>
                                 </div>
 
 
@@ -194,75 +202,23 @@ function tips_add_to_db() {
 
 }
 
-function tips_entry_form(){
+$("input[name='tips_percentage']").change(function(){
+    var base_price =parseFloat($('#total_order_amt').val());
 
-    var html = '<label> Want to give some Tips </label><br>\n' +
-        '              <input type="radio" value="0" class="icheckbox_flat" name="tips_percentage" id="0percente" style="margin-right: 5px"> <label>  Not today</label>\n' +
-        '              <input type="radio" value="18" name="tips_percentage" id="18percente" style="margin-right: 5px; margin-left: 10px"> <label>  18% </label>\n' +
-        '              <input type="radio" value="25" name="tips_percentage" id="25percente" style="margin-right: 5px; margin-left: 10px"> <label>  25% </label>\n' +
-        '              <input type="radio" value="30" name="tips_percentage" id="30percente" style="margin-right: 5px; margin-left: 10px"> <label>  30% </label>\n' +
-        '              <input type="radio" value="100" name="tips_percentage" id="100percente" style="margin-right: 5px; margin-left: 10px"> <span><label>  Custom</label></span>\n' +
-        '              <span><input type="number" step="0.01" name="tips" id="tips" placeholder="Tips amount" class="input-fields" value="0" style="border-radius: 10px; display: block;margin-top: 10px"></span>\n'+
-        '              <div id="tips_error" class="text-center" style="display:none"></div>\n'
+    if($(this).val()==100){
+        $('#tips').css('display','block')
+        $('#fieldName').attr("read", false)
+        //$('#tips').attr()
+    }
+    else {
+        //alert(base_price)
+        $('#tips').val(base_price*parseInt($(this).val())/100)
+        $('#fieldName').attr("disabled", true)
+    }
+    tips_add_to_db()
+    //$('#tips').trigger('change')
 
-    $('#tips_entry').html(html)
-    $("input[name='tips_percentage']").change(function(){
-        var base_price =parseFloat($('#total_order_amt').val());
-
-        if($(this).val()==100){
-            $('#tips').css('display','block')
-            $('#fieldName').attr("read", false)
-            //$('#tips').attr()
-        }
-        else {
-            //alert(base_price)
-            $('#tips').val(base_price*parseInt($(this).val())/100)
-            $('#fieldName').attr("disabled", true)
-        }
-        tips_add_to_db()
-        //$('#tips').trigger('change')
-
-    });
-}
-/*
-$('#tips').on('change',function () {
-//alert('sdf')
-    var tips = $('#tips').val();
-
-        $.ajax({
-            url: "./includes/controller/groupController.php",
-            type:'POST',
-            async:false,
-            data: {
-                q:'add_tips',
-                tips:tips,
-                group_order_id: group_order_id
-            },
-            success: function(data){
-                if(data==1){
-                    success_or_error_msg('#tips_error','success',"Thanks for the tips. ","#coupon");
-
-
-                }else if(data==2){
-                    success_or_error_msg('#tips_error','danger',"Tips is not added. ","#coupon");
-
-                }
-                //alert(data)
-
-                order_summary()
-                //location.reload();
-            }
-        });
-
-    //$('#loyalty_spend').html("("+Math.ceil(total_amt/loyalty_point_value)+" point will spend)")
-    //$('#loyalty_point_earn').html(Math.floor(total_amt/loyalty_reserve_value)+' points will earn')
-
-
-    //$('#tips_').html(currency_symbol+''+$('#tips').val())
-
-})
-*/
-
+});
 
 
 $('#coupon').on('change',function () {
@@ -317,6 +273,8 @@ load_customer_profile = function load_customer_profile(id){
 		}
 	});
 }
+load_customer_profile();
+
 display_div = function display_div(){
 	$("#take_out").css("display", "none");
 	$("#payments").css("display", "none");
@@ -362,17 +320,17 @@ general_settings = function general_settings(){
                     $('#take_out_location_').html(data.store_address);
                     if(data.cash_payment==1){
                         html+='<div class="payment-mode">\n' +
-                            '       <input type="radio" name="payment_method" value="1" onclick="payment_check()"><label style="padding-left: 10px; padding-top: 10px; font-size: 18px">Cash on Delivery</label>\n' +
+                            '       <input type="radio" name="payment_method" value="1" ><label style="padding-left: 10px; padding-top: 10px; font-size: 18px">Cash on Delivery</label>\n' +
                             '  </div>'
                     }
                     if(data.loyelty_payment==1 ){
                         html+='<div class="payment-mode">\n' +
-                            '      <input type="radio" name="payment_method" id="loyalty_redio" value="2"  onclick="payment_check()"><label style="padding-left: 10px; padding-top: 10px; font-size: 18px">Use Loyalty Point <span id="loyalty_spend"></span></label>\n' +
+                            '      <input type="radio" name="payment_method" id="loyalty_redio" value="2"><label style="padding-left: 10px; padding-top: 10px; font-size: 18px">Use Loyalty Point <span id="loyalty_spend"></span></label>\n' +
                             '  </div>'
                     }
                     if(data.card_payment==1){
                         html+='<div class="payment-mode">\n' +                      
-                            '      <input type="radio" name="payment_method" value="3"  onclick="payment_check()"><label style="padding-left: 10px; padding-top: 10px; font-size: 18px">Credit Card</label>'
+                            '      <input type="radio" name="payment_method" value="3" ><label style="padding-left: 10px; padding-top: 10px; font-size: 18px">Credit Card</label>'
                         if(data.payment_card_visa==1){
                             html+='<img src="./images/payments/visa.png" style="height: 30px">'
                         }
@@ -439,7 +397,7 @@ order_summary = function order_summary(){
                 $('#total_paid_amount').val(data['order_details']['total_order_amt'])
                 $('#loyalty_point_earn').html(Math.floor(parseFloat(data['order_details']['total_order_amt'])/loyalty_reserve_value)+' points will earn')
 
-                $('#loyalty_spend').html("("+Math.ceil(parseFloat(data['order_details']['total_order_amt'])/loyalty_reserve_value)+" point will spend)")
+                $('#loyalty_spend').html("("+Math.ceil(parseFloat(data['order_details']['total_order_amt'])*loyalty_reserve_value)+" point will spend you have"+loyalty_points+")" )
 
 
 
@@ -448,17 +406,12 @@ order_summary = function order_summary(){
 
         }
     });
-    tips_entry_form()
+    //tips_entry_form()
 }
 
 order_summary()
 load_customer_profile()
 
-payment_check = function payment_check(){
-    //loyalty point deduction message will be here
-    //alert(loyalty_point_value)
-    //alert($('input[name=payment_method]:checked', '#checkout-form').val())
-}
 
 
 $('#checkout_submit').click(function(event){
@@ -510,6 +463,7 @@ $('#checkout_submit').click(function(event){
         success_or_error_msg('#logn_reg_error','danger',"Please confirm the tarms and conditions ","#reference_no");
     }
     else{
+        alert('sdf')
         $.ajax({
             url: "includes/controller/groupController.php",
             type:'POST',
@@ -518,15 +472,20 @@ $('#checkout_submit').click(function(event){
             cache:false,
             contentType:false,processData:false,
             success: function(data){
+                alert('checkout done')
                 //alert(data)
+                console.log(data)
                 if(data==0){
-                    success_or_error_msg('#logn_reg_error',"danger","Order Faild. please check your information properly","#checkout_submit" );
+                    success_or_error_msg('#logn_reg_error',"danger","Order Failed. please check your information properly","#checkout_submit" );
                 }
                 else{
                     //localStorage.setItem('last_invoice_no', data);
                     //alert('done')
                     showCart()
-                    $("#content").load("index.php?page=checkout_confirm");
+                    window.location.href = "/index.php?page=account"
+                    //$('#account_contents').load('views/checkout_confirm.php');
+
+                   // $("#content").load("checkout_confirm.php");
 
                     //window.location = "completed.php?complete=success&order_id="+$.trim(data);
                 }

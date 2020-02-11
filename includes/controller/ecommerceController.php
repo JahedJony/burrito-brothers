@@ -662,7 +662,7 @@ switch ($q){
                 c.full_name customer_name, d.item_id, c.contact_no customer_contact_no, c.address customer_address,  m.order_id,
                 GROUP_CONCAT(ca.name,' >> ',ca.id,'#',ca.id,'#',p.name,' (',ca.name,' )','#',p.item_id,'#',d.item_rate,'#',d.quantity,'#',d.ingredient_name,'..') order_info,
                 m.order_date, m.delivery_date, m.delivery_type, m.discount_amount, m.total_paid_amount,
-                m.address, m.delivery_charge_id, m.tax_amount,
+                m.address, m.delivery_charge_id, m.tax_amount, m.tips,
                 m.remarks, m.order_status, m.payment_status, m.payment_method, 
                 m.payment_reference_no, m.invoice_no, m.total_order_amt,
                 case payment_status when payment_status=1 then 'Not Paid' else 'Paid' end paid_status, 
