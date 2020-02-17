@@ -661,7 +661,7 @@ showCart();
 var view_order = function view_order(order_id){
 	$('#ord_detail_vw>table>tbody').html('');
 	$.ajax({
-		url:project_url+"includes/controller/ecommerceController.php",
+		url:"includes/controller/ecommerceController.php",
 		type:'POST',
 		async:false,
 		dataType: "json",

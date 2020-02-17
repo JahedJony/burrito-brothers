@@ -96,7 +96,7 @@ if(!isset($_SESSION['customer_id']) && $_SESSION['customer_id']!="" && $_SESSION
         //alert('ok')
         $('#ord_detail_vw>table>tbody').html('');
         $.ajax({
-            url:project_url+"includes/controller/ecommerceController.php",
+            url:project_url +"includes/controller/ecommerceController.php",
             type:'POST',
             async:false,
             dataType: "json",

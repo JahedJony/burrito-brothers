@@ -69,7 +69,7 @@
         $('#cart_empty').modal('hide');
 
         $.ajax({
-            url: project_url+"includes/controller/groupController.php",
+            url: "includes/controller/groupController.php",
             dataType: "json",
             type: "post",
             async: false,
@@ -86,7 +86,7 @@
     load_category = function load_category() {
         //alert(project_url)
         $.ajax({
-            url:project_url+"includes/controller/itemsController.php",
+            url:"includes/controller/itemsController.php",
             dataType: "json",
             type: "post",
             async: false,

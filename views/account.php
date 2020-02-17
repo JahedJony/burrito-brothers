@@ -123,7 +123,7 @@ if(isset($_GET['order_id']) && $_GET['order_id']!="") $order_id =  $_GET['order_
             //alert('ok')
             order_no = $.trim($('#order_tracking_number').val());
             $.ajax({
-                url: project_url+"includes/controller/itemsController.php",
+                url: project_url +"includes/controller/itemsController.php",
                 dataType: "json",
                 type: "post",
                 async:false,

@@ -30,7 +30,7 @@ $(function () {
             formdata.append('q','group_member_order')
             //alert('safdds')
             $.ajax({
-                url: project_url+"includes/controller/groupController.php",
+                url: project_url +"includes/controller/groupController.php",
                 type:'POST',
                 data:formdata,
                 async:false,

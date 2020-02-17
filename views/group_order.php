@@ -182,7 +182,7 @@ $('.date-picker').daterangepicker({
     $('#group_name').on("keyup change", function () {
         //alert( $('#group_name').val())
         $.ajax({
-            url: project_url+"includes/controller/groupController.php",
+            url: project_url +"includes/controller/groupController.php",
             data: {
                 q: "group_details_by_name",
                 group_name: $('#group_name').val()
@@ -209,7 +209,7 @@ $('.date-picker').daterangepicker({
 		var html=''
 
 		$.ajax({
-			url: project_url+"includes/controller/groupController.php",
+			url: project_url +"includes/controller/groupController.php",
 			data:{
 				q: "groups",
 				customer_id: customer_id
@@ -269,7 +269,7 @@ $('.date-picker').daterangepicker({
         else{
             //alert('ksjfdlk;')
             $.ajax({
-                url: project_url+"includes/controller/groupController.php",
+                url: project_url +"includes/controller/groupController.php",
                 type:'POST',
                 data:formData,
                 async:false,
@@ -296,7 +296,7 @@ $('.date-picker').daterangepicker({
             //$('#id_group').val(group_id)
 
             $.ajax({
-                url: project_url+"includes/controller/groupController.php",
+                url: project_url +"includes/controller/groupController.php",
                 data:{
                     q: "group_details",
                     group_id: id
@@ -337,7 +337,7 @@ $('.date-picker').daterangepicker({
 
     function newForm(){
         $.ajax({
-            url: project_url+"includes/controller/ecommerceController.php",
+            url: project_url +"includes/controller/ecommerceController.php",
             data: {
                 q: "get_customer_details"
             },

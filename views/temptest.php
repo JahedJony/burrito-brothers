@@ -9,7 +9,7 @@
     ingredientadd= function ingredientadd(){
         //alert('ok')
         $.ajax({
-            url: project_url+"includes/controller/ecommerceController.php",
+            url: project_url +"includes/controller/ecommerceController.php",
             dataType: "json",
             type: "post",
             async: false,
