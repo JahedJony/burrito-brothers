@@ -53,10 +53,9 @@ else{
 			<table id="template_Table" name="table_records" class="table table-bordered  responsive-utilities jambo_table table-striped table-scroll ">
 				<thead>
 					<tr class="headings">
-						<th class="column-title" width="12%">Template Name</th>
-						<th class="column-title" width="20%">Dynamic Variables</th>
-						<th class="column-title" width="25%">Subject</th>
+						<th class="column-title" width="30%">Template Title</th>
 						<th class="column-title" width="">Details</th>
+						<th class="column-title" width="12%">Template Type</th>
 						<th class="column-title no-link last" width="100"><span class="nobr"></span></th>
 					</tr>
 				</thead>
@@ -87,42 +86,34 @@ else{
         <br />       
         <form method="post" id="template_form" name="template_form" enctype="multipart/form-data" class="form-horizontal form-label-left">
             <div class="form-group">
-                <label class="control-label col-md-2 col-sm-2 col-xs-12" for="title">Template Type<span class="required">*</span></label>
+                <label class="control-label col-md-2 col-sm-2 col-xs-12">Template Type<span class="required">*</span></label>
                 <div class="col-md-6 col-sm-6 col-xs-12">
-                    <select id="template_type" name="template_type" class="form-control">
-						<option value="">Select Template</option>
-						<option value="0">Order</option>
-						<option value="1">Coupon</option>
-						<option value="2">Promotional</option>
-						<option value="3">Award</option>
-						<option value="4">Upcoming Item</option>
-						<option value="5">Group Order Invitation</option>
-						<option value="6">Group Order Selection</option>
-					</select>
+                    <input type="radio" class="flat_radio" name="type" value="1"/> Notice
+					<input type="radio" class="flat_radio" name="type" value="2"/> Email
                 </div>
             </div>
 			<div class="form-group">
-                <label class="control-label col-md-2 col-sm-2 col-xs-12" for="title">Subject</label>
+                <label class="control-label col-md-2 col-sm-2 col-xs-12" for="title">Template Name<span class="required">*</span></label>
                 <div class="col-md-10 col-sm-10 col-xs-12">
-                    <input type="text" id="subject" name="subject" class="form-control col-lg-12" />
+                    <input type="text" id="title" name="title" class="form-control col-lg-12" />
                 </div>
             </div>
+			<div class="form-group">
+                <label class="control-label col-md-2 col-sm-2 col-xs-12">Dynamic Variables</label>
+				<div class="col-md-10 col-sm-10 col-xs-12">
+					<small style="color:red" >
+						Dynamic Variables: avoid to edit 
+					</small>
+                    <input type="text" id="dynamic_variables" name="dynamic_variables" placeholder="[ORDER_NO] [CUSTOMER_NAME] [CUPON_NUMBER]" class="form-control col-lg-12" />
+                </div>
+            </div>	
             <div class="form-group">
                 <label class="control-label col-md-2 col-sm-2 col-xs-12" for="details">Details<span class="required">*</span></label>
                 <div class="col-md-10 col-sm-10 col-xs-12">                 
                     <textarea type="text" id="details" name="details" required class="form-control  col-lg-12"></textarea>
                 </div>
             </div>            
-
-			<div class="form-group">
-                <label class="control-label col-md-2 col-sm-2 col-xs-12" for="title">Dynamic Variables</label>
-				<div class="col-md-10 col-sm-10 col-xs-12">
-					<small style="color:red" >
-						(order_id,customer_id,email_to,email_from)
-					</small>
-                    <input type="text" id="dynamic_variables" name="dynamic_variables" class="form-control col-lg-12" />
-                </div>
-            </div>			
+		
             <div class="ln_solid"></div>
             <div class="form-group">
               	<label class="control-label col-md-2 col-sm-2 col-xs-6"></label>
@@ -147,6 +138,7 @@ else{
 <script>	
 
 $(document).ready(function () {	
+
 	// initialize page no to "1" for paging
 	var current_template_no=1;	
 	load_data = function load_data(search_txt){
@@ -158,10 +150,10 @@ $(document).ready(function () {
 			type: "post",
 			async:false,
 			data: {
-				q: "mail_grid_data",
+				q: "grid_data",
 				search_txt: search_txt,
 				limit:template_Table_length,
-				template_no:current_template_no
+				page_no:current_template_no
 			},
 			success: function(data) {
 				// for  showing grid's no of records from total no of records 
@@ -173,7 +165,7 @@ $(document).ready(function () {
 				$("#search_template_button").toggleClass('active');
 				if(!jQuery.isEmptyObject(records_array)){
 					// create and set grid table row
-					var colums_array=["id*identifier*hidden", "template_name", "dynamic_variables", "subject", "details"];
+					var colums_array=["id*identifier*hidden", "title", "details", "type_text"];
 					// first element is for view , edit condition, delete condition
 					// "all" will show /"no" will show nothing
 					var condition_array=["","","all", "","all",""];
@@ -245,10 +237,10 @@ $(document).ready(function () {
 		event.preventDefault();
 		ckeditorUpdateElement();
 		var formData = new FormData($('#template_form')[0]);
-		formData.append("q","insert_or_update_mail");
+		formData.append("q","insert_or_update");
 		//validation 
-		if($.trim($('#template_type').val()) == "0"){
-			success_or_error_msg('#form_submit_error','danger','Please Select Template Type',"#template_type"); 
+		if($.trim($('#title').val()) == ""){
+			success_or_error_msg('#form_submit_error','danger','Please Insert Template Title',"#title"); 
 		}
 		else if($.trim($('#details').val()) == ""){
 			success_or_error_msg('#form_submit_error','danger','Please Insert Details',"#details"); 
@@ -292,15 +284,11 @@ $(document).ready(function () {
 			success: function(data){
 				if(!jQuery.isEmptyObject(data.records)){
 					$.each(data.records, function(i,data){				
-						$('#master_id').val(data.id);
-						
-						$('#template_type').val(data.template_type);
-						$('#subject').val(data.subject);
-						
-						CKEDITOR.instances['details'].setData(data.description);
-						
-						$('#save_template_btn').html('Update');
-						
+						$('#master_id').val(data.id);	
+						$('input:radio[name=type][value='+data.type+']').prop('checked', true);	
+						$('#title').val(data.title);						
+						CKEDITOR.instances['details'].setData(data.details);						
+						$('#save_template_btn').html('Update');						
 						// to open submit post section
 						if($.trim($('#toggle_form i').attr("class"))=="fa fa-chevron-down")
 						$( "#toggle_form" ).trigger( "click" );	

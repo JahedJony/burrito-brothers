@@ -1,9 +1,9 @@
-<?php 
+<?php
 session_start();
-include '../dbConnect.php';	
+include '../dbConnect.php';
 include("../dbClass.php");
 
-$dbClass = new dbClass;	
+$dbClass = new dbClass;
 extract($_POST);
 /*
 if($q=="insert_review"){
@@ -52,6 +52,7 @@ if($q=="getOrder_status"){
 switch ($q){
 
     case "category_view":
+        //echo 1; die;
         $data = array();
         $sql = 	"SELECT id, name, code, photo,  c.id, c.code, c.name, ifnull(c.photo,'') photo
 					FROM category c	ORDER BY id desc";
@@ -118,23 +119,23 @@ switch ($q){
         break;
 
     case "getOrder_status":
-            $sql = "select order_status,order_noticed, payment_status, ifnull(payment_method,3) payment_method from order_master where invoice_no='$order_tracking_number'";
-            $stmt = $conn->prepare($sql);
-            $stmt->execute();
-            $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
-            foreach ($result as $row) {
-                $data['records'][] = $row;
-            }
-            //	var_dump($data);
-            echo json_encode($data);
-    break;
+        $sql = "select order_status,order_noticed, payment_status, ifnull(payment_method,3) payment_method from order_master where invoice_no='$order_tracking_number'";
+        $stmt = $conn->prepare($sql);
+        $stmt->execute();
+        $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        foreach ($result as $row) {
+            $data['records'][] = $row;
+        }
+        //	var_dump($data);
+        echo json_encode($data);
+        break;
 
     case "menu_options_view":
         //echo 1; die;
         $data = [];
         $item_id = $item_id;
         // get item details
-        $sql = 	"Select i.item_id,i.price, i.name, i.details from items i where i.item_id=$item_id";
+        $sql = 	"Select i.item_id,i.price, i.name,is_combo, i.category_id, i.details from items i where i.item_id=$item_id";
         $stmt = $conn->prepare($sql);
         $stmt->execute();
         $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -164,13 +165,16 @@ switch ($q){
             $i+=1;
         }
 
+        if($data['item']['is_combo']==1 || $side_item==0 || $data['item']['category_id']==45 || $data['item']['category_id']==6 ){
+            echo json_encode($data); die;
+        }
+
         $sql = 	"Select name from category where id=45";
         $stmt = $conn->prepare($sql);
         $stmt->execute();
         $result_cat = $stmt->fetchAll(PDO::FETCH_ASSOC);
         //$data['side_item'][0]=$result;
-    //var_dump($result_cat[0]['name']); die;
-
+        //var_dump($result_cat[0]['name']); die;
         $sql = 	"Select i.item_id,i.price, i.name, i.details from items i where i.category_id=45";
         $stmt = $conn->prepare($sql);
         $stmt->execute();
@@ -190,7 +194,7 @@ switch ($q){
 
         //$data['option']=$tem_data;
         echo json_encode($data);
-     break;
+        break;
 
 }
 

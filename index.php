@@ -923,15 +923,11 @@ if(isset($_GET['search'])) $search_text = "";
 
     function group_order(){
         localStorage.setItem("nexturl", "grouporder");
-            //alert("IN group order")
         if(customer_id==0){
-            //nextPage = 'group_order';
-            //$('.nexturl').val('grouporder')
             $('#loginModal').modal();
         }
         else {
             window.location=project_url+'index.php?page=account'
-
         }
 
     }
@@ -1003,7 +999,7 @@ if(isset($_GET['search'])) $search_text = "";
                     else if($.isNumeric(data)==true && data==1){
                         $('#done_login').addClass("hide");
                         $('#done_login_msg').removeClass("hide");
-                        $('.language-menu').html('<a href="index.php?page=account" class="current-lang" id="my_acc"><i class="fa fa-user" aria-hidden="true" ></i> My Account</a>');
+                        $('.language-menu').html('<a href="'+project_url+'index.php?page=account" class="current-lang" id="my_acc"><i class="fa fa-user" aria-hidden="true" ></i> My Account</a>');
                         if($('#islogged_in').length > 0 ){
                             $('#islogged_in').val(1);
                             $('.logged_in_already').addClass('hide');

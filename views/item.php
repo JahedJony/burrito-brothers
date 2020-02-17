@@ -555,7 +555,7 @@ if(isset($_GET['order_id']) && $_GET['order_id']!="") $order_id =  $_GET['order_
     })
 
     addToCart = function addToCart(){
-        //alert('sdf')
+        //alert(project_url)
         //alert(Object.keys(selected_item_list).length)
 
 
@@ -594,6 +594,7 @@ if(isset($_GET['order_id']) && $_GET['order_id']!="") $order_id =  $_GET['order_
                     special_instruction: $('#special_instruction').val()
                 },
                 success: function(data) {
+
                     $('#cart_confirmation').modal()
                 }
             });

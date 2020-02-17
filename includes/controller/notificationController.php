@@ -1,6 +1,5 @@
 <?php 
 session_start();
-include '../includes/static_text.php';
 include("../dbConnect.php");
 include("../dbClass.php");
 
@@ -11,45 +10,42 @@ $loggedUser = $dbClass->getUserId();
 extract($_REQUEST);
 
 switch ($q){
-	/*
+	
 	case "insert_notification":		
-		//var_dump($_REQUEST);die;
+		/* $stock_alert_product = $dbClass->getResultlist("SELECT r.id, r.stock_quantity, CONCAT(p.name,' >>',s.name) p_name 
+														FROM product_rate r 
+														LEFT JOIN products p ON p.product_id = r.product_id
+														LEFT JOIN size s ON s.id = r.size_id
+														WHERE p.sell_from_stock = 1 AND
+														(
+															SELECT ss.stock_alert_quantity 
+															FROM settings ss 
+															WHERE r.stock_quantity <= ss.stock_alert_quantity
+														)");  
 		
-		if(isset($customer_name) && $customer_name != ''){
-			$return_noti = $dbClass->insert_notification(NULL, $details, 0, $customer_id, $notification_type);
-			if($return_noti) echo "1";
-			else             echo "0";	
-		}
-		if(isset($customer_group_select) && $customer_group_select != ''){
-			foreach($customer_group_select as $group_id){
-				$group_members  = $dbClass->getResultList("SELECT c.customer_id 
-														FROM customer_infos c 
-														LEFT JOIN customer_group_member m ON m.customer_id = c.customer_id
-														LEFT JOIN customer_group g ON g.id = m.group_id
-														WHERE m.`status` = 1 AND g.id = $group_id"); 
-				foreach($group_members as $id){
-					$return_noti = $dbClass->insert_notification(NULL, $details, 0, $id['customer_id'], $notification_type);	
-				}														
+		foreach($stock_alert_product as $row){
+			
+			$unread_notification = $dbClass->getSingleRow("SELECT * FROM notification n WHERE n.`status` = 0 AND n.product_rate_id = '".$row['id']."'"); 
+			//var_dump($unread_notification);die;
+			if(empty($unread_notification)){
+				$columns_value = array(
+					'product_rate_id'=>$row['id'],
+					'details'=>'Add <b>'.$row['p_name'].'</b> in Stock.'
+				);			
+				$return = $dbClass->insert("notification", $columns_value);		
 			}
-			if($return_noti) echo "1";
-			else             echo "0"; 
-		}
+		} */
 		
 	break;
-	*/
+	
 	case "load_notifications":
-		if(isset($n_type) && $n_type == 'all'){
-			$con = '';
-		}else{
-			$con = ' WHERE nt.notification_user_type = 1 ';
-		}
 		$start = ($page_no*$limit)-$limit;
 		$end   = $limit;		
-		$total_unread_notification  = $dbClass->getSingleRow("SELECT count(id) unread FROM notification nt where nt.status=0 and nt.notification_user_type = 1");  
+		$total_unread_notification  = $dbClass->getSingleRow("SELECT count(id) unread FROM notification nt where nt.status=0 and nt.notified_to = $customer_id");  
 		$data['total_unread']       = $total_unread_notification['unread'];					
 		$sql = "SELECT nt.id, nt.order_id, nt.status, nt.details, date_time
 				FROM notification nt
-				$con
+				WHERE nt.notification_user_type = 0 and nt.notified_to = $customer_id
 				ORDER BY nt.status, nt.id DESC
 				limit $start, $end";	
 		//echo $sql;die;
@@ -63,7 +59,7 @@ switch ($q){
 	break;
 	
 	case "load_notifications_no":
-		$total_unread_notification  = $dbClass->getSingleRow("SELECT count(id) unread FROM notification nt where nt.status=0 and nt.notification_user_type = 1");  
+		$total_unread_notification  = $dbClass->getSingleRow("SELECT count(id) unread FROM notification nt where nt.status=0 and nt.notified_to = $customer_id");  
 		$data['total_unread']       = $total_unread_notification['unread'];	
 		$data['nofication_details_message'] = "";
 		if($data['total_unread']>0){

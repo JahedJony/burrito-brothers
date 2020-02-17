@@ -118,11 +118,11 @@
             '                        <div class="shop-product" style="border-radius: 15px 15px 0px 0px; padding-bottom: 0px; margin-bottom: 0px">\n' +
             '                            <img src="admin/'+data['photo']+'" alt="" style="border-radius: 17px 17px 0px 0px">\n' +
             '                        <div style=" padding-top: 8px; padding-bottom: 8px; border-radius: 0px 0px 17px 17px">\n' +
-            '                             <a href="index.php?page=menu&category='+ name+'"><h5 style="text-transform: uppercase">'+ data['name']+'</h5></a>' +
+            '                             <a href="'+project_url+'index.php?page=menu&category='+ name+'"><h5 style="text-transform: uppercase">'+ data['name']+'</h5></a>' +
             '                        </div>\n'+
             '                            <div class="cart-overlay-wrap" style="border-radius: 17px 17px 17px 17px">\n' +
             '                                <div class="cart-overlay" >\n' +
-            '                                    <a href="index.php?page=menu&category='+ name+'" class="shop-cart-btn">Choose Menu</a>\n' +
+            '                                    <a href="'+project_url+'index.php?page=menu&category='+ name+'" class="shop-cart-btn">Choose Menu</a>\n' +
             '                                </div>\n' +
             '                            </div>\n' +
             '                        </div>' +

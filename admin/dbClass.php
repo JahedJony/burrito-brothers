@@ -299,7 +299,11 @@ class dbClass {
 			echo "Insert:Error: " . $e->getMessage();
 		}		
 	}
-	
+    //email function
+    function send_mail($to_mail, $subject, $message){
+        //echo "mail function";die;
+        mail($to_mail,$subject,$message);
+    }
 	
 }
 

@@ -12,7 +12,7 @@ if(isset($_SESSION['customer_id']) && $_SESSION['customer_id']!=""){
 else {
     ?>
     <script>
-        window.location.href = "index.php";
+        window.location.href = project_url+"index.php";
     </script>
     <?php
 }

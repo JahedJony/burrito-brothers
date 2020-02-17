@@ -360,7 +360,7 @@ textarea{height:175px;padding:25px 30px;width:100%;border:2px solid #e5e5ee;-web
 .menu-main li{list-style:none;float:left;width:auto;font-size:15px;margin-right:25px;position:relative;}
 .menu-main li:last-child{margin-right:0px;}
 .menu-main li a{display:block;position:relative;padding:15px 0 15px 5px;color:#ffffff;}
-.menu-main>ul>li>a:before{content:"•";position:absolute;top:50%;-webkit-transform:translateY(-50%);-moz-transform:translateY(-50%);-ms-transform:translateY(-50%);-o-transform:translateY(-50%);transform:translateY(-50%);color:#e4b95b;left:0px;}
+.menu-main>ul>li>a:before{content:"";position:absolute;top:50%;-webkit-transform:translateY(-50%);-moz-transform:translateY(-50%);-ms-transform:translateY(-50%);-o-transform:translateY(-50%);transform:translateY(-50%);color:#e4b95b;left:0px;}
 .drop-nav-arrow{display:none;}
 .menu-main li.mega-menu{position:static;}
 .mega-title{color:#20202f;font-size:18px;font-family:'GraviolaSoft-Medium';display:block;margin-bottom:25px;}

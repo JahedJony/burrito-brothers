@@ -1,6 +1,6 @@
-<?php 
+<?php
 session_start();
-include '../dbConnect.php';	
+include '../dbConnect.php';
 include("../dbClass.php");
 
 $dbClass = new dbClass;
@@ -99,9 +99,9 @@ switch ($q){
         //$_SESSION['cart']='';
         $data['records'] = $cart;
         //echo 1;die;
-    //var_dump($data);
+        //var_dump($data);
         echo json_encode($data);
-    break;
+        break;
 
 
     case "viewCartSummery":
@@ -110,7 +110,7 @@ switch ($q){
         else 													 $cart = $_SESSION['cart'];
         $data['records'] = $cart;
         echo json_encode($data);
-    break;
+        break;
 
     case "viewPriceSummery":
         $tax = $dbClass->getSingleRow("Select tax_type, tax_amount, tax_enable from general_settings where id=1");
@@ -154,7 +154,7 @@ switch ($q){
             $data['tax_amount']= 0;
         }
         echo  json_encode($data);
-    break;
+        break;
 
     case "removeFromCart":
         if(!isset($_SESSION['cart']) || empty($_SESSION['cart']))$cart = array();
@@ -167,7 +167,7 @@ switch ($q){
         $_SESSION['cart']= $cart;
         $data['records'] = $cart;
         echo json_encode($data);
-    break;
+        break;
 
 
     case "update_cart":
@@ -199,7 +199,7 @@ switch ($q){
             echo json_encode($_SESSION['cart']);die;
             echo 1;
         }
-    break;
+        break;
 
 
     case "apply_cupon":
@@ -221,7 +221,7 @@ switch ($q){
                 $cupon_info = $dbClass->getSingleRow("select c_type,amount,min_order_amount from cupons where status=1 and ((cupon_no='$cupon_code' and customer_id = ".$_SESSION['customer_id'].") or cupon_no='$cupon_code' and customer_id is null) and (DATE_FORMAT(start_date, '%Y-%m-%d') <= '$date' AND DATE_FORMAT(end_date, '%Y-%m-%d') >= '$date')");
             }
             else{
-               // echo ("select c_type,amount from cupons where status=1 and cupon_no='$cupon_code' and customer_id is null and(DATE_FORMAT(start_date, '%Y-%m-%d') <= '$date' AND DATE_FORMAT(end_date, '%Y-%m-%d') >= '$date')"); die;
+                // echo ("select c_type,amount from cupons where status=1 and cupon_no='$cupon_code' and customer_id is null and(DATE_FORMAT(start_date, '%Y-%m-%d') <= '$date' AND DATE_FORMAT(end_date, '%Y-%m-%d') >= '$date')"); die;
                 $cupon_info = $dbClass->getSingleRow("select c_type,amount,min_order_amount from cupons where status=1 and cupon_no='$cupon_code' and customer_id is null and(DATE_FORMAT(start_date, '%Y-%m-%d') <= '$date' AND DATE_FORMAT(end_date, '%Y-%m-%d') >= '$date')");
             }
             //echo($cupon_info);die;
@@ -255,13 +255,13 @@ switch ($q){
             }
         }
 
-    break;
+        break;
 
 
     case "checkout":
-		//var_dump($_REQUEST);die;
-			
-		if(!isset($_SESSION['cart']) || empty($_SESSION['cart']) || empty($_SESSION['customer_id']) || $_SESSION['customer_id']=="" ){echo "0"; die;}
+        //var_dump($_REQUEST);die;
+
+        if(!isset($_SESSION['cart']) || empty($_SESSION['cart']) || empty($_SESSION['customer_id']) || $_SESSION['customer_id']=="" ){echo "0"; die;}
         else 	$cart = $_SESSION['cart'];
 
         //------------ generate invoice no  -------------------
@@ -283,7 +283,7 @@ switch ($q){
         //-----------------------------------------------------
 
 
-        if(isset($_SESSION['group_master'])){			
+        if(isset($_SESSION['group_master'])){
             $price = 0;
             foreach($cart as $key=>$item){
                 $price+=(float)$item['discounted_rate']*(int)$item['quantity'];
@@ -330,14 +330,14 @@ switch ($q){
                 'group_order_details_id'=>0
             );
         }
-       
+
         if(isset($_SESSION['cupon_code']) || !empty($_SESSION['cupon_code'])){
             $columns_value['cupon_id'] 			= $_SESSION['cupon_code'];
             $columns_value['discount_amount']	= $_SESSION['total_discounted_amount'];
         }
 
         $paid = 0; // not paid
-      
+
         if(!isset($_SESSION['group_master']) ) {
             if ($total_paid_amount) {
 
@@ -350,7 +350,7 @@ switch ($q){
         }
         $return_master = $dbClass->insert("order_master", $columns_value);
 
-       //var_dump($return_master);
+        //var_dump($return_master);
         if(isset($_SESSION['group_master']) ){
             //SET Notification for group order
 
@@ -368,15 +368,15 @@ switch ($q){
         //echo $return_master; die;
         if($return_master){
 
-			
-			/* *********************************   notification Start       ************************* */
-			
-			//notification for group & single order			
 
-			if(isset($_SESSION['group_master']) ){
-				//SET Notification for group order
-				//notfication to customer who created group order not admin
-				// mr chaki select his items
+            /* *********************************   notification Start       ************************* */
+
+            //notification for group & single order
+
+            if(isset($_SESSION['group_master']) ){
+                //SET Notification for group order
+                //notfication to customer who created group order not admin
+                // mr chaki select his items
                 //
 
                 $t_sql = "SELECT go.customer_id from  
@@ -386,38 +386,38 @@ switch ($q){
                 //echo $t_sql; die;
 
 
-				$customer_id_group = $dbClass->getSingleRow($t_sql);
-				//echo json_encode($customer_id_group);
+                $customer_id_group = $dbClass->getSingleRow($t_sql);
+                //echo json_encode($customer_id_group);
                 //die;
 
                 //extract($customer_id_group);
                 $c_sql ="SELECT full_name FROM customer_infos WHERE customer_id = ".$customer_id_group['customer_id'];
                 //echo $c_sql; die;
-				$group_customer_name = $dbClass->getSingleRow($c_sql);
-				//extract($group_customer_name);
-				//echo json_encode($group_customer_name);
-				//die;
+                $group_customer_name = $dbClass->getSingleRow($c_sql);
+                //extract($group_customer_name);
+                //echo json_encode($group_customer_name);
+                //die;
                 //echo $group_customer_name['full_name']; die;
-				$details = "".ucfirst($group_customer_name['full_name'])." select his items";
-				$return_notifiction = $dbClass->insert_notification($return_master, $details, 0, $customer_id_group['customer_id']);
-			}
-			else{
-				//set single notification details
-				//$invoice_no = $dbClass->getSingleRow("SELECT invoice_no from order_master WHERE order_id = $return_master");
-				$customer_name = $dbClass->getSingleRow("SELECT full_name FROM customer_infos WHERE customer_id = '".$_SESSION['customer_id']."'");
-				//extract($invoice_no);
-				$details = "".ucfirst($customer_name['full_name'])." Placed an Order (".$invoice_no.")";	
-				$return_notifiction = $dbClass->insert_notification($return_master, $details, 1, NULL);	
-			}
-			
-			//insert_notification function 
-			//param: order_id (int), 
-			//details (text), 
-			//notification_user_type (int) : 0=customer, 1: admin, 
-			//notified_to (int) : make notified_to null if notified target user type = admin	
-			
-			
-			/* *********************************   notification END       ************************* */
+                $details = "".ucfirst($group_customer_name['full_name'])." select his items";
+                $return_notifiction = $dbClass->insert_notification($return_master, $details, 0, $customer_id_group['customer_id']);
+            }
+            else{
+                //set single notification details
+                //$invoice_no = $dbClass->getSingleRow("SELECT invoice_no from order_master WHERE order_id = $return_master");
+                $customer_name = $dbClass->getSingleRow("SELECT full_name FROM customer_infos WHERE customer_id = '".$_SESSION['customer_id']."'");
+                //extract($invoice_no);
+                $details = "".ucfirst($customer_name['full_name'])." Placed an Order (".$invoice_no.")";
+                $return_notifiction = $dbClass->insert_notification($return_master, $details, 1, NULL);
+            }
+
+            //insert_notification function
+            //param: order_id (int),
+            //details (text),
+            //notification_user_type (int) : 0=customer, 1: admin,
+            //notified_to (int) : make notified_to null if notified target user type = admin
+
+
+            /* *********************************   notification END       ************************* */
 
 
 
@@ -567,9 +567,9 @@ switch ($q){
                         $body 	 = '';
 
                         $headers = 'From: ' . $from . "\r\n" .
-                                'Reply-To: ' . $from . "\r\n" .
-                                'Content-type: text/html; charset=iso-8859-1' . "\r\n" .
-                                'X-Mailer: PHP/' . phpversion();
+                            'Reply-To: ' . $from . "\r\n" .
+                            'Content-type: text/html; charset=iso-8859-1' . "\r\n" .
+                            'X-Mailer: PHP/' . phpversion();
 
                         $body .= "
                             <link rel='stylesheet' type='text/css' href='http://mbrotherssolution.com/CnC/plugin/bootstrap/bootstrap.css'>
@@ -609,25 +609,25 @@ switch ($q){
                                                     </tr>
                                                 </thead>
                                                 <tbody>";
-                                            $order_info_arr = explode(',', $order_info);
-                                            $order_total = 0;
-                                            foreach($order_info_arr as $key=>$item_details){
-                                                $item_details_arr = explode('#', $item_details);
-                                                $total = ($item_details_arr[7]*$item_details_arr[6]);
-                                                $body .= "<tr><td>".$item_details_arr[2]."</td><td align='left'>".$item_details_arr[4]."</td><td align='center'>".$item_details_arr[7]."</td><td align='right'>".$item_details_arr[6]."</td><td align='right'>".number_format($total,2)."</td></tr>";
-                                                $order_total += $total;
-                                            }
+                        $order_info_arr = explode(',', $order_info);
+                        $order_total = 0;
+                        foreach($order_info_arr as $key=>$item_details){
+                            $item_details_arr = explode('#', $item_details);
+                            $total = ($item_details_arr[7]*$item_details_arr[6]);
+                            $body .= "<tr><td>".$item_details_arr[2]."</td><td align='left'>".$item_details_arr[4]."</td><td align='center'>".$item_details_arr[7]."</td><td align='right'>".$item_details_arr[6]."</td><td align='right'>".number_format($total,2)."</td></tr>";
+                            $order_total += $total;
+                        }
 
-                                            $total_order_bill = $order_total-$discount_amount;
-                                            $total_paid 	  = $total_paid_amount;
-                                            $body .= '<tr><td colspan="4" align="right" ><b>Total Product Bill</b></td><td align="right"><b>'.number_format($order_total ,2).'</b></td></tr>';
-                                            $body .= '<tr><td colspan="4" align="right" ><b>Discount Amount</b></td><td align="right"><b>'.number_format($discount_amount,2).'</b></td></tr>';
-                                            $body .= '<tr><td colspan="4" align="right" ><b>Total Order Bill</b></td><td align="right"><b>'.number_format($total_order_bill,2).'</b></td></tr>';
-                                            $body .= '<tr><td colspan="4" align="right" ><b>Delivery Charge</b></td><td align="right"><b>'.number_format($delivery_charge,2).'</b></td></tr>';
-                                            $body .= '<tr><td colspan="4" align="right" ><b>Total Paid</b></td><td align="right"><b>'.number_format($total_paid,2).'</b></td></tr>';
-                                            $body .= '<tr><td colspan="4" align="right" ><b>Balance</b></td><td align="right"><b>'.number_format((($total_order_bill+$delivery_charge)-$total_paid),2).'</b></td></tr>';
+                        $total_order_bill = $order_total-$discount_amount;
+                        $total_paid 	  = $total_paid_amount;
+                        $body .= '<tr><td colspan="4" align="right" ><b>Total Product Bill</b></td><td align="right"><b>'.number_format($order_total ,2).'</b></td></tr>';
+                        $body .= '<tr><td colspan="4" align="right" ><b>Discount Amount</b></td><td align="right"><b>'.number_format($discount_amount,2).'</b></td></tr>';
+                        $body .= '<tr><td colspan="4" align="right" ><b>Total Order Bill</b></td><td align="right"><b>'.number_format($total_order_bill,2).'</b></td></tr>';
+                        $body .= '<tr><td colspan="4" align="right" ><b>Delivery Charge</b></td><td align="right"><b>'.number_format($delivery_charge,2).'</b></td></tr>';
+                        $body .= '<tr><td colspan="4" align="right" ><b>Total Paid</b></td><td align="right"><b>'.number_format($total_paid,2).'</b></td></tr>';
+                        $body .= '<tr><td colspan="4" align="right" ><b>Balance</b></td><td align="right"><b>'.number_format((($total_order_bill+$delivery_charge)-$total_paid),2).'</b></td></tr>';
 
-                                    $body .= "										
+                        $body .= "										
                                                 </tbody>
                                             </table>
                                             <p>Note: <span id='note_vw'>$remarks</span></p>
@@ -649,7 +649,7 @@ switch ($q){
             }
         }
         else echo "0";
-    break;
+        break;
 
     case "placeGroupOrder":
 
@@ -675,7 +675,7 @@ switch ($q){
                 WHERE m.invoice_no= '$order_id'
                 GROUP BY d.order_id
                 ORDER BY m.order_id";
-    	//echo $sql;die;
+        //echo $sql;die;
         $stmt = $conn->prepare($sql);
         $stmt->execute();
         $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -684,7 +684,7 @@ switch ($q){
         }
         echo json_encode($data);
 
-    break;
+        break;
 
 
 
@@ -701,84 +701,84 @@ switch ($q){
         }
         echo json_encode($data);
 
-    break;
+        break;
 
     case "insert_or_update":
-            if(isset($customer_id) && $customer_id != ""){
-                $is_active=0;
-                if(isset($_POST['is_active'])){
-                    $is_active=1;
-                }
+        if(isset($customer_id) && $customer_id != ""){
+            $is_active=0;
+            if(isset($_POST['is_active'])){
+                $is_active=1;
+            }
 
-                $columns_value = array(
-                    'full_name'=>$customer_name,
-                    'email'=>$email,
-                    'address'=>$address,
-                    'age'=>$age,
-                    'contact_no'=>$contact_no,
-                    'email'=>$email,
-                    'status'=>$is_active
-                );
-                if($age != "" && $age != "0000-00-00"){
-                    $dob = date("Y-m-d", strtotime($age));
-                    $columns_value['age'] = $dob;
-                }
+            $columns_value = array(
+                'full_name'=>$customer_name,
+                'email'=>$email,
+                'address'=>$address,
+                'age'=>$age,
+                'contact_no'=>$contact_no,
+                'email'=>$email,
+                'status'=>$is_active
+            );
+            if($age != "" && $age != "0000-00-00"){
+                $dob = date("Y-m-d", strtotime($age));
+                $columns_value['age'] = $dob;
+            }
 
-                if(isset($_POST['remarks']))
-                    $columns_value['remarks'] = $remarks;
+            if(isset($_POST['remarks']))
+                $columns_value['remarks'] = $remarks;
 
-                if(isset($_FILES['customer_image_upload']) && $_FILES['customer_image_upload']['name']!= ""){
-                    $desired_dir = "../../admin/images/customer";
-                    chmod( "../../admin/images/customer", 0777);
-                    $file_name = $_FILES['customer_image_upload']['name'];
-                    $file_size =$_FILES['customer_image_upload']['size'];
-                    $file_tmp =$_FILES['customer_image_upload']['tmp_name'];
-                    $file_type=$_FILES['customer_image_upload']['type'];
-                    if($file_size < 5297152){
-                        if(file_exists("$desired_dir/".$file_name)==false){
-                            if(move_uploaded_file($file_tmp,"$desired_dir/".$file_name))
-                                $photo = "$file_name";
-                        }
-                        else{//rename the file if another one exist
-                            $new_dir="$desired_dir/".time().$file_name;
-                            if(rename($file_tmp,$new_dir))
-                                $photo =time()."$file_name";
-                        }
-                        $photo  = "/images/customer/".$photo;
+            if(isset($_FILES['customer_image_upload']) && $_FILES['customer_image_upload']['name']!= ""){
+                $desired_dir = "../../admin/images/customer";
+                chmod( "../../admin/images/customer", 0777);
+                $file_name = $_FILES['customer_image_upload']['name'];
+                $file_size =$_FILES['customer_image_upload']['size'];
+                $file_tmp =$_FILES['customer_image_upload']['tmp_name'];
+                $file_type=$_FILES['customer_image_upload']['type'];
+                if($file_size < 5297152){
+                    if(file_exists("$desired_dir/".$file_name)==false){
+                        if(move_uploaded_file($file_tmp,"$desired_dir/".$file_name))
+                            $photo = "$file_name";
                     }
-                    else {
-                        echo "Image size is too large!";die;
+                    else{//rename the file if another one exist
+                        $new_dir="$desired_dir/".time().$file_name;
+                        if(rename($file_tmp,$new_dir))
+                            $photo =time()."$file_name";
                     }
-                    $columns_value['photo'] = $photo;
+                    $photo  = "/images/customer/".$photo;
                 }
+                else {
+                    echo "Image size is too large!";die;
+                }
+                $columns_value['photo'] = $photo;
+            }
 
-                if($password != "" && $new_password != ""){
-                    $old_password =  $dbClass->getResultList("SELECT password FROM customer_infos WHERE customer_id=$customer_id");
-                    if(md5($password) == $old_password[0]){
-                        $columns_value['password'] = md5($new_password);
-                    }
-                    else{
-                        echo "3";die;
-                    }
+            if($password != "" && $new_password != ""){
+                $old_password =  $dbClass->getResultList("SELECT password FROM customer_infos WHERE customer_id=$customer_id");
+                if(md5($password) == $old_password[0]){
+                    $columns_value['password'] = md5($new_password);
                 }
+                else{
+                    echo "3";die;
+                }
+            }
 
             //	var_dump($columns_value);
             //	die;
-                $condition_array = array(
-                    'customer_id'=>$customer_id
-                );
-                $return = $dbClass->update("customer_infos", $columns_value, $condition_array);
+            $condition_array = array(
+                'customer_id'=>$customer_id
+            );
+            $return = $dbClass->update("customer_infos", $columns_value, $condition_array);
 
-                if($return) echo "2";
-                else 	echo "0";
-            }
-            else
-                echo "0";
+            if($return) echo "2";
+            else 	echo "0";
+        }
+        else
+            echo "0";
 
         break;
 
 
-	case "get_settings_details":
+    case "get_settings_details":
         //echo '1'; die;
         $general_settings = $dbClass->getResultList("SELECT *
 												FROM general_settings s
@@ -788,7 +788,7 @@ switch ($q){
             $data['records'][] = $row;
         }
         echo json_encode($data);
-    break;
+        break;
 
 
 //this portion will remove while final submission......
@@ -894,7 +894,7 @@ switch ($q){
 
 
         }
-    //echo json_encode($items_id); die;
+        //echo json_encode($items_id); die;
         break;
 
 
@@ -914,10 +914,9 @@ switch ($q){
             $data['records'][] = $row;
         }
         echo json_encode($data['records'][0]);
-    break;
+        break;
 
 }
-
 
 
 

@@ -83,14 +83,14 @@
             '                                </div>\n' +
             '                            </div>\n' +
             '                        </div>\n' +
-            '                                <a href="index.php?page=item&id='+ data['item_id']+'"><h5 class="text-capitalize">'+ data['name']+' <span style="color: white">'+ currency_symbol+''+data['rate']+'</span></h5></a>\n' +
+            '                                <a href="'+project_url+'index.php?page=item&id='+ data['item_id']+'"><h5 class="text-capitalize">'+ data['name']+' <span style="color: white">'+ currency_symbol+''+data['rate']+'</span></h5></a>\n' +
             '                    </div>\n' +
             '                </div>\n'
 
 
         var html='<div class="col-md-6 col-sm-6 col-xs-12 isotope-item breakfast">\n' +
             '         <div class="menu-list" '+width+'>\n' +
-            '              <a href="index.php?page=item&id='+ data['item_id']+'">' +
+            '              <a href="'+project_url+'index.php?page=item&id='+ data['item_id']+'">' +
             '              <span class="menu-list-product" style="'+ item_image_display +'">\n' +
             '                <img  src="'+ project_url+'admin/'+data['photo']+'" onclick="cart('+data['item_id']+','+data['rate_id']+')" alt="" style="">\n' +
             '              </span>\n' +

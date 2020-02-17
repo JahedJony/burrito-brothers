@@ -12,45 +12,34 @@ extract($_REQUEST);
 
 switch ($q){
 	
-	case "insert_or_update_mail":
-		
+	case "insert_or_update":
+		//var_dump($_REQUEST);die;
 		if(isset($master_id) && $master_id == ""){
 
 			$columns_value = array(
-				'group_name'=>$group_name,
-				'status'=>$is_active
+				'type'=>$type,
+				'title'=>$title,
+				'details'=>$details,
+				'dynamic_variables'=>$dynamic_variables,
 			);
-			$return = $dbClass->insert("customer_group", $columns_value);
+			$return = $dbClass->insert("template", $columns_value);
 
-			if($return){
-				$customer_result = $dbClass->getResultList("select customer_id from customer_infos");
-				foreach($customer_result as $row){
-					$columns_value = array(
-						'group_id'=>$return,
-						'customer_id'=>$row['customer_id'],
-						'status'=>0
-					);
-					$return_group_member = $dbClass->insert("customer_group_member",$columns_value);
-				}
-			}
-			if($return_group_member) echo "1";	
-			else 					 echo "0";
+			if($return) echo "1";	
+			else 		echo "0";
 		}
 		//update
-		else if(isset($group_id) && $group_id>0){
+		else if(isset($master_id) && $master_id>0){
 			//var_dump($_POST);die;
-			$is_active = 0;
-			if(isset($_POST['is_active'])){
-				$is_active = 1;
-			}
 			$columns_value = array(
-				'group_name'=>$group_name,
-				'status'=>$is_active
+				'type'=>$type,
+				'title'=>$title,
+				'details'=>$details,
+				'dynamic_variables'=>$dynamic_variables,
 			);
 			$condition_array = array(
-				'id'=>$group_id
+				'id'=>$master_id
 			);
-			$return = $dbClass->update("customer_group",$columns_value, $condition_array);
+			$return = $dbClass->update("template",$columns_value, $condition_array);
 			if($return) echo "2";
 			else        echo "0";
 			 
@@ -59,49 +48,40 @@ switch ($q){
 	break;
 	
 	
-	case "group_grid_data":
+	case "grid_data":
 		$start = ($page_no*$limit)-$limit;
         $end   = $limit;
         $data = array();
-        $employee_grid_permission   = $dbClass->getUserGroupPermission(15);
-        $entry_permission   	   	= $dbClass->getUserGroupPermission(10);
 
         $condition = "";
         //# advance search for grid        
-        $condition .=	" WHERE CONCAT(c.customer_id, c.full_name) LIKE '%$search_txt%' ";
+        $condition =	" WHERE CONCAT(title, details) LIKE '%$search_txt%' ";
         
-        $countsql = "SELECT COUNT(c.customer_id) FROM customer_infos c $condition";
+        $countsql = "SELECT COUNT(id) FROM template $condition";
         $stmt = $conn->prepare($countsql);
         $stmt->execute();
         $total_records = $stmt->fetchColumn();
         $data['total_records'] = $total_records;
-        $data['entry_status'] = $entry_permission;
         $total_pages = $total_records/$limit;
         $data['total_pages'] = ceil($total_pages);
-        if($employee_grid_permission==1 || $permission_grid_permission==1){
-            $sql = "SELECT c.customer_id, c.full_name, c.photo,
-					(CASE c.status when 1 then 'Active' when 0 then 'Blocked' end) active_status,
-					$employee_grid_permission as permission_status, $entry_permission as update_status,	$entry_permission as delete_status
-					FROM customer_infos c
-					LEFT JOIN customer_group_member gm on c.customer_id = gm.customer_id
-					LEFT JOIN customer_group g ON g.id = gm.group_id
-					$condition  
-					GROUP BY c.customer_id 
-					ORDER BY c.status DESC, customer_id ASC limit $start, $end";
-					//echo $sql;die;
-            $stmt = $conn->prepare($sql);
-            $stmt->execute();
-            $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
-            foreach ($result as $row) {
-                $data['records'][] = $row;
-            }
-            echo json_encode($data);
-        }
+		$sql = "SELECT id, title, details, type,
+				(CASE type WHEN 1 THEN 'Notice' WHEN 2 THEN 'Email' END) type_text	
+				FROM template
+				$condition   
+				ORDER BY id ASC limit $start, $end";
+				//echo $sql;die;
+		$stmt = $conn->prepare($sql);
+		$stmt->execute();
+		$result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+		foreach ($result as $row) {
+			$data['records'][] = $row;
+		}
+		echo json_encode($data);
     break;	
 	
-	case "get_group_details":
+	case "get_template_details":
 		//var_dump($_POST);die;
-		$sql = "select * from customer_group where id=$group_id";
+		$sql = "select * from template where id = $template_id";
 		$stmt = $conn->prepare($sql);
 		$stmt->execute();
 		$result = $stmt->fetchAll(PDO::FETCH_ASSOC);	
@@ -124,6 +104,24 @@ switch ($q){
         echo json_encode($data);
     break;
 	
+	
+	case "templateInfo":
+        $sql ="SELECT id, title, details FROM template WHERE title LIKE '%$term%' ORDER BY id";
+        $stmt = $conn->prepare($sql);
+        $stmt->execute();
+        $json = array();
+        $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        $count = $stmt->rowCount();
+
+        if($count>0){
+            foreach ($result as $row) {
+                $json[] = array('id' => $row["id"],'label' => $row["title"],'details' => $row['details']);
+            }
+        } else {
+            $json[] = array('id' => "0",'label' => "No name available !!!");
+        }
+        echo json_encode($json);
+     break;
 	
 }
 ?>

@@ -114,6 +114,16 @@ if($q=="registration"){
 
 
     if($return) {
+        /* need to add chaki start */
+        $common_group_id = $dbClass->getSingleRow("SELECT id FROM customer_group WHERE group_name = 'All'");
+        $columns_value = array(
+            'group_id'=>$common_group_id['id'],
+            'customer_id'=>$return,
+            'status'=>1
+        );
+        $dbClass->insert("customer_group_member", $columns_value);
+        /* need to add chaki end */
+
         $query="select customer_id, full_name, password, email from customer_infos WHERE (customer_id= '".$return."')";
         $stmt = $conn->prepare($query);
         $stmt->execute();

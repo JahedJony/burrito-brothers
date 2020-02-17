@@ -19,7 +19,7 @@ if(isset($_GET['order_id']) && $_GET['order_id']!="") $order_id =  $_GET['order_
 
 //var_dump($customer_info);
 if(!isset($_SESSION['cart']) || !count($_SESSION['cart'])>0) {
-    echo'<script> window.location="index.php?page=categories"; </script> ';
+    echo'<script> window.location=project_url+"index.php?page=categories"; </script> ';
 }
 ?>
 
@@ -550,7 +550,7 @@ general_settings = function general_settings(){
                             '  </div>'
                     }
                     if(data.card_payment==1){
-                        html+='<div class="payment-mode">\n' +                      
+                        html+='<div class="payment-mode">\n' +
                             '      <input type="radio" name="payment_method" value="3"  onclick="payment_check()"><label style="padding-left: 10px; padding-top: 10px;">Credit Card</label>'
                         if(data.payment_card_visa==1){
                             html+='<img src="./images/payments/visa.png" style="height: 30px">'
@@ -602,7 +602,8 @@ $("input[name='tips_percentage']").change(function(){
 
 $('#tips').on('change',function () {
     //alert('ok')
-    $('#tips_').html(currency_symbol+''+$('#tips').val())
+    //var tips_am =
+    $('#tips_').html(currency_symbol+''+parseFloat($('#tips').val()).toFixed(2))
 
     total_amt = parseFloat($('#total_order_amt').val())+parseFloat($('#tips').val())
     //alert(total_amt)
@@ -670,7 +671,7 @@ order_summary = function order_summary(){
                         $('#total_amount_').html(currency_symbol+''+parseFloat($('#total_paid_amount').val()).toFixed(2))
                         $('#loyalty_spend').html("("+Math.ceil(data['discounted_price']*loyalty_point_value)+" point will spend; you have "+loyalty_points+")" )
 
-                    }   
+                    }
                 }
             });
 
@@ -718,7 +719,7 @@ $('#login').click(function(event){
                             $('#islogged_in').val(1);
                             $('.logged_in_already').addClass('hide');
                         }
-                        window.location.href = "index.php?page=checkout";
+                        window.location.href = project_url+"index.php?page=checkout";
 
                     }
                 }
@@ -757,7 +758,7 @@ $('#foget_pass_submit_').click(function(event){
             });
         }
     })
-	
+
 // send mail if forget password
 $('#register_submit_').click(function(event){
     event.preventDefault();
@@ -804,7 +805,7 @@ $('#register_submit_').click(function(event){
                 else if($.isNumeric(data)==true && data==1){
                     $('.done_registration').addClass("hide");
                     $('.done_registration_msg').removeClass("hide");
-                    window.location.href = "index.php?page=checkout";
+                    window.location.href = project_url+"index.php?page=checkout";
                 }
                 else{
                     success_or_error_msg('#registration_submit_error_',"danger","Registration is not completed. please check your information again.","#cust_email" );

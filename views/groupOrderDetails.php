@@ -242,7 +242,7 @@ else{
         //alert($('#total_amt').html())
         if($('#total_amt').html()!=currency_symbol+"0.00"){
             //alert('sss')
-            window.location.href = "index.php?page=groupCheckout&id="+group_id
+            window.location.href = project_url+"index.php?page=groupCheckout&id="+group_id
         }
         else {
             //alert('sdf')

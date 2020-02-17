@@ -386,7 +386,7 @@ $('#login_submit').click(function(event){
 				else if($.isNumeric(data)==true && data==1){
 					$('#done_login').addClass("hide");
 					$('#done_login_msg').removeClass("hide");
-					$('.language-menu').html('<a href="index.php?page=account" class="current-lang" id="my_acc"><i class="fa fa-user" aria-hidden="true" ></i> My Account</a>');
+					$('.language-menu').html('<a href="'+project_url+'index.php?page=account" class="current-lang" id="my_acc"><i class="fa fa-user" aria-hidden="true" ></i> My Account</a>');
 					if($('#islogged_in').length > 0 ){
 						$('#islogged_in').val(1);
 						$('.logged_in_already').addClass('hide');
