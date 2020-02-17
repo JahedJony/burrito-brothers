@@ -337,7 +337,7 @@ $('#cust_username_').on('change', function () {
     //alert(username)
 
     $.ajax({
-        url: "./includes/controller/customerController.php",
+        url: project_url+"includes/controller/customerController.php",
         dataType: "json",
         type: "post",
         async: false,
@@ -364,7 +364,7 @@ $('#cust_username_').on('change', function () {
 $('#cust_email_').on('change', function () {
     var userMail= $('#cust_email_').val();
     $.ajax({
-        url: "./includes/controller/customerController.php",
+        url: project_url+"includes/controller/customerController.php",
             dataType: "json",
             type: "post",
             async: false,
@@ -398,7 +398,7 @@ $('#coupon').on('change',function () {
     var coupon_code = $('#coupon').val();
     if(coupon_code !=""){
         $.ajax({
-            url: "./includes/controller/ecommerceController.php",
+            url: project_url+"includes/controller/ecommerceController.php",
             type:'POST',
             async:false,
             data: "q=apply_cupon&cupon_code="+coupon_code,
@@ -424,7 +424,7 @@ $('#coupon').on('change',function () {
 
 load_customer_profile = function load_customer_profile(id){
 $.ajax({
-		url:"./includes/controller/ecommerceController.php",
+		url:project_url+"includes/controller/ecommerceController.php",
 		dataType: "json",
 		type: "post",
 		async:false,
@@ -520,7 +520,7 @@ payments = function payments(){
 
 general_settings = function general_settings(){
     $.ajax({
-        url:"./includes/controller/ecommerceController.php",
+        url:project_url+"includes/controller/ecommerceController.php",
         dataType: "json",
         type: "post",
         async:false,
@@ -620,7 +620,7 @@ $('#tips').on('change',function () {
 
 order_summary = function order_summary(){
     $.ajax({
-        url: "./includes/controller/ecommerceController.php",
+        url: project_url+"includes/controller/ecommerceController.php",
         dataType: "json",
         type: "post",
         async:false,
@@ -644,7 +644,7 @@ order_summary = function order_summary(){
                 $('#cart_summary').html(html);
             }
             $.ajax({
-                url: "./includes/controller/ecommerceController.php",
+                url: project_url+"includes/controller/ecommerceController.php",
                 dataType: "json",
                 type: "post",
                 async:false,
@@ -697,7 +697,7 @@ $('#login').click(function(event){
         }
         else{
             $.ajax({
-                url: "./includes/controller/customerController.php",
+                url: project_url+"includes/controller/customerController.php",
                 type:'POST',
                 data:formData,
                 async:false,
@@ -736,7 +736,7 @@ $('#foget_pass_submit_').click(function(event){
         }
         else{
             $.ajax({
-                url: "./includes/controller/customerController.php",
+                url: project_url+"includes/controller/customerController.php",
                 type:'POST',
                 data:formData,
                 async:false,
@@ -786,7 +786,7 @@ $('#register_submit_').click(function(event){
     }
     else{
         $.ajax({
-            url: "./includes/controller/customerController.php",
+            url: project_url+"includes/controller/customerController.php",
             type:'POST',
             data:formData,
             async:false,
@@ -867,7 +867,7 @@ $('#checkout_submit').click(function(event) {
     }
     else{
         $.ajax({
-            url: "includes/controller/ecommerceController.php",
+            url: project_url+"includes/controller/ecommerceController.php",
             type:'POST',
             data:formData,
             async:false,

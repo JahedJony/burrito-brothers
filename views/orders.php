@@ -227,7 +227,7 @@ else{
 
         if(!order_id.includes("BBG")){
             $.ajax({
-                url:"./includes/controller/ecommerceController.php",
+                url:project_url+"includes/controller/ecommerceController.php",
                 type:'POST',
                 async:false,
                 dataType: "json",
@@ -278,7 +278,7 @@ else{
         }
         else {
             $.ajax({
-                url:"./includes/controller/groupController.php",
+                url:project_url+"includes/controller/groupController.php",
                 type:'POST',
                 async:false,
                 dataType: "json",

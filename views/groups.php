@@ -117,7 +117,7 @@ $customer_id = $_SESSION['customer_id'];
         group_id=id;
 
         $.ajax({
-            url: "./includes/controller/groupController.php",
+            url: project_url+"includes/controller/groupController.php",
             data:{
                 q: "group_details",
                 customer_id: customer_id,
@@ -151,7 +151,7 @@ $customer_id = $_SESSION['customer_id'];
         var html=''
 
         $.ajax({
-            url: "./includes/controller/groupController.php",
+            url: project_url+"includes/controller/groupController.php",
             data:{
                 q: "groups",
                 customer_id: customer_id
@@ -211,7 +211,7 @@ $customer_id = $_SESSION['customer_id'];
         else{
 
             $.ajax({
-                url: "./includes/controller/groupController.php",
+                url: project_url+"includes/controller/groupController.php",
                 type:'POST',
                 data:formData,
                 async:false,

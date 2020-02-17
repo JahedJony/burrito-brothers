@@ -266,7 +266,7 @@ else{
         //sessionStorage.setItem('returnPage','groupOrderDetails');
 
         $.ajax({
-            url: "./includes/controller/groupController.php",
+            url: project_url+"includes/controller/groupController.php",
             type: 'POST',
             async: false,
             dataType: "json",
@@ -287,7 +287,7 @@ else{
         group_id = order_id;
         $('#ord_detail_vw>table>tbody').html('');
         $.ajax({
-            url:"./includes/controller/groupController.php",
+            url:project_url+"includes/controller/groupController.php",
             type:'POST',
             async:false,
             dataType: "json",

@@ -1,7 +1,7 @@
 var currency_symbol=''
 
 $.ajax({
-    url:"./includes/controller/ecommerceController.php",
+    url:project_url+"includes/controller/ecommerceController.php",
     dataType: "json",
     type: "post",
     async:false,
@@ -23,7 +23,7 @@ function showCart(){
     }
     //alert('ok')
     $.ajax({
-        url: "./includes/controller/ecommerceController.php",
+        url: project_url+"includes/controller/ecommerceController.php",
         dataType: "json",
         type: "post",
         async:false,
@@ -64,7 +64,7 @@ function deleteItem(cart_key){
     //alert('ok')
     //alert(cart_key)
     $.ajax({
-        url: "./includes/controller/ecommerceController.php",
+        url: project_url+"includes/controller/ecommerceController.php",
         dataType: "json",
         type: "post",
         async:false,

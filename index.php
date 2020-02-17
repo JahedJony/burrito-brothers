@@ -987,7 +987,7 @@ if(isset($_GET['search'])) $search_text = "";
         }
         else{
             $.ajax({
-                url: "includes/controller/customerController.php",
+                url: project_url+"includes/controller/customerController.php",
                 type:'POST',
                 data:formData,
                 async:false,
@@ -1028,7 +1028,7 @@ if(isset($_GET['search'])) $search_text = "";
         }
         else{
             $.ajax({
-                url: "includes/controller/customerController.php",
+                url: project_url+"includes/controller/customerController.php",
                 type:'POST',
                 data:formData,
                 async:false,
@@ -1075,7 +1075,7 @@ if(isset($_GET['search'])) $search_text = "";
         }
         else{
             $.ajax({
-                url: "includes/controller/customerController.php",
+                url: project_url+"includes/controller/customerController.php",
                 type:'POST',
                 data:formData,
                 async:false,
@@ -1127,7 +1127,7 @@ if(isset($_GET['search'])) $search_text = "";
         }
         else{
             $.ajax({
-                url: "includes/controller/customerController.php",
+                url: project_url+"includes/controller/customerController.php",
                 type:'POST',
                 data:formData,
                 async:false,
@@ -1165,7 +1165,7 @@ if(isset($_GET['search'])) $search_text = "";
         }
         else{
             $.ajax({
-                url: "includes/controller/customerController.php",
+                url: project_url+"includes/controller/customerController.php",
                 type:'POST',
                 data:formData,
                 async:false,

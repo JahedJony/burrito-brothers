@@ -71,7 +71,7 @@
 <script>
     $(function () {
         $.ajax({
-            url:"./includes/controller/ecommerceController.php",
+            url:project_url+"includes/controller/ecommerceController.php",
             dataType: "json",
             type: "post",
             async:false,
@@ -117,7 +117,7 @@
         }
         else{
             $.ajax({
-                url: "./includes/controller/customerController.php",
+                url: project_url+"includes/controller/customerController.php",
                 type:'POST',
                 data:formData,
                 async:false,

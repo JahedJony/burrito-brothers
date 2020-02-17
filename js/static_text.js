@@ -15,7 +15,7 @@ var not_authentic_user = "You are not authenticated by system. Please type user 
 var item_image_display = "";
 
 
-var project_url="";
+var project_url="https://burritobrothers.test/";
 
 
 

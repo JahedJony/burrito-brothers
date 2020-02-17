@@ -2,20 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="289ea524-a539-47c6-a345-6f05b3774d37" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/admin/controller/customerGroupController.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/admin/view/notification/adminNotification.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/admin/view/notification/notification.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/admin/view/notification/notificationSend.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/admin/view/settings/customerGroup.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/admin/view/settings/customerGroupMember.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/admin/view/template/template.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/admin/controller/couponController.php" beforeDir="false" afterPath="$PROJECT_DIR$/admin/controller/couponController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/admin/controller/notificationController.php" beforeDir="false" afterPath="$PROJECT_DIR$/admin/controller/notificationController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/admin/dbClass.php" beforeDir="false" afterPath="$PROJECT_DIR$/admin/dbClass.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/admin/view/common_view/left_menu.php" beforeDir="false" afterPath="$PROJECT_DIR$/admin/view/common_view/left_menu.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/includes/controller/groupController.php" beforeDir="false" afterPath="$PROJECT_DIR$/includes/controller/groupController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/includes/dbClass.php" beforeDir="false" afterPath="$PROJECT_DIR$/includes/dbClass.php" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -43,7 +30,7 @@
   <component name="PropertiesComponent">
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/admin/view" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.detected.package.tslint" value="true" />
     <property name="node.js.path.for.package.eslint" value="project" />

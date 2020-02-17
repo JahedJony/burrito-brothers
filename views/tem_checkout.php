@@ -125,7 +125,7 @@
     function cartView(){
         //alert('ok')
         $.ajax({
-            url: "includes/controller/ecommerceController.php",
+            url: project_url+"includes/controller/ecommerceController.php",
             dataType: "json",
             type: "post",
             async:false,
@@ -201,7 +201,7 @@
         var cupon_code = $('#cupon_code').val();
         if(cupon_code !=""){
             $.ajax({
-                url: "includes/controller/ecommerceController.php",
+                url: project_url+"includes/controller/ecommerceController.php",
                 type:'POST',
                 async:false,
                 data: "q=apply_cupon&cupon_code="+cupon_code,
@@ -219,7 +219,7 @@
         var formData = new FormData($('#cart_detail')[0]);
         formData.append("q","update_cart");
         $.ajax({
-            url: "includes/controller/ecommerceController.php",
+            url: project_url+"includes/controller/ecommerceController.php",
             type:'POST',
             data:formData,
             async:false,

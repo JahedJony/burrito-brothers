@@ -336,7 +336,7 @@ if(isset($_GET['order_id']) && $_GET['order_id']!="") $order_id =  $_GET['order_
     // set the ingredient category header for the main menu
     load_item_option = function load_item_option(){
         $.ajax({
-            url:"./includes/controller/itemsController.php",
+            url:project_url+"includes/controller/itemsController.php",
             dataType: "json",
             type: "post",
             async:false,
@@ -483,7 +483,7 @@ if(isset($_GET['order_id']) && $_GET['order_id']!="") $order_id =  $_GET['order_
         //alert('clicked')
 
         $.ajax({
-            url:"./includes/controller/itemsController.php",
+            url:project_url+"includes/controller/itemsController.php",
             dataType: "json",
             type: "post",
             async:false,
@@ -576,7 +576,7 @@ if(isset($_GET['order_id']) && $_GET['order_id']!="") $order_id =  $_GET['order_
         }
         else {
             $.ajax({
-                url: "./includes/controller/ecommerceController.php",
+                url: project_url+"includes/controller/ecommerceController.php",
                 dataType: "json",
                 type: "post",
                 async:false,

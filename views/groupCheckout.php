@@ -181,7 +181,7 @@ else {
     function tips_add_to_db() {
         var tips = $('#tips').val()
         $.ajax({
-            url: "./includes/controller/groupController.php",
+            url: project_url+'includes/controller/groupController.php",
             type:'POST',
             async:false,
             data: {
@@ -225,7 +225,7 @@ else {
         var coupon_code = $('#coupon').val();
         if(coupon_code !=""){
             $.ajax({
-                url: "./includes/controller/groupController.php",
+                url: project_url+"includes/controller/groupController.php",
                 type:'POST',
                 async:false,
                 data: {
@@ -254,7 +254,7 @@ else {
 
     load_customer_profile = function load_customer_profile(id){
         $.ajax({
-            url:"./includes/controller/ecommerceController.php",
+            url:project_url+"includes/controller/ecommerceController.php",
             dataType: "json",
             type: "post",
             async:false,
@@ -302,7 +302,7 @@ else {
 
     general_settings = function general_settings(){
         $.ajax({
-            url:"./includes/controller/ecommerceController.php",
+            url:project_url+"includes/controller/ecommerceController.php",
             dataType: "json",
             type: "post",
             async:false,
@@ -360,7 +360,7 @@ else {
     order_summary = function order_summary(){
         //alert('sdf')
         $.ajax({
-            url: "./includes/controller/groupController.php",
+            url: project_url+"includes/controller/groupController.php",
             dataType: "json",
             type: "post",
             async:false,
@@ -465,7 +465,7 @@ else {
         else{
             alert('sdf')
             $.ajax({
-                url: "includes/controller/groupController.php",
+                url: project_url+"includes/controller/groupController.php",
                 type:'POST',
                 data:formData,
                 async:false,

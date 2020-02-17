@@ -91,7 +91,7 @@ if(!isset($_SESSION['cart']) || !count($_SESSION['cart'])>0) {
     submitItem= function submitItem() {
         alert('checkout')
         $.ajax({
-            url: "./includes/controller/ecommerceController.php",
+            url: project_url+"includes/controller/ecommerceController.php",
             dataType: "json",
             type: "post",
             async:false,
@@ -114,7 +114,7 @@ if(!isset($_SESSION['cart']) || !count($_SESSION['cart'])>0) {
 
     function cart_View(){
         $.ajax({
-            url: "./includes/controller/ecommerceController.php",
+            url: project_url+"includes/controller/ecommerceController.php",
             dataType: "json",
             type: "post",
             async:false,
@@ -214,7 +214,7 @@ if(!isset($_SESSION['cart']) || !count($_SESSION['cart'])>0) {
         var formData = new FormData($('#cart_detail')[0]);
         formData.append("q","update_cart");
         $.ajax({
-            url: "./includes/controller/ecommerceController.php",
+            url: project_url+"includes/controller/ecommerceController.php",
             type:'POST',
             data:formData,
             async:false,

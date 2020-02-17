@@ -1,8 +1,8 @@
-<?php 
-	$servername = "localhost.test";
-	$username = "root";
-	$password = "kajol1234";
-	$dbname = "burritobrothers_db";
+<?php
+$servername = "localhost";
+$username = "root";
+$password = "kajol1234";
+$dbname = "burritobrothers_db";
 	try {
 		$conn = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
 		$conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);

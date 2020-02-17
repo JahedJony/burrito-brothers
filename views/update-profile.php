@@ -70,7 +70,7 @@
     set_customer_data = function set_customer_data(){
         $('#is_active_home_page_div').hide();
         $.ajax({
-            url:"includes/controller/ecommerceController.php",
+            url:project_url+"includes/controller/ecommerceController.php",
             dataType: "json",
             type: "post",
             async:false,
@@ -136,7 +136,7 @@ set_customer_data()
 
 
             $.ajax({
-                url: 'includes/controller/ecommerceController.php',
+                url: project_url+'includes/controller/ecommerceController.php',
                 type:'POST',
                 data:formData,
                 async:false,
